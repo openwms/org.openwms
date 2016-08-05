@@ -409,7 +409,12 @@
     <properties>
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
-        <argLine></argLine>
+        <argLine><![CDATA[-Dcatalina.base=${project.build.directory}
+        -Dorg.springframework.restdocs.outputDir=${project.build.directory}/generated-snippets
+        -Ddocumentation.dir=${project.build.directory}/generated-snippets
+        -Dorg.jboss.logging.provider=slf4j
+        -Dfile.encoding=${project.build.sourceEncoding}]]>
+        </argLine>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
@@ -419,6 +424,12 @@
         <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
         <debug.info>true</debug.info>
+        <ci.buildNumber>MANUAL</ci.buildNumber>
+        <documentation.dir>${project.build.directory}</documentation.dir>
+        <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
+        <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
+        <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
+        <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
 
         <!-- Used to make the Maven description property available from Bundlor -->
         <project.description>${project.description}</project.description>
@@ -436,19 +447,20 @@
         <el-impl.version>2.2</el-impl.version>
 
         <hibernate.version>5.1.0.Final</hibernate.version> <!-- Keep in sync with Spring Data JPA -->
-        <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with platform -->
+        <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
-        <spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version>
+        <!--spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version-->
         <spring-boot.version>1.4.0.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring.version>4.3.2.RELEASE</spring.version> <!-- Keep in sync with platform -->
+        <spring.version>4.3.2.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
         <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
         <plugin.archiver.version>2.3.2</plugin.archiver.version>
+        <plugin.asciidoctor-maven.version>1.5.3</plugin.asciidoctor-maven.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
         <plugin.checkstyle.version>2.11</plugin.checkstyle.version>
         <plugin.clean.version>2.5</plugin.clean.version>
@@ -580,6 +592,82 @@
                 </plugin-->
 
                 <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>${plugin.asciidoctor-maven.version}</version>
+                    <executions>
+                        <execution>
+                            <id>generate-docs</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html</backend>
+                                <doctype>book</doctype>
+                                <attributes>
+                                    <bversion>${project.version}</bversion>
+                                    <bnumber>${ci.buildNumber}</bnumber>
+                                    <generated>${documentation.snippet.dir}</generated>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>generate-docs-site</id>
+                            <phase>site</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html</backend>
+                                <doctype>book</doctype>
+                                <attributes>
+                                    <generated>${documentation.snippet.dir}</generated>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>
+                                    ${project.build.outputDirectory}/META-INF/resources/public/static/docs
+                                </outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${documentation.input.dir}</directory>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>copy-asciidoc</id>
+                            <phase>pre-site</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${documentation.output.dir}</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${documentation.input.dir}</directory>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
                     <artifactId>maven-install-plugin</artifactId>
                     <executions>
                         <execution>
@@ -597,14 +685,11 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${plugin.surefire.version}</version>
                     <configuration>
-                        <forkCount>0</forkCount>
+                        <!--forkCount>0</forkCount>
                         <threadCount>1</threadCount>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <skipTests>false</skipTests>
-                        <trimStackTrace>true</trimStackTrace>
-                        <systemPropertyVariables>
-                            <log4j.configuration>log4j.xml</log4j.configuration>
-                        </systemPropertyVariables>
+                        <trimStackTrace>true</trimStackTrace-->
                         <includes>
                             <include>**/*Test.java</include>
                             <include>**/*IT.java</include>
@@ -677,13 +762,13 @@
             </dependency>
 
             <!-- Spring Framework Libraries -->
-            <dependency>
+            <!--dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
                 <version>${spring.io.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>

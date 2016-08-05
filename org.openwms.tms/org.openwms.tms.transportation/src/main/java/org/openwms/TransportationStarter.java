@@ -21,6 +21,10 @@
  */
 package org.openwms;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import feign.RequestInterceptor;
 import feign.auth.BasicAuthRequestInterceptor;
 import org.ameba.annotation.EnableAspects;
@@ -67,8 +71,20 @@ public class TransportationStarter {
 
     public
     @Bean
+    ObjectMapper jackson2ObjectMapper() {
+        ObjectMapper om = new ObjectMapper();
+        om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        om.configure(SerializationFeature.WRITE_EMPTY_JSON_ARRAYS, false);
+        om.configure(SerializationFeature.INDENT_OUTPUT, true);
+        om.configure(SerializationFeature.WRITE_NULL_MAP_VALUES, false);
+        om.setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        return om;
+    }
+
+    public
+    @Bean
     RequestInterceptor basicAuthRequestInterceptor() {
-        return  new BasicAuthRequestInterceptor("user", "sa");
+        return new BasicAuthRequestInterceptor("user", "sa");
         /*return (t) -> {
             //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             //User user = (User) authentication.getPrincipal();

@@ -6,4 +6,4 @@ node_js:
   - '0.10'
 before_script:
   - 'npm install -g bower'
-install: "mvn clean install -U -Denforcer.skip=true"
+install: "mvn clean install -U -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR"

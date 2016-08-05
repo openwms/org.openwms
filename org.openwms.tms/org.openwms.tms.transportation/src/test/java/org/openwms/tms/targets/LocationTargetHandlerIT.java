@@ -21,55 +21,29 @@
  */
 package org.openwms.tms.targets;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.openwms.core.test.IntegrationTest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringRunner;
 
 /**
- * A Location.
+ * A LocationTargetHandlerIT.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class Location implements Target, Serializable {
+@RunWith(SpringRunner.class)
+@IntegrationTest
+public class LocationTargetHandlerIT {
 
-    private String locationId;
-    private boolean incomingActive = true;
+    @Autowired
+    private LocationTargetHandler lth;
 
-    @JsonCreator
-    public Location() {
-    }
-
-    @JsonCreator
-    public Location(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public boolean isIncomingActive() {
-        return incomingActive;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
-
-    /**
-     * Return the {@code locationId}.
-     *
-     * @return String locationId
-     */
-    @Override
-    public String toString() {
-        return locationId;
-    }
-
-    @Override
-    public String asString() {
-        return locationId;
-    }
-
-    public boolean isInfeedBlocked() {
-        return !incomingActive;
+    public final
+    @Test
+    void test() {
+        int no = lth.getNoTOToTarget(new Location("ERR_/0000/0000/0000/0000"));
     }
 }

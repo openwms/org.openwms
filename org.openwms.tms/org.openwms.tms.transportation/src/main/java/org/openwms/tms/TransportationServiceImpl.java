@@ -112,49 +112,9 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
         }
-/*
-        if (saved.getTransportUnitBK().equalsIgnoreCase(transportOrder.getTransportUnitBK())) {
-            tuChange(saved, transportOrder);
-        }
-
-        if (saved.getPriority() != transportOrder.getPriority()) {
-            prioritize(saved, transportOrder.getPriority());
-        }
-
-        if (transportOrder.hasProblem()) {
-            reportProblem(saved, transportOrder.getProblem());
-        }
-
-        if (saved.getState() != transportOrder.getState()) {
-            stateChange(saved, transportOrder.getState());
-        }
-
-        if (saved.hasTargetChanged(transportOrder)) {
-            targetChange(saved, transportOrder);
-        }
-        */
         return saved;
     }
-/*
-    private void targetChange(TransportOrder saved, TransportOrder transportOrder) {
-    }
 
-    private void stateChange(TransportOrder saved, TransportOrder.State state) {
-
-    }
-
-    private void reportProblem(TransportOrder saved, Problem problem) {
-
-    }
-
-    private void prioritize(TransportOrder saved, PriorityLevel priority) {
-
-    }
-
-    private void tuChange(TransportOrder saved, TransportOrder transportOrder) {
-
-    }
-*/
     /**
      * {@inheritDoc}
      */
@@ -179,5 +139,13 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             }
         }
         return failure;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public TransportOrder findByPKey(String pKey) {
+        return repository.findByPKey(pKey).orElseThrow(() -> NotFoundException.createNotFound(String.format("No TransportOrder with persisted key %s found", pKey)));
     }
 }

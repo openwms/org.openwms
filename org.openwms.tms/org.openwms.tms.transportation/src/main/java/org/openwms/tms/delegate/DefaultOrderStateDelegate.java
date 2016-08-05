@@ -137,10 +137,10 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 starter.start(to);
                 break;
             } catch (StateChangeException sce) {
-                if (LOGGER.isDebugEnabled()) {
+                if (LOGGER.isWarnEnabled()) {
                     // Not starting a transport here is not a problem, so be
                     // quiet
-                    LOGGER.debug(sce.getMessage());
+                    LOGGER.warn(sce.getMessage(), sce);
                 }
             }
         }
