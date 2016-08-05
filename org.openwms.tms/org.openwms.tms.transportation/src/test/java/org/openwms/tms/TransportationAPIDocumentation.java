@@ -109,9 +109,9 @@ public class TransportationAPIDocumentation {
         Location errorLocation = new Location(ERR_LOC);
         TransportUnit tu = new TransportUnit(vo.getBarcode(), actualLocation, vo.getTarget());
 
-        given(this.commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
-        given(this.commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(errorLocation));
-        given(this.commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
+        given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
+        given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(errorLocation));
+        given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
         return vo;
     }
 
@@ -140,7 +140,7 @@ public class TransportationAPIDocumentation {
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("state", is("STARTED")))
+                .andExpect(jsonPath("state", is(TransportOrder.State.STARTED.toString())))
                 .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
                 .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
                 .andDo(document("to-create-and-get"))
@@ -181,7 +181,7 @@ public class TransportationAPIDocumentation {
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("state", is("INITIALIZED")))
+                .andExpect(jsonPath("state", is(TransportOrder.State.INITIALIZED.toString())))
                 .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
                 .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
                 .andDo(document("to-create-and-get-target-na"))
