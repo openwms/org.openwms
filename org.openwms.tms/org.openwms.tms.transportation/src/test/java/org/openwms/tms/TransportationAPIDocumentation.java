@@ -39,6 +39,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
+import org.openwms.tms.api.CreateTransportOrderVO;
 import org.openwms.tms.targets.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -19,12 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.api;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ameba.mapping.BeanMapper;
+import org.openwms.tms.PriorityLevel;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.TransportationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PathVariable;

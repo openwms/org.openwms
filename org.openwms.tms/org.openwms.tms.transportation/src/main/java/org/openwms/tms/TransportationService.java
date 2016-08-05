@@ -52,6 +52,12 @@ public interface TransportationService<T extends TransportOrder> {
      */
     T create(String barcode, String target, PriorityLevel priority);
 
+    /**
+     * Modifies an existing {@link TransportOrder} according to the argument passed as {@code transportOrder}.
+     *
+     * @param transportOrder Stores the ID of the {@link TransportOrder} to change as well as the state to change
+     * @return The modified instance
+     */
     T update(T transportOrder);
     /**
      * Try to turn a list of {@link TransportOrder}s into the given {@code state}.

@@ -16,7 +16,7 @@
 	</configuration>
 
     <mapping>
-		<class-a>org.openwms.tms.CreateTransportOrderVO</class-a>
+		<class-a>org.openwms.tms.api.CreateTransportOrderVO</class-a>
 		<class-b>org.openwms.tms.TransportOrder</class-b>
         <field>
             <a is-accessible="true">pKey</a>
