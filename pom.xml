@@ -441,13 +441,13 @@
         <el-impl.version>2.2</el-impl.version>
 
         <hibernate.version>5.1.0.Final</hibernate.version> <!-- Keep in sync with Spring Data JPA -->
-        <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with platform -->
+        <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
-        <spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version>
+        <!--spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version-->
         <spring-boot.version>1.4.0.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring.version>4.3.2.RELEASE</spring.version> <!-- Keep in sync with platform -->
+        <spring.version>4.3.2.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
         <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- =================== -->
@@ -759,13 +759,13 @@
             </dependency>
 
             <!-- Spring Framework Libraries -->
-            <dependency>
+            <!--dependency>
                 <groupId>io.spring.platform</groupId>
                 <artifactId>platform-bom</artifactId>
                 <version>${spring.io.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
+            </dependency-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
