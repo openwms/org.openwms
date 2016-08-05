@@ -58,7 +58,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
- * A TransportationAPIDocumentation is a system test to test the public API of the component. It is marked as {@link Transactional} and to
+ * A CreateTODocumentation is a system test to test the public API of the component. It is marked as {@link Transactional} and to
  * be roll-backed ({@link Rollback}) after each test run. The reason for this is to open the transaction bracket around the controller to
  * rollback it afterwards.
  *
@@ -70,7 +70,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @SpringBootTest
 @Transactional
 @Rollback
-public class TransportationAPIDocumentation {
+public class CreateTODocumentation {
 
     public static final String INIT_LOC = "INIT/0000/0000/0000/0000";
     public static final String ERR_LOC = "ERR_/0000/0000/0000/0000";
