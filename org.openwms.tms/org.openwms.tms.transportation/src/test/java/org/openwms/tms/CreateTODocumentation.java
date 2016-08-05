@@ -58,9 +58,9 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
- * A TransportationAPIDocumentation is a system test to test the public API of the component. It is marked as {@link Transactional} and to be
- * roll-backed ({@link Rollback}) after each test run. The reason for this is to open the transaction bracket around the controller to rollback it
- * afterwards.
+ * A CreateTODocumentation is a system test to test the public API of the component. It is marked as {@link Transactional} and to
+ * be roll-backed ({@link Rollback}) after each test run. The reason for this is to open the transaction bracket around the controller to
+ * rollback it afterwards.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
@@ -70,7 +70,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @SpringBootTest
 @Transactional
 @Rollback
-public class TransportationAPIDocumentation {
+public class CreateTODocumentation {
 
     public static final String INIT_LOC = "INIT/0000/0000/0000/0000";
     public static final String ERR_LOC = "ERR_/0000/0000/0000/0000";
@@ -78,7 +78,7 @@ public class TransportationAPIDocumentation {
     private ObjectMapper objectMapper;
     protected MockMvc mockMvc;
     @Rule
-    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(System.getProperty("documentation.dir", System.getProperty("project.build.directory")+"/generated-snippets"));
+    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(System.getProperty("documentation.dir", System.getProperty("project.build.directory") + "/generated-snippets"));
     @Autowired
     protected WebApplicationContext context;
     @MockBean
@@ -98,31 +98,6 @@ public class TransportationAPIDocumentation {
                         .withPort(8888))
                 .addFilters(filter)
                 .build();
-    }
-
-    private CreateTransportOrderVO createTO() {
-        CreateTransportOrderVO vo = new CreateTransportOrderVO();
-        vo.setBarcode("4711");
-        vo.setPriority(PriorityLevel.HIGHEST.toString());
-        vo.setTarget(ERR_LOC);
-
-        Location actualLocation = new Location(INIT_LOC);
-        Location errorLocation = new Location(ERR_LOC);
-        TransportUnit tu = new TransportUnit(vo.getBarcode(), actualLocation, vo.getTarget());
-
-        given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
-        given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(errorLocation));
-        given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
-        return vo;
-    }
-
-    private MvcResult postTOAndValidate(CreateTransportOrderVO vo) throws Exception {
-        return mockMvc.perform(post("/transportOrders")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(vo)))
-                .andExpect(status().isCreated())
-                .andDo(document("to-create"))
-                .andReturn();
     }
 
     public
@@ -163,9 +138,26 @@ public class TransportationAPIDocumentation {
                 .andDo(document("to-create-uk-tu"))
         ;
     }
+
     public
     @Test
-    void testCreateTOAndGetTargetNotAvailable() throws Exception {
+    void testCreateTOUnknownTarget() throws Exception {
+        CreateTransportOrderVO vo = createTO();
+        vo.setTarget("UNKNOWN");
+        given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.empty());
+        given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
+
+        mockMvc.perform(post("/transportOrders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo)))
+                .andExpect(status().isNotFound())
+                .andReturn()
+        ;
+    }
+
+    public
+    @Test
+    void testCreateTOTargetNotAvailable() throws Exception {
         CreateTransportOrderVO vo = createTO();
         vo.setTarget(ERR_LOC);
         Location loc = new Location(ERR_LOC);
@@ -178,7 +170,6 @@ public class TransportationAPIDocumentation {
                 .andExpect(status().isCreated())
                 .andReturn();
 
-        Thread.sleep(1000);
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
@@ -187,5 +178,44 @@ public class TransportationAPIDocumentation {
                 .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
                 .andDo(document("to-create-and-get-target-na"))
         ;
+    }
+
+    public
+    @Test
+    void testCreateTOUnknownPriority() throws Exception {
+        CreateTransportOrderVO vo = createTO();
+        vo.setPriority("UNKNOWN");
+
+        mockMvc.perform(post("/transportOrders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo)))
+                .andExpect(status().isNotFound())
+                .andReturn()
+        ;
+    }
+
+    private CreateTransportOrderVO createTO() {
+        CreateTransportOrderVO vo = new CreateTransportOrderVO();
+        vo.setBarcode("4711");
+        vo.setPriority(PriorityLevel.HIGHEST.toString());
+        vo.setTarget(ERR_LOC);
+
+        Location actualLocation = new Location(INIT_LOC);
+        Location errorLocation = new Location(ERR_LOC);
+        TransportUnit tu = new TransportUnit(vo.getBarcode(), actualLocation, vo.getTarget());
+
+        given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
+        given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(errorLocation));
+        given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
+        return vo;
+    }
+
+    private MvcResult postTOAndValidate(CreateTransportOrderVO vo) throws Exception {
+        return mockMvc.perform(post("/transportOrders")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo)))
+                .andExpect(status().isCreated())
+                .andDo(document("to-create"))
+                .andReturn();
     }
 }

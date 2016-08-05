@@ -21,9 +21,12 @@
  */
 package org.openwms.tms.api;
 
+import static java.util.Arrays.asList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.tms.PriorityLevel;
 import org.openwms.tms.TransportOrder;
@@ -59,6 +62,10 @@ class TransportationController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/transportOrders")
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
+        asList(PriorityLevel.values()).stream()
+                .filter(p -> p.name().equals(vo.getPriority()))
+                .findFirst()
+                .orElseThrow(() -> NotFoundException.createNotFound(String.format("A priority level of %s is not defined", vo.getPriority())));
         TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
         resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
         resp.setStatus(201);

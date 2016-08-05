@@ -24,10 +24,11 @@ package org.openwms.tms.delegate;
 import java.util.List;
 import java.util.Optional;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
+import org.openwms.tms.exception.StateChangeException;
 import org.openwms.tms.targets.Location;
 import org.openwms.tms.targets.LocationGroup;
 import org.slf4j.Logger;
@@ -63,7 +64,7 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         Optional<Location> loc = commonGateway.getLocation(transportOrder.getTargetLocation());
         if (!lg.isPresent() && !loc.isPresent()) {
             // At least one target must be set
-            throw new StateChangeException(
+            throw NotFoundException.createNotFound(
                     "Neither a valid target LocationGroup nor a Location are set, hence it is not possible to start the TransportOrder");
         }
         if (lg.isPresent() && lg.get().isInfeedBlocked()) {
