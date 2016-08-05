@@ -66,7 +66,7 @@ public class TransportationStarter {
     public
     @Bean
     BeanMapper beanMapper() {
-        return new DozerMapperImpl("classpath:/META-INF/dozer/tms-bean-mappings.xml");
+        return new DozerMapperImpl("META-INF/dozer/tms-bean-mappings.xml");
     }
 
     public

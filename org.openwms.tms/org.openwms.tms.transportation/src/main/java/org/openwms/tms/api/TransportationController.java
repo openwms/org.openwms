@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.mapping.BeanMapper;
+import org.openwms.tms.Constants;
 import org.openwms.tms.PriorityLevel;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportationService;
@@ -55,12 +56,12 @@ class TransportationController {
     @Autowired
     private TransportationService<TransportOrder> service;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/transportOrders/{pKey}")
+    @RequestMapping(method = RequestMethod.GET, value = Constants.ROOT_ENTITIES + "/{pKey}")
     public TransportOrder findByPKey(@PathVariable String pKey) {
         return service.findByPKey(pKey);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/transportOrders")
+    @RequestMapping(method = RequestMethod.POST, value = Constants.ROOT_ENTITIES)
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
         asList(PriorityLevel.values()).stream()
                 .filter(p -> p.name().equals(vo.getPriority()))
@@ -71,8 +72,8 @@ class TransportationController {
         resp.setStatus(201);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = "/transportOrders")
-    public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping(method = RequestMethod.PATCH, value = Constants.ROOT_ENTITIES)
+    public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletResponse resp) {
         service.update(m.map(vo, TransportOrder.class));
         resp.setStatus(204);
     }
