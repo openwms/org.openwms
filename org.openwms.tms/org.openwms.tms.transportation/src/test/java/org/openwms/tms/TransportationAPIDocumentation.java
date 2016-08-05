@@ -78,7 +78,7 @@ public class TransportationAPIDocumentation {
     private ObjectMapper objectMapper;
     protected MockMvc mockMvc;
     @Rule
-    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
+    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(System.getProperty("documentation.dir", System.getProperty("project.build.directory")+"/generated-snippets"));
     @Autowired
     protected WebApplicationContext context;
     @MockBean
