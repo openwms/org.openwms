@@ -21,6 +21,8 @@
  */
 package org.openwms.tms;
 
+import org.openwms.tms.exception.RemovalNotAllowedException;
+
 /**
  * An OnRemovalListener is able to hook in the lifecycle of an entity class. A class implementing this interface is called before an entity
  * of type <code>T</code> is removed.

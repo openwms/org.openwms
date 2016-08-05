@@ -37,6 +37,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.ameba.integration.jpa.ApplicationEntity;
+import org.openwms.tms.exception.StateChangeException;
 
 /**
  * A TransportOrder is used to move {@code TransportUnit}s from a current {@code Location} to a target.
