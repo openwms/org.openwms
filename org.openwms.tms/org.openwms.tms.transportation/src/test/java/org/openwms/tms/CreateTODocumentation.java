@@ -32,78 +32,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Optional;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.openwms.common.CommonGateway;
-import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.openwms.tms.targets.Location;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.JUnitRestDocumentation;
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.filter.CharacterEncodingFilter;
 
 /**
- * A CreateTODocumentation is a system test to test the public API of the component. It is marked as {@link Transactional} and to
- * be roll-backed ({@link Rollback}) after each test run. The reason for this is to open the transaction bracket around the controller to
+ * A CreateTODocumentation is a system test to test the public API of the component. It is marked as {@link Transactional} and to be
+ * roll-backed ({@link Rollback}) after each test run. The reason for this is to open the transaction bracket around the controller to
  * rollback it afterwards.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@Transactional
-@Rollback
-public class CreateTODocumentation {
-
-    public static final String INIT_LOC = "INIT/0000/0000/0000/0000";
-    public static final String ERR_LOC = "ERR_/0000/0000/0000/0000";
-    @Autowired
-    private ObjectMapper objectMapper;
-    protected MockMvc mockMvc;
-    @Rule
-    public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(System.getProperty("documentation.dir", System.getProperty("project.build.directory") + "/generated-snippets"));
-    @Autowired
-    protected WebApplicationContext context;
-    @MockBean
-    private CommonGateway commonGateway;
-
-    /**
-     * Do something before each test method.
-     *
-     * @throws Exception Any error
-     */
-    @Before
-    public void setUp() throws Exception {
-        CharacterEncodingFilter filter = new CharacterEncodingFilter("UTF-8", true);
-        this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(MockMvcRestDocumentation.documentationConfiguration(restDocumentation).uris()
-                        .withPort(8888))
-                .addFilters(filter)
-                .build();
-    }
+public class CreateTODocumentation extends DocumentationBase {
 
     public
     @Test
     void testCreateTO() throws Exception {
-        MvcResult res = postTOAndValidate(createTO());
+        MvcResult res = postTOAndValidate(createTO(), "to-create");
         assertThat(res.getResponse().getHeaderValue(HttpHeaders.LOCATION)).isNotNull();
     }
 
@@ -111,14 +63,14 @@ public class CreateTODocumentation {
     @Test
     void testCreateTOAndGet() throws Exception {
         CreateTransportOrderVO vo = createTO();
-        MvcResult res = postTOAndValidate(vo);
+        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
 
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("state", is(TransportOrder.State.STARTED.toString())))
-                .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
-                .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
+                .andExpect(jsonPath("sourceLocation", is(INIT_LOC_STRING)))
+                .andExpect(jsonPath("targetLocation", is(ERR_LOC_STRING)))
                 .andDo(document("to-create-and-get"))
         ;
     }
@@ -131,7 +83,7 @@ public class CreateTODocumentation {
 
         given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.empty());
 
-        mockMvc.perform(post("/transportOrders")
+        mockMvc.perform(post(Constants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isNotFound())
@@ -147,7 +99,7 @@ public class CreateTODocumentation {
         given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.empty());
         given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
 
-        mockMvc.perform(post("/transportOrders")
+        mockMvc.perform(post(Constants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isNotFound())
@@ -159,12 +111,12 @@ public class CreateTODocumentation {
     @Test
     void testCreateTOTargetNotAvailable() throws Exception {
         CreateTransportOrderVO vo = createTO();
-        vo.setTarget(ERR_LOC);
-        Location loc = new Location(ERR_LOC);
+        vo.setTarget(ERR_LOC_STRING);
+        Location loc = new Location(ERR_LOC_STRING);
         loc.setIncomingActive(false);
         given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(loc));
 
-        MvcResult res = mockMvc.perform(post("/transportOrders")
+        MvcResult res = mockMvc.perform(post(Constants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isCreated())
@@ -174,8 +126,8 @@ public class CreateTODocumentation {
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("state", is(TransportOrder.State.INITIALIZED.toString())))
-                .andExpect(jsonPath("sourceLocation", is(INIT_LOC)))
-                .andExpect(jsonPath("targetLocation", is(ERR_LOC)))
+                .andExpect(jsonPath("sourceLocation", is(INIT_LOC_STRING)))
+                .andExpect(jsonPath("targetLocation", is(ERR_LOC_STRING)))
                 .andDo(document("to-create-and-get-target-na"))
         ;
     }
@@ -186,36 +138,11 @@ public class CreateTODocumentation {
         CreateTransportOrderVO vo = createTO();
         vo.setPriority("UNKNOWN");
 
-        mockMvc.perform(post("/transportOrders")
+        mockMvc.perform(post(Constants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isNotFound())
                 .andReturn()
         ;
-    }
-
-    private CreateTransportOrderVO createTO() {
-        CreateTransportOrderVO vo = new CreateTransportOrderVO();
-        vo.setBarcode("4711");
-        vo.setPriority(PriorityLevel.HIGHEST.toString());
-        vo.setTarget(ERR_LOC);
-
-        Location actualLocation = new Location(INIT_LOC);
-        Location errorLocation = new Location(ERR_LOC);
-        TransportUnit tu = new TransportUnit(vo.getBarcode(), actualLocation, vo.getTarget());
-
-        given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.of(tu));
-        given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(errorLocation));
-        given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
-        return vo;
-    }
-
-    private MvcResult postTOAndValidate(CreateTransportOrderVO vo) throws Exception {
-        return mockMvc.perform(post("/transportOrders")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(vo)))
-                .andExpect(status().isCreated())
-                .andDo(document("to-create"))
-                .andReturn();
     }
 }
