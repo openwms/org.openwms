@@ -58,7 +58,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
                         .content(objectMapper.writeValueAsString(vo))
                 )
                 .andExpect(status().isNotFound())
-                .andDo(document("to-patch-tu-unknown"))
+                .andDo(document("to-patch-tu-change"))
         ;
     }
 
