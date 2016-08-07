@@ -71,9 +71,9 @@ public abstract class DocumentationBase {
     protected WebApplicationContext context;
     @MockBean
     protected CommonGateway commonGateway;
-    protected static final String NOTLOGGED = "--";
     @Rule
     public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(System.getProperty("documentation.dir", System.getProperty("project.build.directory") + "/generated-snippets"));
+    public static final String NOTLOGGED = "--";
     public static final String INIT_LOC_STRING = "INIT/0000/0000/0000/0000";
     public static final Location INIT_LOC = new Location(INIT_LOC_STRING);
     public static final String ERR_LOC_STRING = "ERR_/0000/0000/0000/0000";
