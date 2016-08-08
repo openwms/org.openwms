@@ -32,6 +32,7 @@ import org.junit.Test;
 import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
 /**
  * A ChangeTUDocumentation.
@@ -67,7 +68,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
     void testTUChangeUnknownTU() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
+        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
         vo.setBarcode(UNKNOWN);
 
         // test ...
@@ -78,6 +79,25 @@ public class ChangeTUDocumentation extends DocumentationBase {
                 )
                 .andExpect(status().isNotFound())
                 .andDo(document("to-patch-tu-unknown"))
+        ;
+    }
+
+    public
+    @Test
+    void testTUChangeTUWithNUll() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setBarcode(null);
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNotFound())
+                .andDo(document("to-patch-tu-null"))
         ;
     }
 }

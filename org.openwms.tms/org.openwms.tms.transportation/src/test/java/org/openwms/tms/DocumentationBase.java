@@ -39,6 +39,7 @@ import org.openwms.tms.targets.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -80,6 +81,7 @@ public abstract class DocumentationBase {
     public static final Location ERR_LOC = new Location(ERR_LOC_STRING);
     public static final String KNOWN = "KNOWN";
     public static final String UNKNOWN = "UNKNOWN";
+    public static final String BC_4711 = "4711";
 
     /**
      * Do something before each test method.
@@ -99,8 +101,8 @@ public abstract class DocumentationBase {
 
     protected CreateTransportOrderVO createTO() {
         CreateTransportOrderVO vo = new CreateTransportOrderVO();
-        vo.setBarcode("4711");
         vo.setPriority(PriorityLevel.HIGHEST.toString());
+        vo.setBarcode(BC_4711);
         vo.setTarget(ERR_LOC_STRING);
 
         Location actualLocation = new Location(INIT_LOC_STRING);
@@ -114,11 +116,15 @@ public abstract class DocumentationBase {
     }
 
     protected MvcResult postTOAndValidate(CreateTransportOrderVO vo, String outputFile) throws Exception {
-        return mockMvc.perform(post("/transportOrders")
+        MvcResult res = mockMvc.perform(post("/transportOrders")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isCreated())
                 .andDo(document(outputFile))
                 .andReturn();
+
+        String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
+        vo.setpKey(toLocation);
+        return res;
     }
 }

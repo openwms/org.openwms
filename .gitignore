@@ -2,6 +2,7 @@
 /build/
 /bin/
 target/
+**/${project.build.directory}/
 libs/
 **/overlays/**/*
 **/node/
