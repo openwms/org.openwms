@@ -31,4 +31,6 @@ package org.openwms.tms;
 public class Constants {
 
     public static final String ROOT_ENTITIES = "/transportOrders";
+
+    public static final String BEAN_NAME_OBJECTMAPPER = "jacksonOM";
 }

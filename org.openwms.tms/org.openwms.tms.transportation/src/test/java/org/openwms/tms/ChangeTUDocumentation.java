@@ -72,14 +72,17 @@ public class ChangeTUDocumentation extends DocumentationBase {
         vo.setBarcode(UNKNOWN);
 
         // test ...
-        mockMvc.perform(
+        res = mockMvc.perform(
                 patch(Constants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
                 )
                 .andExpect(status().isNotFound())
                 .andDo(document("to-patch-tu-unknown"))
+                .andReturn()
         ;
+
+        //res.getResponse().
     }
 
     public
