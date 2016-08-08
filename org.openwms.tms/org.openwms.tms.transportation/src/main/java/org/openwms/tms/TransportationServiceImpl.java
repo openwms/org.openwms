@@ -108,7 +108,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
 
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
-        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey()).orElseThrow(NotFoundException::new);
+        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey()).orElseThrow(() -> NotFoundException.createNotFound(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey())));
 
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
