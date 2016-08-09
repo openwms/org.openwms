@@ -84,7 +84,7 @@ class TransportationController {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Response> handleNotFound(HttpServletResponse res, NotFoundException ex) throws Exception {
-        return new ResponseEntity<>(new Response(ex.getMessage(), ex.getMsgKey(), HttpStatus.NOT_FOUND.toString(), null), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new Response(ex.getMessage(), ex.getMsgKey(), HttpStatus.NOT_FOUND.toString(), new String[]{ex.getMsgKey()}), HttpStatus.NOT_FOUND);
     }
 
     private String getCreatedResourceURI(HttpServletRequest req, String objId) {

@@ -21,6 +21,7 @@
  */
 package org.openwms.tms;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
@@ -59,6 +60,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
                         .content(objectMapper.writeValueAsString(vo))
                 )
                 .andExpect(status().isNotFound())
+                //.andExpect(jsonPath("obj[0]", is("not.found")))
                 .andDo(document("to-patch-tu-change"))
         ;
     }
@@ -68,11 +70,11 @@ public class ChangeTUDocumentation extends DocumentationBase {
     void testTUChangeUnknownTU() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
-        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
+        postTOAndValidate(vo, NOTLOGGED);
         vo.setBarcode(UNKNOWN);
 
         // test ...
-        res = mockMvc.perform(
+        MvcResult res = mockMvc.perform(
                 patch(Constants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
@@ -82,7 +84,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
                 .andReturn()
         ;
 
-        //res.getResponse().
+        assertThat(res.getResponse().getContentAsString().contains("[null]")).isTrue();
     }
 
     public

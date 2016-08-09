@@ -26,7 +26,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.ameba.Messages;
 import org.ameba.annotation.TxService;
+import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.NotFoundException;
 import org.openwms.tms.exception.StateChangeException;
 import org.openwms.tms.exception.TransportOrderServiceException;
@@ -108,7 +110,8 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
 
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
-        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey()).orElseThrow(() -> NotFoundException.createNotFound(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey())));
+        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey())
+                .orElseThrow(() -> BusinessRuntimeException.create(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey()), Messages.NOT_FOUND, transportOrder.getPersistentKey()));
 
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
