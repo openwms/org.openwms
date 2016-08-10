@@ -40,7 +40,8 @@ public interface TransportOrderRepository extends JpaRepository<TransportOrder, 
     @Query("select to from TransportOrder to where to.pKey = ?1")
     Optional<TransportOrder> findByPKey(String pKey);
 
-    List<TransportOrder> findByBk(List<String> bks);
+    @Query("select to from TransportOrder to where to.pKey in ?1")
+    List<TransportOrder> findByPKey(List<String> pKeys);
 
     @Query("select to from TransportOrder to where to.transportUnitBK = ?1 and to.state in ?2")
     List<TransportOrder> findByTransportUnitBKAndStates(String transportUnitBK, TransportOrder.State... states);

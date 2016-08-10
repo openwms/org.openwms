@@ -24,6 +24,8 @@ package org.openwms.common;
 import java.util.Optional;
 
 import feign.FeignException;
+import org.ameba.Messages;
+import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.tms.targets.Location;
@@ -82,7 +84,11 @@ class HttpCommonGateway implements CommonGateway {
         try {
             commonFeignClient.updateTU(savedTU.getBarcode(), m.map(savedTU, TransportUnitVO.class));
         } catch (Exception ex) {
-            throw new ServiceLayerException(ex.getMessage());
+            if (translate(ex) == 404) {
+                throw new NotFoundException(ex.getMessage(), Messages.NOT_FOUND, savedTU.getBarcode());
+            } else {
+                throw new ServiceLayerException(ex.getMessage());
+            }
         }
     }
 

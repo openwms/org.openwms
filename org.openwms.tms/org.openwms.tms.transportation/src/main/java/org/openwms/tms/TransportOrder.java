@@ -33,6 +33,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -50,15 +51,12 @@ import org.openwms.tms.exception.StateChangeException;
 @Table(name = "TMS_TRANSPORT_ORDER")
 public class TransportOrder extends ApplicationEntity implements Serializable {
 
-    /** Unique business key. */
-    @Column(name = "C_BK")
-    private String bk;
-
     /**
      * The bk of the {@code TransportUnit} to be moved by this {@code TransportOrder}. Allowed to be {@literal null} to keep {@code
      * TransportOrder}s without {@code TransportUnit}s.
      */
     @Column(name = "C_TRANSPORT_UNIT_BK")
+    @Min(value = 1, groups = ChangeTU.class)
     private String transportUnitBK;
 
     /**
@@ -112,6 +110,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * A {@code LocationGroup} can also be set as target. At least one target must be set when the {@code TransportOrder} is being started.
      */
     @Column(name = "C_TARGET_LOCATION_GROUP")
+    @Min(value = 1, groups = ChangeTU.class)
     private String targetLocationGroup;
 
     /* ----------------------------- methods ------------------- */
@@ -383,4 +382,6 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
             return order;
         }
     }
+
+    public interface ChangeTU{}
 }

@@ -21,6 +21,8 @@
  */
 package org.openwms.tms;
 
+import javax.validation.Validator;
+
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ class ChangeTUFunction implements UpdateFunction {
 
     @Autowired
     private CommonGateway gateway;
+    @Autowired
+    private Validator validator;
 
     /**
      * {@inheritDoc}
@@ -46,6 +50,7 @@ class ChangeTUFunction implements UpdateFunction {
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
+        validateAttributes(toUpdate);
         if (!saved.getTransportUnitBK().equalsIgnoreCase(toUpdate.getTransportUnitBK())) {
 
             // change the target of the TU to assign
@@ -61,5 +66,9 @@ class ChangeTUFunction implements UpdateFunction {
 
             saved.setTransportUnitBK(toUpdate.getTransportUnitBK());
         }
+    }
+
+    private void validateAttributes(TransportOrder to) {
+        validator.validate(to, TransportOrder.ChangeTU.class);
     }
 }
