@@ -31,11 +31,13 @@ import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
+import org.openwms.tms.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -70,7 +72,8 @@ public class TransportationStarter {
     }
 
     public
-    @Bean
+    @Primary
+    @Bean(name = Constants.BEAN_NAME_OBJECTMAPPER)
     ObjectMapper jackson2ObjectMapper() {
         ObjectMapper om = new ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

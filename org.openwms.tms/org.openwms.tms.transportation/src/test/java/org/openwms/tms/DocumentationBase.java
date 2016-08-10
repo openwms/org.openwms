@@ -37,6 +37,7 @@ import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.openwms.tms.targets.Location;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
@@ -66,6 +67,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public abstract class DocumentationBase {
 
     @Autowired
+    @Qualifier(Constants.BEAN_NAME_OBJECTMAPPER)
     protected ObjectMapper objectMapper;
     protected MockMvc mockMvc;
     @Autowired
@@ -124,7 +126,7 @@ public abstract class DocumentationBase {
                 .andReturn();
 
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
-        vo.setpKey(toLocation);
+        vo.setpKey(toLocation.substring(toLocation.indexOf("/", toLocation.length()-1), toLocation.length()-1));
         return res;
     }
 }
