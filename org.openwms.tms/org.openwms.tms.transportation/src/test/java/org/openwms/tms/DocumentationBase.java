@@ -126,7 +126,8 @@ public abstract class DocumentationBase {
                 .andReturn();
 
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
-        vo.setpKey(toLocation.substring(toLocation.indexOf("/", toLocation.length()-1), toLocation.length()-1));
+        toLocation = toLocation.substring(0, toLocation.length()-1);
+        vo.setpKey(toLocation.substring(toLocation.lastIndexOf("/")+1));
         return res;
     }
 }

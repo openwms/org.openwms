@@ -59,14 +59,17 @@ public interface TransportationService<T extends TransportOrder> {
      * @return The modified instance
      */
     T update(T transportOrder);
+
     /**
      * Try to turn a list of {@link TransportOrder}s into the given {@code state}.
      *
-     * @param bks The business keys of {@link TransportOrder}s
+     * @param pKeys The persisted keys of {@link TransportOrder}s
      * @param state The state to change all orders to
-     * @return A list of business keys of that {@link TransportOrder}s that have not been changed
+     * @return A list of persisted keys of {@link TransportOrder}s that have not been changed
+     * @deprecated Use update instead
      */
-    Collection<String> cancelTransportOrders(Collection<String> bks, TransportOrder.State state);
+    @Deprecated
+    Collection<String> change(Collection<String> pKeys, TransportOrder.State state);
 
     /**
      * Find and return the {@code TransportOrder} identified by the persisted key {@code pKey}.

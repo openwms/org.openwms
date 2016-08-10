@@ -3,6 +3,7 @@
 /bin/
 target/
 **/${project.build.directory}/
+/null/
 libs/
 **/overlays/**/*
 **/node/

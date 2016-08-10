@@ -25,7 +25,10 @@ import static java.util.Arrays.asList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
 
+import org.ameba.exception.BehaviorAwareException;
+import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.NotFoundException;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
@@ -70,7 +73,7 @@ class TransportationController {
         asList(PriorityLevel.values()).stream()
                 .filter(p -> p.name().equals(vo.getPriority()))
                 .findFirst()
-                .orElseThrow(() -> NotFoundException.createNotFound(String.format("A priority level of %s is not defined", vo.getPriority())));
+                .orElseThrow(() -> new NotFoundException(String.format("A priority level of %s is not defined", vo.getPriority())));
         TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
         resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
         resp.setStatus(201);
@@ -82,9 +85,13 @@ class TransportationController {
         resp.setStatus(204);
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<Response> handleNotFound(HttpServletResponse res, NotFoundException ex) throws Exception {
-        return new ResponseEntity<>(new Response(ex.getMessage(), ex.getMsgKey(), HttpStatus.NOT_FOUND.toString(), new String[]{ex.getMsgKey()}), HttpStatus.NOT_FOUND);
+    @ExceptionHandler(BusinessRuntimeException.class)
+    public ResponseEntity<Response<Serializable>> handleNotFound(HttpServletResponse res, BusinessRuntimeException ex) throws Exception {
+        if (ex instanceof BehaviorAwareException) {
+            BehaviorAwareException bae = (BehaviorAwareException) ex;
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), bae.getMsgKey(), bae.getStatus().toString(), new String[]{bae.getMsgKey()}), bae.getStatus());
+        }
+        return new ResponseEntity<>(new Response<>(ex.getMessage(), ex.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{ex.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private String getCreatedResourceURI(HttpServletRequest req, String objId) {

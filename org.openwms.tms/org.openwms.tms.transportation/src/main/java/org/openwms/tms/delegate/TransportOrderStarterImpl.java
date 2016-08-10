@@ -64,7 +64,7 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         Optional<Location> loc = commonGateway.getLocation(transportOrder.getTargetLocation());
         if (!lg.isPresent() && !loc.isPresent()) {
             // At least one target must be set
-            throw NotFoundException.createNotFound(
+            throw new NotFoundException(
                     "Neither a valid target LocationGroup nor a Location are set, hence it is not possible to start the TransportOrder");
         }
         if (lg.isPresent() && lg.get().isInfeedBlocked()) {

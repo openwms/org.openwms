@@ -28,7 +28,6 @@ import java.util.Optional;
 
 import org.ameba.Messages;
 import org.ameba.annotation.TxService;
-import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.NotFoundException;
 import org.openwms.tms.exception.StateChangeException;
 import org.openwms.tms.exception.TransportOrderServiceException;
@@ -111,7 +110,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
         TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey())
-                .orElseThrow(() -> BusinessRuntimeException.create(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey()), Messages.NOT_FOUND, transportOrder.getPersistentKey()));
+                .orElseThrow(() -> new NotFoundException(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey()), Messages.NOT_FOUND, transportOrder.getPersistentKey()));
 
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
@@ -123,9 +122,9 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      * {@inheritDoc}
      */
     @Override
-    public Collection<String> cancelTransportOrders(Collection<String> bks, TransportOrder.State state) {
-        List<String> failure = new ArrayList<>(bks.size());
-        List<TransportOrder> transportOrders = repository.findByBk(new ArrayList<>(bks));
+    public Collection<String> change(Collection<String> pKeys, TransportOrder.State state) {
+        List<String> failure = new ArrayList<>(pKeys.size());
+        List<TransportOrder> transportOrders = repository.findByPKey(new ArrayList<>(pKeys));
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 if (LOGGER.isDebugEnabled()) {
@@ -150,6 +149,6 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      */
     @Override
     public TransportOrder findByPKey(String pKey) {
-        return repository.findByPKey(pKey).orElseThrow(() -> NotFoundException.createNotFound(String.format("No TransportOrder with persisted key %s found", pKey)));
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(String.format("No TransportOrder with persisted key %s found", pKey)));
     }
 }

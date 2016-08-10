@@ -59,7 +59,7 @@ class ModuleServiceImpl implements ModuleService {
         for (Module module : modules) {
             Module toSave = moduleDao.findOne(module.getPk());
             if (toSave == null) {
-                throw NotFoundException.createNotFound(String.format("Module with if [%s] not found", module.getPk()));
+                throw new NotFoundException(String.format("Module with if [%s] not found", module.getPk()));
             }
             toSave.setStartupOrder(module.getStartupOrder());
             save(toSave);
