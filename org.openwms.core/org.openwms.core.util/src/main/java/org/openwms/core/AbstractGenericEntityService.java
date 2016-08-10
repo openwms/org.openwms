@@ -28,10 +28,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.ameba.exception.IntegrationLayerException;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.openwms.core.exception.ExceptionCodes;
-import org.openwms.core.exception.IntegrationRuntimeException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
@@ -208,7 +208,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
         if (entity.isNew()) {
             try {
                 getRepository().persist(entity);
-            } catch (PersistenceException | IntegrationRuntimeException ex) {
+            } catch (PersistenceException | IntegrationLayerException ex) {
                 String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS,
                         new Object[]{entity}, null);
                 throw new ServiceLayerException(msg);

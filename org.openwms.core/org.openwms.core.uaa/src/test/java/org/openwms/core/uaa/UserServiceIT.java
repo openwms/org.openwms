@@ -197,7 +197,7 @@ public class UserServiceIT {
             fail("Should throw an exception when calling with an unknown user");
         } catch (NotFoundException sre) {
             if (!(sre.getMsgKey().equals(ExceptionCodes.USER_NOT_EXIST))) {
-                fail("Should throw an UserNotFoundException when calling with an unknown user");
+                fail("Should throw an NotFoundException when calling with an unknown user");
             }
             LOGGER.debug("OK: UserNotFoundException:" + sre.getMessage());
         }

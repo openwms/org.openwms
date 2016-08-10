@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.ameba.Messages;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.openwms.tms.exception.StateChangeException;
@@ -108,7 +109,8 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
 
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
-        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey()).orElseThrow(() -> NotFoundException.createNotFound(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey())));
+        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey())
+                .orElseThrow(() -> new NotFoundException(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey()), Messages.NOT_FOUND, transportOrder.getPersistentKey()));
 
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
@@ -147,6 +149,6 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      */
     @Override
     public TransportOrder findByPKey(String pKey) {
-        return repository.findByPKey(pKey).orElseThrow(() -> NotFoundException.createNotFound(String.format("No TransportOrder with persisted key %s found", pKey)));
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(String.format("No TransportOrder with persisted key %s found", pKey)));
     }
 }

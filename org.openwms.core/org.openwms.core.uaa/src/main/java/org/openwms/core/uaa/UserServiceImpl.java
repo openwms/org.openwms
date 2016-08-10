@@ -229,7 +229,7 @@ class UserServiceImpl implements UserService {
     public User findById(Long pk) {
         User user = repository.findOne(pk);
         if (null == user) {
-            throw NotFoundException.createNotFound(String.format("No User with pk %s found", pk));
+            throw new NotFoundException(String.format("No User with pk %s found", pk));
         }
         return user;
     }

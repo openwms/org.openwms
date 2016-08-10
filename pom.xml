@@ -442,7 +442,7 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.6</ameba-lib.version>
+        <ameba-lib.version>1.7-SNAPSHOT</ameba-lib.version>
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
@@ -493,9 +493,12 @@
 
     <repositories>
         <repository>
-            <id>ameba-bintray</id>
-            <name>Ameba Bintray Repository</name>
-            <url>https://dl.bintray.com/abraxas/labs</url>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/groups/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>spring-milestones</id>
@@ -735,12 +738,12 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.ameba</groupId>
+                <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
                 <version>${ameba-lib.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.ameba</groupId>
+                <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
                 <version>${ameba-lib.version}</version>
                 <type>test-jar</type>
@@ -845,7 +848,7 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.ameba</groupId>
+            <groupId>io.interface21</groupId>
             <artifactId>ameba-lib</artifactId>
         </dependency>
 
@@ -861,7 +864,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.ameba</groupId>
+            <groupId>io.interface21</groupId>
             <artifactId>ameba-lib</artifactId>
             <type>test-jar</type>
             <scope>test</scope>
