@@ -23,11 +23,15 @@ package org.openwms.common;
 
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
+import org.ameba.i18n.AbstractTranslator;
+import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
@@ -52,7 +56,27 @@ public class CommonStarter {
     }
 
     public
-    @Bean BeanMapper beanMapper() {
+    @Bean
+    Translator translator() {
+        return new AbstractTranslator() {
+            @Override
+            protected MessageSource getMessageSource() {
+                return messageSource();
+            }
+        };
+    }
+
+    public
+    @Bean
+    MessageSource messageSource() {
+        ResourceBundleMessageSource nrrbm = new ResourceBundleMessageSource();
+        nrrbm.setBasename("i18n");
+        return nrrbm;
+    }
+
+    public
+    @Bean
+    BeanMapper beanMapper() {
         return new DozerMapperImpl("classpath:/META-INF/dozer/common-bean-mappings.xml");
     }
 }

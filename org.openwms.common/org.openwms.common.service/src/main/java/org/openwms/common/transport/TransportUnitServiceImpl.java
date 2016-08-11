@@ -29,6 +29,8 @@ import java.util.List;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
+import org.ameba.i18n.Translator;
+import org.openwms.common.ModuleMessages;
 import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationPK;
 import org.openwms.common.location.LocationService;
@@ -39,10 +41,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.LocaleResolver;
 
 /**
  * A TransportUnitServiceImpl.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.1
  */
@@ -53,22 +56,22 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     @Autowired
     private TransportUnitRepository dao;
-
     @Autowired
     private LocationService<Location> locationService;
-
     @Autowired
     private TransportUnitTypeRepository transportUnitTypeRepository;
-
     @Autowired(required = false)
     @Qualifier("onRemovalListener")
     private OnRemovalListener<TransportUnit> onRemovalListener;
+    //@Autowired
+    private LocaleResolver localeResolver;
+    @Autowired
+    private Translator translator;
 
     /**
      * Attach an OnRemovalListener.
-     * 
-     * @param onRemovalListener
-     *            The listener to attach
+     *
+     * @param onRemovalListener The listener to attach
      */
     void setOnRemovalListener(OnRemovalListener<TransportUnit> onRemovalListener) {
         this.onRemovalListener = onRemovalListener;
@@ -104,7 +107,7 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     @Override
     public TransportUnit update(Barcode barcode, TransportUnit tu) {
-        TransportUnit savedTu = dao.findByBarcode(barcode).orElseThrow(NotFoundException::new);
+        TransportUnit savedTu = dao.findByBarcode(barcode).orElseThrow(() -> new NotFoundException(translator, ModuleMessages.BARCODE_NOT_FOUND, new String[]{barcode.toString()}, barcode));
         //if (savedTu.get)
         // TODO [openwms]: 25/07/16
 
@@ -147,7 +150,7 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * A ServiceRuntimeException is thrown when other {@link TransportUnit}s are placed on a {@link TransportUnit} that shall be removed.
      * Also {@link TransportUnit} with active TransportOrders won't be removed, if a proper delegate exists.
      */
@@ -159,14 +162,15 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
             List<TransportUnit> tus = new ArrayList<>();
             // FIXME [openwms]: 29/04/16
 
-
             // first try to delete depending ones, afterwards the parent
             // units...
             Collections.sort(tus, new Comparator<TransportUnit>() {
                 @Override
                 public int compare(TransportUnit o1, TransportUnit o2) {
                     return o1.getChildren().isEmpty() ? -1 : 1;
-                };
+                }
+
+                ;
             });
             for (TransportUnit tu : tus) {
                 if (!tu.getChildren().isEmpty()) {
@@ -188,11 +192,10 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     /**
      * Try to remove when there is no listener defined or a defined listener votes for removal.
-     * 
-     * @param transportUnit
-     *            The TransportUnit to be removed
-     * @throws RemovalNotAllowedException
-     *             In case it is not allowed to remove the TransportUnit, probably because depending items exist (like TransportOrders).
+     *
+     * @param transportUnit The TransportUnit to be removed
+     * @throws RemovalNotAllowedException In case it is not allowed to remove the TransportUnit, probably because depending items exist
+     * (like TransportOrders).
      */
     private void delete(TransportUnit transportUnit) throws RemovalNotAllowedException {
         if (LOGGER.isDebugEnabled() && onRemovalListener == null) {

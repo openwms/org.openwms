@@ -21,8 +21,16 @@
  */
 package org.openwms.common.transport;
 
+import java.io.Serializable;
+
+import org.ameba.exception.BehaviorAwareException;
+import org.ameba.exception.BusinessRuntimeException;
+import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,4 +64,12 @@ public class TransportUnitController {
         return mapper.map(service.update(new Barcode(transportUnitBK), mapper.map(tu, TransportUnit.class)), TransportUnitVO.class);
     }
 
+    @ExceptionHandler(BusinessRuntimeException.class)
+    public ResponseEntity<Response<Serializable>> handleBRE(BusinessRuntimeException ex) throws Exception {
+        if (ex instanceof BehaviorAwareException) {
+            BehaviorAwareException bae = (BehaviorAwareException) ex;
+            return bae.toResponse(bae.getData());//new ResponseEntity<>(new Response<>(ex.getMessage(), bae.getMsgKey(), bae.getStatus().toString(), new String[]{bae.getMsgKey()}), bae.getStatus());
+        }
+        return new ResponseEntity<>(new Response<>(ex.getMessage(), ex.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{ex.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
