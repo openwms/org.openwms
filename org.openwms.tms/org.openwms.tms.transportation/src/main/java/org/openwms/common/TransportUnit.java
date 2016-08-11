@@ -22,6 +22,7 @@
 package org.openwms.common;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.openwms.tms.targets.Location;
 
@@ -74,5 +75,20 @@ public class TransportUnit implements Serializable {
 
     public void clearTarget() {
         this.target = "";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransportUnit that = (TransportUnit) o;
+        return Objects.equals(barcode, that.barcode) &&
+                Objects.equals(actualLocation, that.actualLocation) &&
+                Objects.equals(target, that.target);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(barcode, actualLocation, target);
     }
 }
