@@ -18,7 +18,7 @@
         </discriminator>
         <sift>
             <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>/tmp/logs/${Tenant}.log</file>
+                <file>${catalina.base:-.}/logs/${Tenant}.log</file>
                 <prudent>false</prudent>
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
