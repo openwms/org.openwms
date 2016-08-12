@@ -30,7 +30,7 @@ import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.i18n.Translator;
-import org.openwms.common.ModuleMessages;
+import org.openwms.common.CommonMessageCodes;
 import org.openwms.common.location.Location;
 import org.openwms.common.location.LocationPK;
 import org.openwms.common.location.LocationService;
@@ -107,7 +107,7 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
 
     @Override
     public TransportUnit update(Barcode barcode, TransportUnit tu) {
-        TransportUnit savedTu = dao.findByBarcode(barcode).orElseThrow(() -> new NotFoundException(translator, ModuleMessages.BARCODE_NOT_FOUND, new String[]{barcode.toString()}, barcode));
+        TransportUnit savedTu = dao.findByBarcode(barcode).orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.BARCODE_NOT_FOUND, new String[]{barcode.toString()}, barcode));
         //if (savedTu.get)
         // TODO [openwms]: 25/07/16
 

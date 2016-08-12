@@ -24,6 +24,8 @@ package org.openwms.common;
 import java.util.Optional;
 
 import feign.FeignException;
+import feign.Response;
+import feign.Util;
 import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
@@ -68,21 +70,22 @@ class HttpCommonGateway implements CommonGateway {
 
     @Override
     public Optional<TransportUnit> getTransportUnit(String transportUnitBK) {
-        try {
-            return Optional.of(commonFeignClient.getTransportUnit(transportUnitBK));
-        } catch (Exception ex) {
+        //try {
+        return Optional.of(commonFeignClient.getTransportUnit(transportUnitBK));
+        /*} catch (Exception ex) {
             if (translate(ex) == 404) {
                 return Optional.empty();
             } else {
                 throw new ServiceLayerException(ex.getMessage());
             }
-        }
+        }*/
     }
 
     @Override
     public void updateTransportUnit(TransportUnit savedTU) {
         try {
-            commonFeignClient.updateTU(savedTU.getBarcode(), m.map(savedTU, TransportUnitVO.class));
+            Response res = commonFeignClient.updateTU(savedTU.getBarcode(), m.map(savedTU, TransportUnitVO.class));
+            String d = Util.toString(res.body().asReader());
         } catch (Exception ex) {
             if (translate(ex) == 404) {
                 throw new NotFoundException(ex.getMessage(), Messages.NOT_FOUND, savedTU.getBarcode());

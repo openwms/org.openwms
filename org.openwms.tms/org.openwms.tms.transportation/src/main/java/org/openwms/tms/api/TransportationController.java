@@ -89,7 +89,7 @@ class TransportationController {
     public ResponseEntity<Response<Serializable>> handleNotFound(HttpServletResponse res, BusinessRuntimeException ex) throws Exception {
         if (ex instanceof BehaviorAwareException) {
             BehaviorAwareException bae = (BehaviorAwareException) ex;
-            return new ResponseEntity<>(new Response<>(ex.getMessage(), bae.getMsgKey(), bae.getStatus().toString(), new String[]{bae.getMsgKey()}), bae.getStatus());
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), bae.getMsgKey(), bae.getStatus().toString(), bae.getData()), bae.getStatus());
         }
         return new ResponseEntity<>(new Response<>(ex.getMessage(), ex.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{ex.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
     }

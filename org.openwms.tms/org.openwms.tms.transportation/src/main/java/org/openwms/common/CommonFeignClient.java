@@ -21,6 +21,7 @@
  */
 package org.openwms.common;
 
+import feign.Response;
 import org.openwms.tms.targets.Location;
 import org.openwms.tms.targets.LocationGroup;
 import org.springframework.cloud.netflix.feign.FeignClient;
@@ -36,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @version 1.0
  * @since 1.0
  */
-@FeignClient(url = "${common.url}", name = "COMMON-1")
+@FeignClient(url = "${common.url}", name = "COMMON-1", decode404 = true)
 interface CommonFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
@@ -49,5 +50,5 @@ interface CommonFeignClient {
     TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK);
 
     @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"}/*, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE*/)
-    TransportUnit updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
+    Response updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
 }

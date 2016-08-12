@@ -25,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
+import org.ameba.i18n.Translator;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.openwms.common.CommonMessageCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,7 +48,9 @@ import org.springframework.web.util.UriTemplate;
 class LocationGroupController {
 
     @Autowired
-    private LocationGroupService locationGroupService;
+    private LocationGroupService<LocationGroup> locationGroupService;
+    @Autowired
+    private Translator translator;
 
     @RequestMapping(value = "/locationGroups/{id}", method = RequestMethod.PATCH)
     public void save(@PathVariable String id, @RequestParam(name = "statein", required = false) LocationGroupState stateIn, @RequestParam(name = "stateout", required = false) LocationGroupState stateOut, HttpServletRequest req, HttpServletResponse res) {
@@ -57,7 +61,7 @@ class LocationGroupController {
     @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
     public LocationGroup getLocationGroup(@RequestParam("name") String name) {
         Optional<LocationGroup> opt = locationGroupService.findByName(name);
-        return opt.orElseThrow(NotFoundException::new);
+        return opt.orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.LOCATION_GROUP_NOT_FOUND, new String[]{name}, name));
     }
 
     private String getLocationForCreatedResource(javax.servlet.http.HttpServletRequest req, String objId) {

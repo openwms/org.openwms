@@ -21,15 +21,31 @@
  */
 package org.openwms.common;
 
+import feign.RequestInterceptor;
+import feign.auth.BasicAuthRequestInterceptor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 /**
- * A ModuleMessages.
+ * A FeignConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class ModuleMessages {
+@Configuration
+class FeignConfiguration {
 
-    public static final String BARCODE_NOT_FOUND ="COMMON.BARCODE_NOT_FOUND";
-
+    public
+    @Bean
+    RequestInterceptor basicAuthRequestInterceptor() {
+        return new BasicAuthRequestInterceptor("user", "sa");
+        /*return (t) -> {
+            //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            //User user = (User) authentication.getPrincipal();
+            String username = "user";//user.getUsername();
+            String password = "sa";//(String) authentication.getCredentials();
+            t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
+        };*/
+    }
 }

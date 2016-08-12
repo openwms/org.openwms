@@ -21,12 +21,12 @@
  */
 package org.openwms;
 
+import java.util.Locale;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import feign.RequestInterceptor;
-import feign.auth.BasicAuthRequestInterceptor;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.mapping.BeanMapper;
@@ -39,6 +39,9 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
  * A Starter.
@@ -86,14 +89,18 @@ public class TransportationStarter {
 
     public
     @Bean
-    RequestInterceptor basicAuthRequestInterceptor() {
-        return new BasicAuthRequestInterceptor("user", "sa");
-        /*return (t) -> {
-            //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            //User user = (User) authentication.getPrincipal();
-            String username = "user";//user.getUsername();
-            String password = "sa";//(String) authentication.getCredentials();
-            t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
-        };*/
+    LocaleResolver localeResolver() {
+        SessionLocaleResolver slr = new SessionLocaleResolver();
+        slr.setDefaultLocale(Locale.US);
+        return slr;
+    }
+
+
+    public
+    @Bean
+    LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
     }
 }

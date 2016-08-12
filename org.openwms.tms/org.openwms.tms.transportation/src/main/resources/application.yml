@@ -21,3 +21,4 @@ hystrix:
 security:
   user:
     password: sa
+

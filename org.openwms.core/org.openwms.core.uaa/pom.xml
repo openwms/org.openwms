@@ -42,7 +42,7 @@
 
     <profiles>
         <profile>
-            <id>defaut</id>
+            <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
