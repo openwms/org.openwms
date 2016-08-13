@@ -21,6 +21,7 @@
  */
 package org.openwms.common.transport;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -212,6 +213,6 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
     @Override
     @Transactional(readOnly = true)
     public TransportUnit findByBarcode(Barcode barcode) {
-        return dao.findByBarcode(barcode).orElseThrow(NotFoundException::new);
+        return dao.findByBarcode(barcode).orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.BARCODE_NOT_FOUND, new Serializable[]{barcode}, barcode));
     }
 }

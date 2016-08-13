@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @version 1.0
  * @since 1.0
  */
-@FeignClient(url = "${common.url}", name = "COMMON-1", decode404 = true)
+@FeignClient(url = "${common.url}", name = "COMMON-1")
 interface CommonFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
@@ -49,6 +49,6 @@ interface CommonFeignClient {
     @RequestMapping(method = RequestMethod.GET, value = "/transportUnits", params = {"bk"})
     TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"}/*, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE*/)
+    @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"})
     Response updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
 }

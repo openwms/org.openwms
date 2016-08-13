@@ -61,6 +61,11 @@
                 <artifactId>org.openwms.common.shared</artifactId>
                 <version>${common.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.restdocs</groupId>
+                <artifactId>spring-restdocs-mockmvc</artifactId>
+                <version>${spring-restdocs-mockmvc.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -102,12 +107,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-hateoas</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.restdocs</groupId>
-            <artifactId>spring-restdocs-mockmvc</artifactId>
-            <version>${spring-restdocs-mockmvc.version}</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- Project dependencies -->
         <dependency>
@@ -115,6 +114,11 @@
             <artifactId>org.openwms.common.shared</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.test</artifactId>
@@ -124,6 +128,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
