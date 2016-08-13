@@ -18,11 +18,11 @@
         </discriminator>
         <sift>
             <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${catalina.base:-.}/logs/${Tenant}.log</file>
+                <file>${catalina.base:-.}/logs/${Tenant}-common.log</file>
                 <prudent>false</prudent>
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}.%i.log
+                    <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-common.%i.log
                     </fileNamePattern>
                     <MinIndex>1</MinIndex>
                     <MaxIndex>10</MaxIndex>
@@ -33,7 +33,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant}-%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%logger{36}] -- %msg%n
+                    <pattern>${Tenant}-%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%logger{36}];[%X{MSGKEY}];[%X{MSGDATA}] - %msg%n
                     </pattern>
                 </encoder>
             </appender>
@@ -45,12 +45,12 @@
             <defaultValue>BOOT</defaultValue>
         </discriminator>
         <sift>
-            <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${catalina.base:-.}/logs/${Tenant}-exception.log</file>
+            <appender name="EXCFILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>${catalina.base:-.}/logs/${Tenant}-common.exlog</file>
                 <prudent>false</prudent>
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-exception.%i.log
+                    <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-common.%i.exlog
                     </fileNamePattern>
                     <MinIndex>1</MinIndex>
                     <MaxIndex>10</MaxIndex>
@@ -61,7 +61,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant}-%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%logger{36}] -- %msg%n
+                    <pattern>${Tenant}-%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%logger{36}];[%X{MSGKEY}];[%X{MSGDATA}] - %msg%n
                     </pattern>
                 </encoder>
             </appender>
@@ -74,11 +74,11 @@
         </discriminator>
         <sift>
             <appender name="TSL-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${catalina.base:-.}/logs/${Tenant}.tslog</file>
+                <file>${catalina.base:-.}/logs/${Tenant}-common.tslog</file>
                 <prudent>false</prudent>
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}.%i.tslog
+                    <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-common.%i.tslog
                     </fileNamePattern>
                     <MinIndex>1</MinIndex>
                     <MaxIndex>10</MaxIndex>
@@ -89,7 +89,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant}-%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%logger{36}] -- %msg%n
+                    <pattern>${Tenant}-%d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%logger{36}];[%X{MSGKEY}];[%X{MSGDATA}] - %msg%n
                     </pattern>
                 </encoder>
             </appender>
@@ -101,27 +101,24 @@
 
     <!-- Specialized loggers -->
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
-        <appender-ref ref="LOGFILE"/>
         <appender-ref ref="EXCFILE"/>
-        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LOGFILE"/>
     </logger>
-    <logger name="SERVICE_LAYER_ACCESS" level="INFO" additivity="false">
+    <logger name="SERVICE_LAYER_ACCESS" level="DEBUG" additivity="false">
         <appender-ref ref="TSL"/>
     </logger>
     <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR" additivity="false">
-        <appender-ref ref="STDOUT"/>
         <appender-ref ref="EXCFILE"/>
         <appender-ref ref="LOGFILE"/>
     </logger>
-    <logger name="INTEGRATION_LAYER_ACCESS" level="INFO" additivity="false">
+    <logger name="INTEGRATION_LAYER_ACCESS" level="DEBUG" additivity="false">
         <appender-ref ref="TSL"/>
     </logger>
     <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
-        <appender-ref ref="STDOUT"/>
         <appender-ref ref="EXCFILE"/>
         <appender-ref ref="LOGFILE"/>
     </logger>
-    <logger name="MEASURED" level="INFO" additivity="false">
+    <logger name="MEASURED" level="DEBUG" additivity="false">
         <appender-ref ref="TSL"/>
     </logger>
 
