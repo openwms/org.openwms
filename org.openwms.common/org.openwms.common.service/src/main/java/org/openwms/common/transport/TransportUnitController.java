@@ -58,9 +58,8 @@ public class TransportUnitController {
         return mapper.map(service.findByBarcode(new Barcode(transportUnitBK)), TransportUnitVO.class);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"}/*, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE*/)
+    @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"})
     public @ResponseBody TransportUnitVO updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu) {
-        //TransportUnit tu2 = ;
         return mapper.map(service.update(new Barcode(transportUnitBK), mapper.map(tu, TransportUnit.class)), TransportUnitVO.class);
     }
 
@@ -68,7 +67,7 @@ public class TransportUnitController {
     public ResponseEntity<Response<Serializable>> handleBRE(BusinessRuntimeException ex) throws Exception {
         if (ex instanceof BehaviorAwareException) {
             BehaviorAwareException bae = (BehaviorAwareException) ex;
-            return bae.toResponse(bae.getData());//new ResponseEntity<>(new Response<>(ex.getMessage(), bae.getMsgKey(), bae.getStatus().toString(), new String[]{bae.getMsgKey()}), bae.getStatus());
+            return bae.toResponse(bae.getData());
         }
         return new ResponseEntity<>(new Response<>(ex.getMessage(), ex.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{ex.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
     }

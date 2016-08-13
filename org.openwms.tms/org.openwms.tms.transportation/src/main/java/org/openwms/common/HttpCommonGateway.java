@@ -24,12 +24,16 @@ package org.openwms.common;
 import java.util.Optional;
 
 import feign.FeignException;
+import feign.Response;
+import feign.Util;
 import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.tms.targets.Location;
 import org.openwms.tms.targets.LocationGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,6 +47,7 @@ import org.springframework.stereotype.Component;
 @Component
 class HttpCommonGateway implements CommonGateway {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpCommonGateway.class);
     @Autowired
     private CommonFeignClient commonFeignClient;
     @Autowired
@@ -56,6 +61,7 @@ class HttpCommonGateway implements CommonGateway {
             if (translate(ex) == 404) {
                 return Optional.empty();
             } else {
+                LOGGER.error(ex.getMessage(), ex);
                 throw new ServiceLayerException(ex.getMessage());
             }
         }
@@ -74,6 +80,7 @@ class HttpCommonGateway implements CommonGateway {
             if (translate(ex) == 404) {
                 return Optional.empty();
             } else {
+                LOGGER.error(ex.getMessage(), ex);
                 throw new ServiceLayerException(ex.getMessage());
             }
         }
@@ -82,8 +89,10 @@ class HttpCommonGateway implements CommonGateway {
     @Override
     public void updateTransportUnit(TransportUnit savedTU) {
         try {
-            commonFeignClient.updateTU(savedTU.getBarcode(), m.map(savedTU, TransportUnitVO.class));
+            Response res = commonFeignClient.updateTU(savedTU.getBarcode(), m.map(savedTU, TransportUnitVO.class));
+            String d = Util.toString(res.body().asReader());
         } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
             if (translate(ex) == 404) {
                 throw new NotFoundException(ex.getMessage(), Messages.NOT_FOUND, savedTU.getBarcode());
             } else {
@@ -96,6 +105,7 @@ class HttpCommonGateway implements CommonGateway {
         if (ex.getCause() instanceof FeignException) {
             return ((FeignException) ex.getCause()).status();
         }
+        LOGGER.error(ex.getMessage(), ex);
         throw new ServiceLayerException(ex.getMessage());
     }
 }

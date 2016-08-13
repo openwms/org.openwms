@@ -21,15 +21,40 @@
  */
 package org.openwms.common;
 
+import java.io.IOException;
+import java.text.ParseException;
+
+import feign.Response;
+import feign.Util;
+import feign.codec.ErrorDecoder;
+import org.ameba.exception.NotFoundException;
+import org.springframework.stereotype.Component;
+
 /**
- * A ModuleMessages.
+ * A CustomErrorDecoder.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version 1.0
  * @since 1.0
  */
-public class ModuleMessages {
+@Component
+public class CustomErrorDecoder implements ErrorDecoder {
 
-    public static final String BARCODE_NOT_FOUND ="COMMON.BARCODE_NOT_FOUND";
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Exception decode(String methodKey, Response response) {
 
+        try {
+            if (response.status() == 404) {
+                String d = Util.toString(response.body().asReader());
+                org.ameba.http.Response r = org.ameba.http.Response.parse(d);
+                return new NotFoundException(r.getMessage(), r.getMessageKey(), r.getObj());
+            }
+        } catch (IOException | ParseException e) {
+            return new IllegalArgumentException(e);
+        }
+        return null;//new IllegalArgumentException(methodKey);
+    }
 }

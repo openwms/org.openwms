@@ -21,6 +21,7 @@
  */
 package org.openwms.tms;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -29,9 +30,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Optional;
 
-import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
 import org.junit.Test;
+import org.openwms.common.CommonMessageCodes;
 import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.springframework.http.MediaType;
@@ -73,7 +74,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
         vo.setBarcode(UNKNOWN);
-        willThrow(new NotFoundException("", Messages.NOT_FOUND, UNKNOWN)).given(commonGateway).updateTransportUnit(new TransportUnit(UNKNOWN, null, ERR_LOC_STRING));
+        willThrow(new NotFoundException("", CommonMessageCodes.BARCODE_NOT_FOUND, UNKNOWN)).given(commonGateway).updateTransportUnit(new TransportUnit(UNKNOWN, null, ERR_LOC_STRING));
 
         // test ...
         MvcResult res = mockMvc.perform(
@@ -85,7 +86,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-tu-unknown"))
                 .andReturn()
         ;
-     //   assertThat(res.getResponse().getContentAsString().contains("[null]")).isTrue();
+        assertThat(res.getResponse().getContentAsString().contains("COMMON.BARCODE_NOT_FOUND")).isTrue();
     }
 
     public
