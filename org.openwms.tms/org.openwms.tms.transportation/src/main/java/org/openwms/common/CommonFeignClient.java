@@ -37,7 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @version 1.0
  * @since 1.0
  */
-@FeignClient(url = "${common.url}", name = "COMMON-1")
+@FeignClient(url = "${common.url}", name = "COMMON-1", decode404 = true)
 interface CommonFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})

@@ -29,6 +29,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
+import org.ameba.i18n.AbstractTranslator;
+import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
 import org.openwms.tms.Constants;
@@ -36,8 +38,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -95,12 +99,30 @@ public class TransportationStarter {
         return slr;
     }
 
-
     public
     @Bean
     LocaleChangeInterceptor localeChangeInterceptor() {
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
         lci.setParamName("lang");
         return lci;
+    }
+
+    public
+    @Bean
+    Translator translator() {
+        return new AbstractTranslator() {
+            @Override
+            protected MessageSource getMessageSource() {
+                return messageSource();
+            }
+        };
+    }
+
+    public
+    @Bean
+    MessageSource messageSource() {
+        ResourceBundleMessageSource nrrbm = new ResourceBundleMessageSource();
+        nrrbm.setBasename("i18n");
+        return nrrbm;
     }
 }
