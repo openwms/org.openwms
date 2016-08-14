@@ -26,9 +26,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.ameba.Messages;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
+import org.ameba.i18n.Translator;
 import org.openwms.tms.exception.StateChangeException;
 import org.openwms.tms.exception.TransportOrderServiceException;
 import org.openwms.tms.targets.Target;
@@ -59,6 +59,8 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     private List<TargetResolver<Target>> targetResolvers;
     @Autowired(required = false)
     private List<UpdateFunction> updateFunctions;
+    @Autowired
+    private Translator translator;
 
     /**
      * {@inheritDoc}
@@ -90,8 +92,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Create TransportOrder with Barcode " + barcode + ", to Target " + target
-                    + ", with Priority " + priority + " ...");
+            LOGGER.debug("Trying to create TransportOrder with Barcode [{}], to Target [{}], with Priority [{}]", barcode, target, priority);
         }
         TransportOrder transportOrder = new TransportOrder();
         transportOrder.setTransportUnitBK(barcode);
@@ -107,11 +108,12 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         return transportOrder;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
-        TransportOrder saved = repository.findByPKey(transportOrder.getPersistentKey())
-                .orElseThrow(() -> new NotFoundException(String.format("TransportOrder with persisted key [%s] not found", transportOrder.getPersistentKey()), Messages.NOT_FOUND, transportOrder.getPersistentKey()));
-
+        TransportOrder saved = findBy(transportOrder.getPersistentKey());
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
         }
@@ -128,14 +130,13 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Trying to turn TransportOrder [" + transportOrder.getPk() + "] into: " + state);
+                    LOGGER.debug("Trying to turn TransportOrder [{}] into state [{}]", transportOrder.getPk(), state);
                 }
                 transportOrder.setState(state);
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(), TransportOrderUtil
                         .convertToEventType(state)));
             } catch (StateChangeException sce) {
-                LOGGER.error("Could not turn TransportOrder: [" + transportOrder.getPk() + "] into " + state
-                        + " with reason : " + sce.getMessage());
+                LOGGER.error("Could not turn TransportOrder: [{}] into [{}], because of [{}]", transportOrder.getPk(), state, sce.getMessage());
                 Problem problem = new Problem(sce.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getPk().toString());
@@ -149,6 +150,10 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      */
     @Override
     public TransportOrder findByPKey(String pKey) {
-        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(String.format("No TransportOrder with persisted key %s found", pKey)));
+        return findBy(pKey);
+    }
+
+    private TransportOrder findBy(String pKey) {
+        return repository.findByPKey(pKey).orElseThrow(() -> new NotFoundException(translator, TMSMessageCodes.TO_WITH_PKEY_NOT_FOUND, new String[]{pKey}, pKey));
     }
 }

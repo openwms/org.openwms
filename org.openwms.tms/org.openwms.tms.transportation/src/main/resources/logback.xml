@@ -21,7 +21,7 @@
         <sift>
             <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${catalina.base:-.}/logs/${Tenant}-tms.log</file>
-                <prudent>false</prudent>
+                <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
                     <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-tms.%i.log
@@ -48,7 +48,7 @@
         <sift>
             <appender name="EXCFILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${catalina.base:-.}/logs/${Tenant}-tms.exlog</file>
-                <prudent>false</prudent>
+                <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
                     <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-tms.%i.exlog
@@ -75,7 +75,7 @@
         <sift>
             <appender name="TSL-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>${catalina.base:-.}/logs/${Tenant}-tms.tslog</file>
-                <prudent>false</prudent>
+                <!--prudent>false</prudent-->
 
                 <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
                     <fileNamePattern>${catalina.base:-.}/logs/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-tms.%i.tslog
