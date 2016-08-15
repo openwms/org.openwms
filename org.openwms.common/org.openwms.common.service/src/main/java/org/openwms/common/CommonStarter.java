@@ -23,6 +23,7 @@ package org.openwms.common;
 
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
+import org.ameba.http.EnableMultiTenancy;
 import org.ameba.i18n.AbstractTranslator;
 import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
@@ -44,6 +45,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication(scanBasePackageClasses = {CommonStarter.class, SolutionApp.class})
 @EnableAspects
 @EnableJpaAuditing
+@EnableMultiTenancy
 public class CommonStarter {
 
     /**

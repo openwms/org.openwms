@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="true" scan="true" scanPeriod="30 seconds">
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
 
     <property name="LOG_TEMP" value="/tmp/owms"/>
     <property name="MODULE_NAME" value="TMS"/>
@@ -103,7 +103,7 @@
 
     <logger name="org.openwms" level="DEBUG"/>
     <logger name="org.hibernate" level="WARN"/>
-    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework" level="INFO"/>
 
     <!-- Specialized loggers -->
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
