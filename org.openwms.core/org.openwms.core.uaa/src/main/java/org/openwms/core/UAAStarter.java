@@ -32,15 +32,13 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 /**
- * A Starter.
+ * An UAAStarter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
-@SpringBootApplication(scanBasePackageClasses = {Starter.class, SolutionApp.class})
-@EnableAspects
-public class Starter {
+@SpringBootApplication(scanBasePackageClasses = {UAAStarter.class, SolutionApp.class})
+@EnableAspects(propagateRootCause = true)
+public class UAAStarter {
 
     public
     @Bean
@@ -87,6 +85,6 @@ public class Starter {
      * @param args Some args
      */
     public static void main(String[] args) {
-        SpringApplication.run(Starter.class, args);
+        SpringApplication.run(UAAStarter.class, args);
     }
 }

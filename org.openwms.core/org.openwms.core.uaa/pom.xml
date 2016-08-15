@@ -36,7 +36,7 @@
 
     <properties>
         <moduleDir>../..</moduleDir>
-        <start-class>org.openwms.core.Starter</start-class>
+        <start-class>org.openwms.core.UAAStarter</start-class>
         <querydsl.version>4.1.2</querydsl.version>
     </properties>
 
