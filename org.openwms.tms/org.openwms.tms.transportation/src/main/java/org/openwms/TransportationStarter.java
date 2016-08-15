@@ -29,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
+import org.ameba.http.EnableMultiTenancy;
 import org.ameba.i18n.AbstractTranslator;
 import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
@@ -61,6 +62,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})
 @RestController
 @EnableAspects
+@EnableMultiTenancy
 public class TransportationStarter {
 
     /**
