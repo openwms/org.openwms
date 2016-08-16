@@ -27,9 +27,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.ameba.IDGenerator;
+import org.ameba.JdkIDGenerator;
 import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.http.EnableMultiTenancy;
+import org.ameba.http.RequestIDFilter;
 import org.ameba.i18n.AbstractTranslator;
 import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
@@ -37,12 +40,14 @@ import org.ameba.mapping.DozerMapperImpl;
 import org.openwms.tms.Constants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.Ordered;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -93,6 +98,7 @@ public class TransportationStarter {
         return om;
     }
 
+    /*~ ------------- i18n handling ----------- */
     public
     @Bean
     LocaleResolver localeResolver() {
@@ -126,5 +132,20 @@ public class TransportationStarter {
         ResourceBundleMessageSource nrrbm = new ResourceBundleMessageSource();
         nrrbm.setBasename("i18n");
         return nrrbm;
+    }
+
+    /*~ ------------- Request ID handling ----------- */
+    public
+    @Bean
+    IDGenerator<String> uuidGenerator() {
+        return new JdkIDGenerator();
+    }
+
+    public
+    @Bean
+    FilterRegistrationBean requestIDFilter(IDGenerator<String> uuidGenerator) {
+        FilterRegistrationBean frb = new FilterRegistrationBean(new RequestIDFilter(uuidGenerator));
+        frb.setOrder(Ordered.HIGHEST_PRECEDENCE + 1);
+        return frb;
     }
 }
