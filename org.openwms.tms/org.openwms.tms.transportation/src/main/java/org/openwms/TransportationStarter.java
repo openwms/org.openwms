@@ -46,9 +46,9 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -65,8 +65,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableFeignClients
 @EnableCircuitBreaker
 @SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})
-@RestController
-@EnableAspects
+@EnableSpringConfigured
+@EnableAspects(propagateRootCause = true)
 @EnableMultiTenancy
 public class TransportationStarter {
 

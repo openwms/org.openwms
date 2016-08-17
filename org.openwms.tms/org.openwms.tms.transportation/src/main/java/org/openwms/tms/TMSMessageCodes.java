@@ -25,10 +25,12 @@ package org.openwms.tms;
  * A TMSMessageCodes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public class TMSMessageCodes {
 
     public static final String TO_WITH_PKEY_NOT_FOUND = "TMS.TO_WITH_PKEY_NOT_FOUND";
+    public static final String TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED = "TMS.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED";
+    public static final String TO_STATE_CHANGE_NOT_READY = "TMS.TO_STATE_CHANGE_NOT_READY";
+    public static final String TO_STATE_CHANGE_NULL_STATE = "TMS.TO_STATE_CHANGE_NULL_STATE";
 }

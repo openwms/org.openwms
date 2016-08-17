@@ -21,19 +21,44 @@
  */
 package org.openwms.tms.exception;
 
+import java.io.Serializable;
+
+import org.ameba.exception.BehaviorAwareException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
- * A StateChangeException.
+ * A StateChangeException signals that the request to change the state of a {@code TransportOrder} was not allowed.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
-public class StateChangeException extends RuntimeException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class StateChangeException extends BehaviorAwareException {
 
     /**
      * {@inheritDoc}
      */
     public StateChangeException(String s) {
         super(s);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param message
+     * @param msgKey
+     * @param data
+     */
+    public StateChangeException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public HttpStatus getStatus() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

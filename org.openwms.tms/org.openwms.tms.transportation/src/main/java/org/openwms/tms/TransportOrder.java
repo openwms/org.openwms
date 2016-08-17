@@ -33,12 +33,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.ameba.i18n.Translator;
 import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.tms.exception.StateChangeException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  * A TransportOrder is used to move {@code TransportUnit}s from a current {@code Location} to a target.
@@ -47,6 +51,7 @@ import org.openwms.tms.exception.StateChangeException;
  * @version 1.0
  * @since 0.1
  */
+@Configurable
 @Entity
 @Table(name = "TMS_TRANSPORT_ORDER")
 public class TransportOrder extends ApplicationEntity implements Serializable {
@@ -112,6 +117,10 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     @Column(name = "C_TARGET_LOCATION_GROUP")
     @Min(value = 1, groups = ChangeTU.class)
     private String targetLocationGroup;
+
+    @Transient
+    @Autowired
+    private Translator translator;
 
     /* ----------------------------- methods ------------------- */
 
@@ -187,16 +196,16 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      */
     private void validateStateChange(TransportOrder.State newState) throws StateChangeException {
         if (newState == null) {
-            throw new StateChangeException("New TransportOrder's state may not be NULL");
+            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, this.getPersistentKey());
         }
         if (state.compareTo(newState) > 0) {
             // Don't allow to turn back the state!
-            throw new StateChangeException("Turning back the state of a TransportOrder is not allowed");
+            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, this.getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, this.getPersistentKey());
         }
         switch (state) {
             case CREATED:
                 if (newState != INITIALIZED && newState != CANCELED) {
-                    throw new StateChangeException("A new TransportOrder must first be INITIALIZED or can be CANCELED");
+                    throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, this.getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, this.getPersistentKey());
                 }
                 validateInitializationCondition();
                 break;
