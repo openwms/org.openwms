@@ -26,6 +26,7 @@ import java.util.Base64;
 
 import feign.RequestInterceptor;
 import org.ameba.Constants;
+import org.ameba.http.RequestIDHolder;
 import org.ameba.tenancy.TenantHolder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +51,10 @@ class FeignConfiguration {
             String password = "sa";//(String) authentication.getCredentials();
             t.header("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(Charset.forName("UTF-8"))));
             t.header(Constants.HEADER_VALUE_X_TENANT, TenantHolder.getCurrentTenant());
+            String reqId = RequestIDHolder.getRequestID();
+            if (reqId != null) {
+                t.header(Constants.HEADER_VALUE_X_REQUESTID, reqId);
+            }
         };
     }
 }

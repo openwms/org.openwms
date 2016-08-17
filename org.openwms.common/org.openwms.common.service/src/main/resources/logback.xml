@@ -41,7 +41,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%-40.40logger{39}]${mdcPattern} - %msg%n</pattern>
+                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level \(%thread\) [%-40.40logger{39}]${mdcPattern} - %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -68,7 +68,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%-40.40logger{39}]${mdcPattern} - %msg%n</pattern>
+                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level \(%thread\) [%-40.40logger{39}]${mdcPattern} - %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -95,7 +95,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %-5level \(%thread\) [%-29.29logger{28}] - %msg%n</pattern>
+                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} \(%thread\) [%-29.29logger{28}] - %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>

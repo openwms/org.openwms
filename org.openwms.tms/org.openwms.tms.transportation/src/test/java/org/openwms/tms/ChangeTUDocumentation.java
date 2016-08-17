@@ -82,7 +82,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
                 )
-                .andExpect(status().isNoContent())
+                .andExpect(status().isNotFound())
                 .andDo(document("to-patch-tu-unknown"))
                 .andReturn()
         ;
