@@ -108,26 +108,6 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
     public
     @Test
-    void cancellingAnStartedOne() throws Exception {
-        // setup ...
-        CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
-        vo.setState(TransportOrder.State.CANCELED.toString());
-        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
-
-        // test ...
-        mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-state-cancel-to"))
-        ;
-    }
-
-    public
-    @Test
     void cancellingAnInitializedOne() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
@@ -145,6 +125,26 @@ public class ChangeStateDocumentation extends DocumentationBase {
         )
                 .andExpect(status().isNoContent())
                 .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
+        ;
+    }
+
+    public
+    @Test
+    void cancellingAnStartedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setState(TransportOrder.State.CANCELED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-state-cancel-to"))
         ;
     }
 
