@@ -22,6 +22,7 @@
 package org.openwms.tms;
 
 import static org.openwms.tms.TransportOrder.State.CANCELED;
+import static org.openwms.tms.TransportOrder.State.FINISHED;
 import static org.openwms.tms.TransportOrder.State.INITIALIZED;
 import static org.openwms.tms.TransportOrder.State.ONFAILURE;
 import static org.openwms.tms.TransportOrder.State.STARTED;
@@ -217,7 +218,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 if (newState != STARTED && newState != CANCELED && newState != ONFAILURE) {
                     throw new StateChangeException("An initialized TransportOrder must only be STARTED, CANCELED or set ONFAILURE");
                 }
-                if (startedTOExists()) {
+                if ((newState == STARTED || newState == FINISHED) && startedTOExists()) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
                 }
                 break;

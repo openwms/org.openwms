@@ -44,11 +44,11 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
     public
     @Test
-    void testStateChangeWhenAlreadyStarted() throws Exception {
+    void whenAlreadyStarted() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        vo.setState("STARTED");
+        vo.setState(TransportOrder.State.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
         // test ...
@@ -64,11 +64,11 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
     public
     @Test
-    void testStateChangeTurnBackState() throws Exception {
+    void turnBackState() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        vo.setState("INITIALIZED");
+        vo.setState(TransportOrder.State.INITIALIZED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
         // test ...
@@ -85,13 +85,13 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
     public
     @Test
-    void testStateChangeOneIsAlreadyStarted() throws Exception {
+    void oneIsAlreadyStarted() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
         CreateTransportOrderVO vo2 = createTO();
         postTOAndValidate(vo2, NOTLOGGED);
-        vo2.setState("STARTED");
+        vo2.setState(TransportOrder.State.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
         // test ...
@@ -102,6 +102,50 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
+                .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
+        ;
+    }
+
+    public
+    @Test
+    void cancellingAnStartedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setState(TransportOrder.State.CANCELED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+//                .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
+                .andDo(document("to-patch-state-cancel-to"))
+        ;
+    }
+
+    public
+    @Test
+    void cancellingAnInitializedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        CreateTransportOrderVO vo2 = createTO();
+        postTOAndValidate(vo2, NOTLOGGED);
+        vo2.setState(TransportOrder.State.CANCELED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo2))
+        )
+                .andExpect(status().isNoContent())
+//                .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
                 .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
         ;
     }
