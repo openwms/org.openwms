@@ -122,7 +122,6 @@ public class ChangeStateDocumentation extends DocumentationBase {
                         .content(objectMapper.writeValueAsString(vo))
         )
                 .andExpect(status().isNoContent())
-//                .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
                 .andDo(document("to-patch-state-cancel-to"))
         ;
     }
@@ -145,8 +144,29 @@ public class ChangeStateDocumentation extends DocumentationBase {
                         .content(objectMapper.writeValueAsString(vo2))
         )
                 .andExpect(status().isNoContent())
-//                .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
                 .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
+        ;
+    }
+
+    public
+    @Test
+    void settingAnInitializedOneToFailure() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        CreateTransportOrderVO vo2 = createTO();
+        postTOAndValidate(vo2, NOTLOGGED);
+        vo2.setState(TransportOrder.State.ONFAILURE.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo2))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-state-initialize-to-failure"))
         ;
     }
 }
