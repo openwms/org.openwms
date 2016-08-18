@@ -36,7 +36,7 @@
         <moduleDir>../../..</moduleDir>
     </properties>
 
-    <dependencies>
+        <dependencies>
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework</groupId>

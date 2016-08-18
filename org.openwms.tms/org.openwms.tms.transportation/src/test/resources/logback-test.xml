@@ -10,7 +10,8 @@
 
   <logger name="org.openwms" level="debug"/>
   <logger name="org.springframework" level="warn"/>
-  <logger name="org.hibernate" level="warn"/>
+  <logger name="org.hibernate.sql" level="DEBUG"/>
+  <logger name="org.hibernate.type" level="TRACE"/>
 
   <root level="info">
     <appender-ref ref="stdout"/>

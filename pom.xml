@@ -443,6 +443,7 @@
         <!-- Dependency versions -->
         <!-- =================== -->
         <ameba-lib.version>1.7-SNAPSHOT</ameba-lib.version>
+        <aspectj.version>1.8.9</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
@@ -461,6 +462,7 @@
         <!-- =================== -->
         <plugin.archiver.version>2.3.2</plugin.archiver.version>
         <plugin.asciidoctor-maven.version>1.5.3</plugin.asciidoctor-maven.version>
+        <plugin.aspectj.version>1.8</plugin.aspectj.version>
         <plugin.assembly.version>2.4</plugin.assembly.version>
         <plugin.checkstyle.version>2.11</plugin.checkstyle.version>
         <plugin.clean.version>2.5</plugin.clean.version>
@@ -594,6 +596,51 @@
                     </configuration>
                 </plugin-->
 
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>aspectj-maven-plugin</artifactId>
+                    <version>${plugin.aspectj.version}</version>
+                    <configuration>
+                        <showWeaveInfo>true</showWeaveInfo>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                        <Xlint>ignore</Xlint>
+                        <complianceLevel>${java.version}</complianceLevel>
+                        <encoding>UTF-8</encoding>
+                        <verbose>false</verbose>
+                        <aspectLibraries>
+                            <aspectLibrary>
+                                <groupId>org.springframework</groupId>
+                                <artifactId>spring-aspects</artifactId>
+                            </aspectLibrary>
+                        </aspectLibraries>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>test-compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.aspectj</groupId>
+                            <artifactId>aspectjrt</artifactId>
+                            <version>${aspectj.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.aspectj</groupId>
+                            <artifactId>aspectjweaver</artifactId>
+                            <version>${aspectj.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.aspectj</groupId>
+                            <artifactId>aspectjtools</artifactId>
+                            <version>${aspectj.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
                 <plugin>
                     <groupId>org.asciidoctor</groupId>
                     <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -787,6 +834,11 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-messaging</artifactId>
