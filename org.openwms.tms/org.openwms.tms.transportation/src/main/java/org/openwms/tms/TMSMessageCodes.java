@@ -29,8 +29,14 @@ package org.openwms.tms;
  */
 public class TMSMessageCodes {
 
+    /** Signals that the TransportOrder with the given persisted key wasn't found. */
     public static final String TO_WITH_PKEY_NOT_FOUND = "TMS.TO_WITH_PKEY_NOT_FOUND";
+    /** Signals an exception because it was tried to turn back a TransportOrder into a state that isn't allowed. */
     public static final String TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED = "TMS.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED";
+    /** Signals an exception because it was tried to change the state of a TransportOrder into a following but not allowed state. */
     public static final String TO_STATE_CHANGE_NOT_READY = "TMS.TO_STATE_CHANGE_NOT_READY";
+    /** Signals that a request with state of NULL. */
     public static final String TO_STATE_CHANGE_NULL_STATE = "TMS.TO_STATE_CHANGE_NULL_STATE";
+    /** Signals an exception that it is not allowed to start a TransportOrder, because there is already a started one. */
+    public static final String START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE = "TMS.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE";
 }

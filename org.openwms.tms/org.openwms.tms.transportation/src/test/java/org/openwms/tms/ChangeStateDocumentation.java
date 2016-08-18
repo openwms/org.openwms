@@ -21,9 +21,11 @@
  */
 package org.openwms.tms;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.Optional;
@@ -74,10 +76,33 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 patch(Constants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
-        )
+                )
                 .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("messageKey", is(TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED)))
                 .andDo(document("to-patch-state-change-back"))
         ;
     }
 
+    public
+    @Test
+    void testStateChangeOneIsAlreadyStarted() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        CreateTransportOrderVO vo2 = createTO();
+        postTOAndValidate(vo2, NOTLOGGED);
+        vo2.setState("STARTED");
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo2))
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
+                .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
+        ;
+    }
 }

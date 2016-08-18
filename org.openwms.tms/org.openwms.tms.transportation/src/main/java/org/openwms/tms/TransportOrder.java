@@ -122,6 +122,10 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     @Autowired
     private Translator translator;
 
+    @Transient
+    @Autowired
+    private TransportOrderRepository repo;
+
     /* ----------------------------- methods ------------------- */
 
     /**
@@ -196,22 +200,25 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      */
     private void validateStateChange(TransportOrder.State newState) throws StateChangeException {
         if (newState == null) {
-            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, this.getPersistentKey());
+            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, getPersistentKey());
         }
         if (state.compareTo(newState) > 0) {
             // Don't allow to turn back the state!
-            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, this.getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, this.getPersistentKey());
+            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, getPersistentKey());
         }
         switch (state) {
             case CREATED:
                 if (newState != INITIALIZED && newState != CANCELED) {
-                    throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, this.getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, this.getPersistentKey());
+                    throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, getPersistentKey());
                 }
                 validateInitializationCondition();
                 break;
             case INITIALIZED:
                 if (newState != STARTED && newState != CANCELED && newState != ONFAILURE) {
                     throw new StateChangeException("An initialized TransportOrder must only be STARTED, CANCELED or set ONFAILURE");
+                }
+                if (startedTOExists()) {
+                    throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
                 }
                 break;
             case STARTED:
@@ -224,6 +231,10 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
             default:
                 throw new IllegalStateException("TO state not managed:" + state);
         }
+    }
+
+    private boolean startedTOExists() {
+        return repo.numberOfTransportOrders(transportUnitBK, State.STARTED) > 0;
     }
 
     /**

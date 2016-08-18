@@ -86,7 +86,7 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         }
         transportOrder.setState(TransportOrder.State.STARTED);
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransportOrder " + transportOrder.getPk() + " STARTED at " + transportOrder.getStartDate());
+            LOGGER.debug("TransportOrder for TransportUnit with BarCode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());
         }
     }
 }
