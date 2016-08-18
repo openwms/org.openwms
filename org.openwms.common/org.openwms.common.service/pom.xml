@@ -35,6 +35,7 @@
     <properties>
         <moduleDir>../../..</moduleDir>
         <eventsourcing.version>0.3.1</eventsourcing.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
     </properties>
     <profiles>
         <profile>
@@ -80,6 +81,10 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.1.0.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -91,6 +96,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.eventsourcing</groupId>
                 <artifactId>eventsourcing-core</artifactId>
