@@ -215,7 +215,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 break;
             case INITIALIZED:
                 if (newState != STARTED && newState != CANCELED && newState != ONFAILURE) {
-                    throw new StateChangeException("An initialized TransportOrder must only be STARTED, CANCELED or set ONFAILURE");
+                    throw new StateChangeException(translator.translate(TMSMessageCodes.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO, getPersistentKey()), TMSMessageCodes.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO, getPersistentKey());
                 }
                 if (newState == STARTED && startedTOExists()) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
@@ -234,7 +234,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     }
 
     private boolean startedTOExists() {
-        return repo.numberOfTransportOrders(transportUnitBK, State.STARTED) > 0;
+        return repo.numberOfTransportOrders(transportUnitBK, STARTED) > 0;
     }
 
     /**
@@ -403,5 +403,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         }
     }
 
-    public interface ChangeTU{}
+    public interface ChangeTU {
+
+    }
 }
