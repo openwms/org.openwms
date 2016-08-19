@@ -70,10 +70,7 @@ class TransportationController {
 
     @RequestMapping(method = RequestMethod.POST, value = Constants.ROOT_ENTITIES)
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
-        asList(PriorityLevel.values()).stream()
-                .filter(p -> p.name().equals(vo.getPriority()))
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException(String.format("A priority level of %s is not defined", vo.getPriority())));
+        validatePriority(vo);
         TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
         resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
         resp.setStatus(201);
@@ -81,6 +78,7 @@ class TransportationController {
 
     @RequestMapping(method = RequestMethod.PATCH, value = Constants.ROOT_ENTITIES)
     public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletResponse resp) {
+        validatePriority(vo);
         service.update(m.map(vo, TransportOrder.class));
         resp.setStatus(204);
     }
@@ -92,6 +90,13 @@ class TransportationController {
             return new ResponseEntity<>(new Response<>(ex.getMessage(), bae.getMsgKey(), bae.getStatus().toString(), bae.getData()), bae.getStatus());
         }
         return new ResponseEntity<>(new Response<>(ex.getMessage(), ex.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{ex.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private void validatePriority(@RequestBody CreateTransportOrderVO vo) {
+        asList(PriorityLevel.values()).stream()
+                .filter(p -> p.name().equals(vo.getPriority()))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(String.format("A priority level of %s is not defined", vo.getPriority())));
     }
 
     private String getCreatedResourceURI(HttpServletRequest req, String objId) {

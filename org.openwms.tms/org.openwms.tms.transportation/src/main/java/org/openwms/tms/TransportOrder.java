@@ -209,7 +209,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         switch (state) {
             case CREATED:
                 if (newState != INITIALIZED && newState != CANCELED) {
-                    throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, getPersistentKey());
+                    throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, newState, getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, newState, getPersistentKey());
                 }
                 validateInitializationCondition();
                 break;
