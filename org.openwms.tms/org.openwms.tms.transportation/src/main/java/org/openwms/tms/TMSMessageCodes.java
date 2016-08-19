@@ -39,4 +39,6 @@ public class TMSMessageCodes {
     public static final String TO_STATE_CHANGE_NULL_STATE = "TMS.TO_STATE_CHANGE_NULL_STATE";
     /** Signals an exception that it is not allowed to start a TransportOrder, because there is already a started one. */
     public static final String START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE = "TMS.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE";
+    /** Signals an exception that the requested state change is not allowed for the initialized TransportOrder. */
+    public static final String STATE_CHANGE_ERROR_FOR_INITIALIZED_TO="TMS.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO";
 }

@@ -42,25 +42,6 @@ import org.springframework.http.MediaType;
  */
 public class ChangeStateDocumentation extends DocumentationBase {
 
-    public
-    @Test
-    void whenAlreadyStarted() throws Exception {
-        // setup ...
-        CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
-        vo.setState(TransportOrder.State.STARTED.toString());
-        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
-
-        // test ...
-        mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-state-change"))
-        ;
-    }
 
     public
     @Test
@@ -83,9 +64,10 @@ public class ChangeStateDocumentation extends DocumentationBase {
         ;
     }
 
+    /* ----------------- INITIALIZED -------------------*/
     public
     @Test
-    void oneIsAlreadyStarted() throws Exception {
+    void createAnNewOneWhenOneIsAlreadyStarted() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
@@ -130,27 +112,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
     public
     @Test
-    void cancellingAnStartedOne() throws Exception {
-        // setup ...
-        CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
-        vo.setState(TransportOrder.State.CANCELED.toString());
-        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
-
-        // test ...
-        mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-state-cancel-to"))
-        ;
-    }
-
-    public
-    @Test
-    void settingAnInitializedOneToFailure() throws Exception {
+    void settingAnInitializedOneOnFailure() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
@@ -167,6 +129,192 @@ public class ChangeStateDocumentation extends DocumentationBase {
         )
                 .andExpect(status().isNoContent())
                 .andDo(document("to-patch-state-initialize-to-failure"))
+        ;
+    }
+
+    public
+    @Test
+    void finishingAnInitializedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        CreateTransportOrderVO vo2 = createTO();
+        postTOAndValidate(vo2, NOTLOGGED);
+        vo2.setState(TransportOrder.State.FINISHED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo2))
+        )
+                .andExpect(status().isBadRequest())
+                .andDo(document("to-patch-state-finish-an-initialized"))
+        ;
+    }
+    /* ----------------- STARTED -------------------*/
+    public
+    @Test
+    void startingAnStartedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setState(TransportOrder.State.STARTED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-state-change"))
+        ;
+    }
+
+    public
+    @Test
+    void cancellingAnStartedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setState(TransportOrder.State.CANCELED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-state-cancel-a-started"))
+        ;
+    }
+
+    public
+    @Test
+    void settingAnStartedOneOnFailure() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setState(TransportOrder.State.ONFAILURE.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-state-onfailure-a-started"))
+        ;
+    }
+
+    public
+    @Test
+    void finishingAnStartedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setState(TransportOrder.State.FINISHED.toString());
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+
+        // test ...
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-state-finish-a-started"))
+        ;
+    }
+    /* ----------------- FINISHED -------------------*/
+    public
+    @Test
+    void changingAnFinishedOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+        vo.setState(TransportOrder.State.FINISHED.toString());
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+        ;
+
+        // test ...
+        vo.setState(TransportOrder.State.CANCELED.toString());
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isBadRequest())
+                .andDo(document("to-patch-state-change-a-finished"))
+        ;
+    }
+    /* ----------------- ONFAILURE -------------------*/
+    public
+    @Test
+    void changingAnOnFailureOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+        vo.setState(TransportOrder.State.ONFAILURE.toString());
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+        ;
+
+        // test ...
+        vo.setState(TransportOrder.State.CANCELED.toString());
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isBadRequest())
+                .andDo(document("to-patch-state-change-an-onfailure"))
+        ;
+    }
+    /* ----------------- CANCELED -------------------*/
+    public
+    @Test
+    void changingAnCanceledOne() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
+        vo.setState(TransportOrder.State.CANCELED.toString());
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+        ;
+
+        // test ...
+        vo.setState(TransportOrder.State.ONFAILURE.toString());
+        mockMvc.perform(
+                patch(Constants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isBadRequest())
+                .andDo(document("to-patch-state-change-a-canceled"))
         ;
     }
 }

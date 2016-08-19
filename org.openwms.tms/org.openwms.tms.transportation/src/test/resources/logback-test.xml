@@ -8,10 +8,10 @@
     </encoder>
   </appender>
 
-  <logger name="org.openwms" level="debug"/>
-  <logger name="org.springframework" level="warn"/>
-  <logger name="org.hibernate.sql" level="DEBUG"/>
-  <logger name="org.hibernate.type" level="TRACE"/>
+  <logger name="org.openwms" level="DEBUG"/>
+  <logger name="org.springframework" level="WARN"/>
+  <logger name="org.hibernate.sql" level="WARN"/>
+  <logger name="org.hibernate.type" level="WARN"/>
 
   <root level="info">
     <appender-ref ref="stdout"/>
