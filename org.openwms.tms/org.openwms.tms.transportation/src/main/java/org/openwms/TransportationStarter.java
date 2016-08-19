@@ -54,14 +54,11 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 /**
- * A Starter.
+ * A TransportationStarter is the Spring Boot starter class of the microservice component.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
-//@EnableEurekaServer
-//@EnableEurekaClient
 @EnableFeignClients
 @EnableCircuitBreaker
 @SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})

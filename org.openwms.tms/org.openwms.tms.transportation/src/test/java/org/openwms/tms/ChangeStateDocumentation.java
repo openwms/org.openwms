@@ -42,7 +42,6 @@ import org.springframework.http.MediaType;
  */
 public class ChangeStateDocumentation extends DocumentationBase {
 
-
     public
     @Test
     void turnBackState() throws Exception {
