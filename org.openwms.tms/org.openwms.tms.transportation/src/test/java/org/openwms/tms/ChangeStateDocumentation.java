@@ -53,7 +53,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
                 )
@@ -77,7 +77,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo2))
                 )
@@ -100,7 +100,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo2))
         )
@@ -122,7 +122,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo2))
         )
@@ -144,7 +144,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo2))
         )
@@ -164,7 +164,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -184,7 +184,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -204,7 +204,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -224,7 +224,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -242,7 +242,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
         vo.setState(TransportOrder.State.FINISHED.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -252,7 +252,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // test ...
         vo.setState(TransportOrder.State.CANCELED.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -270,7 +270,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
         vo.setState(TransportOrder.State.ONFAILURE.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -280,7 +280,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // test ...
         vo.setState(TransportOrder.State.CANCELED.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -298,7 +298,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
         vo.setState(TransportOrder.State.CANCELED.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -308,7 +308,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // test ...
         vo.setState(TransportOrder.State.ONFAILURE.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )

@@ -32,8 +32,8 @@ import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.NotFoundException;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
-import org.openwms.tms.Constants;
 import org.openwms.tms.PriorityLevel;
+import org.openwms.tms.TMSConstants;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,12 +63,12 @@ class TransportationController {
     @Autowired
     private TransportationService<TransportOrder> service;
 
-    @RequestMapping(method = RequestMethod.GET, value = Constants.ROOT_ENTITIES + "/{pKey}")
+    @RequestMapping(method = RequestMethod.GET, value = TMSConstants.ROOT_ENTITIES + "/{pKey}")
     public TransportOrder findByPKey(@PathVariable String pKey) {
         return service.findByPKey(pKey);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = Constants.ROOT_ENTITIES)
+    @RequestMapping(method = RequestMethod.POST, value = TMSConstants.ROOT_ENTITIES)
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
         validatePriority(vo);
         TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
@@ -76,7 +76,7 @@ class TransportationController {
         resp.setStatus(201);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = Constants.ROOT_ENTITIES)
+    @RequestMapping(method = RequestMethod.PATCH, value = TMSConstants.ROOT_ENTITIES)
     public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletResponse resp) {
         validatePriority(vo);
         service.update(m.map(vo, TransportOrder.class));

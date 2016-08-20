@@ -22,15 +22,18 @@
 package org.openwms.tms;
 
 /**
- * A Constants.
+ * A TMSConstants holds general constants of this microservice module.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
-public class Constants {
+public class TMSConstants {
 
+    /** API root to hit TransportOrders (plural). */
     public static final String ROOT_ENTITIES = "/transportOrders";
-
+    /**
+     * Bean name of the Jackson ObjectMapper to use. Dissenting from the default bean name to not come in conflict with instantiations done
+     * be SpringBoot autoconfiguration.
+     */
     public static final String BEAN_NAME_OBJECTMAPPER = "jacksonOM";
 }

@@ -37,7 +37,7 @@ import org.ameba.i18n.AbstractTranslator;
 import org.ameba.i18n.Translator;
 import org.ameba.mapping.BeanMapper;
 import org.ameba.mapping.DozerMapperImpl;
-import org.openwms.tms.Constants;
+import org.openwms.tms.TMSConstants;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -84,7 +84,7 @@ public class TransportationStarter {
 
     public
     @Primary
-    @Bean(name = Constants.BEAN_NAME_OBJECTMAPPER)
+    @Bean(name = TMSConstants.BEAN_NAME_OBJECTMAPPER)
     ObjectMapper jackson2ObjectMapper() {
         ObjectMapper om = new ObjectMapper();
         om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

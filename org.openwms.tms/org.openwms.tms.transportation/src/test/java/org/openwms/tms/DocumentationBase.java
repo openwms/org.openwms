@@ -67,7 +67,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public abstract class DocumentationBase {
 
     @Autowired
-    @Qualifier(Constants.BEAN_NAME_OBJECTMAPPER)
+    @Qualifier(TMSConstants.BEAN_NAME_OBJECTMAPPER)
     protected ObjectMapper objectMapper;
     protected MockMvc mockMvc;
     @Autowired
