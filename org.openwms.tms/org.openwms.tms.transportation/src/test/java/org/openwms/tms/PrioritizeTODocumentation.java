@@ -52,7 +52,7 @@ public class PrioritizeTODocumentation extends DocumentationBase {
 
         vo.setPriority(null);
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
                 )
@@ -70,7 +70,7 @@ public class PrioritizeTODocumentation extends DocumentationBase {
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
         mockMvc.perform(
-                get(Constants.ROOT_ENTITIES + "/" + vo.getpKey()))
+                get(TMSConstants.ROOT_ENTITIES + "/" + vo.getpKey()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("priority", is("HIGHEST")))
         ;
@@ -78,7 +78,7 @@ public class PrioritizeTODocumentation extends DocumentationBase {
         // test ...
         vo.setPriority(PriorityLevel.NORMAL.toString());
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
@@ -87,7 +87,7 @@ public class PrioritizeTODocumentation extends DocumentationBase {
         ;
 
         mockMvc.perform(
-                get(Constants.ROOT_ENTITIES + "/" + vo.getpKey()))
+                get(TMSConstants.ROOT_ENTITIES + "/" + vo.getpKey()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("priority", is("NORMAL")))
         ;

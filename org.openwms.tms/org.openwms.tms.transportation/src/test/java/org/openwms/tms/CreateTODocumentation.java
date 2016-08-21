@@ -83,7 +83,7 @@ public class CreateTODocumentation extends DocumentationBase {
 
         given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.empty());
 
-        mockMvc.perform(post(Constants.ROOT_ENTITIES)
+        mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isNotFound())
@@ -99,7 +99,7 @@ public class CreateTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.empty());
         given(commonGateway.getLocationGroup(vo.getTarget())).willReturn(Optional.empty());
 
-        mockMvc.perform(post(Constants.ROOT_ENTITIES)
+        mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isNotFound())
@@ -116,7 +116,7 @@ public class CreateTODocumentation extends DocumentationBase {
         loc.setIncomingActive(false);
         given(commonGateway.getLocation(vo.getTarget())).willReturn(Optional.of(loc));
 
-        MvcResult res = mockMvc.perform(post(Constants.ROOT_ENTITIES)
+        MvcResult res = mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isCreated())
@@ -138,7 +138,7 @@ public class CreateTODocumentation extends DocumentationBase {
         CreateTransportOrderVO vo = createTO();
         vo.setPriority("UNKNOWN");
 
-        mockMvc.perform(post(Constants.ROOT_ENTITIES)
+        mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isNotFound())

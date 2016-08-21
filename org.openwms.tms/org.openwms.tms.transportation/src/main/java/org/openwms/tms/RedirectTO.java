@@ -38,7 +38,6 @@ import org.springframework.stereotype.Component;
  * TransportOrder {@code toUpdate} is recognized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Component
@@ -60,7 +59,6 @@ class RedirectTO implements UpdateFunction {
     public void update(TransportOrder saved, TransportOrder toUpdate) {
         if (toUpdate.getTargetLocationGroup() != null && !toUpdate.getTargetLocationGroup().equals(saved.getTargetLocationGroup())) {
 
-            // somehow the target changed...
             if (null != redirectVoters) {
                 RedirectVote rv = new RedirectVote(toUpdate.getTargetLocationGroup(), saved);
                 // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO

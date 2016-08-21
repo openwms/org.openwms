@@ -58,7 +58,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
                 )
@@ -78,7 +78,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
 
         // test ...
         MvcResult res = mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
                 )
@@ -99,7 +99,7 @@ public class ChangeTUDocumentation extends DocumentationBase {
 // TODO [openwms]: 10/08/16
         // test ...
         mockMvc.perform(
-                patch(Constants.ROOT_ENTITIES)
+                patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )

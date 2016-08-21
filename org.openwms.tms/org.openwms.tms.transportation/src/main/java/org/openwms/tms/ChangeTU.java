@@ -29,14 +29,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * A ChangeTUFunction is responsible to change a {@link TransportOrder}s assigned {@code TransportUnit}.
+ * A ChangeTU is responsible to change a {@link TransportOrder}s assigned {@code TransportUnit}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Component
-class ChangeTUFunction implements UpdateFunction {
+class ChangeTU implements UpdateFunction {
 
     @Autowired
     private CommonGateway gateway;
