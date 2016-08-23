@@ -1,3 +1,11 @@
+---
+title: "Component Info"
+tagName: collaboration
+search: exclude
+permalink: component.html
+sidebar: mydoc_sidebar
+folder: tags
+---
 ## TMS - Transportation
 
 This is a software component implemented in a polyglot microservice architecture. It is in that self-contained that 
