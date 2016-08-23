@@ -1,6 +1,6 @@
 ---
 title: "Component Info"
-tagName: collaboration
+tags: [publishing]
 search: exclude
 permalink: component.html
 sidebar: mydoc_sidebar
