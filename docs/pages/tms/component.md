@@ -2,7 +2,7 @@
 title: "Component Info"
 tags: [publishing]
 search: exclude
-permalink: tms/component.html
+permalink: tms\/component.html
 sidebar: mydoc_sidebar
 folder: tms
 ---
