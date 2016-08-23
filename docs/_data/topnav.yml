@@ -23,7 +23,7 @@ topnav_dropdowns:
         - title: COMMON TCP/IP Communication Driver
           url: https://talk.jekyllrb.com
         - title: TMS Transportation Services
-          url: org.openwms.tms\/org.openwms.tms.transportation/component.html
+          url: org.openwms.tms\/org.openwms.tms.transportation\/component.html
     - title: Documentation
       folderitems:
         - title: OpenWMS.org User Documentation 2.x
