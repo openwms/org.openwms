@@ -2,9 +2,9 @@
 title: "Component Info"
 tags: [publishing]
 search: exclude
-permalink: component.html
+permalink: tms/component.html
 sidebar: mydoc_sidebar
-folder: transportation
+folder: tms
 ---
 ## TMS - Transportation
 
