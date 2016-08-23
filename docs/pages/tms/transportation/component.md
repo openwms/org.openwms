@@ -4,7 +4,7 @@ tagName: collaboration
 search: exclude
 permalink: component.html
 sidebar: mydoc_sidebar
-folder: tms/transportation
+folder: tms\/transportation
 ---
 ## TMS - Transportation
 
