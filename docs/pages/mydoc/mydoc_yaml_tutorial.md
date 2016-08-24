@@ -388,4 +388,4 @@ And here is the result:
 
 For more examples and explanations, see this helpful post on tournemille.com: [How to create data-driven navigation in Jekyll](http://www.tournemille.com/blog/How-to-create-data-driven-navigation-in-Jekyll/).
 
-{% include links.html %}
+

@@ -52,4 +52,4 @@ Integration with Swagger | No | You can link to a SwaggerUI output, but there is
 Templates for endpoints | No | Although static site generators work well with API documentation, there aren't any built-in templates specific to endpoints in this theme. You could construct your own, though.
 eBook output | No | There isn't an eBook output for the content.
 
-{% include links.html %}
+

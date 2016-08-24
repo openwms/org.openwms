@@ -393,4 +393,4 @@ If you update Bootrap, make sure you make this edit. (Sorry, admittedly I couldn
 
 I did, however, remove the color from the alerts and lighten the background shading for `pre` elements. The printstyles.css has this setting.
 
-{% include links.html %}
+

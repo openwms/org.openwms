@@ -65,4 +65,4 @@ I recommend creating a profile in iTerm that stores this command. Here's what th
 
 {% include image.html file="killalljekyll.png" caption="iTerm profile settings to kill all Jekyll" %}
 
-{% include links.html %}
+

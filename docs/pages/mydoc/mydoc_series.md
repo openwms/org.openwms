@@ -107,4 +107,4 @@ The Bootstrap menu uses the `primary` class for styling. If you change this clas
 
 Instead of copying and pasting the button includes on each of your series, you could also create a collection and define a layout for the collection that has the include code. For more information on creating collections, see [Collections][mydoc_collections] for more details.
 
-{% include links.html %}
+

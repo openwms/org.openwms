@@ -80,4 +80,4 @@ Note that the url does not include the project folder where the file is stored. 
 
 Now the page.url and the item.url can match and the `active` class can get applied. With the `active` class applied, the sidebar section remains open.
 
-{% include links.html %}
+

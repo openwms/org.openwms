@@ -37,4 +37,4 @@ If you want to display a workflow map for a process, you can do so by adding som
 
 If you want to upgrade from an earlier version of the theme, I recommend that you download the new theme and copy of your Markdown files into the new theme. You'll then need to make adjustments to your page frontmatter, to the sidebar table of contents, links, image references, and alert references. In short, there's no easy upgrade path. But all of this won't take too long if you don't have mountains of content.
 
-{% include links.html %}
+

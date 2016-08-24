@@ -92,4 +92,4 @@ Although you can use the default command prompt with Windows, it's recommended t
 
    Unfortunately, the Command Prompt doesn't allow you to easily copy and paste the URL, so you'll have to type it manually.
 
-{% include links.html %}
+

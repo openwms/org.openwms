@@ -96,4 +96,4 @@ Also, remove the check box for "Use textpath element for text on a path". And se
 
 {% include image.html file="illustratoroptions.png" caption="Essential options for SVG with Illustrator" %}
 
-{% include links.html %}
+

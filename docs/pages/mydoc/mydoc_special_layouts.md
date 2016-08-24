@@ -28,4 +28,4 @@ If you have a long JSON message you're documenting, see the {{site.data.mydoc_ur
 
 If you want a dynamic card layout that allows you to filter the cards, see {{site.data.mydoc_urls.mydoc_shuffle.link}}. This uses the Shuffle JS library.
 
-{% include links.html %}
+

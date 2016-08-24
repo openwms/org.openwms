@@ -71,4 +71,4 @@ Github Pages will now automatically build your site. Wait a minute or two, and t
 
 You can also customize your Github URL. More instructions on this later....
 
-{% include links.html %}
+

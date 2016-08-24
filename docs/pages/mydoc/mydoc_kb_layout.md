@@ -112,4 +112,4 @@ Getting started pages:
 {% endfor %}
 </ul>
 
-{% include links.html %}
+

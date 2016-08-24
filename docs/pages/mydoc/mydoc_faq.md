@@ -133,4 +133,4 @@ folder: mydoc
 </div>
 <!-- /.panel-group -->
 
-{% include links.html %}
+

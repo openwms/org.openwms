@@ -40,4 +40,4 @@ Here's an example:
 
 {% include tip.html content="When you're done with the session, make sure to click <b>Ctrl+C</b>." %}
 
-{% include links.html %}
+

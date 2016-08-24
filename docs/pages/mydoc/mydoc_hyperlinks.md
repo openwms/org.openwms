@@ -54,7 +54,7 @@ To implement managed links:
 2.  At the bottom of each topic where you plan to include links, include the links.html file:
 
     ```
-    {% raw %}{% include links.html %}{% endraw %}
+    {% raw %}{% endraw %}
     ```
     
 3.  To link to a topic, use reference-style Markdown links, with the referent using the file name (without the file extension). For example:
@@ -96,4 +96,4 @@ This is [Some link][mydoc_pages.html#someIdTag].
 
 It's a little strange having the `.html#` in a reference like this, but it works.
 
-{% include links.html %}
+

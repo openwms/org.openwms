@@ -40,4 +40,4 @@ Execute Bundler against your project:
 bundle exec jekyll serve
 (Instead of jekyll serve, run one of the other build commands.)
 
-{% include links.html %}
+

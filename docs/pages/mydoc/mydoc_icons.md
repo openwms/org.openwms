@@ -222,4 +222,4 @@ The only difference is the color of the left bar.
 
 Callouts are explained in a bit more detail in [Alerts][mydoc_alerts].
 
-{% include links.html %}
+

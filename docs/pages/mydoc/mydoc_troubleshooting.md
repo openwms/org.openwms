@@ -74,4 +74,4 @@ If the sidebar levels aren't collapsed, usually your JavaScript is broken somewh
 
 If the search isn't working, check the JSON validity in the search.json file in your output folder. Usually something is invalid. Identify the problematic line, fix the file, or put `search: exclude` in the frontmatter of the file to exclude it from search.
 
-{% include links.html %}
+

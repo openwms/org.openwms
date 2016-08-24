@@ -353,4 +353,4 @@ And here's the code:
 
 Now you have both documentation and UI tooltips generated from the same definitions file.
 
-{% include links.html %}
+

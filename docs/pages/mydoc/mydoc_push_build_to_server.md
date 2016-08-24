@@ -32,4 +32,4 @@ scp -r /users/tjohnson/projects/mydocproject/ name@domain:/var/www/html/mydocpro
 
 Similar to the above, the first path is the local location; the second path is the destination.
 
-{% include links.html %}
+

@@ -111,4 +111,4 @@ By setting a cookie, if the user refreshes the page, the active tab is the tab t
 
 One piece of functionality I'd like to implement is the ability to set site-wide nav tab options. For example, if the user always chooses PHP instead of Java in the code samples, it would be great to set this option site-wide by default. However, this functionality isn't yet coded.
 
-{% include links.html %}
+

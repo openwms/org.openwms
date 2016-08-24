@@ -37,4 +37,4 @@ I haven't found a huge use for collections in normal documentation. However, I d
 
 See this [video tutorial on Jekyll.tips](http://jekyll.tips/jekyll-casts/introduction-to-collections/) for more details on collections.
 
-{% include links.html %}
+

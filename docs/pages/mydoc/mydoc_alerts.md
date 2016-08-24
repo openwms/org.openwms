@@ -181,4 +181,4 @@ In this case, the quotation marks aren't set correctly. I forgot the closing quo
 
 If you want to blast a warning to users on every page, add the alert or callout to the \_layouts/page.html page right below the frontmatter. Every page using the page layout (all, by defaut) will show this message.
 
-{% include links.html %}
+

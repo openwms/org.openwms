@@ -179,4 +179,4 @@ You can create other layouts inside the layouts folder. If you create a new layo
 
 Disqus, a commenting system, is integrated into the theme. In the configuration file, specify the Disqus code for the universal code, and Disqus will appear. If you don't add a Disqus value, the Disqus form isn't included.
 
-{% include links.html %}
+

@@ -26,4 +26,4 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vel sollicitudi
 
 {% include custom/series_acme_next.html %}
 
-{% include links.html %}
+

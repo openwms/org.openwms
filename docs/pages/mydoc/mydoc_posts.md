@@ -42,4 +42,4 @@ tags: content_types
 | **permalink**| Required | This theme uses permalinks to facilitate the linking. You specify the permalink want for the page, and the \_site output will put the page into the root directory when you publish. Follow the same convention here as you do with page permalinks -- list the file name followed by the .html extension. |
 
 
-{% include links.html %}
+

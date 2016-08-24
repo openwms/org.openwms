@@ -111,4 +111,4 @@ The vanilla Jekyll site you create through `jekyll new my-awesome-site` doesn't 
 2. Type `jekyll serve`
 3. Go to the preview address in the browser. (Make sure you include the `/` at the end.)
 
-{% include links.html %}
+

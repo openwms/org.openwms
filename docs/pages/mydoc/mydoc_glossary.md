@@ -108,4 +108,4 @@ If you squish your screen small enough, at a certain breakpoint this style rever
 Although I like the side-by-side view for shorter definitions, I found it problematic with longer definitions.
 
 
-{% include links.html %}
+

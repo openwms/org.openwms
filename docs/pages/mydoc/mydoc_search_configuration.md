@@ -116,4 +116,4 @@ Where you see `{url}` and `{title}`, the search is retrieving the values for the
 
 For more robust search, consider integrating either [Algolia](http://algolia.com) or [Swifttype](http://swiftype.com).
 
-{% include links.html %}
+

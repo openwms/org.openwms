@@ -83,4 +83,4 @@ If you're working on a draft, put it inside the \_drafts folder or add `publishe
 
 What if a file should appear in two projects but not the third? This can get tricky. For some files, rather than using a wildcard, you may need to manually specify the entire filename that you're excluding instead of excluding it by way of a wildcard pattern.
 
-{% include links.html %}
+

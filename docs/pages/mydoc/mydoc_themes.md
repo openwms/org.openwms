@@ -23,4 +23,4 @@ The differences between the themes is fairly minimal. The main navigation bar, s
 
 In a more sophisticated theming approach, you could use Sass files to generate rules based on options set in a data file, but I kept things simple here.
 
-{% include links.html %}
+

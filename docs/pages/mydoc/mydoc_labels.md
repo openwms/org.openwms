@@ -30,4 +30,4 @@ Labels might come in handy for adding button-like tags next to elements, such as
 
 You can have a label appear within a heading simply by including the span tag in the heading. However, you can't mix Markdown syntax with HTML, so you'd have to hard-code the heading ID for the auto-TOC to work.
 
-{% include links.html %}
+

@@ -153,4 +153,4 @@ If you have a lot of conditions in your text, it can get confusing. As a best pr
 
 If your text is getting busy with a lot of conditional statements, consider putting a lot of content into includes so that you can more easily see where the conditions begin and end.
 
-{% include links.html %}
+

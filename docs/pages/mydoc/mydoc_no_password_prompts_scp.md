@@ -129,4 +129,4 @@ To remove the password prompts when connecting to servers via SSH:
     scp -r ../doc_outputs/mydoc/writers <your-username>@remoteserver:/var/www/html/
     ```
 
-{% include links.html %}
+
