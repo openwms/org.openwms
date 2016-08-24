@@ -427,9 +427,11 @@
         <ci.buildNumber>MANUAL</ci.buildNumber>
         <documentation.dir>${project.build.directory}</documentation.dir>
         <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
-        <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
         <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
         <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
+        <github.global.server>github</github.global.server>
+        <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
+        <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
 
         <!-- Used to make the Maven description property available from Bundlor -->
         <project.description>${project.description}</project.description>
@@ -491,6 +493,7 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
+        <plugin.github-site.version>0.12</plugin.github-site.version>
     </properties>
 
     <repositories>
@@ -768,6 +771,23 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>com.github.github</groupId>
+                    <artifactId>site-maven-plugin</artifactId>
+                    <version>${plugin.github-site.version}</version>
+                    <configuration>
+                        <message>Creating site for ${project.version}</message>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>site</goal>
+                            </goals>
+                            <phase>site</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
                     <groupId>org.zeroturnaround</groupId>
                     <artifactId>jrebel-maven-plugin</artifactId>
                     <version>${plugin.jrebel.version}</version>
@@ -775,11 +795,15 @@
             </plugins>
         </pluginManagement>
 
-        <!--plugins>
-            <plugin>
+        <plugins>
+            <!--plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin-->
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
             </plugin>
-        </plugins-->
+        </plugins>
     </build>
 
     <dependencyManagement>
