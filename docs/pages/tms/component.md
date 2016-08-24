@@ -2,7 +2,7 @@
 title: "TMS - Transportation Microservice"
 search: exclude
 permalink: tms-component.html
-sidebar: tms-transportation-sb
+sidebar: tms_transportation_sb
 folder: tms
 toc: false
 ---
