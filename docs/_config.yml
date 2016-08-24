@@ -96,6 +96,7 @@ sidebars:
 - product1_sidebar
 - product2_sidebar
 - other
+- tms-transportation-sb
 
 description: "Product documentation of OpenWMS.org, an open and free Transport & Warehouse Management System"
 # the description is used in the feed.xml file

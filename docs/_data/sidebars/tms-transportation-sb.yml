@@ -1,0 +1,44 @@
+# This is your sidebar TOC. The sidebar code loops through sections here and provides the appropriate formatting.
+
+entries:
+- title: TMS Transportation
+  product: TMS Transportation
+  version: 1.0
+  folders:
+
+  - title:
+    output: pdf
+    type: frontmatter
+    folderitems:
+    - title:
+      url: /titlepage
+      output: pdf
+      type: frontmatter
+    - title:
+      url: /tocpage
+      output: pdf
+      type: frontmatter
+
+  - title: Documentation
+    output: web, pdf
+    folderitems:
+
+    - title: RESTful API Docs
+      url: /p2_sample1.html
+      output: web, pdf
+
+    - title: Javadocs
+      url: /p2_sample2.html
+      output: web, pdf
+
+    - title: Sources
+      url: /p2_sample3.html
+      output: web, pdf
+
+  - title: Statistics
+    output: web, pdf
+    folderitems:
+
+    - title: Sonar
+      url: /p2_sample14.html
+      output: web, pdf
