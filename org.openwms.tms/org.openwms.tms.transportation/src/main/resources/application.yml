@@ -1,0 +1,23 @@
+#COMMON-1.ribbon.listOfServers:example.com
+
+#eureka:
+ # instance:
+  #  appname: COMMON-1
+server:
+  port: 8761
+
+feign:
+  histrix:
+    enabled: false
+
+hystrix:
+  command:
+    choose:
+      default:
+        execution:
+          timeout:
+            enabled: false
+
+security:
+  user:
+    password: sa

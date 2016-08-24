@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: COMMON-1
+
+common:
+  url: http://localhost:8080

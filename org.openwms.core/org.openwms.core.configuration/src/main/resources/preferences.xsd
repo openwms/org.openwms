@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://www.openwms.org/schema/preferences" 
+  xmlns:user="http://www.openwms.org/schema/usermanagement"
+  targetNamespace="http://www.openwms.org/schema/preferences" elementFormDefault="unqualified">
+
+    <xs:import namespace="http://www.openwms.org/schema/usermanagement" schemaLocation="usermanagement.xsd"/>
+
+    <xs:element name="preferences">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="application" type="applicationPreference" />
+                <xs:element name="module" type="modulePreference" />
+                <xs:element name="user" type="user:userPreference" />
+                <xs:element name="role" type="user:rolePreference" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="abstractPreference" abstract="true">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="val" type="xs:string" />
+                <xs:attribute name="floatValue" type="xs:float" />
+                <xs:attribute name="minimum" type="xs:int" default="0" />
+                <xs:attribute name="maximum" type="xs:int" default="0" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="applicationPreference">
+        <xs:complexContent>
+            <xs:extension base="abstractPreference">
+                <xs:attribute name="key" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="modulePreference">
+        <xs:complexContent>
+            <xs:extension base="abstractPreference">
+                <xs:attribute name="key" use="required" />
+                <xs:attribute name="owner" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>
+

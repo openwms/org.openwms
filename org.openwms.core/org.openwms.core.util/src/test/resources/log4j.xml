@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/*
+ * openwms.org, the Open Warehouse Management System.
+ * Copyright (C) 2014 Heiko Scherrer
+ *
+ * This file is part of openwms.org.
+ *
+ * openwms.org is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as 
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * openwms.org is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this software. If not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false">
+
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d %r %-5p [%c] (%t) - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- CORE system logs -->
+    <category name="CORE_METHOD_LOGS">
+        <priority value="INFO" />
+    </category>
+    <category name="CORE_INTEGRATION_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+    <category name="CORE_SERVICE_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+
+    <!-- COMMON system logs -->
+    <category name="COMMON_METHOD_LOGS">
+        <priority value="INFO" />
+    </category>
+    <category name="COMMON_INTEGRATION_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+    <category name="COMMON_SERVICE_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+
+    <!-- TMS system logs -->
+    <category name="TMS_METHOD_LOGS">
+        <priority value="INFO" />
+    </category>
+    <category name="TMS_INTEGRATION_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+    <category name="TMS_SERVICE_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+
+    <!-- WMS system logs -->
+    <category name="WMS_METHOD_LOGS">
+        <priority value="INFO" />
+    </category>
+    <category name="WMS_INTEGRATION_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+    <category name="WMS_SERVICE_EXC_LOGS">
+        <priority value="ERROR" />
+    </category>
+
+    <category name="org.openwms">
+        <priority value="DEBUG" />
+    </category>
+
+<!-- 
+    <category name="org.hibernate.type">
+        <priority value="TRACE" />
+    </category>
+    <category name="org.hibernate.SQL">
+        <priority value="DEBUG" />
+    </category>
+ -->
+    <category name="org.hibernate.type">
+        <priority value="ERROR" />
+    </category>
+    <category name="org.hibernate.SQL">
+        <priority value="ERROR" />
+    </category>
+
+    <root>
+        <priority value="ERROR" />
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</log4j:configuration>
