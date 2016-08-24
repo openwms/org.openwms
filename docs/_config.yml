@@ -102,5 +102,5 @@ description: "Product documentation of OpenWMS.org, an open and free Transport &
 
 # needed for sitemap.xml file only
 # url: http://idratherbewriting.com
-url: openwms.github.io
+url: https://openwms.github.io
 baseurl: /org.openwms 
