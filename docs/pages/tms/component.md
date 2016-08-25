@@ -17,6 +17,21 @@ The Transportation component offers essential functionality used to monitor and 
 
 # Business Object Model (BOM)
 
-{% include inline_image.html file="tms_bom.png" alt="TMS  BOM" %}
+Basically it is all about moving TransportUnits between Locations within a Warehouse. Such a movement is expressed by a TransportOrder
+ that references the TransportUnit to move. A TransportOrder must always have a final Target where to move to. 
+
+{% include inline_image.html file="tms_bom.png" alt="TMS BOM" %}
+
+## Use Cases
+
+ - Move TransportUnits between Locations using TransportOrders
+ 
+ - Redirect existing TransportOrders to new Targets
+ 
+ - Request a TransportOrder to be started, cancelled or finished.
 
 # Persistent Object Model (POM)
+
+The implementation stores TransportOrders in a relational database (RDBMS) using the Java Persistence API as an abstraction. 
+
+{% include inline_image.html file="tms_pom.png" alt="TMS POM" %}
