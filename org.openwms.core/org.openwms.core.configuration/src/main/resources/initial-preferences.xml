@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<p:preferences xmlns:p="http://www.openwms.org/schema/preferences" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.openwms.org/schema/preferences http://www.openwms.org/schema/preferences.xsd">
-    <application key="defaultLanguage" val="en_US">Global language setting for all users. Value must be some of the localization keys, like en_US, de_DE, ...</application>
-</p:preferences>
