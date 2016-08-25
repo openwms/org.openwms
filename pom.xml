@@ -813,7 +813,7 @@
                     <version>${plugin.github-site.version}</version>
                     <configuration>
                         <message>Creating site for ${project.version}</message>
-                        <outputDirectory>${project.basedir}/docs</outputDirectory>
+                        <outputDirectory>${project.basedir}/${moduleDir}/docs</outputDirectory>
                     </configuration>
                     <executions>
                         <execution>
