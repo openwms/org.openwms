@@ -17,6 +17,6 @@ The Transportation component offers essential functionality used to monitor and 
 
 # Business Object Model (BOM)
 
-{% include inline_image.html file="tms_bom.png" alt="TMS BOM" %}
+{% include inline_image.html file="tms_bom.png" alt="TMS  BOM" %}
 
 # Persistent Object Model (POM)
