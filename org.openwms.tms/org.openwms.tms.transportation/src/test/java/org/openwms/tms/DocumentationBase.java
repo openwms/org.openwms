@@ -118,7 +118,7 @@ public abstract class DocumentationBase {
     }
 
     protected MvcResult postTOAndValidate(CreateTransportOrderVO vo, String outputFile) throws Exception {
-        MvcResult res = mockMvc.perform(post("/transportOrders")
+        MvcResult res = mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(vo)))
                 .andExpect(status().isCreated())
