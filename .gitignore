@@ -13,7 +13,8 @@ libs/
 
 # OS Files #
 .DS_Store
- 
+**/javadoc.sh
+**/options
 *.class
  
 # Package Files #

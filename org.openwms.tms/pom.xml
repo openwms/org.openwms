@@ -36,6 +36,7 @@
     <name>OpenWMS.org TMS</name>
     <properties>
         <moduleDir>../..</moduleDir>
+        <ms.group>tms</ms.group>
         <core.version>${project.version}</core.version>
         <common.version>${project.version}</common.version>
         <module.version>${project.version}</module.version>

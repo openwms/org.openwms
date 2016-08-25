@@ -205,6 +205,7 @@
     </ciManagement>
 
     <profiles>
+
         <profile>
             <id>public</id>
             <properties>
@@ -221,6 +222,7 @@
                 <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
+
         <profile>
             <id>internal</id>
             <properties>
@@ -237,6 +239,7 @@
                 <distribution.repo.snapshot.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
+
         <profile>
             <id>sonatype</id>
             <properties>
@@ -253,6 +256,7 @@
                 <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
+
         <profile>
             <id>all</id>
             <activation>
@@ -268,36 +272,42 @@
                 <!--module>org.openwms.app</module-->
             </modules>
         </profile>
+
         <profile>
             <id>app</id>
             <modules>
                 <module>org.openwms.app</module>
             </modules>
         </profile>
+
         <profile>
             <id>core</id>
             <modules>
                 <module>org.openwms.core</module>
             </modules>
         </profile>
+
         <profile>
             <id>common</id>
             <modules>
                 <module>org.openwms.common</module>
             </modules>
         </profile>
+
         <profile>
             <id>tms</id>
             <modules>
                 <module>org.openwms.tms</module>
             </modules>
         </profile>
+
         <profile>
             <id>wms</id>
             <modules>
                 <module>org.openwms.wms</module>
             </modules>
         </profile>
+
         <profile>
             <id>sordocs</id>
             <build>
@@ -309,6 +319,12 @@
                                 <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>build-javadocs</id>
+                                <goals>
+                                    <goal>javadoc</goal>
                                 </goals>
                             </execution>
                         </executions>
@@ -343,8 +359,24 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>release</id>
+            <properties>
+                <debug.info>false</debug.info>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.github</groupId>
+                        <artifactId>site-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>gpg</id>
             <properties>
                 <debug.info>false</debug.info>
             </properties>
@@ -373,6 +405,7 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>generate_glossary</id>
             <!-- Call this profile together with all to generate the DocBook Glossary file -->
@@ -404,6 +437,7 @@
                 </plugins>
             </build>
         </profile>
+
     </profiles>
 
     <properties>
@@ -453,6 +487,7 @@
         <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
+        <ms.group>NULL</ms.group>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <!--spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version-->
         <spring-boot.version>1.4.0.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
@@ -542,6 +577,7 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
     <build>
         <extensions>
             <extension>
@@ -782,7 +818,7 @@
                             <goals>
                                 <goal>site</goal>
                             </goals>
-                            <phase>site</phase>
+                            <phase>package</phase>
                         </execution>
                     </executions>
                 </plugin>
@@ -799,10 +835,6 @@
             <!--plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin-->
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
