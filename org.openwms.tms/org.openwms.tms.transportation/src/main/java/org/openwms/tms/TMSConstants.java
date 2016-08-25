@@ -29,8 +29,10 @@ package org.openwms.tms;
  */
 public class TMSConstants {
 
+    /** API version. */
+    public static final String API_VERSION = "v1";
     /** API root to hit TransportOrders (plural). */
-    public static final String ROOT_ENTITIES = "/transportOrders";
+    public static final String ROOT_ENTITIES = "/" + API_VERSION + "/transportorders";
     /**
      * Bean name of the Jackson ObjectMapper to use. Dissenting from the default bean name to not come in conflict with instantiations done
      * be SpringBoot autoconfiguration.
