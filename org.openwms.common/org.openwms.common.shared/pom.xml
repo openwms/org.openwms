@@ -33,7 +33,7 @@
     <artifactId>org.openwms.common.shared</artifactId>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
 
         <dependencies>

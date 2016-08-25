@@ -33,7 +33,7 @@
     <artifactId>org.openwms.common.service</artifactId>
     <name>${project.artifactId}</name>
     <properties>
-        <moduleDir>../../..</moduleDir>
+        <moduleDir>../..</moduleDir>
         <eventsourcing.version>0.3.1</eventsourcing.version>
         <commons-lang3.version>3.4</commons-lang3.version>
     </properties>

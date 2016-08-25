@@ -35,7 +35,7 @@
     <packaging>pom</packaging>
     <name>OpenWMS.org TMS</name>
     <properties>
-        <moduleDir>../..</moduleDir>
+        <moduleDir>..</moduleDir>
         <ms.group>tms</ms.group>
         <core.version>${project.version}</core.version>
         <common.version>${project.version}</common.version>

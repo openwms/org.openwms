@@ -33,6 +33,7 @@
     <artifactId>org.openwms.tms.transportation</artifactId>
     <name>${project.artifactId}</name>
     <properties>
+        <moduleDir>../..</moduleDir>
         <spring-cloud-dependencies.version>Brixton.SR4</spring-cloud-dependencies.version>
         <spring-restdocs-mockmvc.version>1.1.1.RELEASE</spring-restdocs-mockmvc.version>
     </properties>

@@ -36,7 +36,7 @@
     <name>OpenWMS.org COMMON</name>
     <properties>
         <ms.group>common</ms.group>
-        <moduleDir>../..</moduleDir>
+        <moduleDir>..</moduleDir>
         <core.version>${project.version}</core.version>
         <maven.test.skip>false</maven.test.skip>
     </properties>

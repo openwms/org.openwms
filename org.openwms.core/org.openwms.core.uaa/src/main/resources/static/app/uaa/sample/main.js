@@ -1,6 +1,4 @@
-System.register(['angular2/core', 'angular2/platform/browser', 'angular2/http', './app.component', '../apiGateway.service', "./httpErrorHandler", 'rxjs/Rx'], function(exports_1, context_1) {
-    "use strict";
-    var __moduleName = context_1 && context_1.id;
+System.register(['angular2/core', 'angular2/platform/browser', 'angular2/http', './app.component', '../apiGateway.service', "./httpErrorHandler", 'rxjs/Rx'], function(exports_1) {
     var core_1, browser_1, http_1, app_component_1, apiGateway_service_1, httpErrorHandler_1;
     return {
         setters:[

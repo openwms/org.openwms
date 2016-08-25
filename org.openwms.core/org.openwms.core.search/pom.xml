@@ -34,7 +34,7 @@
     <name>${project.artifactId}</name>
     <description>Spring implementation of the service layer.</description>
     <properties>
-        <moduleDir>.</moduleDir>
+        <moduleDir>../..</moduleDir>
     </properties>
     <build>
         <resources>

@@ -37,7 +37,7 @@
     <description>The CORE project Maven POM file. Just a common definition of dependencies valid for all other CORE projects. Call mvn install -Pcore to build all CORE projects.</description>
     <properties>
         <ms.group>core</ms.group>
-        <moduleDir>../..</moduleDir>
+        <moduleDir>..</moduleDir>
     </properties>
 
     <distributionManagement>
