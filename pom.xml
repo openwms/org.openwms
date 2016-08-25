@@ -329,6 +329,7 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <outputDirectory>${project.basedir}/${moduleDir}/docs/pages/${ms.group}/javadocs</outputDirectory>
                             <links>
                                 <link>http://docs.spring.io/spring/docs/4.1.x/javadoc-api/</link>
                                 <link>http://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/</link>
@@ -812,6 +813,7 @@
                     <version>${plugin.github-site.version}</version>
                     <configuration>
                         <message>Creating site for ${project.version}</message>
+                        <outputDirectory>${project.basedir}/docs</outputDirectory>
                     </configuration>
                     <executions>
                         <execution>
