@@ -41,10 +41,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
 
@@ -52,10 +53,9 @@ import org.springframework.web.util.UriTemplate;
  * A TransportationController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
+ * @since 2.0
  */
-@RestController
+@RestController(TMSConstants.ROOT_ENTITIES)
 class TransportationController {
 
     @Autowired
@@ -63,12 +63,12 @@ class TransportationController {
     @Autowired
     private TransportationService<TransportOrder> service;
 
-    @RequestMapping(method = RequestMethod.GET, value = TMSConstants.ROOT_ENTITIES + "/{pKey}")
+    @GetMapping(TMSConstants.ROOT_ENTITIES + "/{pKey}")
     public TransportOrder findByPKey(@PathVariable String pKey) {
         return service.findByPKey(pKey);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = TMSConstants.ROOT_ENTITIES)
+    @PostMapping
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
         validatePriority(vo);
         TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
@@ -76,7 +76,7 @@ class TransportationController {
         resp.setStatus(201);
     }
 
-    @RequestMapping(method = RequestMethod.PATCH, value = TMSConstants.ROOT_ENTITIES)
+    @PatchMapping
     public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletResponse resp) {
         validatePriority(vo);
         service.update(m.map(vo, TransportOrder.class));
