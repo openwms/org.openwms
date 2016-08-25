@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>OpenWMS.org COMMON - Project Dependencies</title>
+    <title>org.openwms.common.shared - Project Dependencies</title>
     <style type="text/css" media="all">
       @import url("./css/maven-base.css");
       @import url("./css/maven-theme.css");
@@ -17,7 +17,7 @@
   <body class="composite">
     <div id="banner">
                     <div id="bannerLeft">
-                OpenWMS.org COMMON
+                org.openwms.common.shared
                 </div>
                     <div class="clear">
         <hr/>
@@ -30,7 +30,7 @@
         <span id="publishDate">Last Published: 2016-08-25</span>
                   &nbsp;| <span id="projectVersion">Version: 1.1.0-SNAPSHOT</span>
                       </div>
-            <div class="xright">                    <a href="./" title="OpenWMS.org COMMON">OpenWMS.org COMMON</a>
+            <div class="xright">                    <a href="./" title="org.openwms.common.shared">org.openwms.common.shared</a>
               
                     
       </div>
@@ -45,24 +45,12 @@
                                 <h5>Parent Project</h5>
                   <ul>
                   <li class="none">
-                          <a href="../index.html" title="OpenWMS.org Project">OpenWMS.org Project</a>
-            </li>
-          </ul>
-                       <h5>Modules</h5>
-                  <ul>
-                  <li class="none">
-                          <a href="org.openwms.common.comm/index.html" title="org.openwms.common.comm">org.openwms.common.comm</a>
-            </li>
-                  <li class="none">
-                          <a href="org.openwms.common.service/index.html" title="org.openwms.common.service">org.openwms.common.service</a>
-            </li>
-                  <li class="none">
-                          <a href="org.openwms.common.shared/index.html" title="org.openwms.common.shared">org.openwms.common.shared</a>
+                          <a href="../index.html" title="OpenWMS.org COMMON">OpenWMS.org COMMON</a>
             </li>
           </ul>
                        <h5>Project Documentation</h5>
                   <ul>
-                                                                                                                                                                                                                                                                                                                                                            <li class="expanded">
+                                                                                                                                                                                                                                                                                                                                          <li class="expanded">
                           <a href="project-info.html" title="Project Information">Project Information</a>
                     <ul>
                       <li class="none">
@@ -94,9 +82,6 @@
             </li>
                       <li class="none">
                           <a href="mail-lists.html" title="Mailing Lists">Mailing Lists</a>
-            </li>
-                      <li class="none">
-                          <a href="modules.html" title="Project Modules">Project Modules</a>
             </li>
                       <li class="none">
                           <a href="plugin-management.html" title="Plugin Management">Plugin Management</a>
@@ -149,7 +134,13 @@
 <td><a class="externalLink" href="http://www.slf4j.org">slf4j-api</a></td>
 <td>1.7.21</td>
 <td>jar</td>
-<td><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></td></tr></table></div><a name="Project_Dependencies_test"></a>
+<td><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></td></tr>
+<tr class="b">
+<td>org.springframework</td>
+<td><a class="externalLink" href="https://github.com/spring-projects/spring-framework">spring-context</a></td>
+<td>4.3.2.RELEASE</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr></table></div><a name="Project_Dependencies_test"></a>
 <div class="section">
 <h3>test<a name="test"></a></h3>
 <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p>
@@ -191,7 +182,47 @@
 <td><a class="externalLink" href="http://github.com/mockito/mockito/blob/master/LICENSE">The MIT License</a></td></tr></table></div></div><a name="Project_Transitive_Dependencies"></a>
 <div class="section">
 <h2>Project Transitive Dependencies<a name="Project_Transitive_Dependencies"></a></h2>
-<p>The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies.</p><a name="Project_Transitive_Dependencies_test"></a>
+<p>The following is a list of transitive dependencies for this project. Transitive dependencies are the dependencies of the project dependencies.</p><a name="Project_Transitive_Dependencies_compile"></a>
+<div class="section">
+<h3>compile<a name="compile"></a></h3>
+<p>The following is a list of compile dependencies for this project. These dependencies are required to compile and run the application:</p>
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>GroupId</th>
+<th>ArtifactId</th>
+<th>Version</th>
+<th>Type</th>
+<th>Licenses</th></tr>
+<tr class="b">
+<td>commons-logging</td>
+<td><a class="externalLink" href="http://commons.apache.org/proper/commons-logging/">commons-logging</a></td>
+<td>1.2</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.springframework</td>
+<td><a class="externalLink" href="https://github.com/spring-projects/spring-framework">spring-aop</a></td>
+<td>4.3.2.RELEASE</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.springframework</td>
+<td><a class="externalLink" href="https://github.com/spring-projects/spring-framework">spring-beans</a></td>
+<td>4.3.2.RELEASE</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.springframework</td>
+<td><a class="externalLink" href="https://github.com/spring-projects/spring-framework">spring-core</a></td>
+<td>4.3.2.RELEASE</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr>
+<tr class="b">
+<td>org.springframework</td>
+<td><a class="externalLink" href="https://github.com/spring-projects/spring-framework">spring-expression</a></td>
+<td>4.3.2.RELEASE</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></td></tr></table></div><a name="Project_Transitive_Dependencies_test"></a>
 <div class="section">
 <h3>test<a name="test"></a></h3>
 <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p>
@@ -245,17 +276,74 @@
 <div class="section">
 <h3>Dependency Tree<a name="Dependency_Tree"></a></h3>
 <ul>
-<li>org.openwms:org.openwms.common:pom:1.1.0-SNAPSHOT <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep0" style="display:none">
+<li>org.openwms:org.openwms.common.shared:jar:1.1.0-SNAPSHOT <img id="_img1" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep0', '_img1' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep0" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
-<th>OpenWMS.org COMMON</th></tr>
+<th>org.openwms.common.shared</th></tr>
 <tr class="b">
 <td>
 <p><b>Description: </b>OpenWMS.org is an open source warehouse management software</p>
-<p><b>URL: </b><a class="externalLink" href="http://www.openwms.org/org.openwms.common">http://www.openwms.org/org.openwms.common</a></p>
+<p><b>URL: </b><a class="externalLink" href="http://www.openwms.org/org.openwms.common/org.openwms.common.shared">http://www.openwms.org/org.openwms.common/org.openwms.common.shared</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt">GNU General Public License</a></p></td></tr></table></div>
 <ul>
-<li>org.slf4j:slf4j-api:jar:1.7.21 (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep2', '_img3' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep2" style="display:none">
+<li>org.springframework:spring-context:jar:4.3.2.RELEASE (compile) <img id="_img3" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep2', '_img3' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep2" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Spring Context</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Spring Context</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
+<ul>
+<li>org.springframework:spring-aop:jar:4.3.2.RELEASE (compile) <img id="_img5" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep4', '_img5' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep4" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Spring AOP</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Spring AOP</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
+<li>org.springframework:spring-beans:jar:4.3.2.RELEASE (compile) <img id="_img7" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep6', '_img7' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep6" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Spring Beans</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Spring Beans</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li>
+<li>org.springframework:spring-core:jar:4.3.2.RELEASE (compile) <img id="_img9" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep8', '_img9' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep8" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Spring Core</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Spring Core</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div>
+<ul>
+<li>commons-logging:commons-logging:jar:1.2 (compile) <img id="_img11" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep10', '_img11' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep10" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Apache Commons Logging</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Apache Commons Logging is a thin adapter allowing configurable bridging to other,
+    well known logging systems.</p>
+<p><b>URL: </b><a class="externalLink" href="http://commons.apache.org/proper/commons-logging/">http://commons.apache.org/proper/commons-logging/</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
+<li>org.springframework:spring-expression:jar:4.3.2.RELEASE (compile) <img id="_img13" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep12', '_img13' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep12" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>Spring Expression Language (SpEL)</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>Spring Expression Language (SpEL)</p>
+<p><b>URL: </b><a class="externalLink" href="https://github.com/spring-projects/spring-framework">https://github.com/spring-projects/spring-framework</a></p>
+<p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">The Apache Software License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
+<li>org.slf4j:slf4j-api:jar:1.7.21 (compile) <img id="_img15" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep14', '_img15' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep14" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>SLF4J API Module</th></tr>
@@ -264,7 +352,7 @@
 <p><b>Description: </b>The slf4j API</p>
 <p><b>URL: </b><a class="externalLink" href="http://www.slf4j.org">http://www.slf4j.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/mit-license.php">MIT License</a></p></td></tr></table></div></li>
-<li>io.interface21:ameba-lib:jar:1.7-SNAPSHOT (compile) <img id="_img5" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep4', '_img5' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep4" style="display:none">
+<li>io.interface21:ameba-lib:jar:1.7-SNAPSHOT (compile) <img id="_img17" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep16', '_img17' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep16" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>ameba-lib</th></tr>
@@ -273,7 +361,7 @@
 <p><b>Description: </b>Ameba Utilities</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/abraxas-labs/ameba-lib">https://github.com/abraxas-labs/ameba-lib</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a></p></td></tr></table></div></li>
-<li>junit:junit:jar:4.12 (test) <img id="_img7" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep6', '_img7' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep6" style="display:none">
+<li>junit:junit:jar:4.12 (test) <img id="_img19" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep18', '_img19' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep18" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>JUnit</th></tr>
@@ -283,7 +371,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://junit.org">http://junit.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.eclipse.org/legal/epl-v10.html">Eclipse Public License 1.0</a></p></td></tr></table></div>
 <ul>
-<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img9" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep8', '_img9' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep8" style="display:none">
+<li>org.hamcrest:hamcrest-core:jar:1.3 (test) <img id="_img21" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep20', '_img21' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep20" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Hamcrest Core</th></tr>
@@ -292,7 +380,7 @@
 <p><b>Description: </b>This is the core API of hamcrest matcher framework to be used by third-party framework providers. This includes the a foundation set of matcher implementations for common operations.</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/hamcrest/JavaHamcrest/hamcrest-core">https://github.com/hamcrest/JavaHamcrest/hamcrest-core</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a></p></td></tr></table></div></li></ul></li>
-<li>org.mockito:mockito-core:jar:1.10.19 (test) <img id="_img11" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep10', '_img11' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep10" style="display:none">
+<li>org.mockito:mockito-core:jar:1.10.19 (test) <img id="_img23" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep22', '_img23' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep22" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Mockito</th></tr>
@@ -302,7 +390,7 @@
 <p><b>URL: </b><a class="externalLink" href="http://www.mockito.org">http://www.mockito.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://github.com/mockito/mockito/blob/master/LICENSE">The MIT License</a></p></td></tr></table></div>
 <ul>
-<li>org.objenesis:objenesis:jar:2.1 (test) <img id="_img13" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep12', '_img13' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep12" style="display:none">
+<li>org.objenesis:objenesis:jar:2.1 (test) <img id="_img25" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep24', '_img25' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep24" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Objenesis</th></tr>
@@ -311,7 +399,7 @@
 <p><b>Description: </b>A library for instantiating Java objects</p>
 <p><b>URL: </b><a class="externalLink" href="http://objenesis.org">http://objenesis.org</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0.txt">Apache 2</a></p></td></tr></table></div></li></ul></li>
-<li>io.interface21:ameba-lib:test-jar:tests:1.7-SNAPSHOT (test) <img id="_img15" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep14', '_img15' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep14" style="display:none">
+<li>io.interface21:ameba-lib:test-jar:tests:1.7-SNAPSHOT (test) <img id="_img27" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep26', '_img27' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep26" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>ameba-lib</th></tr>
@@ -320,7 +408,7 @@
 <p><b>Description: </b>Ameba Utilities</p>
 <p><b>URL: </b><a class="externalLink" href="https://github.com/abraxas-labs/ameba-lib">https://github.com/abraxas-labs/ameba-lib</a></p>
 <p><b>Project Licenses: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0">Apache-2.0</a></p></td></tr></table></div></li>
-<li>org.glassfish.web:el-impl:jar:2.2 (test) <img id="_img17" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep16', '_img17' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep16" style="display:none">
+<li>org.glassfish.web:el-impl:jar:2.2 (test) <img id="_img29" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep28', '_img29' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep28" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Expression Language Implementation</th></tr>
@@ -329,7 +417,7 @@
 <p><b>Description: </b>There is currently no description associated with this project.</p>
 <p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div>
 <ul>
-<li>javax.el:el-api:jar:2.2 (test) <img id="_img19" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep18', '_img19' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep18" style="display:none">
+<li>javax.el:el-api:jar:2.2 (test) <img id="_img31" src="./images/icon_info_sml.gif" alt="[Information]" onclick="toggleDependencyDetails( '_dep30', '_img31' );" style="cursor: pointer; vertical-align: text-bottom;"></img><div id="_dep30" style="display:none">
 <table border="0" class="bodyTable">
 <tr class="a">
 <th>Expression Language API (2.1 Maintenance Release)</th></tr>
@@ -339,14 +427,15 @@
 <p><b>Project Licenses: </b>No licenses are defined for this project.</p></td></tr></table></div></li></ul></li></ul></li></ul></div></div><a name="Licenses"></a>
 <div class="section">
 <h2>Licenses<a name="Licenses"></a></h2>
-<p><b>GNU General Public License: </b>OpenWMS.org COMMON</p>
+<p><b>GNU General Public License: </b>org.openwms.common.shared</p>
 <p><b>Apache 2: </b>Objenesis</p>
 <p><b>Unknown: </b>Expression Language API (2.1 Maintenance Release), Expression Language Implementation</p>
 <p><b>Eclipse Public License 1.0: </b>JUnit</p>
 <p><b>MIT License: </b>SLF4J API Module</p>
 <p><b>The MIT License: </b>Mockito</p>
 <p><b>Apache-2.0: </b>ameba-lib</p>
-<p><b>New BSD License: </b>Hamcrest Core</p></div><a name="Dependency_File_Details"></a>
+<p><b>New BSD License: </b>Hamcrest Core</p>
+<p><b>The Apache Software License, Version 2.0: </b>Apache Commons Logging, Spring AOP, Spring Beans, Spring Context, Spring Core, Spring Expression Language (SpEL)</p></div><a name="Dependency_File_Details"></a>
 <div class="section">
 <h2>Dependency File Details<a name="Dependency_File_Details"></a></h2>
 <table border="0" class="bodyTable">
@@ -359,6 +448,14 @@
 <th>Java Version</th>
 <th title="Indicates whether these dependencies have been compiled with debug information.">Debug Information</th></tr>
 <tr class="b">
+<td>commons-logging-1.2.jar</td>
+<td>61.8 kB</td>
+<td>42</td>
+<td>28</td>
+<td>2</td>
+<td>1.2</td>
+<td>Yes</td></tr>
+<tr class="a">
 <td>ameba-lib-1.7-SNAPSHOT.jar</td>
 <td>58.7 kB</td>
 <td>90</td>
@@ -366,7 +463,7 @@
 <td>15</td>
 <td>1.8</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>ameba-lib-1.7-SNAPSHOT-tests.jar</td>
 <td>14.4 kB</td>
 <td>-</td>
@@ -374,7 +471,7 @@
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
-<tr class="b">
+<tr class="a">
 <td>el-api-2.2.jar</td>
 <td>33.9 kB</td>
 <td>38</td>
@@ -382,7 +479,7 @@
 <td>1</td>
 <td>1.5</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>junit-4.12.jar</td>
 <td>314.9 kB</td>
 <td>323</td>
@@ -390,7 +487,7 @@
 <td>30</td>
 <td>1.5</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>el-impl-2.2.jar</td>
 <td>109.3 kB</td>
 <td>87</td>
@@ -398,7 +495,7 @@
 <td>4</td>
 <td>1.5</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>hamcrest-core-1.3.jar</td>
 <td>45 kB</td>
 <td>52</td>
@@ -406,7 +503,7 @@
 <td>3</td>
 <td>1.5</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>mockito-core-1.10.19.jar</td>
 <td>1.2 MB</td>
 <td>1138</td>
@@ -414,7 +511,7 @@
 <td>67</td>
 <td>1.5</td>
 <td>Yes</td></tr>
-<tr class="a">
+<tr class="b">
 <td>objenesis-2.1.jar</td>
 <td>41.8 kB</td>
 <td>52</td>
@@ -422,13 +519,53 @@
 <td>9</td>
 <td>1.5</td>
 <td>Yes</td></tr>
-<tr class="b">
+<tr class="a">
 <td>slf4j-api-1.7.21.jar</td>
 <td>41.1 kB</td>
 <td>46</td>
 <td>34</td>
 <td>4</td>
 <td>1.5</td>
+<td>Yes</td></tr>
+<tr class="b">
+<td>spring-aop-4.3.2.RELEASE.jar</td>
+<td>379.8 kB</td>
+<td>306</td>
+<td>269</td>
+<td>17</td>
+<td>1.6</td>
+<td>Yes</td></tr>
+<tr class="a">
+<td>spring-beans-4.3.2.RELEASE.jar</td>
+<td>757.1 kB</td>
+<td>460</td>
+<td>405</td>
+<td>15</td>
+<td>1.6</td>
+<td>Yes</td></tr>
+<tr class="b">
+<td>spring-context-4.3.2.RELEASE.jar</td>
+<td>1.1 MB</td>
+<td>889</td>
+<td>767</td>
+<td>66</td>
+<td>1.6</td>
+<td>Yes</td></tr>
+<tr class="a">
+<td>spring-core-4.3.2.RELEASE.jar</td>
+<td>1.1 MB</td>
+<td>831</td>
+<td>784</td>
+<td>40</td>
+<td>1.6</td>
+<td>Yes</td></tr>
+<tr class="b">
+<td>spring-expression-4.3.2.RELEASE.jar</td>
+<td>263.7 kB</td>
+<td>156</td>
+<td>142</td>
+<td>6</td>
+<td>1.6</td>
 <td>Yes</td></tr>
 <tr class="a">
 <th>Total</th>
@@ -439,21 +576,21 @@
 <th>Java Version</th>
 <th>Debug Information</th></tr>
 <tr class="b">
-<td>9</td>
-<td>1.8 MB</td>
-<td>1826</td>
-<td>1262</td>
-<td>133</td>
+<td>15</td>
+<td>5.5 MB</td>
+<td>4510</td>
+<td>3657</td>
+<td>279</td>
 <td>1.8</td>
-<td>8</td></tr>
+<td>14</td></tr>
 <tr class="a">
-<td>compile: 2</td>
-<td>compile: 99.7 kB</td>
-<td>compile: 136</td>
-<td>compile: 99</td>
-<td>compile: 19</td>
+<td>compile: 8</td>
+<td>compile: 3.8 MB</td>
+<td>compile: 2820</td>
+<td>compile: 2494</td>
+<td>compile: 165</td>
 <td>-</td>
-<td>compile: 2</td></tr>
+<td>compile: 8</td></tr>
 <tr class="b">
 <td>test: 7</td>
 <td>test: 1.7 MB</td>
@@ -489,6 +626,11 @@
 <td>sonatype-nexus-snapshots</td>
 <td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots">https://oss.sonatype.org/content/repositories/snapshots</a></td>
 <td>Yes</td>
+<td>Yes</td></tr>
+<tr class="b">
+<td>apache.snapshots</td>
+<td><a class="externalLink" href="http://repository.apache.org/snapshots">http://repository.apache.org/snapshots</a></td>
+<td>No</td>
 <td>Yes</td></tr></table>
 <p>Repository locations for each of the Dependencies.</p>
 <table border="0" class="bodyTable">
@@ -497,58 +639,110 @@
 <th>central</th>
 <th>spring-milestones</th>
 <th>spring-snapshots</th>
-<th>sonatype-nexus-snapshots</th></tr>
+<th>sonatype-nexus-snapshots</th>
+<th>apache.snapshots</th></tr>
 <tr class="b">
+<td>commons-logging:commons-logging:jar:1.2</td>
+<td><a class="externalLink" href="https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
 <td>io.interface21:ameba-lib:jar:1.7-SNAPSHOT</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="a">
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td></tr>
+<tr class="b">
 <td>io.interface21:ameba-lib:test-jar:tests:1.7-SNAPSHOT</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10-tests.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td></tr>
-<tr class="b">
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10-tests.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td></tr>
+<tr class="a">
 <td>javax.el:el-api:jar:2.2</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/javax/el/el-api/2.2/el-api-2.2.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>-</td></tr>
-<tr class="a">
+<tr class="b">
 <td>junit:junit:jar:4.12</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/junit/junit/4.12/junit-4.12.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>-</td></tr>
-<tr class="b">
+<tr class="a">
 <td>org.glassfish.web:el-impl:jar:2.2</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/glassfish/web/el-impl/2.2/el-impl-2.2.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>-</td></tr>
-<tr class="a">
+<tr class="b">
 <td>org.hamcrest:hamcrest-core:jar:1.3</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>-</td></tr>
-<tr class="b">
+<tr class="a">
 <td>org.mockito:mockito-core:jar:1.10.19</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/mockito/mockito-core/1.10.19/mockito-core-1.10.19.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>-</td></tr>
-<tr class="a">
+<tr class="b">
 <td>org.objenesis:objenesis:jar:2.1</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/objenesis/objenesis/2.1/objenesis-2.1.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
+<td>-</td>
 <td>-</td></tr>
-<tr class="b">
+<tr class="a">
 <td>org.slf4j:slf4j-api:jar:1.7.21</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="b">
+<td>org.springframework:spring-aop:jar:4.3.2.RELEASE</td>
+<td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-aop/4.3.2.RELEASE/spring-aop-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
+<td>org.springframework:spring-beans:jar:4.3.2.RELEASE</td>
+<td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-beans/4.3.2.RELEASE/spring-beans-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="b">
+<td>org.springframework:spring-context:jar:4.3.2.RELEASE</td>
+<td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-context/4.3.2.RELEASE/spring-context-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
+<td>org.springframework:spring-core:jar:4.3.2.RELEASE</td>
+<td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-core/4.3.2.RELEASE/spring-core-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="b">
+<td>org.springframework:spring-expression:jar:4.3.2.RELEASE</td>
+<td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-expression/4.3.2.RELEASE/spring-expression-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
+<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -557,13 +751,15 @@
 <th>central</th>
 <th>spring-milestones</th>
 <th>spring-snapshots</th>
-<th>sonatype-nexus-snapshots</th></tr>
+<th>sonatype-nexus-snapshots</th>
+<th>apache.snapshots</th></tr>
 <tr class="b">
-<td>9 (compile: 2, test: 7)</td>
-<td>7</td>
+<td>15 (compile: 8, test: 7)</td>
+<td>13</td>
 <td>0</td>
 <td>0</td>
-<td>2</td></tr></table></div>
+<td>2</td>
+<td>0</td></tr></table></div>
       </div>
     </div>
     <div class="clear">
