@@ -606,31 +606,37 @@
 <th>Repo ID</th>
 <th>URL</th>
 <th>Release</th>
-<th>Snapshot</th></tr>
+<th>Snapshot</th>
+<th>Blacklisted</th></tr>
 <tr class="b">
 <td>central</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2">https://repo.maven.apache.org/maven2</a></td>
 <td>Yes</td>
+<td>No</td>
 <td>No</td></tr>
 <tr class="a">
 <td>spring-milestones</td>
 <td><a class="externalLink" href="https://repo.spring.io/milestone">https://repo.spring.io/milestone</a></td>
 <td>Yes</td>
+<td>No</td>
 <td>No</td></tr>
 <tr class="b">
 <td>spring-snapshots</td>
 <td><a class="externalLink" href="https://repo.spring.io/snapshot">https://repo.spring.io/snapshot</a></td>
 <td>Yes</td>
-<td>Yes</td></tr>
+<td>Yes</td>
+<td>No</td></tr>
 <tr class="a">
 <td>sonatype-nexus-snapshots</td>
 <td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots">https://oss.sonatype.org/content/repositories/snapshots</a></td>
 <td>Yes</td>
-<td>Yes</td></tr>
+<td>Yes</td>
+<td>No</td></tr>
 <tr class="b">
 <td>apache.snapshots</td>
 <td><a class="externalLink" href="http://repository.apache.org/snapshots">http://repository.apache.org/snapshots</a></td>
 <td>No</td>
+<td>Yes</td>
 <td>Yes</td></tr></table>
 <p>Repository locations for each of the Dependencies.</p>
 <table border="0" class="bodyTable">
@@ -639,12 +645,10 @@
 <th>central</th>
 <th>spring-milestones</th>
 <th>spring-snapshots</th>
-<th>sonatype-nexus-snapshots</th>
-<th>apache.snapshots</th></tr>
+<th>sonatype-nexus-snapshots</th></tr>
 <tr class="b">
 <td>commons-logging:commons-logging:jar:1.2</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/commons-logging/commons-logging/1.2/commons-logging-1.2.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -653,19 +657,16 @@
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td></tr>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="b">
 <td>io.interface21:ameba-lib:test-jar:tests:1.7-SNAPSHOT</td>
 <td>-</td>
 <td>-</td>
 <td>-</td>
-<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10-tests.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td></tr>
+<td><a class="externalLink" href="https://oss.sonatype.org/content/repositories/snapshots/io/interface21/ameba-lib/1.7-SNAPSHOT/ameba-lib-1.7-20160817.070303-10-tests.jar"><img alt="Found at https://oss.sonatype.org/content/repositories/snapshots" src="images/icon_success_sml.gif" /></a></td></tr>
 <tr class="a">
 <td>javax.el:el-api:jar:2.2</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/javax/el/el-api/2.2/el-api-2.2.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -674,12 +675,10 @@
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/junit/junit/4.12/junit-4.12.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>-</td></tr>
 <tr class="a">
 <td>org.glassfish.web:el-impl:jar:2.2</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/glassfish/web/el-impl/2.2/el-impl-2.2.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -688,12 +687,10 @@
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>-</td></tr>
 <tr class="a">
 <td>org.mockito:mockito-core:jar:1.10.19</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/mockito/mockito-core/1.10.19/mockito-core-1.10.19.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -702,12 +699,10 @@
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/objenesis/objenesis/2.1/objenesis-2.1.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>-</td></tr>
 <tr class="a">
 <td>org.slf4j:slf4j-api:jar:1.7.21</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.21/slf4j-api-1.7.21.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -716,12 +711,10 @@
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-aop/4.3.2.RELEASE/spring-aop-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>-</td></tr>
 <tr class="a">
 <td>org.springframework:spring-beans:jar:4.3.2.RELEASE</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-beans/4.3.2.RELEASE/spring-beans-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -730,12 +723,10 @@
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-context/4.3.2.RELEASE/spring-context-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>-</td></tr>
 <tr class="a">
 <td>org.springframework:spring-core:jar:4.3.2.RELEASE</td>
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-core/4.3.2.RELEASE/spring-core-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
-<td>-</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
@@ -744,22 +735,19 @@
 <td><a class="externalLink" href="https://repo.maven.apache.org/maven2/org/springframework/spring-expression/4.3.2.RELEASE/spring-expression-4.3.2.RELEASE.jar"><img alt="Found at https://repo.maven.apache.org/maven2" src="images/icon_success_sml.gif" /></a></td>
 <td>-</td>
 <td>-</td>
-<td>-</td>
 <td>-</td></tr>
 <tr class="a">
 <th>Total</th>
 <th>central</th>
 <th>spring-milestones</th>
 <th>spring-snapshots</th>
-<th>sonatype-nexus-snapshots</th>
-<th>apache.snapshots</th></tr>
+<th>sonatype-nexus-snapshots</th></tr>
 <tr class="b">
 <td>15 (compile: 8, test: 7)</td>
 <td>13</td>
 <td>0</td>
 <td>0</td>
-<td>2</td>
-<td>0</td></tr></table></div>
+<td>2</td></tr></table></div>
       </div>
     </div>
     <div class="clear">
