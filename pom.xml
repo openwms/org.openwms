@@ -839,9 +839,9 @@
         </pluginManagement>
 
         <plugins>
-            <!--plugin>
+            <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin-->
+            </plugin>
         </plugins>
     </build>
 

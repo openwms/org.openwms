@@ -1,0 +1,12 @@
+openwms:
+  core:
+    config:
+      initial-properties: classpath:initial-preferences.xml
+
+spring:
+  jackson:
+    serialization:
+      fail_on_empty_beans: false
+
+  main:
+    banner-mode: "off"

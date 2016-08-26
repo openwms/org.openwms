@@ -6,7 +6,7 @@ node_js:
 - '0.10'
 before_script:
 - npm install -g bower
-install: mvn clean install --settings=./etc/ci/settings.xml -Psordocs,release -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
+install: mvn clean install --settings=./etc/ci/settings.xml -Psordocs,release -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER
   -Ddocumentation.dir=$TRAVIS_BUILD_DIR
 branches:
   only:

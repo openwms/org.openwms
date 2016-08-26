@@ -1,0 +1,7 @@
+spring:
+  config:
+    name: globals
+
+  cloud:
+    config:
+      uri: file://data/projects/github/org.openwms/org.openwms.core/org.openwms.core.uaa/src/main/resources/config
