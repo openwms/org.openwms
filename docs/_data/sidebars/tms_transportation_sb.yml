@@ -20,25 +20,21 @@ entries:
       type: frontmatter
 
   - title: Documentation
-    output: web, pdf
+    output: web
     folderitems:
 
     - title: RESTful API Docs
-      url: /p2_sample1.html
-      output: web, pdf
+      url: /tms/api/api.html
+      output: web
 
     - title: Javadocs
-      url: /p2_sample2.html
-      output: web, pdf
-
-    - title: Sources
-      url: /p2_sample3.html
-      output: web, pdf
+      url: /tms/javadocs/index.html
+      output: web
 
   - title: Statistics
-    output: web, pdf
+    output: web
     folderitems:
 
     - title: Sonar
-      url: /p2_sample14.html
-      output: web, pdf
+      url: /index.html
+      output: web

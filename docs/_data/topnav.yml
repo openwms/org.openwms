@@ -15,18 +15,18 @@ topnav_dropdowns:
         - title: CORE User Account and Authentication (UAA) Services
           url: org.openwms.core\/uaa
         - title: CORE Configuration Services
-          url: http://idratherbewriting.com/category-jekyll/
+          url: tms-component.html
         - title: CORE Internationalisation and Localisation Services
-          url: http://idratherbewriting.com/category-jekyll/
+          url: tms-component.html
         - title: COMMON Inventory Services
-          url: https://github.com/tomjohnson1492/documentation-theme-jekyll
+          url: tms-component.html
         - title: COMMON TCP/IP Communication Driver
-          url: https://talk.jekyllrb.com
+          url: tms-component.html
         - title: TMS Transportation Services
           url: tms-component.html
     - title: Documentation
       folderitems:
         - title: OpenWMS.org User Documentation 2.x
-          url: /mydoc_introduction.html
+          url: /index.html
         - title: OpenWMS.org User Documentation 1.x
-          url: /mydoc_introduction.html
+          url: /index.html

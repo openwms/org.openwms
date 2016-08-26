@@ -65,9 +65,9 @@ defaults:
       type: "pages"
     values:
       layout: "page"
-      comments: true
-      search: true
-      sidebar: home_sidebar
+      comments: false
+      search: false
+      sidebar: mydoc_sidebar
   -
     scope:
       path: ""
@@ -78,24 +78,10 @@ defaults:
       search: true
       tooltip: true
 
-  -
-    scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      comments: true
-      search: true
-      sidebar: home_sidebar
-
 # these are defaults used for the frontmatter for these file types
 
 sidebars:
-- home_sidebar
 - mydoc_sidebar
-- product1_sidebar
-- product2_sidebar
-- other
 - tms_transportation_sb
 
 description: "Product documentation of OpenWMS.org, an open and free Transport & Warehouse Management System"

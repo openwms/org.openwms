@@ -17,21 +17,36 @@ The Transportation component offers essential functionality used to monitor and 
 
 # Business Object Model (BOM)
 
-Basically it is all about moving TransportUnits between Locations within a Warehouse. Such a movement is expressed by a TransportOrder
- that references the TransportUnit to move. A TransportOrder must always have a final Target where to move to. 
+Basically it is all about moving `TransportUnits` between `Locations` within a Warehouse. Such a movement is expressed by a `TransportOrder`
+ that references the `TransportUnit` to move. A `TransportOrder` must always have a final `Target` where to move to. 
 
 {% include inline_image.html file="tms_bom.png" alt="TMS BOM" %}
 
 ## Use Cases
 
- - Move TransportUnits between Locations using TransportOrders
+ - Move `TansportUnits` between `Locations` using `TransportOrders`
  
- - Redirect existing TransportOrders to new Targets
+ - Redirect existing `TransportOrders` to new Targets
  
- - Request a TransportOrder to be started, cancelled or finished.
+ - Request a `TransportOrder` to be started, cancelled or finished
 
-# Persistent Object Model (POM)
+# Entity Object Model (EOM)
 
-The implementation stores TransportOrders in a relational database (RDBMS) using the Java Persistence API as an abstraction. 
+The implementation stores `TransportOrders` in a relational database (RDBMS) using the Java Persistence API as an abstraction. 
 
 {% include inline_image.html file="tms_pom.png" alt="TMS POM" %}
+
+A `TransportOrderState` is persisted along each `TransportOrder` instance that keeps track of the current state. In addition each `TransportOrder`
+ has a `Priority` assigned that is used to order all active orders for processing. The following order attributes are persisted:
+  
+Attribute | Description
+--- | ---
+transportUnitBk | The business key of the moved TransportUnit
+startDate | When the order has been set into an active state
+endDate | When the order has been ended
+sourceLocation | The business key of the Location the TransportUnit has been placed when the TransportOrder has been started
+targetLocation | The business key of the Location where the TransportOrder should be moved to
+targetLocationGroup | The business key of the LocationGroup where the TransportOrder should be moved to
+
+ 
+
