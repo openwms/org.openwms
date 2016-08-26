@@ -2,7 +2,7 @@
 <configuration debug="false" scan="false">
 
   <property name="LOG_TEMP" value="/tmp/owms"/>
-  <property name="MODULE_NAME" value="TMS"/>
+  <property name="MODULE_NAME" value="CORE"/>
 
   <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
   <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter"/>
