@@ -1,6 +1,1 @@
-org.openwms.core
-org.openwms.core.app
-org.openwms.core.configuration
-org.openwms.core.configuration.api
-org.openwms.core.configuration.file
-org.openwms.core.module
+org.openwms.core.lang
