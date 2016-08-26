@@ -27,12 +27,13 @@ import java.util.Optional;
 import org.ameba.exception.NotFoundException;
 import org.ameba.i18n.Translator;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import org.openwms.common.CommonConstants;
 import org.openwms.common.CommonMessageCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
@@ -41,10 +42,9 @@ import org.springframework.web.util.UriTemplate;
  * A LocationGroupController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
+ * @since 2.0
  */
-@RestController
+@RestController(CommonConstants.API_LOCATIONGROUPS)
 class LocationGroupController {
 
     @Autowired
@@ -52,13 +52,13 @@ class LocationGroupController {
     @Autowired
     private Translator translator;
 
-    @RequestMapping(value = "/locationGroups/{id}", method = RequestMethod.PATCH)
+    @PatchMapping(value = CommonConstants.API_LOCATIONGROUPS + "/{id}")
     public void save(@PathVariable String id, @RequestParam(name = "statein", required = false) LocationGroupState stateIn, @RequestParam(name = "stateout", required = false) LocationGroupState stateOut, HttpServletRequest req, HttpServletResponse res) {
         locationGroupService.changeGroupState(id, stateIn, stateOut);
         res.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, id));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
+    @GetMapping(params = {"name"})
     public LocationGroup getLocationGroup(@RequestParam("name") String name) {
         Optional<LocationGroup> opt = locationGroupService.findByName(name);
         return opt.orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.LOCATION_GROUP_NOT_FOUND, new String[]{name}, name));

@@ -36,14 +36,18 @@ import org.openwms.core.http.AbstractWebController;
 import org.openwms.core.http.HttpBusinessException;
 import org.openwms.core.uaa.Role;
 import org.openwms.core.uaa.RoleService;
+import org.openwms.core.uaa.UAAConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,7 +60,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 0.1
  */
 @RestController
-@RequestMapping("/roles")
+@RequestMapping(UAAConstants.API_ROLES)
 public class RolesController extends AbstractWebController {
 
     @Autowired
@@ -70,7 +74,7 @@ public class RolesController extends AbstractWebController {
      * @return JSON response
      * @status Reviewed [scherrer]
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @ResponseBody
     public ResponseEntity<Response<RoleVO>> findAllRoles() {
         List<RoleVO> roles = m.map(new ArrayList<>(service.findAll()), RoleVO.class);
@@ -84,7 +88,7 @@ public class RolesController extends AbstractWebController {
      * @return An {@link Response} object to encapsulate the result of the creation operation
      * @status Reviewed [scherrer]
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
     public ResponseEntity<Response<RoleVO>> create(@RequestBody @Valid @NotNull RoleVO role, HttpServletRequest req, HttpServletResponse resp) {
         RoleVO createdRole = m.map(service.save(m.map(role, Role.class)), RoleVO.class);
@@ -99,7 +103,7 @@ public class RolesController extends AbstractWebController {
      * @return An {@link Response} object to encapsulate all single removal operations
      * @status Reviewed [scherrer]
      */
-    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{name}")
     public ResponseEntity<Response> remove(@PathVariable("name") @NotNull String... rolenames) {
         /*
         Response result = new Response();
@@ -132,7 +136,7 @@ public class RolesController extends AbstractWebController {
      * @param role
      * @return
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public RoleVO save(@RequestBody @Valid RoleVO role) {

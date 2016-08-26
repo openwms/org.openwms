@@ -46,6 +46,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
 
@@ -69,18 +70,18 @@ class TransportationController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void createTO(@RequestBody CreateTransportOrderVO vo, HttpServletRequest req, HttpServletResponse resp) {
         validatePriority(vo);
         TransportOrder to = service.create(vo.getBarcode(), vo.getTarget(), PriorityLevel.valueOf(vo.getPriority()));
         resp.addHeader(HttpHeaders.LOCATION, getCreatedResourceURI(req, to.getPersistentKey()));
-        resp.setStatus(201);
     }
 
     @PatchMapping
-    public void updateTO(@RequestBody CreateTransportOrderVO vo, HttpServletResponse resp) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateTO(@RequestBody CreateTransportOrderVO vo) {
         validatePriority(vo);
         service.update(m.map(vo, TransportOrder.class));
-        resp.setStatus(204);
     }
 
     @ExceptionHandler(BusinessRuntimeException.class)

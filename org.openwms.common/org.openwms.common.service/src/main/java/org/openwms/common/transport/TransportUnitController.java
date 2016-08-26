@@ -27,13 +27,14 @@ import org.ameba.exception.BehaviorAwareException;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
+import org.openwms.common.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,10 +43,9 @@ import org.springframework.web.bind.annotation.RestController;
  * A TransportUnitController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
+ * @since 2.0
  */
-@RestController
+@RestController(CommonConstants.API_TRANSPORTUNITS)
 public class TransportUnitController {
 
     @Autowired
@@ -53,12 +53,12 @@ public class TransportUnitController {
     @Autowired
     private BeanMapper mapper;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/transportUnits", params = {"bk"})
+    @GetMapping(params = {"bk"})
     public @ResponseBody TransportUnitVO getTransportUnit(@RequestParam("bk") String transportUnitBK) {
         return mapper.map(service.findByBarcode(new Barcode(transportUnitBK)), TransportUnitVO.class);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"})
+    @PutMapping(params = {"bk"})
     public @ResponseBody TransportUnitVO updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu) {
         return mapper.map(service.update(new Barcode(transportUnitBK), mapper.map(tu, TransportUnit.class)), TransportUnitVO.class);
     }
