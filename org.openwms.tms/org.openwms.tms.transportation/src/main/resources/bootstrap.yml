@@ -1,6 +1,9 @@
 spring:
   application:
     name: COMMON-1
+  main:
+    banner-mode: "off"
 
 common:
   url: http://localhost:8080
+
