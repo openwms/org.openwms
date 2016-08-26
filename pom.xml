@@ -521,7 +521,7 @@
         <plugin.taglist.version>2.4</plugin.taglist.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
-        <plugin.github-site.version>0.12</plugin.github-site.version>
+        <plugin.github-site.version>0.13.1</plugin.github-site.version>
     </properties>
 
     <repositories>
@@ -549,6 +549,14 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>bintray</id>
+            <name>Bintray Openwms</name>
+            <url>https://dl.bintray.com/openwms/github</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -568,6 +576,11 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>bintray</id>
+            <name>Bintray Openwms</name>
+            <url>https://dl.bintray.com/openwms/github</url>
         </pluginRepository>
     </pluginRepositories>
 
