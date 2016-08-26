@@ -1,8 +1,0 @@
-org.openwms
-org.openwms.common
-org.openwms.tms
-org.openwms.tms.api
-org.openwms.tms.delegate
-org.openwms.tms.exception
-org.openwms.tms.targets
-org.openwms.tms.voter

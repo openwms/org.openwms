@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * openwms.org, the Open Warehouse Management System.<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * Copyright (C) 2014 Heiko Scherrer<a name="line.3"></a>
+<span class="sourceLineNo">004</span> *<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * This file is part of openwms.org.<a name="line.5"></a>
+<span class="sourceLineNo">006</span> *<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * openwms.org is free software: you can redistribute it and/or modify<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * it under the terms of the GNU General Public License as <a name="line.8"></a>
+<span class="sourceLineNo">009</span> * published by the Free Software Foundation; either version 2 of the<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * License, or (at your option) any later version.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * openwms.org is distributed in the hope that it will be useful,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * but WITHOUT ANY WARRANTY; without even the implied warranty of<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * GNU General Public License for more details.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * You should have received a copy of the GNU General Public License<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * along with this software. If not, write to the Free Software<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * 02110-1301 USA, or see the FSF site: http://www.fsf.org.<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.openwms.core;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.io.Serializable;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.List;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.Map;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>/**<a name="line.28"></a>
+<span class="sourceLineNo">029</span> * A GenericDao is a generic interface declaration that defines simple CRUD operations.<a name="line.29"></a>
+<span class="sourceLineNo">030</span> * &lt;p&gt;<a name="line.30"></a>
+<span class="sourceLineNo">031</span> * This interface provides basic functionality to create/read/update and delete entity classes. Entities can be simple POJO classes without<a name="line.31"></a>
+<span class="sourceLineNo">032</span> * any ORM dependencies. Merely implementations of this interface knows about the way the entity is been persisted.<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * &lt;/p&gt;<a name="line.33"></a>
+<span class="sourceLineNo">034</span> * <a name="line.34"></a>
+<span class="sourceLineNo">035</span> * @param &lt;T&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> *            Any serializable type, mostly an entity class type<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * @param &lt;ID&gt;<a name="line.37"></a>
+<span class="sourceLineNo">038</span> *            The type of the entity class' unique id<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @author &lt;a href="mailto:scherrer@openwms.org"&gt;Heiko Scherrer&lt;/a&gt;<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * @version $Revision$<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @since 0.1<a name="line.41"></a>
+<span class="sourceLineNo">042</span> */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>public interface GenericDao&lt;T extends AbstractEntity&lt;ID&gt;, ID extends Serializable&gt; {<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>    /**<a name="line.45"></a>
+<span class="sourceLineNo">046</span>     * Suffix for the FIND_ALL named query.<a name="line.46"></a>
+<span class="sourceLineNo">047</span>     */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    String FIND_ALL = ".findAll";<a name="line.48"></a>
+<span class="sourceLineNo">049</span><a name="line.49"></a>
+<span class="sourceLineNo">050</span>    /**<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     * Suffix for the FIND_BY_ID named query.<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     */<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    String FIND_BY_ID = ".findById";<a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>    /**<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     * Find and return the entity identified by the technical key.<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     * <a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * @param id<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     *            - Unique technical key of the entity<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * @return Entity class identified by id<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     * @throws IllegalArgumentException<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     *             if &lt;tt&gt;id&lt;/tt&gt; is &lt;code&gt;null&lt;/code&gt;<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     */<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    T findById(ID id);<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>    /**<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     * Find all entities and return them as a {@link java.util.List}.<a name="line.67"></a>
+<span class="sourceLineNo">068</span>     * <a name="line.68"></a>
+<span class="sourceLineNo">069</span>     * @return List of all entities<a name="line.69"></a>
+<span class="sourceLineNo">070</span>     */<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    List&lt;T&gt; findAll();<a name="line.71"></a>
+<span class="sourceLineNo">072</span><a name="line.72"></a>
+<span class="sourceLineNo">073</span>    /**<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     * Use a named query to find all entities. Pass in the name of the &lt;code&gt;NamedQuery&lt;/code&gt; and a parameter map.<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * <a name="line.75"></a>
+<span class="sourceLineNo">076</span>     * @param queryName<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     *            - Defined name of the NamedQuery<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * @param params<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     *            - Map of parameters to pass to the query<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     * @return List of found entity classes<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     */<a name="line.81"></a>
+<span class="sourceLineNo">082</span>    List&lt;T&gt; findByNamedParameters(String queryName, Map&lt;String, ?&gt; params);<a name="line.82"></a>
+<span class="sourceLineNo">083</span><a name="line.83"></a>
+<span class="sourceLineNo">084</span>    /**<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     * Use an own JPA query to fetch entities.<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * <a name="line.86"></a>
+<span class="sourceLineNo">087</span>     * @param queryName<a name="line.87"></a>
+<span class="sourceLineNo">088</span>     *            - Defined name of the NamedQuery<a name="line.88"></a>
+<span class="sourceLineNo">089</span>     * @param values<a name="line.89"></a>
+<span class="sourceLineNo">090</span>     *            - A list of values to use as parameters<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * @return A list of all entities<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     */<a name="line.92"></a>
+<span class="sourceLineNo">093</span>    List&lt;T&gt; findByPositionalParameters(String queryName, Object... values);<a name="line.93"></a>
+<span class="sourceLineNo">094</span><a name="line.94"></a>
+<span class="sourceLineNo">095</span>    /**<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     * Find and return the Entity identified by it's natural unique id.<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     * <a name="line.97"></a>
+<span class="sourceLineNo">098</span>     * @param id<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     *            - Natural key to lookup the Entity (also known as business key)<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * @return The Entity instance or &lt;code&gt;null&lt;/code&gt;<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     */<a name="line.101"></a>
+<span class="sourceLineNo">102</span>    T findByUniqueId(Serializable id);<a name="line.102"></a>
+<span class="sourceLineNo">103</span><a name="line.103"></a>
+<span class="sourceLineNo">104</span>    /**<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     * Synchronize an entity with the persistence layer and return it.<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * <a name="line.106"></a>
+<span class="sourceLineNo">107</span>     * @param entity<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     *            - Entity instance to be synchronized with the persistence layer<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * @return The synchronized entity instance. If JPA is used as implementation, the returned instance is managed.<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    T save(T entity);<a name="line.111"></a>
+<span class="sourceLineNo">112</span><a name="line.112"></a>
+<span class="sourceLineNo">113</span>    /**<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     * Removes an already persistent entity.<a name="line.114"></a>
+<span class="sourceLineNo">115</span>     * <a name="line.115"></a>
+<span class="sourceLineNo">116</span>     * @param entity<a name="line.116"></a>
+<span class="sourceLineNo">117</span>     *            - Entity instance to be removed<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     * @throws IllegalArgumentException<a name="line.118"></a>
+<span class="sourceLineNo">119</span>     *             if the instance is not an entity or is a detached entity<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     */<a name="line.120"></a>
+<span class="sourceLineNo">121</span>    void remove(T entity);<a name="line.121"></a>
+<span class="sourceLineNo">122</span><a name="line.122"></a>
+<span class="sourceLineNo">123</span>    /**<a name="line.123"></a>
+<span class="sourceLineNo">124</span>     * Persist a transient entity.<a name="line.124"></a>
+<span class="sourceLineNo">125</span>     * <a name="line.125"></a>
+<span class="sourceLineNo">126</span>     * @param entity<a name="line.126"></a>
+<span class="sourceLineNo">127</span>     *            - Entity instance to be persisted<a name="line.127"></a>
+<span class="sourceLineNo">128</span>     */<a name="line.128"></a>
+<span class="sourceLineNo">129</span>    void persist(T entity);<a name="line.129"></a>
+<span class="sourceLineNo">130</span>}<a name="line.130"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

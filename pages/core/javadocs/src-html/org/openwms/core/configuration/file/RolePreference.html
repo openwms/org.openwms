@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * openwms.org, the Open Warehouse Management System.<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * Copyright (C) 2014 Heiko Scherrer<a name="line.3"></a>
+<span class="sourceLineNo">004</span> *<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * This file is part of openwms.org.<a name="line.5"></a>
+<span class="sourceLineNo">006</span> *<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * openwms.org is free software: you can redistribute it and/or modify<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * it under the terms of the GNU General Public License as <a name="line.8"></a>
+<span class="sourceLineNo">009</span> * published by the Free Software Foundation; either version 2 of the<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * License, or (at your option) any later version.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * openwms.org is distributed in the hope that it will be useful,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * but WITHOUT ANY WARRANTY; without even the implied warranty of<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * GNU General Public License for more details.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * You should have received a copy of the GNU General Public License<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * along with this software. If not, write to the Free Software<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * 02110-1301 USA, or see the FSF site: http://www.fsf.org.<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.openwms.core.configuration.file;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import javax.persistence.Column;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import javax.persistence.Entity;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import javax.persistence.EnumType;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import javax.persistence.Enumerated;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import javax.persistence.NamedQueries;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import javax.persistence.NamedQuery;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import javax.persistence.Table;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import javax.persistence.UniqueConstraint;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import javax.xml.bind.annotation.XmlAttribute;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import javax.xml.bind.annotation.XmlTransient;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import javax.xml.bind.annotation.XmlType;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import java.io.Serializable;<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>import org.openwms.core.configuration.PropertyScope;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import org.springframework.util.Assert;<a name="line.38"></a>
+<span class="sourceLineNo">039</span><a name="line.39"></a>
+<span class="sourceLineNo">040</span>/**<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * A RolePreference is used to provide settings specific to an {@code Role} . These kind of {@link Preferences} is valid for the assigned<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * Role only. {@code User}s assigned to a {@code Role} inherit these RolePreferences but a RolePreference can be overruled by an {@link<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * UserPreference}. RolePreferences can be defined within a preferences file but also be created with the UI.<a name="line.43"></a>
+<span class="sourceLineNo">044</span> *<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * @author &lt;a href="mailto:scherrer@openwms.org"&gt;Heiko Scherrer&lt;/a&gt;<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * @version $Revision$<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * @GlossaryTerm<a name="line.47"></a>
+<span class="sourceLineNo">048</span> * @since 0.1<a name="line.48"></a>
+<span class="sourceLineNo">049</span> */<a name="line.49"></a>
+<span class="sourceLineNo">050</span>@XmlType(name = "rolePreference", namespace = "http://www.openwms.org/schema/usermanagement")<a name="line.50"></a>
+<span class="sourceLineNo">051</span>@Entity<a name="line.51"></a>
+<span class="sourceLineNo">052</span>@Table(name = "COR_ROLE_PREFERENCE", uniqueConstraints = @UniqueConstraint(columnNames = {"C_TYPE", "C_OWNER", "C_KEY"}))<a name="line.52"></a>
+<span class="sourceLineNo">053</span>@NamedQueries({<a name="line.53"></a>
+<span class="sourceLineNo">054</span>        @NamedQuery(name = RolePreference.NQ_FIND_BY_OWNER, query = "select rp from RolePreference rp where rp.owner = :owner")})<a name="line.54"></a>
+<span class="sourceLineNo">055</span>public class RolePreference extends AbstractPreference implements Serializable {<a name="line.55"></a>
+<span class="sourceLineNo">056</span><a name="line.56"></a>
+<span class="sourceLineNo">057</span>    /**<a name="line.57"></a>
+<span class="sourceLineNo">058</span>     * Type of this preference.<a name="line.58"></a>
+<span class="sourceLineNo">059</span>     */<a name="line.59"></a>
+<span class="sourceLineNo">060</span>    @XmlTransient<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    @Enumerated(EnumType.STRING)<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    @Column(name = "C_TYPE")<a name="line.62"></a>
+<span class="sourceLineNo">063</span>    private PropertyScope type = PropertyScope.ROLE;<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    /**<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * Owner of the {@code RolePreference}.<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     */<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    @XmlAttribute(name = "owner", required = true)<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    @Column(name = "C_OWNER")<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    private String owner;<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    /**<a name="line.70"></a>
+<span class="sourceLineNo">071</span>     * Key value of the {@link RolePreference}.<a name="line.71"></a>
+<span class="sourceLineNo">072</span>     */<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    @XmlAttribute(name = "key", required = true)<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    @Column(name = "C_KEY")<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    private String key;<a name="line.75"></a>
+<span class="sourceLineNo">076</span><a name="line.76"></a>
+<span class="sourceLineNo">077</span>    /**<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * Query to find &lt;strong&gt;all&lt;/strong&gt; {@code RolePreference}s of a {@code Role}. &lt;li&gt;Query parameter name &lt;strong&gt;owner&lt;/strong&gt; : The<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     * rolename of the {@code Role} to search for.&lt;/li&gt;&lt;br /&gt; Name is {@value} .<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     */<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    public static final String NQ_FIND_BY_OWNER = "RolePreference" + FIND_BY_OWNER;<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>    /**<a name="line.83"></a>
+<span class="sourceLineNo">084</span>     * Create a new RolePreference. Defined for the JAXB implementation.<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     */<a name="line.85"></a>
+<span class="sourceLineNo">086</span>    public RolePreference() {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        super();<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    }<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>    /**<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * Create a new RolePreference.<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     *<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * @param rolename The name of the Role that owns this preference<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * @param key the key<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * @throws IllegalArgumentException when rolename or key is {@literal null} or empty<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     */<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    public RolePreference(String rolename, String key) {<a name="line.97"></a>
+<span class="sourceLineNo">098</span>        // Called from the client.<a name="line.98"></a>
+<span class="sourceLineNo">099</span>        super();<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        Assert.hasText(owner, "Not allowed to create a RolePreference with an empty rolename");<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        Assert.hasText(key, "Not allowed to create a RolePreference with an empty key");<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        owner = rolename;<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        this.key = key;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    }<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>    /**<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     * Get the key.<a name="line.107"></a>
+<span class="sourceLineNo">108</span>     *<a name="line.108"></a>
+<span class="sourceLineNo">109</span>     * @return the key.<a name="line.109"></a>
+<span class="sourceLineNo">110</span>     */<a name="line.110"></a>
+<span class="sourceLineNo">111</span>    public String getKey() {<a name="line.111"></a>
+<span class="sourceLineNo">112</span>        return key;<a name="line.112"></a>
+<span class="sourceLineNo">113</span>    }<a name="line.113"></a>
+<span class="sourceLineNo">114</span><a name="line.114"></a>
+<span class="sourceLineNo">115</span>    /**<a name="line.115"></a>
+<span class="sourceLineNo">116</span>     * Get the name of the {@code Role} as String.<a name="line.116"></a>
+<span class="sourceLineNo">117</span>     *<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     * @return the rolename.<a name="line.118"></a>
+<span class="sourceLineNo">119</span>     */<a name="line.119"></a>
+<span class="sourceLineNo">120</span>    public String getOwner() {<a name="line.120"></a>
+<span class="sourceLineNo">121</span>        return owner;<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    }<a name="line.122"></a>
+<span class="sourceLineNo">123</span><a name="line.123"></a>
+<span class="sourceLineNo">124</span>    /**<a name="line.124"></a>
+<span class="sourceLineNo">125</span>     * {@inheritDoc}<a name="line.125"></a>
+<span class="sourceLineNo">126</span>     *<a name="line.126"></a>
+<span class="sourceLineNo">127</span>     * @see AbstractPreference#getType()<a name="line.127"></a>
+<span class="sourceLineNo">128</span>     */<a name="line.128"></a>
+<span class="sourceLineNo">129</span>    @Override<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    public PropertyScope getType() {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>        return PropertyScope.ROLE;<a name="line.131"></a>
+<span class="sourceLineNo">132</span>    }<a name="line.132"></a>
+<span class="sourceLineNo">133</span><a name="line.133"></a>
+<span class="sourceLineNo">134</span>    /**<a name="line.134"></a>
+<span class="sourceLineNo">135</span>     * {@inheritDoc}<a name="line.135"></a>
+<span class="sourceLineNo">136</span>     *<a name="line.136"></a>
+<span class="sourceLineNo">137</span>     * @see AbstractPreference#getFields()<a name="line.137"></a>
+<span class="sourceLineNo">138</span>     */<a name="line.138"></a>
+<span class="sourceLineNo">139</span>    @Override<a name="line.139"></a>
+<span class="sourceLineNo">140</span>    protected Object[] getFields() {<a name="line.140"></a>
+<span class="sourceLineNo">141</span>        return new Object[]{getType(), getOwner(), getKey()};<a name="line.141"></a>
+<span class="sourceLineNo">142</span>    }<a name="line.142"></a>
+<span class="sourceLineNo">143</span><a name="line.143"></a>
+<span class="sourceLineNo">144</span>    /**<a name="line.144"></a>
+<span class="sourceLineNo">145</span>     * {@inheritDoc}<a name="line.145"></a>
+<span class="sourceLineNo">146</span>     * &lt;p&gt;<a name="line.146"></a>
+<span class="sourceLineNo">147</span>     * Uses the type, owner and the key to create a {@link PreferenceKey} instance.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>     *<a name="line.148"></a>
+<span class="sourceLineNo">149</span>     * @see AbstractPreference#getPrefKey()<a name="line.149"></a>
+<span class="sourceLineNo">150</span>     */<a name="line.150"></a>
+<span class="sourceLineNo">151</span>    @Override<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    public PreferenceKey getPrefKey() {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        return new PreferenceKey(getType(), getOwner(), getKey());<a name="line.153"></a>
+<span class="sourceLineNo">154</span>    }<a name="line.154"></a>
+<span class="sourceLineNo">155</span><a name="line.155"></a>
+<span class="sourceLineNo">156</span>    /**<a name="line.156"></a>
+<span class="sourceLineNo">157</span>     * {@inheritDoc}<a name="line.157"></a>
+<span class="sourceLineNo">158</span>     * &lt;p&gt;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>     * Uses key, owner and type for hashCode calculation.<a name="line.159"></a>
+<span class="sourceLineNo">160</span>     *<a name="line.160"></a>
+<span class="sourceLineNo">161</span>     * @see java.lang.Object#hashCode()<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     */<a name="line.162"></a>
+<span class="sourceLineNo">163</span>    @Override<a name="line.163"></a>
+<span class="sourceLineNo">164</span>    public int hashCode() {<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        final int prime = 31;<a name="line.165"></a>
+<span class="sourceLineNo">166</span>        int result = super.hashCode();<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        result = prime * result + ((key == null) ? 0 : key.hashCode());<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        result = prime * result + ((owner == null) ? 0 : owner.hashCode());<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        result = prime * result + ((type == null) ? 0 : type.hashCode());<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        return result;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    }<a name="line.171"></a>
+<span class="sourceLineNo">172</span><a name="line.172"></a>
+<span class="sourceLineNo">173</span>    /**<a name="line.173"></a>
+<span class="sourceLineNo">174</span>     * {@inheritDoc}<a name="line.174"></a>
+<span class="sourceLineNo">175</span>     * &lt;p&gt;<a name="line.175"></a>
+<span class="sourceLineNo">176</span>     * Comparison done with key, owner and type fields. Not delegated to super class.<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     *<a name="line.177"></a>
+<span class="sourceLineNo">178</span>     * @see java.lang.Object#equals(java.lang.Object)<a name="line.178"></a>
+<span class="sourceLineNo">179</span>     */<a name="line.179"></a>
+<span class="sourceLineNo">180</span>    @Override<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    public boolean equals(Object obj) {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        if (null == obj) {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>            return false;<a name="line.183"></a>
+<span class="sourceLineNo">184</span>        }<a name="line.184"></a>
+<span class="sourceLineNo">185</span>        if (this == obj) {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>            return true;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>        }<a name="line.187"></a>
+<span class="sourceLineNo">188</span>        if (getClass() != obj.getClass()) {<a name="line.188"></a>
+<span class="sourceLineNo">189</span>            return false;<a name="line.189"></a>
+<span class="sourceLineNo">190</span>        }<a name="line.190"></a>
+<span class="sourceLineNo">191</span>        RolePreference other = (RolePreference) obj;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>        if (key == null) {<a name="line.192"></a>
+<span class="sourceLineNo">193</span>            if (other.key != null) {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>                return false;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>            }<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        } else if (!key.equals(other.key)) {<a name="line.196"></a>
+<span class="sourceLineNo">197</span>            return false;<a name="line.197"></a>
+<span class="sourceLineNo">198</span>        }<a name="line.198"></a>
+<span class="sourceLineNo">199</span>        if (owner == null) {<a name="line.199"></a>
+<span class="sourceLineNo">200</span>            if (other.owner != null) {<a name="line.200"></a>
+<span class="sourceLineNo">201</span>                return false;<a name="line.201"></a>
+<span class="sourceLineNo">202</span>            }<a name="line.202"></a>
+<span class="sourceLineNo">203</span>        } else if (!owner.equals(other.owner)) {<a name="line.203"></a>
+<span class="sourceLineNo">204</span>            return false;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>        }<a name="line.205"></a>
+<span class="sourceLineNo">206</span>        return type == other.type;<a name="line.206"></a>
+<span class="sourceLineNo">207</span>    }<a name="line.207"></a>
+<span class="sourceLineNo">208</span><a name="line.208"></a>
+<span class="sourceLineNo">209</span>    /**<a name="line.209"></a>
+<span class="sourceLineNo">210</span>     * {@inheritDoc}<a name="line.210"></a>
+<span class="sourceLineNo">211</span>     * &lt;p&gt;<a name="line.211"></a>
+<span class="sourceLineNo">212</span>     * Use all fields.<a name="line.212"></a>
+<span class="sourceLineNo">213</span>     */<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    @Override<a name="line.214"></a>
+<span class="sourceLineNo">215</span>    public String toString() {<a name="line.215"></a>
+<span class="sourceLineNo">216</span>        return "RolePreference{" +<a name="line.216"></a>
+<span class="sourceLineNo">217</span>                "type=" + type +<a name="line.217"></a>
+<span class="sourceLineNo">218</span>                ", owner='" + owner + '\'' +<a name="line.218"></a>
+<span class="sourceLineNo">219</span>                ", key='" + key + '\'' +<a name="line.219"></a>
+<span class="sourceLineNo">220</span>                "} " + super.toString();<a name="line.220"></a>
+<span class="sourceLineNo">221</span>    }<a name="line.221"></a>
+<span class="sourceLineNo">222</span>}<a name="line.222"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

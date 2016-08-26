@@ -1,0 +1,597 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * openwms.org, the Open Warehouse Management System.<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * Copyright (C) 2014 Heiko Scherrer<a name="line.3"></a>
+<span class="sourceLineNo">004</span> *<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * This file is part of openwms.org.<a name="line.5"></a>
+<span class="sourceLineNo">006</span> *<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * openwms.org is free software: you can redistribute it and/or modify<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * it under the terms of the GNU General Public License as <a name="line.8"></a>
+<span class="sourceLineNo">009</span> * published by the Free Software Foundation; either version 2 of the<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * License, or (at your option) any later version.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * openwms.org is distributed in the hope that it will be useful,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * but WITHOUT ANY WARRANTY; without even the implied warranty of<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * GNU General Public License for more details.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * You should have received a copy of the GNU General Public License<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * along with this software. If not, write to the Free Software<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * 02110-1301 USA, or see the FSF site: http://www.fsf.org.<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.openwms.core.uaa;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import javax.persistence.CascadeType;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import javax.persistence.Column;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import javax.persistence.Embedded;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import javax.persistence.Entity;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import javax.persistence.JoinColumn;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import javax.persistence.JoinTable;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import javax.persistence.ManyToMany;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import javax.persistence.OneToMany;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import javax.persistence.OneToOne;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import javax.persistence.PostLoad;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import javax.persistence.Table;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import javax.persistence.Temporal;<a name="line.35"></a>
+<span class="sourceLineNo">036</span>import javax.persistence.TemporalType;<a name="line.36"></a>
+<span class="sourceLineNo">037</span>import javax.persistence.Transient;<a name="line.37"></a>
+<span class="sourceLineNo">038</span>import javax.validation.constraints.NotNull;<a name="line.38"></a>
+<span class="sourceLineNo">039</span>import javax.validation.constraints.Size;<a name="line.39"></a>
+<span class="sourceLineNo">040</span>import java.io.Serializable;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>import java.util.ArrayList;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>import java.util.Collections;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>import java.util.Comparator;<a name="line.43"></a>
+<span class="sourceLineNo">044</span>import java.util.Date;<a name="line.44"></a>
+<span class="sourceLineNo">045</span>import java.util.List;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>import java.util.Set;<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span>import org.ameba.integration.jpa.ApplicationEntity;<a name="line.48"></a>
+<span class="sourceLineNo">049</span>import org.openwms.core.exception.InvalidPasswordException;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>import org.slf4j.Logger;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>import org.slf4j.LoggerFactory;<a name="line.51"></a>
+<span class="sourceLineNo">052</span>import org.springframework.security.crypto.password.PasswordEncoder;<a name="line.52"></a>
+<span class="sourceLineNo">053</span>import org.springframework.util.Assert;<a name="line.53"></a>
+<span class="sourceLineNo">054</span><a name="line.54"></a>
+<span class="sourceLineNo">055</span>/**<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * An User represents a human user of the system. Typically an User is assigned to one or more {@code Roles} to define security constraints.<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * Users can have their own configuration settings in form of {@code UserPreferences} and certain user details, encapsulated in an {@code<a name="line.57"></a>
+<span class="sourceLineNo">058</span> * UserDetails} object that tend to be extended by projects.<a name="line.58"></a>
+<span class="sourceLineNo">059</span> *<a name="line.59"></a>
+<span class="sourceLineNo">060</span> * @author &lt;a href="mailto:scherrer@openwms.org"&gt;Heiko Scherrer&lt;/a&gt;<a name="line.60"></a>
+<span class="sourceLineNo">061</span> * @version 0.2<a name="line.61"></a>
+<span class="sourceLineNo">062</span> * @GlossaryTerm<a name="line.62"></a>
+<span class="sourceLineNo">063</span> * @see UserDetails<a name="line.63"></a>
+<span class="sourceLineNo">064</span> * @see UserPassword<a name="line.64"></a>
+<span class="sourceLineNo">065</span> * @see org.openwms.core.uaa.Role<a name="line.65"></a>
+<span class="sourceLineNo">066</span> * @since 0.1<a name="line.66"></a>
+<span class="sourceLineNo">067</span> */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>@Entity<a name="line.68"></a>
+<span class="sourceLineNo">069</span>@Table(name = "COR_USER")<a name="line.69"></a>
+<span class="sourceLineNo">070</span>public class User extends ApplicationEntity implements Serializable {<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>    private static final Logger LOGGER = LoggerFactory.getLogger(User.class);<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    /** Unique identifier of this User (not nullable). */<a name="line.73"></a>
+<span class="sourceLineNo">074</span>    @Column(name = "C_USERNAME", unique = true, nullable = false)<a name="line.74"></a>
+<span class="sourceLineNo">075</span>    @NotNull<a name="line.75"></a>
+<span class="sourceLineNo">076</span>    @Size(min = 1)<a name="line.76"></a>
+<span class="sourceLineNo">077</span>    private String username;<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    /** {@code true} if the User is authenticated by an external system, otherwise {@code false}. */<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    @Column(name = "C_EXTERN")<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    private boolean extern = false;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    /** Date of the last password change. */<a name="line.81"></a>
+<span class="sourceLineNo">082</span>    @Temporal(TemporalType.TIMESTAMP)<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    @Column(name = "C_LAST_PASSWORD_CHANGE")<a name="line.83"></a>
+<span class="sourceLineNo">084</span>    private Date lastPasswordChange;<a name="line.84"></a>
+<span class="sourceLineNo">085</span>    /**<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * {@code true} if this User is locked and has not the permission to login anymore. This field is set by the backend application, e.g.<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     * when the expirationDate of the account has expired.<a name="line.87"></a>
+<span class="sourceLineNo">088</span>     */<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    @Column(name = "C_LOCKED")<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    private boolean locked = false;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    /** The User's current password (only kept transient). */<a name="line.91"></a>
+<span class="sourceLineNo">092</span>    @Transient<a name="line.92"></a>
+<span class="sourceLineNo">093</span>    private String password;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>    /** The User's current password. */<a name="line.94"></a>
+<span class="sourceLineNo">095</span>    @Column(name = "C_PASSWORD")<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    private String persistedPassword;<a name="line.96"></a>
+<span class="sourceLineNo">097</span>    /** {@code true} if the User is enabled. This field can be managed by the UI application to lock an User manually. */<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    @Column(name = "C_ENABLED")<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    private boolean enabled = true;<a name="line.99"></a>
+<span class="sourceLineNo">100</span>    /** Date when the account expires. After account expiration, the User cannot login anymore. */<a name="line.100"></a>
+<span class="sourceLineNo">101</span>    @Temporal(TemporalType.TIMESTAMP)<a name="line.101"></a>
+<span class="sourceLineNo">102</span>    @Column(name = "C_EXPIRATION_DATE")<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    private Date expirationDate;<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    /** The User's fullname. Doesn't have to be unique. */<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    @Column(name = "C_FULLNAME")<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    private String fullname;<a name="line.106"></a>
+<span class="sourceLineNo">107</span>    @OneToOne//(mappedBy = "username")<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    private Email primaryEmailAddress;<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    @OneToMany(mappedBy = "username")<a name="line.109"></a>
+<span class="sourceLineNo">110</span>    private Set&lt;Email&gt; emailAddresses;<a name="line.110"></a>
+<span class="sourceLineNo">111</span><a name="line.111"></a>
+<span class="sourceLineNo">112</span>    /* ------------------- collection mapping ------------------- */<a name="line.112"></a>
+<span class="sourceLineNo">113</span>    /** More detail information of the User. */<a name="line.113"></a>
+<span class="sourceLineNo">114</span>    @Embedded<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    private UserDetails userDetails = new UserDetails();<a name="line.115"></a>
+<span class="sourceLineNo">116</span><a name="line.116"></a>
+<span class="sourceLineNo">117</span>    /**<a name="line.117"></a>
+<span class="sourceLineNo">118</span>     * List of {@link Role}s assigned to the User. In a JPA context eager loaded.<a name="line.118"></a>
+<span class="sourceLineNo">119</span>     *<a name="line.119"></a>
+<span class="sourceLineNo">120</span>     * @see javax.persistence.FetchType#EAGER<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     */<a name="line.121"></a>
+<span class="sourceLineNo">122</span>    @ManyToMany(mappedBy = "users", cascade = {CascadeType.MERGE, CascadeType.REFRESH})<a name="line.122"></a>
+<span class="sourceLineNo">123</span>    private List&lt;Role&gt; roles = new ArrayList&lt;&gt;();<a name="line.123"></a>
+<span class="sourceLineNo">124</span><a name="line.124"></a>
+<span class="sourceLineNo">125</span>    /** Password history of the User. */<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    @JoinTable(name = "COR_USER_PASSWORD_JOIN", joinColumns = @JoinColumn(name = "USER_ID"), inverseJoinColumns = @JoinColumn(name = "PASSWORD_ID"))<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    private List&lt;UserPassword&gt; passwords = new ArrayList&lt;&gt;();<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>    /**<a name="line.130"></a>
+<span class="sourceLineNo">131</span>     * The number of passwords to be stored in the password history. When an User changes the password, the old password is stored in a<a name="line.131"></a>
+<span class="sourceLineNo">132</span>     * Collection. Default: {@value}.<a name="line.132"></a>
+<span class="sourceLineNo">133</span>     */<a name="line.133"></a>
+<span class="sourceLineNo">134</span>    public static final short NUMBER_STORED_PASSWORDS = 3;<a name="line.134"></a>
+<span class="sourceLineNo">135</span><a name="line.135"></a>
+<span class="sourceLineNo">136</span>    /* ----------------------------- constructors ------------------- */<a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>    /**<a name="line.138"></a>
+<span class="sourceLineNo">139</span>     * Accessed by persistence provider.<a name="line.139"></a>
+<span class="sourceLineNo">140</span>     */<a name="line.140"></a>
+<span class="sourceLineNo">141</span>    protected User() {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        super();<a name="line.142"></a>
+<span class="sourceLineNo">143</span>        loadLazy();<a name="line.143"></a>
+<span class="sourceLineNo">144</span>    }<a name="line.144"></a>
+<span class="sourceLineNo">145</span><a name="line.145"></a>
+<span class="sourceLineNo">146</span>    /**<a name="line.146"></a>
+<span class="sourceLineNo">147</span>     * Create a new User with an username.<a name="line.147"></a>
+<span class="sourceLineNo">148</span>     *<a name="line.148"></a>
+<span class="sourceLineNo">149</span>     * @param username The unique name of the user<a name="line.149"></a>
+<span class="sourceLineNo">150</span>     * @throws IllegalArgumentException when username is {@literal null} or empty<a name="line.150"></a>
+<span class="sourceLineNo">151</span>     */<a name="line.151"></a>
+<span class="sourceLineNo">152</span>    public User(String username) {<a name="line.152"></a>
+<span class="sourceLineNo">153</span>        super();<a name="line.153"></a>
+<span class="sourceLineNo">154</span>        Assert.hasText(username, "Not allowed to create an User with an empty username");<a name="line.154"></a>
+<span class="sourceLineNo">155</span>        this.username = username;<a name="line.155"></a>
+<span class="sourceLineNo">156</span>        loadLazy();<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    }<a name="line.157"></a>
+<span class="sourceLineNo">158</span><a name="line.158"></a>
+<span class="sourceLineNo">159</span>    /**<a name="line.159"></a>
+<span class="sourceLineNo">160</span>     * Create a new User with an username.<a name="line.160"></a>
+<span class="sourceLineNo">161</span>     *<a name="line.161"></a>
+<span class="sourceLineNo">162</span>     * @param username The unique name of the user<a name="line.162"></a>
+<span class="sourceLineNo">163</span>     * @param password The password of the user<a name="line.163"></a>
+<span class="sourceLineNo">164</span>     * @throws IllegalArgumentException when username or password is {@literal null} or empty<a name="line.164"></a>
+<span class="sourceLineNo">165</span>     */<a name="line.165"></a>
+<span class="sourceLineNo">166</span>    protected User(String username, String password) {<a name="line.166"></a>
+<span class="sourceLineNo">167</span>        super();<a name="line.167"></a>
+<span class="sourceLineNo">168</span>        Assert.hasText(username, "Not allowed to create an User with an empty username");<a name="line.168"></a>
+<span class="sourceLineNo">169</span>        Assert.hasText(password, "Not allowed to create an User with an empty password");<a name="line.169"></a>
+<span class="sourceLineNo">170</span>        this.username = username;<a name="line.170"></a>
+<span class="sourceLineNo">171</span>        this.password = password;<a name="line.171"></a>
+<span class="sourceLineNo">172</span>    }<a name="line.172"></a>
+<span class="sourceLineNo">173</span><a name="line.173"></a>
+<span class="sourceLineNo">174</span>    /* ----------------------------- methods ------------------- */<a name="line.174"></a>
+<span class="sourceLineNo">175</span><a name="line.175"></a>
+<span class="sourceLineNo">176</span>    /**<a name="line.176"></a>
+<span class="sourceLineNo">177</span>     * After load, the saved password is copied to the transient one. The transient one can be overridden by the application to force a<a name="line.177"></a>
+<span class="sourceLineNo">178</span>     * password change.<a name="line.178"></a>
+<span class="sourceLineNo">179</span>     */<a name="line.179"></a>
+<span class="sourceLineNo">180</span>    @PostLoad<a name="line.180"></a>
+<span class="sourceLineNo">181</span>    public void postLoad() {<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        loadLazy();<a name="line.182"></a>
+<span class="sourceLineNo">183</span>    }<a name="line.183"></a>
+<span class="sourceLineNo">184</span><a name="line.184"></a>
+<span class="sourceLineNo">185</span>    protected void loadLazy() {<a name="line.185"></a>
+<span class="sourceLineNo">186</span>        password = persistedPassword;<a name="line.186"></a>
+<span class="sourceLineNo">187</span>    }<a name="line.187"></a>
+<span class="sourceLineNo">188</span><a name="line.188"></a>
+<span class="sourceLineNo">189</span>    /**<a name="line.189"></a>
+<span class="sourceLineNo">190</span>     * Return the unique username of the User.<a name="line.190"></a>
+<span class="sourceLineNo">191</span>     *<a name="line.191"></a>
+<span class="sourceLineNo">192</span>     * @return The current username<a name="line.192"></a>
+<span class="sourceLineNo">193</span>     */<a name="line.193"></a>
+<span class="sourceLineNo">194</span>    public String getUsername() {<a name="line.194"></a>
+<span class="sourceLineNo">195</span>        return username;<a name="line.195"></a>
+<span class="sourceLineNo">196</span>    }<a name="line.196"></a>
+<span class="sourceLineNo">197</span><a name="line.197"></a>
+<span class="sourceLineNo">198</span>    /**<a name="line.198"></a>
+<span class="sourceLineNo">199</span>     * Change the username of the User.<a name="line.199"></a>
+<span class="sourceLineNo">200</span>     *<a name="line.200"></a>
+<span class="sourceLineNo">201</span>     * @param username The new username to set<a name="line.201"></a>
+<span class="sourceLineNo">202</span>     */<a name="line.202"></a>
+<span class="sourceLineNo">203</span>    protected void setUsername(String username) {<a name="line.203"></a>
+<span class="sourceLineNo">204</span>        this.username = username;<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    }<a name="line.205"></a>
+<span class="sourceLineNo">206</span><a name="line.206"></a>
+<span class="sourceLineNo">207</span>    /**<a name="line.207"></a>
+<span class="sourceLineNo">208</span>     * Is the User authenticated by an external system?<a name="line.208"></a>
+<span class="sourceLineNo">209</span>     *<a name="line.209"></a>
+<span class="sourceLineNo">210</span>     * @return {@literal true} if so, otherwise {@literal false}<a name="line.210"></a>
+<span class="sourceLineNo">211</span>     */<a name="line.211"></a>
+<span class="sourceLineNo">212</span>    public boolean isExternalUser() {<a name="line.212"></a>
+<span class="sourceLineNo">213</span>        return extern;<a name="line.213"></a>
+<span class="sourceLineNo">214</span>    }<a name="line.214"></a>
+<span class="sourceLineNo">215</span><a name="line.215"></a>
+<span class="sourceLineNo">216</span>    /**<a name="line.216"></a>
+<span class="sourceLineNo">217</span>     * Change the authentication method of the User.<a name="line.217"></a>
+<span class="sourceLineNo">218</span>     *<a name="line.218"></a>
+<span class="sourceLineNo">219</span>     * @param externalUser {@literal true} if the User was authenticated by an external system, otherwise {@literal false}.<a name="line.219"></a>
+<span class="sourceLineNo">220</span>     */<a name="line.220"></a>
+<span class="sourceLineNo">221</span>    public void setExternalUser(boolean externalUser) {<a name="line.221"></a>
+<span class="sourceLineNo">222</span>        extern = externalUser;<a name="line.222"></a>
+<span class="sourceLineNo">223</span>    }<a name="line.223"></a>
+<span class="sourceLineNo">224</span><a name="line.224"></a>
+<span class="sourceLineNo">225</span>    /**<a name="line.225"></a>
+<span class="sourceLineNo">226</span>     * Return the date when the password has changed recently.<a name="line.226"></a>
+<span class="sourceLineNo">227</span>     *<a name="line.227"></a>
+<span class="sourceLineNo">228</span>     * @return The date when the password has changed recently<a name="line.228"></a>
+<span class="sourceLineNo">229</span>     */<a name="line.229"></a>
+<span class="sourceLineNo">230</span>    public Date getLastPasswordChange() {<a name="line.230"></a>
+<span class="sourceLineNo">231</span>        return lastPasswordChange == null ? null : new Date(lastPasswordChange.getTime());<a name="line.231"></a>
+<span class="sourceLineNo">232</span>    }<a name="line.232"></a>
+<span class="sourceLineNo">233</span><a name="line.233"></a>
+<span class="sourceLineNo">234</span>    /**<a name="line.234"></a>
+<span class="sourceLineNo">235</span>     * Check if the User is locked.<a name="line.235"></a>
+<span class="sourceLineNo">236</span>     *<a name="line.236"></a>
+<span class="sourceLineNo">237</span>     * @return {@literal true} if locked, otherwise {@literal false}<a name="line.237"></a>
+<span class="sourceLineNo">238</span>     */<a name="line.238"></a>
+<span class="sourceLineNo">239</span>    public boolean isLocked() {<a name="line.239"></a>
+<span class="sourceLineNo">240</span>        return locked;<a name="line.240"></a>
+<span class="sourceLineNo">241</span>    }<a name="line.241"></a>
+<span class="sourceLineNo">242</span><a name="line.242"></a>
+<span class="sourceLineNo">243</span>    /**<a name="line.243"></a>
+<span class="sourceLineNo">244</span>     * Lock the User.<a name="line.244"></a>
+<span class="sourceLineNo">245</span>     *<a name="line.245"></a>
+<span class="sourceLineNo">246</span>     * @param locked {@literal true} to lock the User, {@literal false} to unlock<a name="line.246"></a>
+<span class="sourceLineNo">247</span>     */<a name="line.247"></a>
+<span class="sourceLineNo">248</span>    public void setLocked(boolean locked) {<a name="line.248"></a>
+<span class="sourceLineNo">249</span>        this.locked = locked;<a name="line.249"></a>
+<span class="sourceLineNo">250</span>    }<a name="line.250"></a>
+<span class="sourceLineNo">251</span><a name="line.251"></a>
+<span class="sourceLineNo">252</span>    /**<a name="line.252"></a>
+<span class="sourceLineNo">253</span>     * Returns the current password of the User.<a name="line.253"></a>
+<span class="sourceLineNo">254</span>     *<a name="line.254"></a>
+<span class="sourceLineNo">255</span>     * @return The current password as String<a name="line.255"></a>
+<span class="sourceLineNo">256</span>     */<a name="line.256"></a>
+<span class="sourceLineNo">257</span>    public String getPassword() {<a name="line.257"></a>
+<span class="sourceLineNo">258</span>        return password;<a name="line.258"></a>
+<span class="sourceLineNo">259</span>    }<a name="line.259"></a>
+<span class="sourceLineNo">260</span><a name="line.260"></a>
+<span class="sourceLineNo">261</span>    /**<a name="line.261"></a>
+<span class="sourceLineNo">262</span>     * Checks if the new password is a valid and change the password of this User.<a name="line.262"></a>
+<span class="sourceLineNo">263</span>     *<a name="line.263"></a>
+<span class="sourceLineNo">264</span>     * @param encodedPassword The new encoded password of this User<a name="line.264"></a>
+<span class="sourceLineNo">265</span>     * @throws InvalidPasswordException in case changing the password is not allowed or the new password is not valid<a name="line.265"></a>
+<span class="sourceLineNo">266</span>     */<a name="line.266"></a>
+<span class="sourceLineNo">267</span>    public void changePassword(String encodedPassword, String rawPassword, PasswordEncoder encoder) throws InvalidPasswordException {<a name="line.267"></a>
+<span class="sourceLineNo">268</span>        if (persistedPassword != null &amp;&amp; encoder.matches(rawPassword ,persistedPassword)) {<a name="line.268"></a>
+<span class="sourceLineNo">269</span>            LOGGER.debug("Trying to set the new password equals to the current password");<a name="line.269"></a>
+<span class="sourceLineNo">270</span>            return;<a name="line.270"></a>
+<span class="sourceLineNo">271</span>        }<a name="line.271"></a>
+<span class="sourceLineNo">272</span>        validateAgainstPasswordHistory(rawPassword, encoder);<a name="line.272"></a>
+<span class="sourceLineNo">273</span>        storeOldPassword(this.password);<a name="line.273"></a>
+<span class="sourceLineNo">274</span>        persistedPassword = encodedPassword;<a name="line.274"></a>
+<span class="sourceLineNo">275</span>        this.password = encodedPassword;<a name="line.275"></a>
+<span class="sourceLineNo">276</span>        lastPasswordChange = new Date();<a name="line.276"></a>
+<span class="sourceLineNo">277</span>    }<a name="line.277"></a>
+<span class="sourceLineNo">278</span><a name="line.278"></a>
+<span class="sourceLineNo">279</span>    /**<a name="line.279"></a>
+<span class="sourceLineNo">280</span>     * Checks whether the password is going to change.<a name="line.280"></a>
+<span class="sourceLineNo">281</span>     *<a name="line.281"></a>
+<span class="sourceLineNo">282</span>     * @return {@literal true} when {@code password} is different to the originally persisted one, otherwise {@literal false}<a name="line.282"></a>
+<span class="sourceLineNo">283</span>     */<a name="line.283"></a>
+<span class="sourceLineNo">284</span>    public boolean hasPasswordChanged() {<a name="line.284"></a>
+<span class="sourceLineNo">285</span>        return (persistedPassword.equals(password));<a name="line.285"></a>
+<span class="sourceLineNo">286</span>    }<a name="line.286"></a>
+<span class="sourceLineNo">287</span><a name="line.287"></a>
+<span class="sourceLineNo">288</span>    /**<a name="line.288"></a>
+<span class="sourceLineNo">289</span>     * Check whether the new password is in the history of former passwords.<a name="line.289"></a>
+<span class="sourceLineNo">290</span>     *<a name="line.290"></a>
+<span class="sourceLineNo">291</span>     * @param rawPassword The password to verify<a name="line.291"></a>
+<span class="sourceLineNo">292</span>     * @return {@literal true} if the password is valid, otherwise {@literal false}<a name="line.292"></a>
+<span class="sourceLineNo">293</span>     */<a name="line.293"></a>
+<span class="sourceLineNo">294</span>    protected void validateAgainstPasswordHistory(String rawPassword, PasswordEncoder encoder) throws InvalidPasswordException {<a name="line.294"></a>
+<span class="sourceLineNo">295</span>        for(UserPassword up : passwords) {<a name="line.295"></a>
+<span class="sourceLineNo">296</span>            if (encoder.matches(rawPassword, up.getPassword())) {<a name="line.296"></a>
+<span class="sourceLineNo">297</span>                throw new InvalidPasswordException("Password is not confirm with defined rules");<a name="line.297"></a>
+<span class="sourceLineNo">298</span>            }<a name="line.298"></a>
+<span class="sourceLineNo">299</span>        }<a name="line.299"></a>
+<span class="sourceLineNo">300</span>    }<a name="line.300"></a>
+<span class="sourceLineNo">301</span><a name="line.301"></a>
+<span class="sourceLineNo">302</span>    private void storeOldPassword(String oldPassword) {<a name="line.302"></a>
+<span class="sourceLineNo">303</span>        if (oldPassword == null || oldPassword.isEmpty()) {<a name="line.303"></a>
+<span class="sourceLineNo">304</span>            if (LOGGER.isDebugEnabled()) {<a name="line.304"></a>
+<span class="sourceLineNo">305</span>                LOGGER.debug("If the old password is null, do not store it in history");<a name="line.305"></a>
+<span class="sourceLineNo">306</span>            }<a name="line.306"></a>
+<span class="sourceLineNo">307</span>            return;<a name="line.307"></a>
+<span class="sourceLineNo">308</span>        }<a name="line.308"></a>
+<span class="sourceLineNo">309</span>        passwords.add(new UserPassword(this, oldPassword));<a name="line.309"></a>
+<span class="sourceLineNo">310</span>        if (passwords.size() &gt; NUMBER_STORED_PASSWORDS) {<a name="line.310"></a>
+<span class="sourceLineNo">311</span>            Collections.sort(passwords, new PasswordComparator());<a name="line.311"></a>
+<span class="sourceLineNo">312</span>            if (LOGGER.isDebugEnabled()) {<a name="line.312"></a>
+<span class="sourceLineNo">313</span>                LOGGER.debug("Remove the old password from the history: " + passwords.get(passwords.size() - 1));<a name="line.313"></a>
+<span class="sourceLineNo">314</span>            }<a name="line.314"></a>
+<span class="sourceLineNo">315</span>            UserPassword pw = passwords.get(passwords.size() - 1);<a name="line.315"></a>
+<span class="sourceLineNo">316</span>            pw.setUser(null);<a name="line.316"></a>
+<span class="sourceLineNo">317</span>            passwords.remove(pw);<a name="line.317"></a>
+<span class="sourceLineNo">318</span>        }<a name="line.318"></a>
+<span class="sourceLineNo">319</span>    }<a name="line.319"></a>
+<span class="sourceLineNo">320</span><a name="line.320"></a>
+<span class="sourceLineNo">321</span>    /**<a name="line.321"></a>
+<span class="sourceLineNo">322</span>     * Determines whether the User is enabled or not.<a name="line.322"></a>
+<span class="sourceLineNo">323</span>     *<a name="line.323"></a>
+<span class="sourceLineNo">324</span>     * @return {@literal true} if the User is enabled, otherwise {@literal false}<a name="line.324"></a>
+<span class="sourceLineNo">325</span>     */<a name="line.325"></a>
+<span class="sourceLineNo">326</span>    public boolean isEnabled() {<a name="line.326"></a>
+<span class="sourceLineNo">327</span>        return enabled;<a name="line.327"></a>
+<span class="sourceLineNo">328</span>    }<a name="line.328"></a>
+<span class="sourceLineNo">329</span><a name="line.329"></a>
+<span class="sourceLineNo">330</span>    /**<a name="line.330"></a>
+<span class="sourceLineNo">331</span>     * Enable or disable the User.<a name="line.331"></a>
+<span class="sourceLineNo">332</span>     *<a name="line.332"></a>
+<span class="sourceLineNo">333</span>     * @param enabled {@literal true} when enabled, otherwise {@literal false}<a name="line.333"></a>
+<span class="sourceLineNo">334</span>     */<a name="line.334"></a>
+<span class="sourceLineNo">335</span>    public void setEnabled(boolean enabled) {<a name="line.335"></a>
+<span class="sourceLineNo">336</span>        this.enabled = enabled;<a name="line.336"></a>
+<span class="sourceLineNo">337</span>    }<a name="line.337"></a>
+<span class="sourceLineNo">338</span><a name="line.338"></a>
+<span class="sourceLineNo">339</span>    /**<a name="line.339"></a>
+<span class="sourceLineNo">340</span>     * Return the date when the account expires.<a name="line.340"></a>
+<span class="sourceLineNo">341</span>     *<a name="line.341"></a>
+<span class="sourceLineNo">342</span>     * @return The expiration date<a name="line.342"></a>
+<span class="sourceLineNo">343</span>     */<a name="line.343"></a>
+<span class="sourceLineNo">344</span>    public Date getExpirationDate() {<a name="line.344"></a>
+<span class="sourceLineNo">345</span>        return expirationDate == null ? null : new Date(expirationDate.getTime());<a name="line.345"></a>
+<span class="sourceLineNo">346</span>    }<a name="line.346"></a>
+<span class="sourceLineNo">347</span><a name="line.347"></a>
+<span class="sourceLineNo">348</span>    /**<a name="line.348"></a>
+<span class="sourceLineNo">349</span>     * Change the date when the account expires.<a name="line.349"></a>
+<span class="sourceLineNo">350</span>     *<a name="line.350"></a>
+<span class="sourceLineNo">351</span>     * @param expDate The new expiration date to set<a name="line.351"></a>
+<span class="sourceLineNo">352</span>     */<a name="line.352"></a>
+<span class="sourceLineNo">353</span>    public void setExpirationDate(Date expDate) {<a name="line.353"></a>
+<span class="sourceLineNo">354</span>        expirationDate = expDate;<a name="line.354"></a>
+<span class="sourceLineNo">355</span>    }<a name="line.355"></a>
+<span class="sourceLineNo">356</span><a name="line.356"></a>
+<span class="sourceLineNo">357</span>    /**<a name="line.357"></a>
+<span class="sourceLineNo">358</span>     * Returns a list of granted {@link Role}s.<a name="line.358"></a>
+<span class="sourceLineNo">359</span>     *<a name="line.359"></a>
+<span class="sourceLineNo">360</span>     * @return The list of granted {@link Role}s<a name="line.360"></a>
+<span class="sourceLineNo">361</span>     */<a name="line.361"></a>
+<span class="sourceLineNo">362</span>    public List&lt;Role&gt; getRoles() {<a name="line.362"></a>
+<span class="sourceLineNo">363</span>        return roles;<a name="line.363"></a>
+<span class="sourceLineNo">364</span>    }<a name="line.364"></a>
+<span class="sourceLineNo">365</span><a name="line.365"></a>
+<span class="sourceLineNo">366</span>    /**<a name="line.366"></a>
+<span class="sourceLineNo">367</span>     * Flatten {@link Role}s and {@link Grant}s and return an unmodifiable list of all {@link Grant}s assigned to this User.<a name="line.367"></a>
+<span class="sourceLineNo">368</span>     *<a name="line.368"></a>
+<span class="sourceLineNo">369</span>     * @return A list of all {@link Grant}s<a name="line.369"></a>
+<span class="sourceLineNo">370</span>     */<a name="line.370"></a>
+<span class="sourceLineNo">371</span>    public List&lt;SecurityObject&gt; getGrants() {<a name="line.371"></a>
+<span class="sourceLineNo">372</span>        List&lt;SecurityObject&gt; grants = new ArrayList&lt;&gt;();<a name="line.372"></a>
+<span class="sourceLineNo">373</span>        for (Role role : getRoles()) {<a name="line.373"></a>
+<span class="sourceLineNo">374</span>            grants.addAll(role.getGrants());<a name="line.374"></a>
+<span class="sourceLineNo">375</span>        }<a name="line.375"></a>
+<span class="sourceLineNo">376</span>        return Collections.unmodifiableList(grants);<a name="line.376"></a>
+<span class="sourceLineNo">377</span>    }<a name="line.377"></a>
+<span class="sourceLineNo">378</span><a name="line.378"></a>
+<span class="sourceLineNo">379</span>    /**<a name="line.379"></a>
+<span class="sourceLineNo">380</span>     * Add a new {@link Role} to the list of {@link Role}s.<a name="line.380"></a>
+<span class="sourceLineNo">381</span>     *<a name="line.381"></a>
+<span class="sourceLineNo">382</span>     * @param role The new {@link Role} to add<a name="line.382"></a>
+<span class="sourceLineNo">383</span>     * @return see {@link java.util.Collection#add(Object)}<a name="line.383"></a>
+<span class="sourceLineNo">384</span>     */<a name="line.384"></a>
+<span class="sourceLineNo">385</span>    public boolean addRole(Role role) {<a name="line.385"></a>
+<span class="sourceLineNo">386</span>        return roles.add(role);<a name="line.386"></a>
+<span class="sourceLineNo">387</span>    }<a name="line.387"></a>
+<span class="sourceLineNo">388</span><a name="line.388"></a>
+<span class="sourceLineNo">389</span>    /**<a name="line.389"></a>
+<span class="sourceLineNo">390</span>     * Set the {@link Role}s of this User. Existing {@link Role}s will be overridden.<a name="line.390"></a>
+<span class="sourceLineNo">391</span>     *<a name="line.391"></a>
+<span class="sourceLineNo">392</span>     * @param roles The new list of {@link Role}s<a name="line.392"></a>
+<span class="sourceLineNo">393</span>     */<a name="line.393"></a>
+<span class="sourceLineNo">394</span>    public void setRoles(List&lt;Role&gt; roles) {<a name="line.394"></a>
+<span class="sourceLineNo">395</span>        this.roles = roles;<a name="line.395"></a>
+<span class="sourceLineNo">396</span>    }<a name="line.396"></a>
+<span class="sourceLineNo">397</span><a name="line.397"></a>
+<span class="sourceLineNo">398</span>    /**<a name="line.398"></a>
+<span class="sourceLineNo">399</span>     * Return the fullname of the User.<a name="line.399"></a>
+<span class="sourceLineNo">400</span>     *<a name="line.400"></a>
+<span class="sourceLineNo">401</span>     * @return The current fullname<a name="line.401"></a>
+<span class="sourceLineNo">402</span>     */<a name="line.402"></a>
+<span class="sourceLineNo">403</span>    public String getFullname() {<a name="line.403"></a>
+<span class="sourceLineNo">404</span>        return fullname;<a name="line.404"></a>
+<span class="sourceLineNo">405</span>    }<a name="line.405"></a>
+<span class="sourceLineNo">406</span><a name="line.406"></a>
+<span class="sourceLineNo">407</span>    /**<a name="line.407"></a>
+<span class="sourceLineNo">408</span>     * Change the fullname of the User.<a name="line.408"></a>
+<span class="sourceLineNo">409</span>     *<a name="line.409"></a>
+<span class="sourceLineNo">410</span>     * @param fullname The new fullname to set<a name="line.410"></a>
+<span class="sourceLineNo">411</span>     */<a name="line.411"></a>
+<span class="sourceLineNo">412</span>    public void setFullname(String fullname) {<a name="line.412"></a>
+<span class="sourceLineNo">413</span>        this.fullname = fullname;<a name="line.413"></a>
+<span class="sourceLineNo">414</span>    }<a name="line.414"></a>
+<span class="sourceLineNo">415</span><a name="line.415"></a>
+<span class="sourceLineNo">416</span>    /**<a name="line.416"></a>
+<span class="sourceLineNo">417</span>     * Return a list of recently used passwords.<a name="line.417"></a>
+<span class="sourceLineNo">418</span>     *<a name="line.418"></a>
+<span class="sourceLineNo">419</span>     * @return A list of recently used passwords<a name="line.419"></a>
+<span class="sourceLineNo">420</span>     */<a name="line.420"></a>
+<span class="sourceLineNo">421</span>    public List&lt;UserPassword&gt; getPasswords() {<a name="line.421"></a>
+<span class="sourceLineNo">422</span>        return passwords;<a name="line.422"></a>
+<span class="sourceLineNo">423</span>    }<a name="line.423"></a>
+<span class="sourceLineNo">424</span><a name="line.424"></a>
+<span class="sourceLineNo">425</span>    /**<a name="line.425"></a>
+<span class="sourceLineNo">426</span>     * Return the details of the User.<a name="line.426"></a>
+<span class="sourceLineNo">427</span>     *<a name="line.427"></a>
+<span class="sourceLineNo">428</span>     * @return The userDetails<a name="line.428"></a>
+<span class="sourceLineNo">429</span>     */<a name="line.429"></a>
+<span class="sourceLineNo">430</span>    public UserDetails getUserDetails() {<a name="line.430"></a>
+<span class="sourceLineNo">431</span>        if (userDetails == null) {<a name="line.431"></a>
+<span class="sourceLineNo">432</span>            userDetails = new UserDetails();<a name="line.432"></a>
+<span class="sourceLineNo">433</span>        }<a name="line.433"></a>
+<span class="sourceLineNo">434</span>        return userDetails;<a name="line.434"></a>
+<span class="sourceLineNo">435</span>    }<a name="line.435"></a>
+<span class="sourceLineNo">436</span><a name="line.436"></a>
+<span class="sourceLineNo">437</span>    /**<a name="line.437"></a>
+<span class="sourceLineNo">438</span>     * Check whether this User has UserDetails set.<a name="line.438"></a>
+<span class="sourceLineNo">439</span>     *<a name="line.439"></a>
+<span class="sourceLineNo">440</span>     * @return {@literal true} if set, otherwise {@literal false}<a name="line.440"></a>
+<span class="sourceLineNo">441</span>     */<a name="line.441"></a>
+<span class="sourceLineNo">442</span>    public boolean hasUserDetails() {<a name="line.442"></a>
+<span class="sourceLineNo">443</span>        return userDetails != null;<a name="line.443"></a>
+<span class="sourceLineNo">444</span>    }<a name="line.444"></a>
+<span class="sourceLineNo">445</span><a name="line.445"></a>
+<span class="sourceLineNo">446</span>    /**<a name="line.446"></a>
+<span class="sourceLineNo">447</span>     * Assign some details to the User.<a name="line.447"></a>
+<span class="sourceLineNo">448</span>     *<a name="line.448"></a>
+<span class="sourceLineNo">449</span>     * @param userDetails The userDetails to set<a name="line.449"></a>
+<span class="sourceLineNo">450</span>     */<a name="line.450"></a>
+<span class="sourceLineNo">451</span>    public void setUserDetails(UserDetails userDetails) {<a name="line.451"></a>
+<span class="sourceLineNo">452</span>        this.userDetails = userDetails;<a name="line.452"></a>
+<span class="sourceLineNo">453</span>    }<a name="line.453"></a>
+<span class="sourceLineNo">454</span><a name="line.454"></a>
+<span class="sourceLineNo">455</span>    /**<a name="line.455"></a>
+<span class="sourceLineNo">456</span>     * {@inheritDoc}<a name="line.456"></a>
+<span class="sourceLineNo">457</span>     * &lt;p&gt;<a name="line.457"></a>
+<span class="sourceLineNo">458</span>     * Does not call the superclass. Uses the username for calculation.<a name="line.458"></a>
+<span class="sourceLineNo">459</span>     *<a name="line.459"></a>
+<span class="sourceLineNo">460</span>     * @see java.lang.Object#hashCode()<a name="line.460"></a>
+<span class="sourceLineNo">461</span>     */<a name="line.461"></a>
+<span class="sourceLineNo">462</span>    @Override<a name="line.462"></a>
+<span class="sourceLineNo">463</span>    public int hashCode() {<a name="line.463"></a>
+<span class="sourceLineNo">464</span>        final int prime = 31;<a name="line.464"></a>
+<span class="sourceLineNo">465</span>        int result = 1;<a name="line.465"></a>
+<span class="sourceLineNo">466</span>        result = prime * result + ((username == null) ? 0 : username.hashCode());<a name="line.466"></a>
+<span class="sourceLineNo">467</span>        return result;<a name="line.467"></a>
+<span class="sourceLineNo">468</span>    }<a name="line.468"></a>
+<span class="sourceLineNo">469</span><a name="line.469"></a>
+<span class="sourceLineNo">470</span>    /**<a name="line.470"></a>
+<span class="sourceLineNo">471</span>     * {@inheritDoc}<a name="line.471"></a>
+<span class="sourceLineNo">472</span>     * &lt;p&gt;<a name="line.472"></a>
+<span class="sourceLineNo">473</span>     * Uses the username for comparison.<a name="line.473"></a>
+<span class="sourceLineNo">474</span>     *<a name="line.474"></a>
+<span class="sourceLineNo">475</span>     * @see java.lang.Object#equals(java.lang.Object)<a name="line.475"></a>
+<span class="sourceLineNo">476</span>     */<a name="line.476"></a>
+<span class="sourceLineNo">477</span>    @Override<a name="line.477"></a>
+<span class="sourceLineNo">478</span>    public boolean equals(Object obj) {<a name="line.478"></a>
+<span class="sourceLineNo">479</span>        if (this == obj) {<a name="line.479"></a>
+<span class="sourceLineNo">480</span>            return true;<a name="line.480"></a>
+<span class="sourceLineNo">481</span>        }<a name="line.481"></a>
+<span class="sourceLineNo">482</span>        if (!(obj instanceof User)) {<a name="line.482"></a>
+<span class="sourceLineNo">483</span>            return false;<a name="line.483"></a>
+<span class="sourceLineNo">484</span>        }<a name="line.484"></a>
+<span class="sourceLineNo">485</span>        User other = (User) obj;<a name="line.485"></a>
+<span class="sourceLineNo">486</span>        if (username == null) {<a name="line.486"></a>
+<span class="sourceLineNo">487</span>            if (other.username != null) {<a name="line.487"></a>
+<span class="sourceLineNo">488</span>                return false;<a name="line.488"></a>
+<span class="sourceLineNo">489</span>            }<a name="line.489"></a>
+<span class="sourceLineNo">490</span>        } else if (!username.equals(other.username)) {<a name="line.490"></a>
+<span class="sourceLineNo">491</span>            return false;<a name="line.491"></a>
+<span class="sourceLineNo">492</span>        }<a name="line.492"></a>
+<span class="sourceLineNo">493</span>        return true;<a name="line.493"></a>
+<span class="sourceLineNo">494</span>    }<a name="line.494"></a>
+<span class="sourceLineNo">495</span><a name="line.495"></a>
+<span class="sourceLineNo">496</span>    /**<a name="line.496"></a>
+<span class="sourceLineNo">497</span>     * Returns the business key.<a name="line.497"></a>
+<span class="sourceLineNo">498</span>     *<a name="line.498"></a>
+<span class="sourceLineNo">499</span>     * @return Username<a name="line.499"></a>
+<span class="sourceLineNo">500</span>     */<a name="line.500"></a>
+<span class="sourceLineNo">501</span>    @Override<a name="line.501"></a>
+<span class="sourceLineNo">502</span>    public String toString() {<a name="line.502"></a>
+<span class="sourceLineNo">503</span>        return getUsername();<a name="line.503"></a>
+<span class="sourceLineNo">504</span>    }<a name="line.504"></a>
+<span class="sourceLineNo">505</span><a name="line.505"></a>
+<span class="sourceLineNo">506</span>    /**<a name="line.506"></a>
+<span class="sourceLineNo">507</span>     * A PasswordComparator sorts UserPassword by date ascending.<a name="line.507"></a>
+<span class="sourceLineNo">508</span>     *<a name="line.508"></a>
+<span class="sourceLineNo">509</span>     * @author &lt;a href="mailto:scherrer@openwms.org"&gt;Heiko Scherrer&lt;/a&gt;<a name="line.509"></a>
+<span class="sourceLineNo">510</span>     * @version $Revision$<a name="line.510"></a>
+<span class="sourceLineNo">511</span>     * @since 0.2<a name="line.511"></a>
+<span class="sourceLineNo">512</span>     */<a name="line.512"></a>
+<span class="sourceLineNo">513</span>    static class PasswordComparator implements Comparator&lt;UserPassword&gt;, Serializable {<a name="line.513"></a>
+<span class="sourceLineNo">514</span><a name="line.514"></a>
+<span class="sourceLineNo">515</span>        /**<a name="line.515"></a>
+<span class="sourceLineNo">516</span>         * {@inheritDoc}<a name="line.516"></a>
+<span class="sourceLineNo">517</span>         *<a name="line.517"></a>
+<span class="sourceLineNo">518</span>         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)<a name="line.518"></a>
+<span class="sourceLineNo">519</span>         */<a name="line.519"></a>
+<span class="sourceLineNo">520</span>        @Override<a name="line.520"></a>
+<span class="sourceLineNo">521</span>        public int compare(UserPassword o1, UserPassword o2) {<a name="line.521"></a>
+<span class="sourceLineNo">522</span>            return o2.getPasswordChanged().compareTo(o1.getPasswordChanged());<a name="line.522"></a>
+<span class="sourceLineNo">523</span>        }<a name="line.523"></a>
+<span class="sourceLineNo">524</span>    }<a name="line.524"></a>
+<span class="sourceLineNo">525</span>}<a name="line.525"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>

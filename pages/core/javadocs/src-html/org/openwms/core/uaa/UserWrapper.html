@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * openwms.org, the Open Warehouse Management System.<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * Copyright (C) 2014 Heiko Scherrer<a name="line.3"></a>
+<span class="sourceLineNo">004</span> *<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * This file is part of openwms.org.<a name="line.5"></a>
+<span class="sourceLineNo">006</span> *<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * openwms.org is free software: you can redistribute it and/or modify<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * it under the terms of the GNU General Public License as <a name="line.8"></a>
+<span class="sourceLineNo">009</span> * published by the Free Software Foundation; either version 2 of the<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * License, or (at your option) any later version.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * openwms.org is distributed in the hope that it will be useful,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * but WITHOUT ANY WARRANTY; without even the implied warranty of<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * GNU General Public License for more details.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * You should have received a copy of the GNU General Public License<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * along with this software. If not, write to the Free Software<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * 02110-1301 USA, or see the FSF site: http://www.fsf.org.<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.openwms.core.uaa;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.Collection;<a name="line.24"></a>
+<span class="sourceLineNo">025</span>import java.util.HashSet;<a name="line.25"></a>
+<span class="sourceLineNo">026</span>import java.util.stream.Collectors;<a name="line.26"></a>
+<span class="sourceLineNo">027</span><a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.springframework.security.core.GrantedAuthority;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.springframework.security.core.userdetails.UserDetails;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.springframework.util.Assert;<a name="line.30"></a>
+<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">032</span>/**<a name="line.32"></a>
+<span class="sourceLineNo">033</span> * An UserWrapper is used as an adapter between {@link Role}s, {@link SecurityObject}s and Spring's {@link GrantedAuthority} objects.<a name="line.33"></a>
+<span class="sourceLineNo">034</span> *<a name="line.34"></a>
+<span class="sourceLineNo">035</span> * @author &lt;a href="mailto:russelltina@users.sourceforge.net"&gt;Tina Russell&lt;/a&gt;<a name="line.35"></a>
+<span class="sourceLineNo">036</span> * @version 0.2<a name="line.36"></a>
+<span class="sourceLineNo">037</span> * @see org.openwms.core.uaa.SecurityObject<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * @see org.openwms.core.uaa.Role<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * @see org.springframework.security.core.GrantedAuthority<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * @see org.springframework.security.core.userdetails.UserDetails<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * @since 0.1<a name="line.41"></a>
+<span class="sourceLineNo">042</span> */<a name="line.42"></a>
+<span class="sourceLineNo">043</span>public class UserWrapper implements UserDetails, UserHolder {<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>    private User user;<a name="line.45"></a>
+<span class="sourceLineNo">046</span>    private Collection&lt;GrantedAuthority&gt; authorities = null;<a name="line.46"></a>
+<span class="sourceLineNo">047</span><a name="line.47"></a>
+<span class="sourceLineNo">048</span>    /**<a name="line.48"></a>
+<span class="sourceLineNo">049</span>     * Create a new UserWrapper.<a name="line.49"></a>
+<span class="sourceLineNo">050</span>     *<a name="line.50"></a>
+<span class="sourceLineNo">051</span>     * @param user The User to wrap<a name="line.51"></a>
+<span class="sourceLineNo">052</span>     */<a name="line.52"></a>
+<span class="sourceLineNo">053</span>    public UserWrapper(User user) {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>        Assert.notNull(user, "Not allowed to create an UserWrapper with null argument");<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        this.user = user;<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        this.user.getRoles().size();<a name="line.56"></a>
+<span class="sourceLineNo">057</span>    }<a name="line.57"></a>
+<span class="sourceLineNo">058</span><a name="line.58"></a>
+<span class="sourceLineNo">059</span>    /**<a name="line.59"></a>
+<span class="sourceLineNo">060</span>     * Subclasses can set a collection of grants that are always available for an User. This is useful for administrative accounts.<a name="line.60"></a>
+<span class="sourceLineNo">061</span>     *<a name="line.61"></a>
+<span class="sourceLineNo">062</span>     * @param authz A collection of grants (authorities) where the default grants are added to<a name="line.62"></a>
+<span class="sourceLineNo">063</span>     */<a name="line.63"></a>
+<span class="sourceLineNo">064</span>    protected void addDefaultGrants(Collection&lt;GrantedAuthority&gt; authz) {<a name="line.64"></a>
+<span class="sourceLineNo">065</span>    }<a name="line.65"></a>
+<span class="sourceLineNo">066</span><a name="line.66"></a>
+<span class="sourceLineNo">067</span>    /**<a name="line.67"></a>
+<span class="sourceLineNo">068</span>     * {@inheritDoc}<a name="line.68"></a>
+<span class="sourceLineNo">069</span>     */<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    @Override<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    public User getUser() {<a name="line.71"></a>
+<span class="sourceLineNo">072</span>        return user;<a name="line.72"></a>
+<span class="sourceLineNo">073</span>    }<a name="line.73"></a>
+<span class="sourceLineNo">074</span><a name="line.74"></a>
+<span class="sourceLineNo">075</span>    /**<a name="line.75"></a>
+<span class="sourceLineNo">076</span>     * {@inheritDoc}<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     *<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * @return the authorities, sorted by natural key (never {@literal null})<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     */<a name="line.79"></a>
+<span class="sourceLineNo">080</span>    @Override<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    public Collection&lt;GrantedAuthority&gt; getAuthorities() {<a name="line.81"></a>
+<span class="sourceLineNo">082</span>        if (null == authorities) {<a name="line.82"></a>
+<span class="sourceLineNo">083</span>            authorities = new HashSet&lt;&gt;();<a name="line.83"></a>
+<span class="sourceLineNo">084</span>            authorities.addAll(user.getGrants().stream().map(SecurityObjectAuthority::new).collect(Collectors.toList()));<a name="line.84"></a>
+<span class="sourceLineNo">085</span>            addDefaultGrants(authorities);<a name="line.85"></a>
+<span class="sourceLineNo">086</span>        }<a name="line.86"></a>
+<span class="sourceLineNo">087</span>        return authorities;<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    }<a name="line.88"></a>
+<span class="sourceLineNo">089</span><a name="line.89"></a>
+<span class="sourceLineNo">090</span>    /**<a name="line.90"></a>
+<span class="sourceLineNo">091</span>     * {@inheritDoc}<a name="line.91"></a>
+<span class="sourceLineNo">092</span>     *<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * @return the password (never {@literal null})<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     */<a name="line.94"></a>
+<span class="sourceLineNo">095</span>    @Override<a name="line.95"></a>
+<span class="sourceLineNo">096</span>    public String getPassword() {<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        return user.getPassword();<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    }<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>    /**<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     * {@inheritDoc}<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     *<a name="line.102"></a>
+<span class="sourceLineNo">103</span>     * @return the username (never {@literal null})<a name="line.103"></a>
+<span class="sourceLineNo">104</span>     */<a name="line.104"></a>
+<span class="sourceLineNo">105</span>    @Override<a name="line.105"></a>
+<span class="sourceLineNo">106</span>    public String getUsername() {<a name="line.106"></a>
+<span class="sourceLineNo">107</span>        return user.getUsername();<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    }<a name="line.108"></a>
+<span class="sourceLineNo">109</span><a name="line.109"></a>
+<span class="sourceLineNo">110</span>    /**<a name="line.110"></a>
+<span class="sourceLineNo">111</span>     * {@inheritDoc}<a name="line.111"></a>
+<span class="sourceLineNo">112</span>     *<a name="line.112"></a>
+<span class="sourceLineNo">113</span>     * @return {@literal true} if the user's account is valid (ie non-expired), {@literal false} if no longer valid (ie expired)<a name="line.113"></a>
+<span class="sourceLineNo">114</span>     */<a name="line.114"></a>
+<span class="sourceLineNo">115</span>    @Override<a name="line.115"></a>
+<span class="sourceLineNo">116</span>    public boolean isAccountNonExpired() {<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        return true;<a name="line.117"></a>
+<span class="sourceLineNo">118</span>    }<a name="line.118"></a>
+<span class="sourceLineNo">119</span><a name="line.119"></a>
+<span class="sourceLineNo">120</span>    /**<a name="line.120"></a>
+<span class="sourceLineNo">121</span>     * {@inheritDoc}<a name="line.121"></a>
+<span class="sourceLineNo">122</span>     *<a name="line.122"></a>
+<span class="sourceLineNo">123</span>     * @return {@literal true} if the user is not locked, {@literal false} otherwise<a name="line.123"></a>
+<span class="sourceLineNo">124</span>     */<a name="line.124"></a>
+<span class="sourceLineNo">125</span>    @Override<a name="line.125"></a>
+<span class="sourceLineNo">126</span>    public boolean isAccountNonLocked() {<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        return !user.isLocked();<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    }<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>    /**<a name="line.130"></a>
+<span class="sourceLineNo">131</span>     * {@inheritDoc}<a name="line.131"></a>
+<span class="sourceLineNo">132</span>     *<a name="line.132"></a>
+<span class="sourceLineNo">133</span>     * @return {@literal true} if the user's credentials are valid (ie non-expired), {@literal false} if no longer valid (ie expired)<a name="line.133"></a>
+<span class="sourceLineNo">134</span>     * @see org.springframework.security.core.userdetails.UserDetails#isCredentialsNonExpired()<a name="line.134"></a>
+<span class="sourceLineNo">135</span>     */<a name="line.135"></a>
+<span class="sourceLineNo">136</span>    @Override<a name="line.136"></a>
+<span class="sourceLineNo">137</span>    public boolean isCredentialsNonExpired() {<a name="line.137"></a>
+<span class="sourceLineNo">138</span>        return true;<a name="line.138"></a>
+<span class="sourceLineNo">139</span>    }<a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>    /**<a name="line.141"></a>
+<span class="sourceLineNo">142</span>     * {@inheritDoc}<a name="line.142"></a>
+<span class="sourceLineNo">143</span>     *<a name="line.143"></a>
+<span class="sourceLineNo">144</span>     * @return {@literal true} if the user is enabled, {@literal false} otherwise<a name="line.144"></a>
+<span class="sourceLineNo">145</span>     */<a name="line.145"></a>
+<span class="sourceLineNo">146</span>    @Override<a name="line.146"></a>
+<span class="sourceLineNo">147</span>    public boolean isEnabled() {<a name="line.147"></a>
+<span class="sourceLineNo">148</span>        return user.isEnabled();<a name="line.148"></a>
+<span class="sourceLineNo">149</span>    }<a name="line.149"></a>
+<span class="sourceLineNo">150</span><a name="line.150"></a>
+<span class="sourceLineNo">151</span>    /**<a name="line.151"></a>
+<span class="sourceLineNo">152</span>     * {@inheritDoc}<a name="line.152"></a>
+<span class="sourceLineNo">153</span>     * &lt;p&gt;<a name="line.153"></a>
+<span class="sourceLineNo">154</span>     * Uses authorities and user for calculation.<a name="line.154"></a>
+<span class="sourceLineNo">155</span>     */<a name="line.155"></a>
+<span class="sourceLineNo">156</span>    @Override<a name="line.156"></a>
+<span class="sourceLineNo">157</span>    public int hashCode() {<a name="line.157"></a>
+<span class="sourceLineNo">158</span>        final int prime = 31;<a name="line.158"></a>
+<span class="sourceLineNo">159</span>        int result = 1;<a name="line.159"></a>
+<span class="sourceLineNo">160</span>        result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());<a name="line.160"></a>
+<span class="sourceLineNo">161</span>        result = prime * result + ((user == null) ? 0 : user.hashCode());<a name="line.161"></a>
+<span class="sourceLineNo">162</span>        return result;<a name="line.162"></a>
+<span class="sourceLineNo">163</span>    }<a name="line.163"></a>
+<span class="sourceLineNo">164</span><a name="line.164"></a>
+<span class="sourceLineNo">165</span>    /**<a name="line.165"></a>
+<span class="sourceLineNo">166</span>     * {@inheritDoc}<a name="line.166"></a>
+<span class="sourceLineNo">167</span>     * &lt;p&gt;<a name="line.167"></a>
+<span class="sourceLineNo">168</span>     * Uses authorities and user for comparison.<a name="line.168"></a>
+<span class="sourceLineNo">169</span>     */<a name="line.169"></a>
+<span class="sourceLineNo">170</span>    @Override<a name="line.170"></a>
+<span class="sourceLineNo">171</span>    public boolean equals(Object obj) {<a name="line.171"></a>
+<span class="sourceLineNo">172</span>        if (this == obj) {<a name="line.172"></a>
+<span class="sourceLineNo">173</span>            return true;<a name="line.173"></a>
+<span class="sourceLineNo">174</span>        }<a name="line.174"></a>
+<span class="sourceLineNo">175</span>        if (obj == null) {<a name="line.175"></a>
+<span class="sourceLineNo">176</span>            return false;<a name="line.176"></a>
+<span class="sourceLineNo">177</span>        }<a name="line.177"></a>
+<span class="sourceLineNo">178</span>        if (getClass() != obj.getClass()) {<a name="line.178"></a>
+<span class="sourceLineNo">179</span>            return false;<a name="line.179"></a>
+<span class="sourceLineNo">180</span>        }<a name="line.180"></a>
+<span class="sourceLineNo">181</span>        UserWrapper other = (UserWrapper) obj;<a name="line.181"></a>
+<span class="sourceLineNo">182</span>        if (authorities == null) {<a name="line.182"></a>
+<span class="sourceLineNo">183</span>            if (other.authorities != null) {<a name="line.183"></a>
+<span class="sourceLineNo">184</span>                return false;<a name="line.184"></a>
+<span class="sourceLineNo">185</span>            }<a name="line.185"></a>
+<span class="sourceLineNo">186</span>        } else if (!authorities.equals(other.authorities)) {<a name="line.186"></a>
+<span class="sourceLineNo">187</span>            return false;<a name="line.187"></a>
+<span class="sourceLineNo">188</span>        }<a name="line.188"></a>
+<span class="sourceLineNo">189</span>        if (user == null) {<a name="line.189"></a>
+<span class="sourceLineNo">190</span>            if (other.user != null) {<a name="line.190"></a>
+<span class="sourceLineNo">191</span>                return false;<a name="line.191"></a>
+<span class="sourceLineNo">192</span>            }<a name="line.192"></a>
+<span class="sourceLineNo">193</span>        } else if (!user.equals(other.user)) {<a name="line.193"></a>
+<span class="sourceLineNo">194</span>            return false;<a name="line.194"></a>
+<span class="sourceLineNo">195</span>        }<a name="line.195"></a>
+<span class="sourceLineNo">196</span>        return true;<a name="line.196"></a>
+<span class="sourceLineNo">197</span>    }<a name="line.197"></a>
+<span class="sourceLineNo">198</span><a name="line.198"></a>
+<span class="sourceLineNo">199</span>    /**<a name="line.199"></a>
+<span class="sourceLineNo">200</span>     * Return the Users username.<a name="line.200"></a>
+<span class="sourceLineNo">201</span>     *<a name="line.201"></a>
+<span class="sourceLineNo">202</span>     * @return The username of the User<a name="line.202"></a>
+<span class="sourceLineNo">203</span>     * @see java.lang.Object#toString()<a name="line.203"></a>
+<span class="sourceLineNo">204</span>     */<a name="line.204"></a>
+<span class="sourceLineNo">205</span>    @Override<a name="line.205"></a>
+<span class="sourceLineNo">206</span>    public String toString() {<a name="line.206"></a>
+<span class="sourceLineNo">207</span>        return getUsername();<a name="line.207"></a>
+<span class="sourceLineNo">208</span>    }<a name="line.208"></a>
+<span class="sourceLineNo">209</span>}<a name="line.209"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
