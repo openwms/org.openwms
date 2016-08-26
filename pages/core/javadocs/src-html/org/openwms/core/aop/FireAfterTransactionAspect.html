@@ -1,0 +1,185 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+<head>
+<title>Source code</title>
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<div class="sourceContainer">
+<pre><span class="sourceLineNo">001</span>/*<a name="line.1"></a>
+<span class="sourceLineNo">002</span> * openwms.org, the Open Warehouse Management System.<a name="line.2"></a>
+<span class="sourceLineNo">003</span> * Copyright (C) 2014 Heiko Scherrer<a name="line.3"></a>
+<span class="sourceLineNo">004</span> *<a name="line.4"></a>
+<span class="sourceLineNo">005</span> * This file is part of openwms.org.<a name="line.5"></a>
+<span class="sourceLineNo">006</span> *<a name="line.6"></a>
+<span class="sourceLineNo">007</span> * openwms.org is free software: you can redistribute it and/or modify<a name="line.7"></a>
+<span class="sourceLineNo">008</span> * it under the terms of the GNU General Public License as <a name="line.8"></a>
+<span class="sourceLineNo">009</span> * published by the Free Software Foundation; either version 2 of the<a name="line.9"></a>
+<span class="sourceLineNo">010</span> * License, or (at your option) any later version.<a name="line.10"></a>
+<span class="sourceLineNo">011</span> *<a name="line.11"></a>
+<span class="sourceLineNo">012</span> * openwms.org is distributed in the hope that it will be useful,<a name="line.12"></a>
+<span class="sourceLineNo">013</span> * but WITHOUT ANY WARRANTY; without even the implied warranty of<a name="line.13"></a>
+<span class="sourceLineNo">014</span> * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<a name="line.14"></a>
+<span class="sourceLineNo">015</span> * GNU General Public License for more details.<a name="line.15"></a>
+<span class="sourceLineNo">016</span> *<a name="line.16"></a>
+<span class="sourceLineNo">017</span> * You should have received a copy of the GNU General Public License<a name="line.17"></a>
+<span class="sourceLineNo">018</span> * along with this software. If not, write to the Free Software<a name="line.18"></a>
+<span class="sourceLineNo">019</span> * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA<a name="line.19"></a>
+<span class="sourceLineNo">020</span> * 02110-1301 USA, or see the FSF site: http://www.fsf.org.<a name="line.20"></a>
+<span class="sourceLineNo">021</span> */<a name="line.21"></a>
+<span class="sourceLineNo">022</span>package org.openwms.core.aop;<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>import java.util.EventObject;<a name="line.24"></a>
+<span class="sourceLineNo">025</span><a name="line.25"></a>
+<span class="sourceLineNo">026</span>import org.openwms.core.annotation.FireAfterTransaction;<a name="line.26"></a>
+<span class="sourceLineNo">027</span>import org.openwms.core.annotation.FireAfterTransactionAsynchronous;<a name="line.27"></a>
+<span class="sourceLineNo">028</span>import org.openwms.core.event.RootApplicationEvent;<a name="line.28"></a>
+<span class="sourceLineNo">029</span>import org.slf4j.Logger;<a name="line.29"></a>
+<span class="sourceLineNo">030</span>import org.slf4j.LoggerFactory;<a name="line.30"></a>
+<span class="sourceLineNo">031</span>import org.springframework.beans.factory.annotation.Autowired;<a name="line.31"></a>
+<span class="sourceLineNo">032</span>import org.springframework.context.ApplicationContext;<a name="line.32"></a>
+<span class="sourceLineNo">033</span>import org.springframework.context.ApplicationEvent;<a name="line.33"></a>
+<span class="sourceLineNo">034</span>import org.springframework.scheduling.annotation.Async;<a name="line.34"></a>
+<span class="sourceLineNo">035</span>import org.springframework.stereotype.Component;<a name="line.35"></a>
+<span class="sourceLineNo">036</span><a name="line.36"></a>
+<span class="sourceLineNo">037</span>/**<a name="line.37"></a>
+<span class="sourceLineNo">038</span> * An UserChangedEventAspect fires events after a method invocation completes.<a name="line.38"></a>
+<span class="sourceLineNo">039</span> * It's main purpose is to fire events after a transaction succeeds, thereby the<a name="line.39"></a>
+<span class="sourceLineNo">040</span> * advice must be enabled around Spring's Transaction advice.<a name="line.40"></a>
+<span class="sourceLineNo">041</span> * &lt;p&gt;<a name="line.41"></a>
+<span class="sourceLineNo">042</span> * Use the {@link FireAfterTransaction} event and declare some type of events<a name="line.42"></a>
+<span class="sourceLineNo">043</span> * inside the &lt;code&gt;value&lt;/code&gt; attribute. Instances of these events will then<a name="line.43"></a>
+<span class="sourceLineNo">044</span> * be fired after the transaction completes.<a name="line.44"></a>
+<span class="sourceLineNo">045</span> * &lt;/p&gt;<a name="line.45"></a>
+<span class="sourceLineNo">046</span> * Example: &lt;blockquote&gt;<a name="line.46"></a>
+<span class="sourceLineNo">047</span> * <a name="line.47"></a>
+<span class="sourceLineNo">048</span> * &lt;pre&gt;<a name="line.48"></a>
+<span class="sourceLineNo">049</span> * &amp;#064;FireAfterTransaction(events = { UserChangedEvent.class })<a name="line.49"></a>
+<span class="sourceLineNo">050</span> * public User save(User user) { .. }<a name="line.50"></a>
+<span class="sourceLineNo">051</span> * &lt;/pre&gt;<a name="line.51"></a>
+<span class="sourceLineNo">052</span> * <a name="line.52"></a>
+<span class="sourceLineNo">053</span> * &lt;/blockquote&gt;<a name="line.53"></a>
+<span class="sourceLineNo">054</span> * &lt;p&gt;<a name="line.54"></a>
+<span class="sourceLineNo">055</span> * The component can be referenced by name {@value #COMPONENT_NAME}.<a name="line.55"></a>
+<span class="sourceLineNo">056</span> * &lt;/p&gt;<a name="line.56"></a>
+<span class="sourceLineNo">057</span> * <a name="line.57"></a>
+<span class="sourceLineNo">058</span> * @author &lt;a href="mailto:scherrer@openwms.org"&gt;Heiko Scherrer&lt;/a&gt;<a name="line.58"></a>
+<span class="sourceLineNo">059</span> * @version $Revision$<a name="line.59"></a>
+<span class="sourceLineNo">060</span> * @since 0.1<a name="line.60"></a>
+<span class="sourceLineNo">061</span> * @see org.openwms.core.annotation.FireAfterTransaction<a name="line.61"></a>
+<span class="sourceLineNo">062</span> */<a name="line.62"></a>
+<span class="sourceLineNo">063</span>@Component(FireAfterTransactionAspect.COMPONENT_NAME)<a name="line.63"></a>
+<span class="sourceLineNo">064</span>public class FireAfterTransactionAspect {<a name="line.64"></a>
+<span class="sourceLineNo">065</span><a name="line.65"></a>
+<span class="sourceLineNo">066</span>    private static final Logger LOGGER = LoggerFactory.getLogger(FireAfterTransactionAspect.class);<a name="line.66"></a>
+<span class="sourceLineNo">067</span>    @Autowired<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    private ApplicationContext ctx;<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    /** Springs component name. */<a name="line.69"></a>
+<span class="sourceLineNo">070</span>    public static final String COMPONENT_NAME = "fireAfterTransactionAspect";<a name="line.70"></a>
+<span class="sourceLineNo">071</span><a name="line.71"></a>
+<span class="sourceLineNo">072</span>    /**<a name="line.72"></a>
+<span class="sourceLineNo">073</span>     * Only {@link ApplicationEvent}s are created and published over Springs<a name="line.73"></a>
+<span class="sourceLineNo">074</span>     * {@link ApplicationContext}.<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * <a name="line.75"></a>
+<span class="sourceLineNo">076</span>     * @param publisher<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     *            The instance that is publishing the event<a name="line.77"></a>
+<span class="sourceLineNo">078</span>     * @param events<a name="line.78"></a>
+<span class="sourceLineNo">079</span>     *            A list of event classes to fire<a name="line.79"></a>
+<span class="sourceLineNo">080</span>     * @throws Exception<a name="line.80"></a>
+<span class="sourceLineNo">081</span>     *             Any exception is re-thrown<a name="line.81"></a>
+<span class="sourceLineNo">082</span>     */<a name="line.82"></a>
+<span class="sourceLineNo">083</span>    public void fireEvent(Object publisher, FireAfterTransaction events) throws Exception {<a name="line.83"></a>
+<span class="sourceLineNo">084</span>        for (int i = 0; i &lt; events.events().length; i++) {<a name="line.84"></a>
+<span class="sourceLineNo">085</span>            Class&lt;? extends EventObject&gt; event = events.events()[i];<a name="line.85"></a>
+<span class="sourceLineNo">086</span>            if (ApplicationEvent.class.isAssignableFrom(event)) {<a name="line.86"></a>
+<span class="sourceLineNo">087</span>                ctx.publishEvent((ApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));<a name="line.87"></a>
+<span class="sourceLineNo">088</span>            }<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        }<a name="line.89"></a>
+<span class="sourceLineNo">090</span>    }<a name="line.90"></a>
+<span class="sourceLineNo">091</span><a name="line.91"></a>
+<span class="sourceLineNo">092</span>    /**<a name="line.92"></a>
+<span class="sourceLineNo">093</span>     * Only {@link ApplicationEvent}s are created and published over Springs<a name="line.93"></a>
+<span class="sourceLineNo">094</span>     * {@link ApplicationContext}.<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * <a name="line.95"></a>
+<span class="sourceLineNo">096</span>     * @param publisher<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     *            The instance that is publishing the event<a name="line.97"></a>
+<span class="sourceLineNo">098</span>     * @param events<a name="line.98"></a>
+<span class="sourceLineNo">099</span>     *            Stores a list of event classes to fire<a name="line.99"></a>
+<span class="sourceLineNo">100</span>     * @throws Exception<a name="line.100"></a>
+<span class="sourceLineNo">101</span>     *             Any exception is re-thrown<a name="line.101"></a>
+<span class="sourceLineNo">102</span>     */<a name="line.102"></a>
+<span class="sourceLineNo">103</span>    @Async<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    public void fireEventAsync(Object publisher, FireAfterTransactionAsynchronous events) throws Exception {<a name="line.104"></a>
+<span class="sourceLineNo">105</span>        for (int i = 0; i &lt; events.events().length; i++) {<a name="line.105"></a>
+<span class="sourceLineNo">106</span>            Class&lt;? extends EventObject&gt; event = events.events()[i];<a name="line.106"></a>
+<span class="sourceLineNo">107</span>            if (RootApplicationEvent.class.isAssignableFrom(event)) {<a name="line.107"></a>
+<span class="sourceLineNo">108</span>                LOGGER.debug("Sending event:" + event);<a name="line.108"></a>
+<span class="sourceLineNo">109</span>                ctx.publishEvent((RootApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));<a name="line.109"></a>
+<span class="sourceLineNo">110</span>            }<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        }<a name="line.111"></a>
+<span class="sourceLineNo">112</span>    }<a name="line.112"></a>
+<span class="sourceLineNo">113</span>}<a name="line.113"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</div>
+</body>
+</html>
