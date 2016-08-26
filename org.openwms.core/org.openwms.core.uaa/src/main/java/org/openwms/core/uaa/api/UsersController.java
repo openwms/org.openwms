@@ -33,6 +33,7 @@ import org.ameba.Messages;
 import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.core.http.AbstractWebController;
+import org.openwms.core.uaa.UAAConstants;
 import org.openwms.core.uaa.User;
 import org.openwms.core.uaa.UserPassword;
 import org.openwms.core.uaa.UserService;
@@ -40,27 +41,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * An UsersController represents a RESTful access to <tt>User</tt>s. It is transactional by the means it is the outer application service
  * facade that returns validated and completed <tt>User</tt> objects to its clients.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
+ * @since 1.0
  */
-@Controller
-@RequestMapping(UsersController.USERS)
+@RestController(UAAConstants.API_USERS)
 public class UsersController extends AbstractWebController {
 
-    /** Root URL path for plural. */
-    public static final String USERS = "/api/users";
     @Autowired
     private UserService service;
     @Autowired
@@ -73,7 +73,7 @@ public class UsersController extends AbstractWebController {
      *
      * @return JSON response
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     @ResponseBody
     public ResponseEntity<Response<UserVO>> findAllUsers() {
         List<UserVO> users = m.map(new ArrayList<>(service.findAll()), UserVO.class);
@@ -105,7 +105,7 @@ public class UsersController extends AbstractWebController {
      * @param user The user to create
      * @return a responseVO
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
     public ResponseEntity<Response<UserVO>> create(@RequestBody @Valid @NotNull UserVO user, HttpServletRequest req, HttpServletResponse resp) {
         User createdUser = service.create(m.map(user, User.class));
@@ -119,7 +119,7 @@ public class UsersController extends AbstractWebController {
      * @param user
      * @return a responseVO
      */
-    @RequestMapping(method = RequestMethod.PUT)
+    @PutMapping
     @ResponseBody
     public ResponseEntity<Response<UserVO>> save(@RequestBody @Valid UserVO user) {
         User eo = m.map(user, User.class);
@@ -139,7 +139,7 @@ public class UsersController extends AbstractWebController {
      * @param id The users persisted id
      * @return An responseVO
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.PATCH)
+    @PatchMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<Response<UserVO>> saveImage(@RequestBody @NotNull byte[] image, @PathVariable("id") @NotNull Long id) {
         service.uploadImageFile(id, image);
@@ -153,7 +153,7 @@ public class UsersController extends AbstractWebController {
      * @return a responseVO
      * @throws Exception
      */
-    @RequestMapping(value = "/{name}", method = RequestMethod.DELETE)
+    @DeleteMapping(value = "/{name}")
     public ResponseEntity<Response> remove(@PathVariable("name") @NotNull String... names) {
         /*
         Response result = new Response();

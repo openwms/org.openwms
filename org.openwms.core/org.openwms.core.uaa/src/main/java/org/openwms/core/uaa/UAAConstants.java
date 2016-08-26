@@ -1,5 +1,3 @@
-<?xml version="1.0"?>
-<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -21,21 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
--->
+package org.openwms.core.uaa;
 
-<!--
-    AspectJ load-time weaving config file to install common Spring aspects.
-    Only used in conjunction with aop:aspectj-autoproxy feature and annotation based
-    configuration.
--->
-<aspectj>
+/**
+ * A UAAConstants.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ */
+public class UAAConstants {
 
-    <!--
-    <weaver options="-showWeaveInfo"/>
-    
-
-    <aspects>
-        <aspect name="org.openwms.core.service.spring.aop.UserChangedEventAspect"/>
-    </aspects>
--->
-</aspectj>
+    /** API version. */
+    public static final String API_VERSION = "v1";
+    /** API root to hit Roles (plural). */
+    public static final String API_ROLES = "/" + API_VERSION + "/roles";
+    /** API root to hit Users (plural). */
+    public static final String API_USERS = "/" + API_VERSION + "/users";
+}

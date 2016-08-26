@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
 /*
  * openwms.org, the Open Warehouse Management System.
  * Copyright (C) 2014 Heiko Scherrer
@@ -21,13 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
--->
-<p:preferences xmlns:p="http://www.openwms.org/schema/preferences" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.openwms.org/schema/preferences http://www.openwms.org/schema/preferences.xsd">
-    <application key="APP1" />
-    <application key="APP2" floatValue="100.0" minimum="5" maximum="100" val="Some value">Description is used as element value</application>
-    <module owner="CORE" key="module.name" val="CORE Module">This is also a description value</module>
-    <module owner="COMMON" key="host.ip-adress" val="127.0.0.1" />
-    <module owner="TMS" key="host.ip-adress" />
-    <user owner="testuser" key="testKey" />
-</p:preferences>
+package org.openwms.common;
+
+/**
+ * A CommonConstants.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ */
+public class CommonConstants {
+
+    /** API version. */
+    public static final String API_VERSION = "v1";
+    /** API root to hit Locations (plural). */
+    public static final String API_LOCATIONS = "/" + API_VERSION + "/locations";
+    /** API root to hit LocationGroups (plural). */
+    public static final String API_LOCATIONGROUPS = "/" + API_VERSION + "/locationgroups";
+    /** API root to hit TransportUnits (plural). */
+    public static final String API_TRANSPORTUNITS = "/" + API_VERSION + "/transportunits";
+}

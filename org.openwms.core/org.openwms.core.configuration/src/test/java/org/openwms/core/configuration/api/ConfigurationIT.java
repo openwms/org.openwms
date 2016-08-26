@@ -44,7 +44,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class ConfigurationIT {
 
     @Autowired
-    private ConfigurationOperations testee;
+    private ConfigurationController testee;
 
     public
     @Test

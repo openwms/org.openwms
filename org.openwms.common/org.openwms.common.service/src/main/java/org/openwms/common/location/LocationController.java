@@ -21,9 +21,9 @@
  */
 package org.openwms.common.location;
 
+import org.openwms.common.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,16 +31,15 @@ import org.springframework.web.bind.annotation.RestController;
  * A LocationController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
+ * @since 2.0
  */
-@RestController
+@RestController(CommonConstants.API_LOCATIONS)
 class LocationController {
 
     @Autowired
     private LocationService<Location> locationService;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
+    @GetMapping(params = {"locationPK"})
     public Location getLocation(@RequestParam("locationPK") String locationPk) {
         return locationService.findByLocationId(LocationPK.fromString(locationPk));
     }

@@ -646,7 +646,7 @@
                     <artifactId>aspectj-maven-plugin</artifactId>
                     <version>${plugin.aspectj.version}</version>
                     <configuration>
-                        <showWeaveInfo>true</showWeaveInfo>
+                        <showWeaveInfo>false</showWeaveInfo>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <Xlint>ignore</Xlint>
@@ -839,9 +839,9 @@
         </pluginManagement>
 
         <plugins>
-            <!--plugin>
+            <plugin>
                 <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin-->
+            </plugin>
         </plugins>
     </build>
 

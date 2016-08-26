@@ -56,7 +56,7 @@ public class ConfigurationWithInitialPreferencesIT {
             .build();
 
     @Autowired
-    private ConfigurationOperations testee;
+    private ConfigurationController testee;
 
     public
     @Test
