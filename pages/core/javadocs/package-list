@@ -1,12 +1,6 @@
 org.openwms.core
-org.openwms.core.annotation
-org.openwms.core.aop
 org.openwms.core.app
-org.openwms.core.event
-org.openwms.core.exception
-org.openwms.core.http
-org.openwms.core.lang
-org.openwms.core.listener
-org.openwms.core.startup
-org.openwms.core.util
-org.openwms.core.values
+org.openwms.core.configuration
+org.openwms.core.configuration.api
+org.openwms.core.configuration.file
+org.openwms.core.module
