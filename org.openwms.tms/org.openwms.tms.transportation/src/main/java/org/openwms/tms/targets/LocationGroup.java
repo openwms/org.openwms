@@ -25,10 +25,13 @@ package org.openwms.tms.targets;
  * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
+ * @since 2.0
  */
 public class LocationGroup implements Target {
+
+    public LocationGroup(String name) {
+        this.name = name;
+    }
 
     private String name;
 

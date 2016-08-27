@@ -36,6 +36,7 @@ import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.openwms.tms.targets.Location;
+import org.openwms.tms.targets.LocationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -81,6 +82,8 @@ public abstract class DocumentationBase {
     public static final Location INIT_LOC = new Location(INIT_LOC_STRING);
     public static final String ERR_LOC_STRING = "ERR_/0000/0000/0000/0000";
     public static final Location ERR_LOC = new Location(ERR_LOC_STRING);
+    public static final String ERR_LOCGB_STRING = "ERR_/0000/0000/0000/0000";
+    public static final LocationGroup ERR_LOCGRB = new LocationGroup(ERR_LOC_STRING);
     public static final String KNOWN = "KNOWN";
     public static final String UNKNOWN = "UNKNOWN";
     public static final String BC_4711 = "4711";
