@@ -46,6 +46,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
         vo.setTarget(INIT_LOC_STRING);
+        given(commonGateway.getLocationGroup(INIT_LOC_STRING)).willReturn(Optional.empty());
         given(commonGateway.getLocation(INIT_LOC_STRING)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
@@ -66,7 +67,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
         vo.setTarget(ERR_LOCGB_STRING);
-        given(commonGateway.getLocationGroup(INIT_LOC_STRING)).willReturn(Optional.of(ERR_LOCGRB));
+        given(commonGateway.getLocationGroup(ERR_LOCGB_STRING)).willReturn(Optional.of(ERR_LOCGRB));
 
         // test ...
         mockMvc.perform(
