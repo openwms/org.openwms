@@ -39,15 +39,16 @@ import org.springframework.http.MediaType;
  */
 public class RedirectTODocumentation extends DocumentationBase {
 
+
     public
     @Test
-    void testRedirectToValidLocationOK() throws Exception {
+    void testRedirectToUnknownLocationButGroup() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        vo.setTarget(INIT_LOC_STRING);
-        given(commonGateway.getLocationGroup(INIT_LOC_STRING)).willReturn(Optional.empty());
-        given(commonGateway.getLocation(INIT_LOC_STRING)).willReturn(Optional.of(INIT_LOC));
+        vo.setTarget(UNKNOWN);
+        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.empty());
+        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
         mockMvc.perform(
@@ -56,18 +57,19 @@ public class RedirectTODocumentation extends DocumentationBase {
                         .content(objectMapper.writeValueAsString(vo))
         )
                 .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-loc"))
+                .andDo(document("to-patch-target-unknown-loc"))
         ;
     }
 
     public
     @Test
-    void testRedirectToValidLocationGroupOK() throws Exception {
+    void testRedirectToUnknownLocationGroupButLoc() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        vo.setTarget(ERR_LOCGB_STRING);
-        given(commonGateway.getLocationGroup(ERR_LOCGB_STRING)).willReturn(Optional.of(ERR_LOCGRB));
+        vo.setTarget(UNKNOWN);
+        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
+        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
 
         // test ...
         mockMvc.perform(
@@ -76,7 +78,70 @@ public class RedirectTODocumentation extends DocumentationBase {
                         .content(objectMapper.writeValueAsString(vo))
         )
                 .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-locgrp"))
+                .andDo(document("to-patch-target-unknown-locgp"))
+        ;
+    }
+
+    public
+    @Test
+    void testRedirectToUnknownTargets() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(UNKNOWN);
+        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.empty());
+        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
+
+        // test ...
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isConflict())
+                .andDo(document("to-patch-target-unknown-target"))
+        ;
+    }
+
+    public
+    @Test
+    void testRedirectToKnownTargets() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(UNKNOWN);
+        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
+        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
+
+        // test ...
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-target-unknown-target"))
+        ;
+    }
+
+    public
+    @Test
+    void testRedirectToKnownTargets2() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(UNKNOWN);
+        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
+        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
+
+        // test ...
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-target-unknown-target"))
         ;
     }
 }

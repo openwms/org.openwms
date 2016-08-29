@@ -8,31 +8,30 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * A Problem is used to signal an occurred failure.
+ * A Message is used to encapsulate a message text.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
  * @since 0.1
  */
 @Embeddable
-public class Problem implements Serializable {
+public class Message implements Serializable {
 
     /**
-     * Timestamp when the <code>Problem</code> occurred.
+     * Timestamp when the {@literal Message} occurred.
      */
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "C_PROBLEM_OCCURRED")
     private Date occurred;
 
     /**
-     * Message number of the <code>Problem</code>.
+     * Message number of the {@literal Message}.
      */
     @Column(name = "C_PROBLEM_MESSAGE_NO")
     private int messageNo;
 
     /**
-     * Message text about the <code>Problem</code>.
+     * Message text about the {@literal Message}.
      */
     @Column(name = "C_PROBLEM_MESSAGE")
     private String message;
@@ -42,39 +41,39 @@ public class Problem implements Serializable {
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Creates a new <code>Problem</code> instance.
+     * Creates a new {@literal Message} instance.
      */
-    public Problem() {
+    public Message() {
         this.occurred = new Date();
     }
 
     /**
-     * Create a new <code>Problem</code> instance with a message text.
+     * Create a new {@literal Message} instance with a message text.
      * 
      * @param message
      *            text as String
      */
-    public Problem(String message) {
+    public Message(String message) {
         this();
         this.message = message;
     }
 
     /**
-     * Create a new <code>Problem</code> instance with a message text and a message number.
+     * Create a new {@literal Message} instance with a message text and a message number.
      * 
      * @param message
      *            text as String
      * @param messageNo
      *            message number
      */
-    public Problem(String message, int messageNo) {
+    public Message(String message, int messageNo) {
         this();
         this.message = message;
         this.messageNo = messageNo;
     }
 
     /**
-     * Return the Date when the <code>Problem</code> has occurred.
+     * Return the Date when the {@literal Message} has occurred.
      * 
      * @return Date when occurred.
      */
@@ -83,7 +82,7 @@ public class Problem implements Serializable {
     }
 
     /**
-     * Set the Date when the <code>Problem</code> occurred.
+     * Set the Date when the {@literal Message} occurred.
      * 
      * @param occurred
      *            The Date to set.

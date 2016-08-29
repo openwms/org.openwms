@@ -39,7 +39,7 @@ class ProblemHistory extends BaseEntity {
     @JoinColumn(name = "C_FK_TO")
     private TransportOrder transportOrder;
 
-    private Problem problem;
+    private Message problem;
 
     /** Dear JPA ... */
     protected ProblemHistory() {
@@ -51,7 +51,7 @@ class ProblemHistory extends BaseEntity {
      * @param transportOrder The TO this problem initially occurred
      * @param problem The problem itself
      */
-    public ProblemHistory(TransportOrder transportOrder, Problem problem) {
+    public ProblemHistory(TransportOrder transportOrder, Message problem) {
         this.transportOrder = transportOrder;
         this.problem = problem;
     }

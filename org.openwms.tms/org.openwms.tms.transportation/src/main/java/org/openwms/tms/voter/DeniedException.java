@@ -23,14 +23,16 @@ package org.openwms.tms.voter;
 
 
 import org.ameba.exception.ServiceLayerException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * A DeniedException is thrown by a {@link DecisionVoter}s in case a business action is not allowed to be executed.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
  * @since 0.1
  */
+@ResponseStatus(HttpStatus.CONFLICT)
 public class DeniedException extends ServiceLayerException {
 
     /**
@@ -39,7 +41,7 @@ public class DeniedException extends ServiceLayerException {
      * @param message
      *            Detail message
      */
-    private DeniedException(String message) {
+    public DeniedException(String message) {
         super(message);
     }
 

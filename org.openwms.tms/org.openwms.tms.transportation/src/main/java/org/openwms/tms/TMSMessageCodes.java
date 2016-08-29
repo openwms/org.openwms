@@ -29,6 +29,9 @@ package org.openwms.tms;
  */
 public class TMSMessageCodes {
 
+    /*~ Messagetext Codes */
+
+
     /** Signals that the TransportOrder with the given persisted key wasn't found. */
     public static final String TO_WITH_PKEY_NOT_FOUND = "TMS.TO_WITH_PKEY_NOT_FOUND";
     /** Signals an exception because it was tried to turn back a TransportOrder into a state that isn't allowed. */
@@ -41,4 +44,11 @@ public class TMSMessageCodes {
     public static final String START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE = "TMS.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE";
     /** Signals an exception that the requested state change is not allowed for the initialized TransportOrder. */
     public static final String STATE_CHANGE_ERROR_FOR_INITIALIZED_TO="TMS.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO";
+
+
+    /*~ Message Codes */
+
+    /** Target LocationGroup or Location is blocked for infeed. */
+    public static final int TARGET_BLOCKED = 400;
+    public static final String TARGET_BLOCKED_MSG = "TMS.TARGET_BLOCKED";
 }

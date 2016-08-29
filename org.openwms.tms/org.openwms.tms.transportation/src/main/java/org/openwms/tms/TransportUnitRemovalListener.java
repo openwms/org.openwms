@@ -83,14 +83,14 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
             for (TransportOrder transportOrder : transportOrders) {
                 try {
                     transportOrder.setState(TransportOrder.State.CANCELED);
-                    transportOrder.setProblem(new Problem("TransportUnit " + transportUnit
+                    transportOrder.setProblem(new Message("TransportUnit " + transportUnit
                             + " was removed, order was canceled"));
                     transportOrder.setTransportUnitBK(null);
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Successfully unlinked and canceled TransportOrder: " + transportOrder.getPk());
                     }
                 } catch (StateChangeException sce) {
-                    transportOrder.setProblem(new Problem(sce.getMessage()));
+                    transportOrder.setProblem(new Message(sce.getMessage()));
                 } finally {
                     repository.save(transportOrder);
                 }
@@ -106,7 +106,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
                 TransportOrder.State.ONFAILURE);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
-                transportOrder.setProblem(new Problem("TransportUnit " + transportUnit
+                transportOrder.setProblem(new Message("TransportUnit " + transportUnit
                         + " was removed, order was unlinked"));
                 transportOrder.setTransportUnitBK(null);
                 repository.save(transportOrder);
@@ -121,7 +121,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
         List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrder.State.CANCELED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
-                transportOrder.setProblem(new Problem("TransportUnit " + transportUnit
+                transportOrder.setProblem(new Message("TransportUnit " + transportUnit
                         + " was removed, order was unlinked"));
                 transportOrder.setTransportUnitBK(null);
                 repository.save(transportOrder);

@@ -62,19 +62,21 @@ class RedirectTO implements UpdateFunction {
             if (null != redirectVoters) {
                 RedirectVote rv = new RedirectVote(toUpdate.getTargetLocationGroup(), saved);
                 // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
-                try {
-                    for (DecisionVoter<RedirectVote> voter : redirectVoters) {
-                        voter.voteFor(rv);
-                    }
-                } catch (DeniedException de) {
-                    LOGGER.error("Could not redirect TransportOrder with persistent key [" + saved.getPersistentKey() + "], reason is: "
-                            + de.getMessage());
-                    addProblem.add(new Problem(de.getMessage()), saved);
+                for (DecisionVoter<RedirectVote> voter : redirectVoters) {
+                    voter.voteFor(rv);
+                }
+
+                if (rv.hasMessages()) {
+                    rv.getMessages().forEach(m -> addProblem.add(new Message(m.getMessage()), saved));
+                }
+
+                if (!rv.completed()) {
+                    throw new DeniedException("TransportOrder couldn't be redirected to a new Target");
                 }
             }
 //            targetResolvers.forEach(tr -> tr.resolve(toUpdate.getTargetLocationGroup()).);
             //            saved.setTargetLocationGroup(toUpdate.getTargetLocationGroup());
-           // saved.setTargetLocation(toUpdate.getTargetLocation());
+            // saved.setTargetLocation(toUpdate.getTargetLocation());
         }
     }
 }

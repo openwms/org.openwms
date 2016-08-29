@@ -21,14 +21,40 @@
  */
 package org.openwms.tms.voter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openwms.tms.Message;
+
 /**
  * A Vote stores all information used by {@link DecisionVoter}s to vote for or against an action that shall be executed. Acts as a
  * superclass for certain votes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 0.1
  */
 public class Vote {
 
+    private List<Message> messages = new ArrayList<>();
+    private boolean completed = false;
+
+    public boolean addMessage(Message message) {
+        return messages.add(message);
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public boolean hasMessages() {
+        return messages != null && !messages.isEmpty();
+    }
+
+    public void complete() {
+        this.completed = true;
+    }
+
+    public boolean completed() {
+        return completed;
+    }
 }
