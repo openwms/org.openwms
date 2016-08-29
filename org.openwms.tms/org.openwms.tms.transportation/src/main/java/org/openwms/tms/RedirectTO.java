@@ -57,26 +57,21 @@ class RedirectTO implements UpdateFunction {
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (toUpdate.getTargetLocationGroup() != null && !toUpdate.getTargetLocationGroup().equals(saved.getTargetLocationGroup())) {
 
-            if (null != redirectVoters) {
-                RedirectVote rv = new RedirectVote(toUpdate.getTargetLocationGroup(), saved);
-                // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
-                for (DecisionVoter<RedirectVote> voter : redirectVoters) {
-                    voter.voteFor(rv);
-                }
-
-                if (rv.hasMessages()) {
-                    rv.getMessages().forEach(m -> addProblem.add(new Message(m.getMessage()), saved));
-                }
-
-                if (!rv.completed()) {
-                    throw new DeniedException("TransportOrder couldn't be redirected to a new Target");
-                }
+        if (null != redirectVoters) {
+            RedirectVote rv = new RedirectVote(toUpdate.getTargetLocationGroup(), saved);
+            // TODO [openwms]: 13/07/16 the concept of a voter is misused in that a voter changes the state of a TO
+            for (DecisionVoter<RedirectVote> voter : redirectVoters) {
+                voter.voteFor(rv);
             }
-//            targetResolvers.forEach(tr -> tr.resolve(toUpdate.getTargetLocationGroup()).);
-            //            saved.setTargetLocationGroup(toUpdate.getTargetLocationGroup());
-            // saved.setTargetLocation(toUpdate.getTargetLocation());
+
+            if (rv.hasMessages()) {
+                rv.getMessages().forEach(m -> addProblem.add(new Message(m.getMessage()), saved));
+            }
+
+            if (!rv.completed()) {
+                throw new DeniedException("TransportOrder couldn't be redirected to a new Target");
+            }
         }
     }
 }

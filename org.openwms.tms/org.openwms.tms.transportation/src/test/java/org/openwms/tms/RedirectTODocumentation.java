@@ -31,6 +31,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 /**
  * A RedirectTODocumentation.
@@ -51,14 +52,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-loc"))
-        ;
+        sendPatch(vo, status().isNoContent(), "to-patch-target-unknown-loc");
     }
 
     public
@@ -72,14 +66,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-locgp"))
-        ;
+        sendPatch(vo, status().isNoContent(), "to-patch-target-unknown-locgb");
     }
 
     public
@@ -93,14 +80,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isConflict())
-                .andDo(document("to-patch-target-unknown-target"))
-        ;
+        sendPatch(vo, status().isConflict(), "to-patch-target-unknown");
     }
 
     public
@@ -114,14 +94,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-target"))
-        ;
+        sendPatch(vo, status().isNoContent(), "to-patch-target-known-target");
     }
 
     public
@@ -133,15 +106,18 @@ public class RedirectTODocumentation extends DocumentationBase {
         vo.setTarget(UNKNOWN);
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
         given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
+        sendPatch(vo, status().isNoContent() , "to-patch-target-known-target2");
+    }
 
+    private void sendPatch(CreateTransportOrderVO vo, ResultMatcher rm, String output) throws Exception {
         // test ...
         mockMvc.perform(
                 patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
         )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-target"))
+                .andExpect(rm)
+                .andDo(document(output))
         ;
     }
 }
