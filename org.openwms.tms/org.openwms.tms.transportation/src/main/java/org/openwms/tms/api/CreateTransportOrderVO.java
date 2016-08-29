@@ -23,7 +23,7 @@ package org.openwms.tms.api;
 
 import java.io.Serializable;
 
-import org.openwms.tms.Problem;
+import org.openwms.tms.Message;
 
 /**
  * A CreateTransportOrderVO.
@@ -37,7 +37,7 @@ public class CreateTransportOrderVO implements Serializable {
     private String pKey;
     private String barcode;
     private String priority;
-    private Problem problem;
+    private Message problem;
     private String state;
     private String target;
 
@@ -65,11 +65,11 @@ public class CreateTransportOrderVO implements Serializable {
         this.priority = priority;
     }
 
-    public Problem getProblem() {
+    public Message getProblem() {
         return problem;
     }
 
-    public void setProblem(Problem problem) {
+    public void setProblem(Message problem) {
         this.problem = problem;
     }
 

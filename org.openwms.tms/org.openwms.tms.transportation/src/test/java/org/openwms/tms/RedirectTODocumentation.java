@@ -62,6 +62,27 @@ public class RedirectTODocumentation extends DocumentationBase {
 
     public
     @Test
+    void testRedirectToUnknownLocation() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(UNKNOWN);
+        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.empty());
+        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
+
+        // test ...
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isConflict())
+                .andDo(document("to-patch-target-unknown-loc"))
+        ;
+    }
+
+    public
+    @Test
     void testRedirectToValidLocationGroupOK() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();

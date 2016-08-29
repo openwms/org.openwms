@@ -23,7 +23,10 @@ package org.openwms.tms.voter;
 
 import java.util.Optional;
 
+import org.ameba.i18n.Translator;
 import org.openwms.common.CommonGateway;
+import org.openwms.tms.Message;
+import org.openwms.tms.TMSMessageCodes;
 import org.openwms.tms.targets.Location;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +50,8 @@ class LocationRedirector implements DecisionVoter<RedirectVote> {
 
     @Autowired
     private CommonGateway commonGateway;
+    @Autowired
+    private Translator translator;
     private static final Logger LOGGER = LoggerFactory.getLogger(LocationRedirector.class);
 
     /**
@@ -60,11 +65,14 @@ class LocationRedirector implements DecisionVoter<RedirectVote> {
         Optional<Location> group = commonGateway.getLocation(vote.getTarget());
         if (group.isPresent()) {
             if (group.get().isInfeedBlocked()) {
-                LOGGER.warn("The targetLocation is blocked and is not accepted as target");
-                // we do not actually throw because of other voters in the chain
+                String msg = translator.translate(TMSMessageCodes.TARGET_BLOCKED_MSG, vote.getTarget(), vote.getTransportOrder().getPersistentKey());
+                vote.addMessage(new Message(msg, TMSMessageCodes.TARGET_BLOCKED));
+                LOGGER.debug(msg);
+            } else {
+                // make change here
+                vote.complete();
+                vote.getTransportOrder().setTargetLocation(vote.getTarget());
             }
-            // make change here
-            vote.getTransportOrder().setTargetLocation(vote.getTarget());
         }
     }
 }

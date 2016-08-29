@@ -49,7 +49,7 @@ class AddProblem implements UpdateFunction {
         }
     }
 
-    void add(Problem problem, TransportOrder to) {
+    void add(Message problem, TransportOrder to) {
         repository.save(new ProblemHistory(to, to.getProblem()));
         to.setProblem(problem);
 

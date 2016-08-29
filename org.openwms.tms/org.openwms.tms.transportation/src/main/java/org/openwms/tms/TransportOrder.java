@@ -83,7 +83,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * Last reported problem on the {@code TransportOrder}.
      */
     @Column(name = "C_PROBLEM")
-    private Problem problem;
+    private Message problem;
 
     /**
      * Date when the {@code TransportOrder} ended.
@@ -301,20 +301,20 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     }
 
     /**
-     * Get the last {@link Problem}.
+     * Get the last {@link Message}.
      *
      * @return The last problem.
      */
-    public Problem getProblem() {
+    public Message getProblem() {
         return problem;
     }
 
     /**
-     * Set the last {@link Problem}.
+     * Set the last {@link Message}.
      *
-     * @param problem The {@link Problem} to set.
+     * @param problem The {@link Message} to set.
      */
-    public void setProblem(Problem problem) {
+    public void setProblem(Message problem) {
         this.problem = problem;
     }
 

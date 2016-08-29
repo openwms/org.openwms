@@ -137,7 +137,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
                         .convertToEventType(state)));
             } catch (StateChangeException sce) {
                 LOGGER.error("Could not turn TransportOrder: [{}] into [{}], because of [{}]", transportOrder.getPk(), state, sce.getMessage());
-                Problem problem = new Problem(sce.getMessage());
+                Message problem = new Message(sce.getMessage());
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getPk().toString());
             }
