@@ -40,7 +40,6 @@ import org.springframework.test.web.servlet.ResultMatcher;
  */
 public class RedirectTODocumentation extends DocumentationBase {
 
-
     public
     @Test
     void testRedirectToUnknownLocationButGroup() throws Exception {
@@ -107,6 +106,36 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
         given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
         sendPatch(vo, status().isNoContent() , "to-patch-target-known-target2");
+    }
+
+    public
+    @Test
+    void testRedirectToBlockedLocation() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(INIT_LOC_STRING);
+        given(commonGateway.getLocationGroup(INIT_LOC_STRING)).willReturn(Optional.empty());
+        INIT_LOC.setIncomingActive(false);
+        given(commonGateway.getLocation(INIT_LOC_STRING)).willReturn(Optional.of(INIT_LOC));
+
+        // test ...
+        sendPatch(vo, status().isNoContent(), "to-patch-target-blocked-loc");
+    }
+
+    public
+    @Test
+    void testRedirectToBlockedLocationGroup() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(INIT_LOCGB_STRING);
+        INIT_LOCGRB.setIncomingActive(false);
+        given(commonGateway.getLocationGroup(INIT_LOCGB_STRING)).willReturn(Optional.of(INIT_LOCGRB));
+        given(commonGateway.getLocation(INIT_LOCGB_STRING)).willReturn(Optional.empty());
+
+        // test ...
+        sendPatch(vo, status().isNoContent(), "to-patch-target-blocked-locgrp");
     }
 
     private void sendPatch(CreateTransportOrderVO vo, ResultMatcher rm, String output) throws Exception {

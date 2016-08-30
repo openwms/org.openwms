@@ -23,6 +23,7 @@ package org.openwms.tms;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import java.io.Serializable;
 
 import org.ameba.integration.jpa.BaseEntity;
 
@@ -30,15 +31,14 @@ import org.ameba.integration.jpa.BaseEntity;
  * A ProblemHistory.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Entity
-class ProblemHistory extends BaseEntity {
+public class ProblemHistory extends BaseEntity implements Serializable {
 
     @JoinColumn(name = "C_FK_TO")
     private TransportOrder transportOrder;
-
+    @JoinColumn(name = "C_FK_MSG")
     private Message problem;
 
     /** Dear JPA ... */

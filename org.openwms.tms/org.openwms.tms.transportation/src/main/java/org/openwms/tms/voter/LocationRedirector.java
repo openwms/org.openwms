@@ -62,9 +62,9 @@ class LocationRedirector implements DecisionVoter<RedirectVote> {
     @Override
     public void voteFor(RedirectVote vote) throws DeniedException {
 
-        Optional<Location> group = commonGateway.getLocation(vote.getTarget());
-        if (group.isPresent()) {
-            if (group.get().isInfeedBlocked()) {
+        Optional<Location> location = commonGateway.getLocation(vote.getTarget());
+        if (location.isPresent()) {
+            if (location.get().isInfeedBlocked()) {
                 String msg = translator.translate(TMSMessageCodes.TARGET_BLOCKED_MSG, vote.getTarget(), vote.getTransportOrder().getPersistentKey());
                 vote.addMessage(new Message(msg, TMSMessageCodes.TARGET_BLOCKED));
                 LOGGER.debug(msg);
