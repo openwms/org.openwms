@@ -141,12 +141,12 @@ public class RedirectTODocumentation extends DocumentationBase {
     private void sendPatch(CreateTransportOrderVO vo, ResultMatcher rm, String output) throws Exception {
         // test ...
         mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(rm)
-                .andDo(document(output))
+            patch(TMSConstants.ROOT_ENTITIES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo))
+            )
+            .andExpect(rm)
+            .andDo(document(output))
         ;
     }
 }
