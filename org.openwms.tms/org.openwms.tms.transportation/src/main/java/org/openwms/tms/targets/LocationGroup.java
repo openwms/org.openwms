@@ -29,6 +29,8 @@ package org.openwms.tms.targets;
  */
 public class LocationGroup implements Target {
 
+    private boolean incomingActive;
+
     public LocationGroup(String name) {
         this.name = name;
     }
@@ -36,11 +38,15 @@ public class LocationGroup implements Target {
     private String name;
 
     public boolean isInfeedBlocked() {
-        return false;
+        return !incomingActive;
     }
 
     @Override
     public String asString() {
         return name;
+    }
+
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 }

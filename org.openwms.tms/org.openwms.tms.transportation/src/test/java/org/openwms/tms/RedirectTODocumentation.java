@@ -31,6 +31,7 @@ import java.util.Optional;
 import org.junit.Test;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 /**
  * A RedirectTODocumentation.
@@ -38,7 +39,6 @@ import org.springframework.http.MediaType;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public class RedirectTODocumentation extends DocumentationBase {
-
 
     public
     @Test
@@ -51,14 +51,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-loc"))
-        ;
+        sendPatch(vo, status().isNoContent(), "to-patch-target-unknown-loc");
     }
 
     public
@@ -72,14 +65,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-locgp"))
-        ;
+        sendPatch(vo, status().isNoContent(), "to-patch-target-unknown-locgb");
     }
 
     public
@@ -93,14 +79,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.empty());
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isConflict())
-                .andDo(document("to-patch-target-unknown-target"))
-        ;
+        sendPatch(vo, status().isConflict(), "to-patch-target-unknown");
     }
 
     public
@@ -114,14 +93,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
-        mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-target"))
-        ;
+        sendPatch(vo, status().isNoContent(), "to-patch-target-known-target");
     }
 
     public
@@ -133,15 +105,48 @@ public class RedirectTODocumentation extends DocumentationBase {
         vo.setTarget(UNKNOWN);
         given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
         given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
+        sendPatch(vo, status().isNoContent() , "to-patch-target-known-target2");
+    }
+
+    public
+    @Test
+    void testRedirectToBlockedLocation() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(INIT_LOC_STRING);
+        given(commonGateway.getLocationGroup(INIT_LOC_STRING)).willReturn(Optional.empty());
+        INIT_LOC.setIncomingActive(false);
+        given(commonGateway.getLocation(INIT_LOC_STRING)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
+        sendPatch(vo, status().isNoContent(), "to-patch-target-blocked-loc");
+    }
+
+    public
+    @Test
+    void testRedirectToBlockedLocationGroup() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        postTOAndValidate(vo, NOTLOGGED);
+        vo.setTarget(INIT_LOCGB_STRING);
+        INIT_LOCGRB.setIncomingActive(false);
+        given(commonGateway.getLocationGroup(INIT_LOCGB_STRING)).willReturn(Optional.of(INIT_LOCGRB));
+        given(commonGateway.getLocation(INIT_LOCGB_STRING)).willReturn(Optional.empty());
+
+        // test ...
+        sendPatch(vo, status().isNoContent(), "to-patch-target-blocked-locgrp");
+    }
+
+    private void sendPatch(CreateTransportOrderVO vo, ResultMatcher rm, String output) throws Exception {
+        // test ...
         mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-target-unknown-target"))
+            patch(TMSConstants.ROOT_ENTITIES)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(vo))
+            )
+            .andExpect(rm)
+            .andDo(document(output))
         ;
     }
 }

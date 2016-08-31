@@ -80,10 +80,16 @@ public abstract class DocumentationBase {
     public static final String NOTLOGGED = "--";
     public static final String INIT_LOC_STRING = "INIT/0000/0000/0000/0000";
     public static final Location INIT_LOC = new Location(INIT_LOC_STRING);
+
     public static final String ERR_LOC_STRING = "ERR_/0000/0000/0000/0000";
     public static final Location ERR_LOC = new Location(ERR_LOC_STRING);
-    public static final String ERR_LOCGB_STRING = "ERR_/0000/0000/0000/0000";
+
+    public static final String INIT_LOCGB_STRING = "Picking";
+    public static final LocationGroup INIT_LOCGRB = new LocationGroup(ERR_LOC_STRING);
+
+    public static final String ERR_LOCGB_STRING = "Error handling";
     public static final LocationGroup ERR_LOCGRB = new LocationGroup(ERR_LOC_STRING);
+
     public static final String KNOWN = "KNOWN";
     public static final String UNKNOWN = "UNKNOWN";
     public static final String BC_4711 = "4711";
@@ -121,16 +127,25 @@ public abstract class DocumentationBase {
     }
 
     protected MvcResult postTOAndValidate(CreateTransportOrderVO vo, String outputFile) throws Exception {
-        MvcResult res = mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(vo)))
-                .andExpect(status().isCreated())
-                .andDo(document(outputFile))
-                .andReturn();
+        MvcResult res;
+        if (NOTLOGGED.equals(outputFile)) {
+            res = mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(vo)))
+                    .andExpect(status().isCreated())
+                    .andReturn();
+        } else {
+            res = mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(vo)))
+                    .andExpect(status().isCreated())
+                    .andDo(document(outputFile))
+                    .andReturn();
+        }
 
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
-        toLocation = toLocation.substring(0, toLocation.length()-1);
-        vo.setpKey(toLocation.substring(toLocation.lastIndexOf("/")+1));
+        toLocation = toLocation.substring(0, toLocation.length() - 1);
+        vo.setpKey(toLocation.substring(toLocation.lastIndexOf("/") + 1));
         return res;
     }
 }
