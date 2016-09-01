@@ -48,7 +48,6 @@ import org.springframework.beans.factory.annotation.Configurable;
  * A TransportOrder is used to move {@code TransportUnit}s from a current {@code Location} to a target.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 0.1
  */
 @Configurable
@@ -401,9 +400,5 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         public int getOrder() {
             return order;
         }
-    }
-
-    public interface ChangeTU {
-
     }
 }

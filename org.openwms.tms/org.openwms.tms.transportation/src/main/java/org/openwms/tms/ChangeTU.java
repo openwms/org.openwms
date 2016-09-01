@@ -25,6 +25,7 @@ import javax.validation.Validator;
 
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
+import org.openwms.tms.validation.ChangeTUValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -68,6 +69,6 @@ class ChangeTU implements UpdateFunction {
     }
 
     private void validateAttributes(TransportOrder to) {
-        validator.validate(to, TransportOrder.ChangeTU.class);
+        validator.validate(to, ChangeTUValidation.class);
     }
 }

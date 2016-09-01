@@ -23,6 +23,7 @@ package org.openwms.tms;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 import org.ameba.integration.jpa.BaseEntity;
@@ -36,6 +37,7 @@ import org.ameba.integration.jpa.BaseEntity;
 @Entity
 public class ProblemHistory extends BaseEntity implements Serializable {
 
+    @ManyToOne
     @JoinColumn(name = "C_FK_TO")
     private TransportOrder transportOrder;
     @JoinColumn(name = "C_FK_MSG")

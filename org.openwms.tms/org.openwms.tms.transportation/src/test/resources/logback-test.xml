@@ -21,6 +21,8 @@
         </filter>
     </appender>
 
+    <logger name="org.hibernate" level="INFO" />
+
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="OFF" />
     <logger name="SERVICE_LAYER_ACCESS" level="OFF" />
     <logger name="SERVICE_LAYER_EXCEPTION" level="OFF" />

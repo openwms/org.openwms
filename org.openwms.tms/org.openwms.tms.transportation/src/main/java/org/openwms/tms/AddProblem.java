@@ -28,7 +28,6 @@ import org.springframework.stereotype.Component;
  * A AddProblem.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Component
@@ -50,8 +49,7 @@ class AddProblem implements UpdateFunction {
     }
 
     void add(Message problem, TransportOrder to) {
-        repository.save(new ProblemHistory(to, to.getProblem()));
         to.setProblem(problem);
-
+        repository.save(new ProblemHistory(to, to.getProblem()));
     }
 }
