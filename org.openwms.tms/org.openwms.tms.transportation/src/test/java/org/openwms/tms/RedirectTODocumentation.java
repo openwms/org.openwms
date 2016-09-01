@@ -88,11 +88,9 @@ public class RedirectTODocumentation extends DocumentationBase {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        vo.setTarget(UNKNOWN);
-        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
-        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
-
-        // test ...
+        vo.setTarget(KNOWN);
+        given(commonGateway.getLocationGroup(KNOWN)).willReturn(Optional.empty());
+        given(commonGateway.getLocation(KNOWN)).willReturn(Optional.of(INIT_LOC));
         sendPatch(vo, status().isNoContent(), "to-patch-target-known-target");
     }
 
@@ -102,9 +100,9 @@ public class RedirectTODocumentation extends DocumentationBase {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        vo.setTarget(UNKNOWN);
-        given(commonGateway.getLocation(UNKNOWN)).willReturn(Optional.of(INIT_LOC));
-        given(commonGateway.getLocationGroup(UNKNOWN)).willReturn(Optional.of(ERR_LOCGRB));
+        vo.setTarget(KNOWN);
+        given(commonGateway.getLocationGroup(KNOWN)).willReturn(Optional.of(INIT_LOCGRB));
+        given(commonGateway.getLocation(KNOWN)).willReturn(Optional.empty());
         sendPatch(vo, status().isNoContent() , "to-patch-target-known-target2");
     }
 
@@ -120,7 +118,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(INIT_LOC_STRING)).willReturn(Optional.of(INIT_LOC));
 
         // test ...
-        sendPatch(vo, status().isNoContent(), "to-patch-target-blocked-loc");
+        sendPatch(vo, status().isConflict(), "to-patch-target-blocked-loc");
     }
 
     public
@@ -135,7 +133,7 @@ public class RedirectTODocumentation extends DocumentationBase {
         given(commonGateway.getLocation(INIT_LOCGB_STRING)).willReturn(Optional.empty());
 
         // test ...
-        sendPatch(vo, status().isNoContent(), "to-patch-target-blocked-locgrp");
+        sendPatch(vo, status().isConflict(), "to-patch-target-blocked-locgrp");
     }
 
     private void sendPatch(CreateTransportOrderVO vo, ResultMatcher rm, String output) throws Exception {
