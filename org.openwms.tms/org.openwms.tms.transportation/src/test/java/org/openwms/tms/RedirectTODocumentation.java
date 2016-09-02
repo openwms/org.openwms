@@ -42,7 +42,7 @@ public class RedirectTODocumentation extends DocumentationBase {
 
     public
     @Test
-    void testRedirectToUnknownLocationButGroup() throws Exception {
+    void testRedirectToUnknownLocationGroupButLoc() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
@@ -56,7 +56,7 @@ public class RedirectTODocumentation extends DocumentationBase {
 
     public
     @Test
-    void testRedirectToUnknownLocationGroupButLoc() throws Exception {
+    void testRedirectToUnknownLocationButLocGroup() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
@@ -80,30 +80,6 @@ public class RedirectTODocumentation extends DocumentationBase {
 
         // test ...
         sendPatch(vo, status().isConflict(), "to-patch-target-unknown");
-    }
-
-    public
-    @Test
-    void testRedirectToKnownTargets() throws Exception {
-        // setup ...
-        CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
-        vo.setTarget(KNOWN);
-        given(commonGateway.getLocationGroup(KNOWN)).willReturn(Optional.empty());
-        given(commonGateway.getLocation(KNOWN)).willReturn(Optional.of(INIT_LOC));
-        sendPatch(vo, status().isNoContent(), "to-patch-target-known-target");
-    }
-
-    public
-    @Test
-    void testRedirectToKnownTargets2() throws Exception {
-        // setup ...
-        CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
-        vo.setTarget(KNOWN);
-        given(commonGateway.getLocationGroup(KNOWN)).willReturn(Optional.of(INIT_LOCGRB));
-        given(commonGateway.getLocation(KNOWN)).willReturn(Optional.empty());
-        sendPatch(vo, status().isNoContent() , "to-patch-target-known-target2");
     }
 
     public

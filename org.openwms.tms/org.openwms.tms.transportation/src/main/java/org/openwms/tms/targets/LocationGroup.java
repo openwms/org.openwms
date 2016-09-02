@@ -29,7 +29,7 @@ package org.openwms.tms.targets;
  */
 public class LocationGroup implements Target {
 
-    private boolean incomingActive;
+    private boolean incomingActive = true;
 
     public LocationGroup(String name) {
         this.name = name;

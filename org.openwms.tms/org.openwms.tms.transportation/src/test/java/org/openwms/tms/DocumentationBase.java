@@ -79,16 +79,16 @@ public abstract class DocumentationBase {
     public final JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation(System.getProperty("documentation.dir", System.getProperty("project.build.directory") + "/generated-snippets"));
     public static final String NOTLOGGED = "--";
     public static final String INIT_LOC_STRING = "INIT/0000/0000/0000/0000";
-    public static final Location INIT_LOC = new Location(INIT_LOC_STRING);
+    protected Location INIT_LOC;
 
     public static final String ERR_LOC_STRING = "ERR_/0000/0000/0000/0000";
-    public static final Location ERR_LOC = new Location(ERR_LOC_STRING);
+    protected Location ERR_LOC;
 
     public static final String INIT_LOCGB_STRING = "Picking";
-    public static final LocationGroup INIT_LOCGRB = new LocationGroup(ERR_LOC_STRING);
+    protected LocationGroup INIT_LOCGRB;
 
     public static final String ERR_LOCGB_STRING = "Error handling";
-    public static final LocationGroup ERR_LOCGRB = new LocationGroup(ERR_LOC_STRING);
+    protected LocationGroup ERR_LOCGRB;
 
     public static final String KNOWN = "KNOWN";
     public static final String UNKNOWN = "UNKNOWN";
@@ -101,6 +101,10 @@ public abstract class DocumentationBase {
      */
     @Before
     public void setUp() throws Exception {
+        INIT_LOC = new Location(INIT_LOC_STRING);
+        ERR_LOC = new Location(ERR_LOC_STRING);
+        INIT_LOCGRB = new LocationGroup(INIT_LOCGB_STRING);
+        ERR_LOCGRB = new LocationGroup(ERR_LOCGB_STRING);
         CharacterEncodingFilter filter = new CharacterEncodingFilter("UTF-8", true);
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)

@@ -23,13 +23,8 @@ package org.openwms.tms.voter;
 
 import java.util.Optional;
 
-import org.ameba.i18n.Translator;
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.Message;
-import org.openwms.tms.TMSMessageCodes;
 import org.openwms.tms.targets.LocationGroup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
@@ -40,40 +35,28 @@ import org.springframework.stereotype.Component;
  * initialized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @see org.openwms.tms.voter.DecisionVoter
- * @since 0.1
+ * @since 2.0
  */
 @Lazy
 @Order(10)
 @Component
-class LocationGroupRedirector implements DecisionVoter<RedirectVote> {
+class LocationGroupRedirector extends TargetRedirector<LocationGroup> {
 
     @Autowired
     private CommonGateway commonGateway;
-    @Autowired
-    private Translator translator;
-    private static final Logger LOGGER = LoggerFactory.getLogger(LocationGroupRedirector.class);
 
-    /**
-     * {@inheritDoc}
-     * <p>
-     * Simple check for blocked infeed.
-     */
     @Override
-    public void voteFor(RedirectVote vote) throws DeniedException {
+    protected boolean isTargetAvailable(LocationGroup target) {
+        return !target.isInfeedBlocked();
+    }
 
-        Optional<LocationGroup> group = commonGateway.getLocationGroup(vote.getTarget());
-        if (group.isPresent()) {
-            if (group.get().isInfeedBlocked()) {
-                String msg = translator.translate(TMSMessageCodes.TARGET_BLOCKED_MSG, vote.getTarget(), vote.getTransportOrder().getPersistentKey());
-                vote.addMessage(new Message(msg, TMSMessageCodes.TARGET_BLOCKED));
-                LOGGER.debug(msg);
-            } else {
-                // make change here
-                vote.complete();
-                vote.getTransportOrder().setTargetLocationGroup(vote.getTarget());
-            }
-        }
+    @Override
+    protected Optional<LocationGroup> resolveTarget(RedirectVote vote) {
+        return commonGateway.getLocationGroup(vote.getTarget());
+    }
+
+    @Override
+    protected void assignTarget(RedirectVote vote) {
+        vote.getTransportOrder().setTargetLocationGroup(vote.getTarget());
     }
 }
