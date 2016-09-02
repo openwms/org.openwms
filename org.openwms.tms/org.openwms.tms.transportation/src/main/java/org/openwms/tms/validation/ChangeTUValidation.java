@@ -19,50 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
-
-import java.io.Serializable;
+package org.openwms.tms.validation;
 
 /**
- * A PriorityLevel is used to prioritize {@link TransportOrder}s.
- * 
+ * A ChangeTUValidation.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
  */
-public enum PriorityLevel implements Serializable {
-
-    /** Lowest priority. */
-    LOWEST(10),
-
-    /** Low priority. */
-    LOW(20),
-
-    /** Standard priority. */
-    NORMAL(30),
-
-    /** High priority. */
-    HIGH(40),
-
-    /** Highest priority. */
-    HIGHEST(50);
-
-    private int order;
-
-    /** Dear JPA... */
-    PriorityLevel() {
-    }
-
-    PriorityLevel(int order) {
-        this.order = order;
-    }
-
-    /**
-     * Get the order.
-     * 
-     * @return the order.
-     */
-    public int getOrder() {
-        return order;
-    }
+public interface ChangeTUValidation {
 
 }
