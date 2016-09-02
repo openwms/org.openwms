@@ -49,6 +49,5 @@ public class TMSMessageCodes {
     /*~ Message Codes */
 
     /** Target LocationGroup or Location is blocked for infeed. */
-    public static final int TARGET_BLOCKED = 400;
     public static final String TARGET_BLOCKED_MSG = "TMS.TARGET_BLOCKED";
 }

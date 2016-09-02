@@ -59,9 +59,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
     @Override
     public void preRemove(TransportUnit entity) throws RemovalNotAllowedException {
         Assert.notNull(entity, "Not allowed to call preRemove with null argument");
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Someone is trying to remove the TransportUnit [" + entity + " ], check for existing TransportOrders");
-        }
+        LOGGER.debug("Someone is trying to remove the TransportUnit [{}], check for existing TransportOrders", entity);
         try {
             cancelInitializedOrders(entity);
             unlinkFinishedOrders(entity);
@@ -74,23 +72,19 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
     }
 
     protected void cancelInitializedOrders(TransportUnit transportUnit) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Trying to cancel and remove already created but not started TransportOrders");
-        }
+        LOGGER.debug("Trying to cancel and remove already created but not started TransportOrders");
         List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrder.State.CREATED,
                 TransportOrder.State.INITIALIZED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
                 try {
                     transportOrder.setState(TransportOrder.State.CANCELED);
-                    transportOrder.setProblem(new Message("TransportUnit " + transportUnit
-                            + " was removed, order was canceled"));
+                    transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit
+                            + " was removed, order was canceled").build());
                     transportOrder.setTransportUnitBK(null);
-                    if (LOGGER.isDebugEnabled()) {
-                        LOGGER.debug("Successfully unlinked and canceled TransportOrder: " + transportOrder.getPk());
-                    }
+                    LOGGER.debug("Successfully unlinked and canceled TransportOrder [{}]", transportOrder.getPk());
                 } catch (StateChangeException sce) {
-                    transportOrder.setProblem(new Message(sce.getMessage()));
+                    transportOrder.setProblem(new Message.Builder().withMessage(sce.getMessage()).build());
                 } finally {
                     repository.save(transportOrder);
                 }
@@ -106,13 +100,11 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
                 TransportOrder.State.ONFAILURE);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
-                transportOrder.setProblem(new Message("TransportUnit " + transportUnit
-                        + " was removed, order was unlinked"));
+                transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit
+                        + " was removed, order was unlinked").build());
                 transportOrder.setTransportUnitBK(null);
                 repository.save(transportOrder);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Successfully unlinked TransportOrder: " + transportOrder.getPk());
-                }
+                LOGGER.debug("Successfully unlinked TransportOrder [{}]", transportOrder.getPk());
             }
         }
     }
@@ -121,13 +113,11 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
         List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrder.State.CANCELED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
-                transportOrder.setProblem(new Message("TransportUnit " + transportUnit
-                        + " was removed, order was unlinked"));
+                transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit
+                        + " was removed, order was unlinked").build());
                 transportOrder.setTransportUnitBK(null);
                 repository.save(transportOrder);
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Successfully unlinked canceled TransportOrder: " + transportOrder.getPk());
-                }
+                LOGGER.debug("Successfully unlinked canceled TransportOrder [{}]", transportOrder.getPk());
             }
         }
     }

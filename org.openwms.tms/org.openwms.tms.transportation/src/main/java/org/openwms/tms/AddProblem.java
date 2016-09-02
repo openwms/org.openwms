@@ -48,8 +48,13 @@ class AddProblem implements UpdateFunction {
         }
     }
 
+    /**
+     * To be accessed from the same package!
+     * @param problem
+     * @param to
+     */
     void add(Message problem, TransportOrder to) {
-        to.setProblem(problem);
         repository.save(new ProblemHistory(to, to.getProblem()));
+        to.setProblem(problem);
     }
 }

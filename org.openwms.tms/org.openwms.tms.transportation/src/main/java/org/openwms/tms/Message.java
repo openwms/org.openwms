@@ -8,68 +8,38 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * A Message is used to encapsulate a message text.
+ * A Message is used to encapsulate a message text with an identifier.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
  */
 @Embeddable
 public class Message implements Serializable {
 
-    /**
-     * Timestamp when the {@literal Message} occurred.
-     */
+    /** Timestamp when the {@literal Message} has occurred. */
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "C_PROBLEM_OCCURRED")
+    @Column(name = "C_OCCURRED")
     private Date occurred;
 
-    /**
-     * Message number of the {@literal Message}.
-     */
-    @Column(name = "C_PROBLEM_MESSAGE_NO")
-    private int messageNo;
+    /** Message number of the {@literal Message}. */
+    @Column(name = "C_NO")
+    private String messageNo;
 
-    /**
-     * Message text about the {@literal Message}.
-     */
-    @Column(name = "C_PROBLEM_MESSAGE")
+    /** Message text about the {@literal Message}. */
+    @Column(name = "C_MESSAGE")
     private String message;
-
-    // FIXME [scherrer] : add new column with root exception
-    // private Throwable rootCause;
 
     /* ----------------------------- methods ------------------- */
     /**
-     * Creates a new {@literal Message} instance.
+     * Dear JPA...
      */
     public Message() {
-        this.occurred = new Date();
     }
 
-    /**
-     * Create a new {@literal Message} instance with a message text.
-     * 
-     * @param message
-     *            text as String
-     */
-    public Message(String message) {
-        this();
-        this.message = message;
-    }
-
-    /**
-     * Create a new {@literal Message} instance with a message text and a message number.
-     * 
-     * @param message
-     *            text as String
-     * @param messageNo
-     *            message number
-     */
-    public Message(String message, int messageNo) {
-        this();
-        this.message = message;
-        this.messageNo = messageNo;
+    private Message(Builder builder) {
+        occurred = builder.occurred;
+        messageNo = builder.messageNo;
+        message = builder.message;
     }
 
     /**
@@ -78,17 +48,7 @@ public class Message implements Serializable {
      * @return Date when occurred.
      */
     public Date getOccurred() {
-        return new Date(occurred.getTime());
-    }
-
-    /**
-     * Set the Date when the {@literal Message} occurred.
-     * 
-     * @param occurred
-     *            The Date to set.
-     */
-    public void setOccurred(Date occurred) {
-        this.occurred = new Date(occurred.getTime());
+        return occurred;
     }
 
     /**
@@ -96,18 +56,8 @@ public class Message implements Serializable {
      * 
      * @return The messageNo.
      */
-    public int getMessageNo() {
+    public String getMessageNo() {
         return messageNo;
-    }
-
-    /**
-     * Set the messageNo.
-     * 
-     * @param messageNo
-     *            The messageNo to set.
-     */
-    public void setMessageNo(int messageNo) {
-        this.messageNo = messageNo;
     }
 
     /**
@@ -119,13 +69,59 @@ public class Message implements Serializable {
         return message;
     }
 
+
     /**
-     * Set the message.
-     * 
-     * @param message
-     *            The message to set.
+     * {@code Message} builder static inner class.
      */
-    public void setMessage(String message) {
-        this.message = message;
+    public static final class Builder {
+
+        private Date occurred;
+        private String messageNo;
+        private String message;
+
+        public Builder() {
+        }
+
+        /**
+         * Sets the {@code occurred} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code occurred} to set
+         * @return a reference to this Builder
+         */
+        public Builder withOccurred(Date val) {
+            occurred = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code messageNo} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code messageNo} to set
+         * @return a reference to this Builder
+         */
+        public Builder withMessageNo(String val) {
+            messageNo = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code message} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code message} to set
+         * @return a reference to this Builder
+         */
+        public Builder withMessage(String val) {
+            message = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code Message} built from the parameters previously set.
+         *
+         * @return a {@code Message} built with parameters of this {@code Message.Builder}
+         */
+        public Message build() {
+            return new Message(this);
+        }
     }
 }

@@ -66,7 +66,7 @@ class RedirectTO implements UpdateFunction {
             }
 
             if (rv.hasMessages()) {
-                rv.getMessages().forEach(m -> addProblem.add(new Message(m.getMessage()), saved));
+                rv.getMessages().forEach(m -> addProblem.add(new Message.Builder().withMessage(m.getMessage()).build(), saved));
             }
 
             if (!rv.completed()) {
