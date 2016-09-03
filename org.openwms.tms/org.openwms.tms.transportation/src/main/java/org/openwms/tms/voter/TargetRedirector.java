@@ -35,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * A TargetRedirector.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @since 1.0
  */
 abstract class TargetRedirector<T extends Target> implements DecisionVoter<RedirectVote> {
 

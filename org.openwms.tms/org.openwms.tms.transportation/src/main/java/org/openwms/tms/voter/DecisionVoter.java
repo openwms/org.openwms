@@ -27,8 +27,7 @@ package org.openwms.tms.voter;
  * @param <T>
  *            Any type of Vote
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public interface DecisionVoter<T extends Vote> {
 

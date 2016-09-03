@@ -28,8 +28,7 @@ import java.util.Collection;
  *
  * @param <T> Any kind of {@link TransportOrder}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.1
- * @since 0.1
+ * @since 1.0
  */
 public interface TransportationService<T extends TransportOrder> {
 

@@ -27,7 +27,6 @@ import java.util.Optional;
  * A TargetResolver is responsible to resolve a {@link Target}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public interface TargetResolver<T extends Target> {

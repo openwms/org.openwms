@@ -36,8 +36,7 @@ import org.springframework.util.Assert;
  * A TransportUnitRemovalListener is asked to allow or disallow the removal of a TransportUnit in a distributed system.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
 @TxService
 class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {

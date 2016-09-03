@@ -31,7 +31,7 @@ import org.springframework.data.jpa.repository.Query;
  * A TransportOrderRepository provides functionality regarding {@link TransportOrder} entity classes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
+ * @since 1.0
  */
 public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
 

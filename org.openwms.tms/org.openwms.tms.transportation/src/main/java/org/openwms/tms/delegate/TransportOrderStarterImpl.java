@@ -42,8 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A TransportOrderStarterImpl is responsible to start initialized {@link TransportOrder}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
 @Transactional(propagation = Propagation.MANDATORY, noRollbackFor = {StateChangeException.class})
 @Component

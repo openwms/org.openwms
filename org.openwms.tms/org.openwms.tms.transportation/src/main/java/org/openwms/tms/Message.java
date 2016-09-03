@@ -12,6 +12,7 @@ import java.util.Date;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @since 1.0
  */
 @Embeddable
 public class Message implements Serializable {

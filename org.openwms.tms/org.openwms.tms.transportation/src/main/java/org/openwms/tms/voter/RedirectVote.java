@@ -27,8 +27,7 @@ import org.openwms.tms.TransportOrder;
  * A RedirectVote. Encapsulates a targetLocationGroup and a targetLocation to vote for as targets.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
 public class RedirectVote extends Vote {
 

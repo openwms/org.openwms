@@ -29,7 +29,6 @@ import org.openwms.tms.Message;
  * A CreateTransportOrderVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public class CreateTransportOrderVO implements Serializable {

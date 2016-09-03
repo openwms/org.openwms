@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  * A CommonFeignClient.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @FeignClient(url = "${common.url}", name = "COMMON-1", decode404 = true)

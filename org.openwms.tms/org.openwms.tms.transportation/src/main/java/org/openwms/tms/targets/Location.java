@@ -29,7 +29,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * A Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public class Location implements Target, Serializable {
@@ -64,6 +63,9 @@ public class Location implements Target, Serializable {
         return locationId;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String asString() {
         return locationId;

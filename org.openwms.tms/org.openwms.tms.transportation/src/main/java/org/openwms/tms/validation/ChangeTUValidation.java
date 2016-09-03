@@ -25,6 +25,7 @@ package org.openwms.tms.validation;
  * A ChangeTUValidation.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @since 1.0
  */
 public interface ChangeTUValidation {
 

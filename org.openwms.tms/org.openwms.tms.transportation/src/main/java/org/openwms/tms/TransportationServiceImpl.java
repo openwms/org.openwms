@@ -39,12 +39,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 /**
- * A TransportService.
+ * A TransportationServiceImpl is a Spring managed transactional service.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @since 1.0
  * @see TransportationService
- * @since 0.1
  */
 @TxService
 class TransportationServiceImpl implements TransportationService<TransportOrder> {

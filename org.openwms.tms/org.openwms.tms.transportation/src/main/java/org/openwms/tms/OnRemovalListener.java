@@ -29,8 +29,7 @@ import org.openwms.tms.exception.RemovalNotAllowedException;
  *
  * @param <T> Any entity
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public interface OnRemovalListener<T> {
 

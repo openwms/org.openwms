@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * A DeniedException is thrown by a {@link DecisionVoter}s in case a business action is not allowed to be executed.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
+ * @since 1.0
  */
 @ResponseStatus(HttpStatus.CONFLICT)
 public class DeniedException extends ServiceLayerException {

@@ -25,8 +25,7 @@ package org.openwms.tms.delegate;
  * A TransportOrderStateDelegate is called after state changes on a TransportOrder happen.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public interface TransportOrderStateDelegate {
 

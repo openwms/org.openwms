@@ -29,8 +29,7 @@ import java.util.List;
  * A TransportOrderUtil.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public final class TransportOrderUtil {
 

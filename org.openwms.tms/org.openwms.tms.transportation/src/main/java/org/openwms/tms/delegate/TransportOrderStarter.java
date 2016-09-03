@@ -29,8 +29,7 @@ import org.openwms.tms.exception.StateChangeException;
  * A TransportOrderStarter.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public interface TransportOrderStarter {
 

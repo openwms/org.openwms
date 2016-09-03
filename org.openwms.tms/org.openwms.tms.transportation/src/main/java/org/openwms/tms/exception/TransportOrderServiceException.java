@@ -29,8 +29,7 @@ import org.ameba.exception.ServiceLayerException;
  * A TransportOrderServiceException.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version 1.0
- * @since 0.1
+ * @since 1.0
  */
 public class TransportOrderServiceException extends ServiceLayerException implements Serializable {
 

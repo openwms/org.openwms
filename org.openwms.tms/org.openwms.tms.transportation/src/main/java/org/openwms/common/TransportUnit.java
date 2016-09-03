@@ -30,7 +30,6 @@ import org.openwms.tms.targets.Location;
  * A TransportUnit.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public class TransportUnit implements Serializable {

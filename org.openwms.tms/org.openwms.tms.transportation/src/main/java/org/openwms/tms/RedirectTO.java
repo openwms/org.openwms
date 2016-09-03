@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
  * TransportOrder {@code toUpdate} is recognized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 2.0
+ * @since 1.0
  */
 @Component
 class RedirectTO implements UpdateFunction {

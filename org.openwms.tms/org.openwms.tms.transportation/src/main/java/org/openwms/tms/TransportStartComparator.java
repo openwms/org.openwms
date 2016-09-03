@@ -30,8 +30,7 @@ import java.util.Comparator;
  * sorting in the database with JPA. Hence we must do it with Comparators in the application layer.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  * @see PriorityLevel
  */
 public class TransportStartComparator implements Comparator<TransportOrder>, Serializable {
