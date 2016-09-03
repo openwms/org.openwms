@@ -21,13 +21,18 @@
  */
 package org.openwms.tms;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.persistence.EntityManager;
+
 import org.junit.Test;
 import org.openwms.tms.api.CreateTransportOrderVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
 /**
  * A AddProblemDocumentation.
@@ -36,13 +41,17 @@ import org.springframework.http.MediaType;
  */
 public class AddProblemDocumentation extends DocumentationBase {
 
+    @Autowired
+    private EntityManager em;
+
     public
     @Test
     void testAddProblem() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
-        postTOAndValidate(vo, NOTLOGGED);
-        vo.setProblem(new Message.Builder().withMessage("text").withMessageNo("77").build());
+        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
+        Message text = new Message.Builder().withMessage("text").withMessageNo("77").build();
+        vo.setProblem(text);
 
         // test ...
         mockMvc.perform(
@@ -54,5 +63,8 @@ public class AddProblemDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-addproblem"))
         ;
 
+        em.flush();
+        TransportOrder saved = em.createQuery("select to from TransportOrder to where to.pKey = :pkey", TransportOrder.class).setParameter("pkey", vo.getpKey()).getSingleResult();
+        assertThat(saved.getProblem()).isEqualTo(text);
     }
 }
