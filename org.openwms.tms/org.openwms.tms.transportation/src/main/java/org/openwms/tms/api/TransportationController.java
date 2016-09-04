@@ -54,7 +54,7 @@ import org.springframework.web.util.UriTemplate;
  * A TransportationController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 2.0
+ * @since 1.0
  */
 @RestController(TMSConstants.ROOT_ENTITIES)
 class TransportationController {

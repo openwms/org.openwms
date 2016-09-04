@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
  * TransportOrder {@code toUpdate} is recognized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 2.0
+ * @since 1.0
  */
 @Component
 class RedirectTO implements UpdateFunction {
@@ -66,7 +66,7 @@ class RedirectTO implements UpdateFunction {
             }
 
             if (rv.hasMessages()) {
-                rv.getMessages().forEach(m -> addProblem.add(new Message(m.getMessage()), saved));
+                rv.getMessages().forEach(m -> addProblem.add(new Message.Builder().withMessage(m.getMessage()).build(), saved));
             }
 
             if (!rv.completed()) {

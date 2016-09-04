@@ -35,7 +35,6 @@ import org.springframework.context.annotation.Configuration;
  * A FeignConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Configuration

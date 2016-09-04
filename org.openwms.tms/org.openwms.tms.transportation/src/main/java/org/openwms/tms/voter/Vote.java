@@ -31,7 +31,7 @@ import org.openwms.tms.Message;
  * superclass for certain votes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
+ * @since 1.0
  */
 public class Vote {
 

@@ -29,8 +29,7 @@ import org.springframework.context.ApplicationEvent;
  * A TransportServiceEvent.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public class TransportServiceEvent extends ApplicationEvent implements Serializable {
 

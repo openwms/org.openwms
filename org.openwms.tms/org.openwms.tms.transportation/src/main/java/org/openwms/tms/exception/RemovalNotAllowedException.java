@@ -27,8 +27,7 @@ import org.ameba.exception.ServiceLayerException;
  * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an entity.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 public class RemovalNotAllowedException extends ServiceLayerException {
 

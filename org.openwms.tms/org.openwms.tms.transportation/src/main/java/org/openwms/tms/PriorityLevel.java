@@ -27,7 +27,7 @@ import java.io.Serializable;
  * A PriorityLevel is used to prioritize {@link TransportOrder}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.1
+ * @since 1.0
  */
 public enum PriorityLevel implements Serializable {
 

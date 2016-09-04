@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
  * initialized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 2.0
+ * @since 1.0
  */
 @Lazy
 @Order(10)

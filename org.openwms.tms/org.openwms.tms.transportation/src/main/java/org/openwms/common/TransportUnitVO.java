@@ -27,7 +27,6 @@ import java.io.Serializable;
  * A TransportUnitVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public class TransportUnitVO implements Serializable {

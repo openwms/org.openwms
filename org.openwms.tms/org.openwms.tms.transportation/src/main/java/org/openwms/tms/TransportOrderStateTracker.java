@@ -30,9 +30,8 @@ import org.springframework.context.ApplicationListener;
  * A TransportOrderStateTracker is a listening adapter that delegates to an instance of {@link TransportOrderStateDelegate}.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
+ * @since 1.0
  * @see org.openwms.tms.delegate.TransportOrderStateDelegate
- * @since 0.1
  */
 @TxService
 public class TransportOrderStateTracker implements ApplicationListener<TransportServiceEvent> {

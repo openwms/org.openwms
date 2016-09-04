@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
  * A LocationRedirector votes for a {@link RedirectVote} whether the target location is enabled for infeed. The class is lazy initialized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 2.0
+ * @since 1.0
  */
 @Lazy
 @Order(5)

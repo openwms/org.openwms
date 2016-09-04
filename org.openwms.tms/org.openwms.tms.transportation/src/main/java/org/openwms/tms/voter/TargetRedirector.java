@@ -35,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * A TargetRedirector.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @since 1.0
  */
 abstract class TargetRedirector<T extends Target> implements DecisionVoter<RedirectVote> {
 
@@ -57,7 +58,7 @@ abstract class TargetRedirector<T extends Target> implements DecisionVoter<Redir
                 vote.complete();
             } else {
                 String msg = translator.translate(TMSMessageCodes.TARGET_BLOCKED_MSG, vote.getTarget(), vote.getTransportOrder().getPersistentKey());
-                vote.addMessage(new Message(msg, TMSMessageCodes.TARGET_BLOCKED));
+                vote.addMessage(new Message.Builder().withMessage(msg).withMessageNo(TMSMessageCodes.TARGET_BLOCKED_MSG).build());
                 LOGGER.debug(msg);
             }
         }

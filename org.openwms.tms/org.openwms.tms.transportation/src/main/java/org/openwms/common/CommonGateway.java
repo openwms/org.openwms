@@ -30,7 +30,6 @@ import org.openwms.tms.targets.LocationGroup;
  * A CommonGateway.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public interface CommonGateway {

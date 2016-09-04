@@ -25,7 +25,7 @@ package org.openwms.tms.targets;
  * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 2.0
+ * @since 1.0
  */
 public class LocationGroup implements Target {
 
@@ -41,6 +41,9 @@ public class LocationGroup implements Target {
         return !incomingActive;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String asString() {
         return name;

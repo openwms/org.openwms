@@ -39,12 +39,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 /**
- * A TransportService.
+ * A TransportationServiceImpl is a Spring managed transactional service.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
+ * @since 1.0
  * @see TransportationService
- * @since 0.1
  */
 @TxService
 class TransportationServiceImpl implements TransportationService<TransportOrder> {
@@ -91,9 +90,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         if (barcode == null) {
             throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Trying to create TransportOrder with Barcode [{}], to Target [{}], with Priority [{}]", barcode, target, priority);
-        }
+        LOGGER.debug("Trying to create TransportOrder with Barcode [{}], to Target [{}], with Priority [{}]", barcode, target, priority);
         TransportOrder transportOrder = new TransportOrder();
         transportOrder.setTransportUnitBK(barcode);
 
@@ -129,15 +126,13 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         List<TransportOrder> transportOrders = repository.findByPKey(new ArrayList<>(pKeys));
         for (TransportOrder transportOrder : transportOrders) {
             try {
-                if (LOGGER.isDebugEnabled()) {
-                    LOGGER.debug("Trying to turn TransportOrder [{}] into state [{}]", transportOrder.getPk(), state);
-                }
+                LOGGER.debug("Trying to turn TransportOrder [{}] into state [{}]", transportOrder.getPk(), state);
                 transportOrder.setState(state);
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(), TransportOrderUtil
                         .convertToEventType(state)));
             } catch (StateChangeException sce) {
                 LOGGER.error("Could not turn TransportOrder: [{}] into [{}], because of [{}]", transportOrder.getPk(), state, sce.getMessage());
-                Message problem = new Message(sce.getMessage());
+                Message problem = new Message.Builder().withMessage(sce.getMessage()).build();
                 transportOrder.setProblem(problem);
                 failure.add(transportOrder.getPk().toString());
             }

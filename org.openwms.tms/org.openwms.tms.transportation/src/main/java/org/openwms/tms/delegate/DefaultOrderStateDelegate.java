@@ -42,8 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * A DefaultOrderStateDelegate. Lazy instantiated, only when needed. Thus it is possible to override this bean and prevent instantiation.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
- * @since 0.1
+ * @since 1.0
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Lazy
