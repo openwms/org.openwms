@@ -46,6 +46,31 @@ public class AddProblemDocumentation extends DocumentationBase {
 
     public
     @Test
+    void testNullAsAddProblem() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
+        Message msg = new Message.Builder().withMessage("text").withMessageNo("77").build();
+        vo.setProblem(msg);
+        addProblem(vo);
+        assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg);
+
+        // test ...
+        vo.setProblem(null);
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+                )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-addproblem-null"))
+        ;
+
+        assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg);
+    }
+
+    public
+    @Test
     void testAddProblem() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
@@ -58,13 +83,25 @@ public class AddProblemDocumentation extends DocumentationBase {
                 patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
-                )
+        )
                 .andExpect(status().isNoContent())
                 .andDo(document("to-patch-addproblem"))
         ;
+        assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg);
 
-        em.flush();
-        TransportOrder saved = em.createQuery("select to from TransportOrder to where to.pKey = :pkey", TransportOrder.class).setParameter("pkey", vo.getpKey()).getSingleResult();
-        assertThat(saved.getProblem()).isEqualTo(msg);
+    }
+
+    private void addProblem(CreateTransportOrderVO vo) throws Exception {
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+        ;
+    }
+
+    private TransportOrder readTransportOrder(String pKey) {
+        return em.createQuery("select to from TransportOrder to where to.pKey = :pkey", TransportOrder.class).setParameter("pkey", pKey).getSingleResult();
     }
 }
