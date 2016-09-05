@@ -41,7 +41,8 @@ class AddProblem implements UpdateFunction {
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getProblem() != null && !saved.getProblem().equals(toUpdate.getProblem())) {
+        if ((saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem())) ||
+                (!saved.hasProblem() && toUpdate.hasProblem())) {
 
             // A Problem occurred and must be added to the TO ...
             add(toUpdate.getProblem(), saved);
@@ -50,11 +51,14 @@ class AddProblem implements UpdateFunction {
 
     /**
      * To be accessed from the same package!
-     * @param problem
-     * @param to
+     *
+     * @param problem The Message to add
+     * @param to The TransportOrder to put the Message on
      */
     void add(Message problem, TransportOrder to) {
-        repository.save(new ProblemHistory(to, to.getProblem()));
+        if (to.hasProblem()) {
+            repository.save(new ProblemHistory(to, to.getProblem()));
+        }
         to.setProblem(problem);
     }
 }

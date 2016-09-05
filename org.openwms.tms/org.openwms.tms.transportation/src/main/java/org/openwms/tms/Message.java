@@ -6,6 +6,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * A Message is used to encapsulate a message text with an identifier.
@@ -34,7 +35,7 @@ public class Message implements Serializable {
     /**
      * Dear JPA...
      */
-    public Message() {
+    protected Message() {
     }
 
     private Message(Builder builder) {
@@ -68,6 +69,45 @@ public class Message implements Serializable {
      */
     public String getMessage() {
         return message;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Use all fields.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message1 = (Message) o;
+        return Objects.equals(occurred, message1.occurred) &&
+                Objects.equals(messageNo, message1.messageNo) &&
+                Objects.equals(message, message1.message);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Use all fields.
+     */
+    @Override
+    public String toString() {
+        return "Message{" +
+                "occurred=" + occurred +
+                ", messageNo='" + messageNo + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Use all fields.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(occurred, messageNo, message);
     }
 
 
