@@ -62,7 +62,7 @@ public class AddProblemDocumentation extends DocumentationBase {
                 patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
-                )
+        )
                 .andExpect(status().isNoContent())
                 .andDo(document("to-patch-addproblem-null"))
         ;
@@ -98,7 +98,7 @@ public class AddProblemDocumentation extends DocumentationBase {
     void testAddSecondProblem() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
-        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
+        postTOAndValidate(vo, NOTLOGGED);
         Message msg = new Message.Builder().withMessage("text").withMessageNo("77").build();
         vo.setProblem(msg);
 
@@ -108,15 +108,19 @@ public class AddProblemDocumentation extends DocumentationBase {
 
         // test ...
         mockMvc.perform(
-                patch(TMSConstants.ROOT_ENTITIES)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(vo))
-        )
-                .andExpect(status().isNoContent())
-                .andDo(document("to-patch-addsecondproblem"))
+            patch(TMSConstants.ROOT_ENTITIES)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(vo))
+            )
+            .andExpect(status().isNoContent())
+            .andDo(document("to-patch-addsecondproblem"))
         ;
         assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg2);
-        assertThat(getProblemHistories()).hasSize(1);
+        List<ProblemHistory> problemHistories = getProblemHistories();
+        assertThat(problemHistories).hasSize(1);
+        assertThat(problemHistories.get(0))
+                .extracting("problem")
+                .contains(msg);
     }
 
     private List<ProblemHistory> getProblemHistories() {
