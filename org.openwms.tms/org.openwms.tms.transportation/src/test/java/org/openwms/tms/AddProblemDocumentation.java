@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 import org.junit.Test;
 import org.openwms.tms.api.CreateTransportOrderVO;
@@ -67,6 +68,7 @@ public class AddProblemDocumentation extends DocumentationBase {
         ;
 
         assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg);
+        assertThat(getProblemHistories()).hasSize(0);
     }
 
     public
@@ -88,7 +90,37 @@ public class AddProblemDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-addproblem"))
         ;
         assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg);
+        assertThat(getProblemHistories()).hasSize(0);
+    }
 
+    public
+    @Test
+    void testAddSecondProblem() throws Exception {
+        // setup ...
+        CreateTransportOrderVO vo = createTO();
+        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
+        Message msg = new Message.Builder().withMessage("text").withMessageNo("77").build();
+        vo.setProblem(msg);
+
+        addProblem(vo);
+        Message msg2 = new Message.Builder().withMessage("text2").withMessageNo("78").build();
+        vo.setProblem(msg2);
+
+        // test ...
+        mockMvc.perform(
+                patch(TMSConstants.ROOT_ENTITIES)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(vo))
+        )
+                .andExpect(status().isNoContent())
+                .andDo(document("to-patch-addsecondproblem"))
+        ;
+        assertThat(readTransportOrder(vo.getpKey()).getProblem()).isEqualTo(msg2);
+        assertThat(getProblemHistories()).hasSize(1);
+    }
+
+    private List<ProblemHistory> getProblemHistories() {
+        return em.createQuery("select ph from ProblemHistory ph", ProblemHistory.class).getResultList();
     }
 
     private void addProblem(CreateTransportOrderVO vo) throws Exception {
