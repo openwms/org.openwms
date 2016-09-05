@@ -68,7 +68,7 @@ public class CreateTODocumentation extends DocumentationBase {
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("state", is(TransportOrder.State.STARTED.toString())))
+                .andExpect(jsonPath("state", is(TransportOrderState.STARTED.toString())))
                 .andExpect(jsonPath("sourceLocation", is(INIT_LOC_STRING)))
                 .andExpect(jsonPath("targetLocation", is(ERR_LOC_STRING)))
                 .andDo(document("to-create-and-get"))
@@ -125,7 +125,7 @@ public class CreateTODocumentation extends DocumentationBase {
         String toLocation = (String) res.getResponse().getHeaderValue(HttpHeaders.LOCATION);
         mockMvc.perform(get(toLocation))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("state", is(TransportOrder.State.INITIALIZED.toString())))
+                .andExpect(jsonPath("state", is(TransportOrderState.INITIALIZED.toString())))
                 .andExpect(jsonPath("sourceLocation", is(INIT_LOC_STRING)))
                 .andExpect(jsonPath("targetLocation", is(ERR_LOC_STRING)))
                 .andDo(document("to-create-and-get-target-na"))

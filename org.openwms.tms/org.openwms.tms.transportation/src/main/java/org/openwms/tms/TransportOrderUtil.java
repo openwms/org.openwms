@@ -45,7 +45,7 @@ public final class TransportOrderUtil {
      *            The state to be checked
      * @return the certain type event that matches to newState
      */
-    public static TransportServiceEvent.TYPE convertToEventType(TransportOrder.State newState) {
+    public static TransportServiceEvent.TYPE convertToEventType(TransportOrderState newState) {
         switch (newState) {
         case FINISHED:
             return TransportServiceEvent.TYPE.TRANSPORT_FINISHED;

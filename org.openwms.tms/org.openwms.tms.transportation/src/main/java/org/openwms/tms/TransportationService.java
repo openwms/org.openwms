@@ -68,7 +68,7 @@ public interface TransportationService<T extends TransportOrder> {
      * @deprecated Use update instead
      */
     @Deprecated
-    Collection<String> change(Collection<String> pKeys, TransportOrder.State state);
+    Collection<String> change(Collection<String> pKeys, TransportOrderState state);
 
     /**
      * Find and return the {@code TransportOrder} identified by the persisted key {@code pKey}.

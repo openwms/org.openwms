@@ -28,6 +28,7 @@ import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
+import org.openwms.tms.TransportOrderState;
 import org.openwms.tms.exception.StateChangeException;
 import org.openwms.tms.targets.Location;
 import org.openwms.tms.targets.LocationGroup;
@@ -78,12 +79,12 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         if (loc.isPresent()) {
             transportOrder.setTargetLocation(loc.get().toString());
         }
-        List<TransportOrder> others = repository.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrder.State.STARTED, TransportOrder.State.INTERRUPTED);
+        List<TransportOrder> others = repository.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrderState.STARTED, TransportOrderState.INTERRUPTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
                     "Cannot start the TransportOrder because one or more active TransportOrders exist");
         }
-        transportOrder.setState(TransportOrder.State.STARTED);
+        transportOrder.setState(TransportOrderState.STARTED);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("TransportOrder for TransportUnit with BarCode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());
         }

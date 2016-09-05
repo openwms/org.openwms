@@ -21,10 +21,10 @@
  */
 package org.openwms.tms;
 
-import static org.openwms.tms.TransportOrder.State.CANCELED;
-import static org.openwms.tms.TransportOrder.State.INITIALIZED;
-import static org.openwms.tms.TransportOrder.State.ONFAILURE;
-import static org.openwms.tms.TransportOrder.State.STARTED;
+import static org.openwms.tms.TransportOrderState.CANCELED;
+import static org.openwms.tms.TransportOrderState.INITIALIZED;
+import static org.openwms.tms.TransportOrderState.ONFAILURE;
+import static org.openwms.tms.TransportOrderState.STARTED;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -96,7 +96,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      */
     @Column(name = "C_STATE")
     @Enumerated(EnumType.STRING)
-    private TransportOrder.State state = TransportOrder.State.CREATED;
+    private TransportOrderState state = TransportOrderState.CREATED;
 
     /**
      * The source {@code Location} of the {@code TransportOrder}.<br> This property is set before the {@code TransportOrder} was started.
@@ -178,7 +178,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      *
      * @return The state of the order
      */
-    public TransportOrder.State getState() {
+    public TransportOrderState getState() {
         return state;
     }
 
@@ -190,14 +190,14 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
 
     /**
      * Validate whether a state change is valid or not. States must be changed in a defined order. Mostly the order is defined by the
-     * ordering if the states in {@link TransportOrder.State} enum class. But some other rules are checked here too and an exception is
+     * ordering if the states in {@link TransportOrderState} enum class. But some other rules are checked here too and an exception is
      * thrown in case the sequence of states is violated.
      *
      * @param newState The new state of the order
      * @throws StateChangeException when <li>newState is {@literal null} or</li><li>the state shall be turned back to a prior state
-     * or</li><li>when the caller tries to leap the state {@link TransportOrder.State#INITIALIZED}</li>
+     * or</li><li>when the caller tries to leap the state {@link TransportOrderState#INITIALIZED}</li>
      */
-    private void validateStateChange(TransportOrder.State newState) throws StateChangeException {
+    private void validateStateChange(TransportOrderState newState) throws StateChangeException {
         if (newState == null) {
             throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, getPersistentKey());
         }
@@ -241,11 +241,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      *
      * @param newState The new state of the order
      * @throws StateChangeException in case <ul> <li>the newState is {@literal null} or</li> <li>the newState is less than the old state
-     * or</li> <li>the {@code TransportOrder} is in state {@link TransportOrder.State#CREATED} and shall be manually turned into something
-     * else then {@link TransportOrder.State#INITIALIZED} or {@link TransportOrder.State#CANCELED}</li> <li>the {@code TransportOrder} is
-     * {@link TransportOrder.State#CREATED} and shall be {@link TransportOrder.State#INITIALIZED} but it is incomplete</li> </ul>
+     * or</li> <li>the {@code TransportOrder} is in state {@link TransportOrderState#CREATED} and shall be manually turned into something
+     * else then {@link TransportOrderState#INITIALIZED} or {@link TransportOrderState#CANCELED}</li> <li>the {@code TransportOrder} is
+     * {@link TransportOrderState#CREATED} and shall be {@link TransportOrderState#INITIALIZED} but it is incomplete</li> </ul>
      */
-    public void setState(TransportOrder.State newState) throws StateChangeException {
+    public void setState(TransportOrderState newState) throws StateChangeException {
         validateStateChange(newState);
         switch (newState) {
             case STARTED:
@@ -362,43 +362,5 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     boolean hasTargetChanged(TransportOrder transportOrder) {
         return ((targetLocation != null && !targetLocation.equals(transportOrder.getTargetLocation())) ||
                 (targetLocationGroup != null && targetLocationGroup.equals(transportOrder.getTargetLocationGroup())));
-    }
-
-    public static enum State {
-        /** Status of new created {@code TransportOrder}s. */
-        CREATED(10),
-
-        /** Status of a full initialized {@code TransportOrder}, ready to be started. */
-        INITIALIZED(20),
-
-        /** A started and active{@code TransportOrder}, ready to be executed. */
-        STARTED(30),
-
-        /** Status to indicate that the {@code TransportOrder} is paused. Not active anymore. */
-        INTERRUPTED(40),
-
-        /** Status to indicate a failure on the {@code TransportOrder}. Not active anymore. */
-        ONFAILURE(50),
-
-        /** Status of a aborted {@code TransportOrder}. Not active anymore. */
-        CANCELED(60),
-
-        /** Status to indicate that the {@code TransportOrder} completed successfully. */
-        FINISHED(70);
-
-        private final int order;
-
-        private State(int sortOrder) {
-            this.order = sortOrder;
-        }
-
-        /**
-         * Get the order.
-         *
-         * @return the order.
-         */
-        public int getOrder() {
-            return order;
-        }
     }
 }

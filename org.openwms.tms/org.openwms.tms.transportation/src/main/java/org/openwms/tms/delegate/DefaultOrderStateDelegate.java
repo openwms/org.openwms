@@ -28,6 +28,7 @@ import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
+import org.openwms.tms.TransportOrderState;
 import org.openwms.tms.TransportStartComparator;
 import org.openwms.tms.exception.StateChangeException;
 import org.slf4j.Logger;
@@ -71,13 +72,13 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     /**
      * {@inheritDoc}
      * <p>
-     * Search for already {@link TransportOrder.State#CREATED} {@link TransportOrder}s for this transportUnit and try to initialize them.
+     * Search for already {@link TransportOrderState#CREATED} {@link TransportOrder}s for this transportUnit and try to initialize them.
      * When initialization is done try to start them.
      */
     @Override
     public void afterCreation(Long pk) {
         TransportOrder to = dao.findOne(pk);
-        List<TransportOrder> transportOrders = findInState(to.getTransportUnitBK(), TransportOrder.State.CREATED);
+        List<TransportOrder> transportOrders = findInState(to.getTransportUnitBK(), TransportOrderState.CREATED);
         for (TransportOrder transportOrder : transportOrders) {
             boolean go = initialize(transportOrder);
             if (go) {
@@ -129,7 +130,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
             return;
         }
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnitBK(),
-                TransportOrder.State.INITIALIZED);
+                TransportOrderState.INITIALIZED);
         Collections.sort(transportOrders, new TransportStartComparator());
         for (TransportOrder to : transportOrders) {
             try {
@@ -157,7 +158,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
 
     private boolean initialize(TransportOrder transportOrder) {
         try {
-            transportOrder.setState(TransportOrder.State.INITIALIZED);
+            transportOrder.setState(TransportOrderState.INITIALIZED);
         } catch (StateChangeException sce) {
             LOGGER.info("Could not initialize TransportOrder [" + transportOrder.getPk() + "]. Message:"
                     + sce.getMessage());
@@ -170,7 +171,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         return true;
     }
 
-    private List<TransportOrder> findInState(String transportUnitBK, TransportOrder.State... orderStates) {
+    private List<TransportOrder> findInState(String transportUnitBK, TransportOrderState... orderStates) {
         return dao.findByTransportUnitBKAndStates(transportUnitBK, orderStates);
     }
 }

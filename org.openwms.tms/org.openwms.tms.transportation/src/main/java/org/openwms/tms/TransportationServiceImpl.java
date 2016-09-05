@@ -121,7 +121,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      * {@inheritDoc}
      */
     @Override
-    public Collection<String> change(Collection<String> pKeys, TransportOrder.State state) {
+    public Collection<String> change(Collection<String> pKeys, TransportOrderState state) {
         List<String> failure = new ArrayList<>(pKeys.size());
         List<TransportOrder> transportOrders = repository.findByPKey(new ArrayList<>(pKeys));
         for (TransportOrder transportOrder : transportOrders) {
