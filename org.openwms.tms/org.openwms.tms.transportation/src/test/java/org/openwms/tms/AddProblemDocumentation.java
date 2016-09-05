@@ -50,8 +50,8 @@ public class AddProblemDocumentation extends DocumentationBase {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         MvcResult res = postTOAndValidate(vo, NOTLOGGED);
-        Message text = new Message.Builder().withMessage("text").withMessageNo("77").build();
-        vo.setProblem(text);
+        Message msg = new Message.Builder().withMessage("text").withMessageNo("77").build();
+        vo.setProblem(msg);
 
         // test ...
         mockMvc.perform(
@@ -65,6 +65,6 @@ public class AddProblemDocumentation extends DocumentationBase {
 
         em.flush();
         TransportOrder saved = em.createQuery("select to from TransportOrder to where to.pKey = :pkey", TransportOrder.class).setParameter("pkey", vo.getpKey()).getSingleResult();
-        assertThat(saved.getProblem()).isEqualTo(text);
+        assertThat(saved.getProblem()).isEqualTo(msg);
     }
 }

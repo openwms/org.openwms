@@ -21,7 +21,8 @@
         </filter>
     </appender>
 
-    <logger name="org.hibernate" level="INFO" />
+    <logger name="org.dozer" level="ERROR" />
+    <logger name="org.hibernate.sql" level="ERROR" />
 
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="OFF" />
     <logger name="SERVICE_LAYER_ACCESS" level="OFF" />
@@ -29,7 +30,7 @@
     <logger name="INTEGRATION_LAYER_ACCESS" level="OFF" />
     <logger name="INTEGRATION_LAYER_EXCEPTION" level="OFF" />
 
-    <root level="ERROR">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
     </root>
 

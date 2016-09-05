@@ -16,12 +16,29 @@
 	</configuration>
 
     <mapping>
+		<class-a>org.openwms.tms.Message</class-a>
+		<class-b>org.openwms.tms.Message</class-b>
+        <field>
+            <a is-accessible="true">occurred</a>
+            <b is-accessible="true">occurred</b>
+        </field>
+		<field>
+			<a is-accessible="true">messageNo</a>
+			<b is-accessible="true">messageNo</b>
+		</field>
+		<field>
+			<a is-accessible="true">message</a>
+			<b is-accessible="true">message</b>
+		</field>
+    </mapping>
+
+	<mapping>
 		<class-a>org.openwms.tms.api.CreateTransportOrderVO</class-a>
 		<class-b>org.openwms.tms.TransportOrder</class-b>
-        <field>
-            <a is-accessible="true">pKey</a>
-            <b is-accessible="true">pKey</b>
-        </field>
+		<field>
+			<a is-accessible="true">pKey</a>
+			<b is-accessible="true">pKey</b>
+		</field>
 		<field>
 			<a is-accessible="true">barcode</a>
 			<b is-accessible="true">transportUnitBK</b>
@@ -42,7 +59,7 @@
 			<a is-accessible="true">target</a>
 			<b is-accessible="true">targetLocationGroup</b>
 		</field>
-    </mapping>
+	</mapping>
 
 	<mapping>
 		<class-a>org.openwms.common.TransportUnit</class-a>
