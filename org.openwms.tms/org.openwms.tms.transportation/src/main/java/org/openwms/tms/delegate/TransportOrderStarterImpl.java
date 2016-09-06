@@ -82,11 +82,9 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         List<TransportOrder> others = repository.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrderState.STARTED, TransportOrderState.INTERRUPTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
-                    "Cannot start the TransportOrder because one or more active TransportOrders exist");
+                    "Cannot start a TransportOrder for TransportUnit [" + transportOrder.getTransportUnitBK() + "] because " + others.size() + " TransportOrders exist in state STARTED or INTERRUPTED");
         }
         transportOrder.setState(TransportOrderState.STARTED);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransportOrder for TransportUnit with BarCode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());
-        }
+        LOGGER.debug("TransportOrder for TransportUnit with BarCode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());
     }
 }

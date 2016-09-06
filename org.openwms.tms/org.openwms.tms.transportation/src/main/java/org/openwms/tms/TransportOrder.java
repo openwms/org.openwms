@@ -233,7 +233,6 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 if (newState == STARTED && startedTOExists()) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
                 }
-                System.out.println("Number of started ones:"+repo.numberOfTransportOrders(transportUnitBK, STARTED));
                 break;
             case STARTED:
                 // new state may be one of the following, no additional if-check required here

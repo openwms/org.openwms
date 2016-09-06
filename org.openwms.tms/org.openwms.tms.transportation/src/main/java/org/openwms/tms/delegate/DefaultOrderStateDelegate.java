@@ -87,7 +87,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 } catch (StateChangeException sce) {
                     // Not starting a transport here is not a problem, so be
                     // quiet
-                    LOGGER.warn(sce.getMessage());
+                    LOGGER.warn("Starter returns with exception: {}", sce.getMessage());
                 }
             }
         }
