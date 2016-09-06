@@ -22,7 +22,7 @@
 package org.openwms.tms;
 
 /**
- * A TransportOrderState.
+ * A TransportOrderState defines all possible states a {@link TransportOrder} may resist in.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

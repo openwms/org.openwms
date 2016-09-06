@@ -80,7 +80,6 @@ public class CreateTODocumentation extends DocumentationBase {
     void testCreateTOUnknownTU() throws Exception {
         CreateTransportOrderVO vo = createTO();
         vo.setBarcode("UNKNOWN");
-
         given(commonGateway.getTransportUnit(vo.getBarcode())).willReturn(Optional.empty());
 
         mockMvc.perform(post(TMSConstants.ROOT_ENTITIES)
