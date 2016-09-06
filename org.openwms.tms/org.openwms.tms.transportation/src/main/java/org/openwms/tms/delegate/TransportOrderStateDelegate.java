@@ -39,33 +39,33 @@ public interface TransportOrderStateDelegate {
 
     /**
      * An action that should be triggered after a TransportOrder has been canceled.
-     * 
-     * @param id
-     *            The id of the TransportOrder
+     *
+     * @param pk
+     *            The primary key of the created {@code TransportOrder}
      */
-    void onCancel(Long id);
+    void onCancel(Long pk);
 
     /**
      * An action that should be triggered after a TransportOrder has been finished successfully.
-     * 
-     * @param id
-     *            The id of the TransportOrder
+     *
+     * @param pk
+     *            The primary key of the created {@code TransportOrder}
      */
-    void afterFinish(Long id);
+    void afterFinish(Long pk);
 
     /**
      * An action that should be triggered after a TransportOrder has been set on failure.
-     * 
-     * @param id
-     *            The id of the TransportOrder
+     *
+     * @param pk
+     *            The primary key of the created {@code TransportOrder}
      */
-    void onFailure(Long id);
+    void onFailure(Long pk);
 
     /**
      * An action that should be triggered after a TransportOrder has been interrupted.
-     * 
-     * @param id
-     *            The id of the TransportOrder
+     *
+     * @param pk
+     *            The primary key of the created {@code TransportOrder}
      */
-    void onInterrupt(Long id);
+    void onInterrupt(Long pk);
 }

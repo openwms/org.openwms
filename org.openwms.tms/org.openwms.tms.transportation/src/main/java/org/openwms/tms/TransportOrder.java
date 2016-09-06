@@ -216,7 +216,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * or</li><li>when the caller tries to leap the state {@link TransportOrderState#INITIALIZED}</li>
      */
     private void validateStateChange(TransportOrderState newState) throws StateChangeException {
-        LOGGER.debug("Request for state change of TransportOrder with PK [{}] from [{}] to [{}]", getPk(), state, newState);
+        LOGGER.debug("> Request for state change of TransportOrder with PK [{}] from [{}] to [{}]", getPk(), state, newState);
 
         if (newState == null) {
             throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, getPersistentKey());
@@ -250,7 +250,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
             default:
                 throw new IllegalStateException("State not managed: " + state);
         }
-        LOGGER.debug("...request processed, order is now "+newState);
+        LOGGER.debug("< Request processed, order is now "+newState);
     }
 
     private boolean startedTOExists() {

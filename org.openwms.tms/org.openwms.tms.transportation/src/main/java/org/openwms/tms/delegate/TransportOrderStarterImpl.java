@@ -60,6 +60,7 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
      */
     @Override
     public void start(TransportOrder transportOrder) throws StateChangeException {
+        LOGGER.debug("> Request to start the TransportOrder with PKey [{}]", transportOrder.getPersistentKey());
         Optional<LocationGroup> lg = commonGateway.getLocationGroup(transportOrder.getTargetLocationGroup());
         Optional<Location> loc = commonGateway.getLocation(transportOrder.getTargetLocation());
         if (!lg.isPresent() && !loc.isPresent()) {
@@ -79,10 +80,10 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
         if (loc.isPresent()) {
             transportOrder.setTargetLocation(loc.get().toString());
         }
-        List<TransportOrder> others = repository.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrderState.STARTED, TransportOrderState.INTERRUPTED);
+        List<TransportOrder> others = repository.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), TransportOrderState.STARTED);
         if (!others.isEmpty()) {
             throw new StateChangeException(
-                    "Cannot start a TransportOrder for TransportUnit [" + transportOrder.getTransportUnitBK() + "] because " + others.size() + " TransportOrders exist in state STARTED or INTERRUPTED");
+                    "Cannot start TransportOrder for TransportUnit [" + transportOrder.getTransportUnitBK() + "] because " + others.size() + " TransportOrders exist in state STARTED");
         }
         transportOrder.setState(TransportOrderState.STARTED);
         LOGGER.info("TransportOrder for TransportUnit with Barcode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());

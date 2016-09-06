@@ -98,8 +98,10 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             transportOrder.setPriority(priority);
         }
         transportOrder = repository.save(transportOrder);
+        LOGGER.debug("TransportOrder for Barcode [{}] created. PKey is [{}], PK is [{}]", barcode, transportOrder.getPersistentKey(), transportOrder.getPk());
         ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(),
                 TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+        LOGGER.debug("TransportOrder for Barcode [{}] persisted. PKey is [{}], PK is [{}]", barcode, transportOrder.getPersistentKey(), transportOrder.getPk());
         return transportOrder;
     }
 

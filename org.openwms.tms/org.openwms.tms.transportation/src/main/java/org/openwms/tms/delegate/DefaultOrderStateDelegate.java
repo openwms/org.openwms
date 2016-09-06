@@ -79,6 +79,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     public void afterCreation(Long pk) {
         TransportOrder to = dao.findOne(pk);
         List<TransportOrder> transportOrders = findInState(to.getTransportUnitBK(), TransportOrderState.CREATED);
+        Collections.sort(transportOrders, new TransportStartComparator());
         for (TransportOrder transportOrder : transportOrders) {
             boolean go = initialize(transportOrder);
             if (go) {
@@ -87,8 +88,10 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 } catch (StateChangeException sce) {
                     // Not starting a transport here is not a problem, so be
                     // quiet
-                    LOGGER.warn("Starter returns with exception: {}", sce.getMessage());
+                    LOGGER.warn("Starter returned with exception: {}", sce.getMessage());
                 }
+            } else {
+                LOGGER.warn("TransportOrder with PK [{}] could not be initialized.", pk);
             }
         }
     }
@@ -99,8 +102,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
-    public void afterFinish(Long id) {
-        startNextForTu(id);
+    public void afterFinish(Long pk) {
+        startNextForTu(pk);
     }
 
     /**
@@ -109,8 +112,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
-    public void onCancel(Long id) {
-        startNextForTu(id);
+    public void onCancel(Long pk) {
+        startNextForTu(pk);
     }
 
     /**
@@ -119,14 +122,14 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
-    public void onFailure(Long id) {
-        startNextForTu(id);
+    public void onFailure(Long pk) {
+        startNextForTu(pk);
     }
 
-    private void startNextForTu(Long id) {
-        TransportOrder transportOrder = dao.findOne(id);
+    private void startNextForTu(Long pk) {
+        TransportOrder transportOrder = dao.findOne(pk);
         if (null == transportOrder) {
-            LOGGER.warn("TransportOrder with PK [{}] could not be loaded", id);
+            LOGGER.warn("TransportOrder with PK [{}] could not be loaded", pk);
             return;
         }
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnitBK(),
@@ -149,15 +152,15 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
      * Just search the next TransportOrder for the TransportUnit and try to start it.
      */
     @Override
-    public void onInterrupt(Long id) {
-        startNextForTu(id);
+    public void onInterrupt(Long pk) {
+        startNextForTu(pk);
     }
 
     private boolean initialize(TransportOrder transportOrder) {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
         } catch (StateChangeException sce) {
-            LOGGER.info("Could not initialize TransportOrder with PK [{}]. Message: [{}]", transportOrder.getPk(), sce.getMessage());
+            LOGGER.warn("Could not initialize TransportOrder with PK [{}]. Message: [{}]", transportOrder.getPk(), sce.getMessage());
             return false;
         }
         transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getActualLocation().toString());
