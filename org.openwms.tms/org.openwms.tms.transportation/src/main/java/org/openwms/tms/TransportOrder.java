@@ -236,9 +236,10 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 if (newState != STARTED && newState != CANCELED && newState != ONFAILURE) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO, getPersistentKey()), TMSMessageCodes.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO, getPersistentKey());
                 }
-                if (newState == STARTED && startedTOExists()) {
+                if (newState == STARTED && numberOfStartedTOExists() > 0) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
                 }
+                LOGGER.debug("Current State is [{}], new state is [{}], #Started is [{}]", state, newState, repo.numberOfTransportOrders(transportUnitBK, STARTED));
                 break;
             case STARTED:
                 // new state may be one of the following, no additional if-check required here
@@ -253,8 +254,8 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         LOGGER.debug("< Request processed, order is now "+newState);
     }
 
-    private boolean startedTOExists() {
-        return repo.numberOfTransportOrders(transportUnitBK, STARTED) > 0;
+    private int numberOfStartedTOExists() {
+        return repo.numberOfTransportOrders(transportUnitBK, STARTED);
     }
 
     /**
