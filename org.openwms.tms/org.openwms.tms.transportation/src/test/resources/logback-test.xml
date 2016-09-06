@@ -21,6 +21,7 @@
         </filter>
     </appender>
 
+    <logger name="org.openwms" level="WARN" />
     <logger name="org.dozer" level="ERROR" />
     <logger name="org.hibernate.sql" level="ERROR" />
 

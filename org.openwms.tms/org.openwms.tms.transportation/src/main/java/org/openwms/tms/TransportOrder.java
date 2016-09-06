@@ -125,6 +125,10 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     @Autowired
     private TransportOrderRepository repo;
 
+    public TransportOrder(String transportUnitBK) {
+        this.transportUnitBK = transportUnitBK;
+    }
+
     /* ----------------------------- methods ------------------- */
 
     /**
@@ -277,9 +281,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * Set the target {@code Location} of this {@code TransportOrder}.
      *
      * @param targetLocation The location to move on
+     * @return this
      */
-    public void setTargetLocation(String targetLocation) {
+    public TransportOrder setTargetLocation(String targetLocation) {
         this.targetLocation = targetLocation;
+        return this;
     }
 
     /**
@@ -295,9 +301,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * Set the targetLocationGroup.
      *
      * @param targetLocationGroup The targetLocationGroup to set.
+     * @return this
      */
-    public void setTargetLocationGroup(String targetLocationGroup) {
+    public TransportOrder setTargetLocationGroup(String targetLocationGroup) {
         this.targetLocationGroup = targetLocationGroup;
+        return this;
     }
 
     /**
@@ -313,9 +321,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * Set the last {@link Message}.
      *
      * @param problem The {@link Message} to set.
+     * @return this
      */
-    public void setProblem(Message problem) {
+    public TransportOrder setProblem(Message problem) {
         this.problem = problem;
+        return this;
     }
 
     /**
@@ -340,9 +350,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * Set the sourceLocation.
      *
      * @param sourceLocation The sourceLocation to set
+     * @return this
      */
-    public void setSourceLocation(String sourceLocation) {
+    public TransportOrder setSourceLocation(String sourceLocation) {
         this.sourceLocation = sourceLocation;
+        return this;
     }
 
     /**

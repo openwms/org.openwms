@@ -126,7 +126,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     private void startNextForTu(Long id) {
         TransportOrder transportOrder = dao.findOne(id);
         if (null == transportOrder) {
-            LOGGER.warn("TransportOrder with id:" + id + " could not be loaded");
+            LOGGER.warn("TransportOrder with id [{}] could not be loaded", id);
             return;
         }
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnitBK(),
@@ -137,11 +137,8 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
                 starter.start(to);
                 break;
             } catch (StateChangeException sce) {
-                if (LOGGER.isWarnEnabled()) {
-                    // Not starting a transport here is not a problem, so be
-                    // quiet
-                    LOGGER.warn(sce.getMessage(), sce);
-                }
+                // Not starting a transport here is not a problem, so be quiet
+                LOGGER.warn(sce.getMessage(), sce);
             }
         }
     }
@@ -160,14 +157,11 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
         } catch (StateChangeException sce) {
-            LOGGER.info("Could not initialize TransportOrder [" + transportOrder.getPk() + "]. Message:"
-                    + sce.getMessage());
+            LOGGER.info("Could not initialize TransportOrder [{}]. Message: [{}]", transportOrder.getPk(), sce.getMessage());
             return false;
         }
         transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getActualLocation().toString());
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("TransportOrder " + transportOrder.getPk() + " INITIALIZED");
-        }
+        LOGGER.debug("TransportOrder [{}] INITIALIZED", transportOrder.getPk());
         return true;
     }
 

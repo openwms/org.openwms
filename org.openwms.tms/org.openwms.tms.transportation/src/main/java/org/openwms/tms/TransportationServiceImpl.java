@@ -42,8 +42,8 @@ import org.springframework.context.ApplicationContext;
  * A TransportationServiceImpl is a Spring managed transactional service.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 1.0
  * @see TransportationService
+ * @since 1.0
  */
 @TxService
 class TransportationServiceImpl implements TransportationService<TransportOrder> {
@@ -91,11 +91,9 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
         LOGGER.debug("Trying to create TransportOrder with Barcode [{}], to Target [{}], with Priority [{}]", barcode, target, priority);
-        TransportOrder transportOrder = new TransportOrder();
-        transportOrder.setTransportUnitBK(barcode);
-
-        transportOrder.setTargetLocation(target);
-        transportOrder.setTargetLocationGroup(target);
+        TransportOrder transportOrder = new TransportOrder(barcode)
+                .setTargetLocation(target)
+                .setTargetLocationGroup(target);
         if (priority != null) {
             transportOrder.setPriority(priority);
         }
