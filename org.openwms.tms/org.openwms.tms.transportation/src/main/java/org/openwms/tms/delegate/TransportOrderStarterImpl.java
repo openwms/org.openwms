@@ -85,6 +85,6 @@ class TransportOrderStarterImpl implements TransportOrderStarter {
                     "Cannot start a TransportOrder for TransportUnit [" + transportOrder.getTransportUnitBK() + "] because " + others.size() + " TransportOrders exist in state STARTED or INTERRUPTED");
         }
         transportOrder.setState(TransportOrderState.STARTED);
-        LOGGER.debug("TransportOrder for TransportUnit with BarCode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());
+        LOGGER.info("TransportOrder for TransportUnit with Barcode {} STARTED at {}. Persisted key is {}", transportOrder.getTransportUnitBK(), transportOrder.getStartDate(), transportOrder.getPk());
     }
 }

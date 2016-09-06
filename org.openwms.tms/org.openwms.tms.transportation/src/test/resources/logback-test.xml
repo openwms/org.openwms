@@ -17,11 +17,11 @@
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
+            <level>INFO</level>
         </filter>
     </appender>
 
-    <logger name="org.openwms" level="WARN" />
+    <logger name="org.openwms" level="INFO" />
     <logger name="org.dozer" level="ERROR" />
     <logger name="org.hibernate.sql" level="ERROR" />
 
