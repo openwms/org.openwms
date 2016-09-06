@@ -125,11 +125,21 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     @Autowired
     private TransportOrderRepository repo;
 
+    /* ----------------------------- constructors ------------------- */
+    /** Dear JPA and Dozer ... */
+    protected TransportOrder() {
+    }
+
+    /**
+     * Create a TransportOrder with the given TransportUnit's business key.
+     *
+     * @param transportUnitBK TransportUnit business key
+     */
     public TransportOrder(String transportUnitBK) {
         this.transportUnitBK = transportUnitBK;
     }
 
-    /* ----------------------------- methods ------------------- */
+    /*~ ----------------------------- methods ------------------- */
 
     /**
      * Returns the priority level of the {@code TransportOrder}.
