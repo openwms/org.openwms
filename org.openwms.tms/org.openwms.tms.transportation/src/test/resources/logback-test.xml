@@ -17,7 +17,7 @@
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>INFO</level>
+            <level>TRACE</level>
         </filter>
     </appender>
 
@@ -31,7 +31,7 @@
     <logger name="INTEGRATION_LAYER_ACCESS" level="OFF" />
     <logger name="INTEGRATION_LAYER_EXCEPTION" level="OFF" />
 
-    <root level="DEBUG">
+    <root level="WARN">
         <appender-ref ref="STDOUT"/>
     </root>
 
