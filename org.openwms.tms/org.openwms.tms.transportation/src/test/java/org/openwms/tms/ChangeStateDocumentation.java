@@ -28,6 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -35,6 +36,7 @@ import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 /**
@@ -45,6 +47,9 @@ import org.springframework.http.MediaType;
 public class ChangeStateDocumentation extends DocumentationBase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChangeStateDocumentation.class);
+
+    @Autowired
+    private EntityManager em;
 
     public
     @Test
@@ -78,6 +83,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // create a second one that shall wait in INITIALIZED
         CreateTransportOrderVO vo2 = createTO();
         postTOAndValidate(vo2, NOTLOGGED);
+        em.flush();
         LOGGER.debug("Order 2: " + vo2);
         vo2.setState(TransportOrderState.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
