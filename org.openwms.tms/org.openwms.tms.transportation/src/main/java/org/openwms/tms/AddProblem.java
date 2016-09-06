@@ -41,8 +41,8 @@ class AddProblem implements UpdateFunction {
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if ((saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem())) ||
-                (!saved.hasProblem() && toUpdate.hasProblem())) {
+        if (saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem()) ||
+                !saved.hasProblem() && toUpdate.hasProblem()) {
 
             // A Problem occurred and must be added to the TO ...
             add(toUpdate.getProblem(), saved);
