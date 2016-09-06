@@ -33,6 +33,8 @@ import java.util.Optional;
 import org.junit.Test;
 import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 
 /**
@@ -41,6 +43,8 @@ import org.springframework.http.MediaType;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public class ChangeStateDocumentation extends DocumentationBase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeStateDocumentation.class);
 
     public
     @Test
@@ -56,7 +60,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo))
-                )
+        )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("messageKey", is(TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED)))
                 .andDo(document("to-patch-state-change-back"))
@@ -70,8 +74,11 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
+        LOGGER.debug("Order 1: " + vo);
+        // create a second one that shall wait in INITIALIZED
         CreateTransportOrderVO vo2 = createTO();
         postTOAndValidate(vo2, NOTLOGGED);
+        LOGGER.debug("Order 2: " + vo2);
         vo2.setState(TransportOrderState.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
@@ -80,11 +87,12 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 patch(TMSConstants.ROOT_ENTITIES)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(vo2))
-                )
+        )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
                 .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
         ;
+        LOGGER.debug("ENDE");
     }
 
     public
@@ -152,6 +160,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-state-finish-an-initialized"))
         ;
     }
+
     /* ----------------- STARTED -------------------*/
     public
     @Test
@@ -232,6 +241,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-state-finish-a-started"))
         ;
     }
+
     /* ----------------- FINISHED -------------------*/
     public
     @Test
@@ -260,6 +270,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-state-change-a-finished"))
         ;
     }
+
     /* ----------------- ONFAILURE -------------------*/
     public
     @Test
@@ -288,6 +299,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 .andDo(document("to-patch-state-change-an-onfailure"))
         ;
     }
+
     /* ----------------- CANCELED -------------------*/
     public
     @Test

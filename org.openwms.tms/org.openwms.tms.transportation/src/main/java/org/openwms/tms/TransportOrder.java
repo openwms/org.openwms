@@ -41,6 +41,8 @@ import java.util.Date;
 import org.ameba.i18n.Translator;
 import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.tms.exception.StateChangeException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 
@@ -54,6 +56,8 @@ import org.springframework.beans.factory.annotation.Configurable;
 @Entity
 @Table(name = "TMS_TRANSPORT_ORDER")
 public class TransportOrder extends ApplicationEntity implements Serializable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(TransportOrder.class);
 
     /**
      * The bk of the {@code TransportUnit} to be moved by this {@code TransportOrder}. Allowed to be {@literal null} to keep {@code
@@ -212,6 +216,8 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * or</li><li>when the caller tries to leap the state {@link TransportOrderState#INITIALIZED}</li>
      */
     private void validateStateChange(TransportOrderState newState) throws StateChangeException {
+        LOGGER.debug("Request for state change of TransportOrder with PK [{}] from [{}] to [{}]", getPk(), state, newState);
+
         if (newState == null) {
             throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, getPersistentKey());
         }
@@ -240,10 +246,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
             case FINISHED:
             case ONFAILURE:
             case CANCELED:
-                throw new StateChangeException("Not allowed to change the state of a TransportOrder that has already been completed. Current state is " + state);
+                throw new StateChangeException("Not allowed to change the state of a TransportOrder that has already been completed. Current state is CANCELED");
             default:
-                throw new IllegalStateException("TO state not managed:" + state);
+                throw new IllegalStateException("State not managed: " + state);
         }
+        LOGGER.debug("...request processed, order is now "+newState);
     }
 
     private boolean startedTOExists() {

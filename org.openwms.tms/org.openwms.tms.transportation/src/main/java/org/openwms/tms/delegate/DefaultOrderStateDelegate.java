@@ -126,7 +126,7 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
     private void startNextForTu(Long id) {
         TransportOrder transportOrder = dao.findOne(id);
         if (null == transportOrder) {
-            LOGGER.warn("TransportOrder with id [{}] could not be loaded", id);
+            LOGGER.warn("TransportOrder with PK [{}] could not be loaded", id);
             return;
         }
         List<TransportOrder> transportOrders = findInState(transportOrder.getTransportUnitBK(),
@@ -157,11 +157,11 @@ public class DefaultOrderStateDelegate implements TransportOrderStateDelegate {
         try {
             transportOrder.setState(TransportOrderState.INITIALIZED);
         } catch (StateChangeException sce) {
-            LOGGER.info("Could not initialize TransportOrder [{}]. Message: [{}]", transportOrder.getPk(), sce.getMessage());
+            LOGGER.info("Could not initialize TransportOrder with PK [{}]. Message: [{}]", transportOrder.getPk(), sce.getMessage());
             return false;
         }
         transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getActualLocation().toString());
-        LOGGER.debug("TransportOrder [{}] INITIALIZED", transportOrder.getPk());
+        LOGGER.debug("TransportOrder with PK [{}] INITIALIZED", transportOrder.getPk());
         return true;
     }
 
