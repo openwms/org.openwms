@@ -21,10 +21,6 @@
  */
 package org.openwms.tms;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * A TransportOrderUtil.
  * 
@@ -58,22 +54,6 @@ public final class TransportOrderUtil {
         default:
             return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
         }
-    }
-
-    /**
-     * Unfortunately Flex clients can't handle Long values and only understand integers. Hence we need a small utility method to convert one
-     * list in another.
-     * 
-     * @param values
-     *            The list of intergers to be converted
-     * @return a new list of long values
-     */
-    public static List<Long> getLongList(Collection<String> values) {
-        List<Long> longList = new ArrayList<>(values.size());
-        for (String number : values) {
-            longList.add(Long.valueOf(number));
-        }
-        return longList;
     }
 
 }
