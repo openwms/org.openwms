@@ -782,11 +782,11 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${plugin.surefire.version}</version>
                     <configuration>
-                        <!--forkCount>0</forkCount>
+                        <forkCount>0</forkCount>
                         <threadCount>1</threadCount>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <skipTests>false</skipTests>
-                        <trimStackTrace>true</trimStackTrace-->
+                        <trimStackTrace>true</trimStackTrace>
                         <includes>
                             <include>**/*Test.java</include>
                             <include>**/*IT.java</include>
