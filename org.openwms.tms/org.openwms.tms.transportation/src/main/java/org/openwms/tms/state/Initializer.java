@@ -73,8 +73,9 @@ class Initializer implements ApplicationListener<TransportServiceEvent> {
             Collections.sort(transportOrders, new TransportStartComparator());
             for (TransportOrder transportOrder : transportOrders) {
                 try {
-                    transportOrder.setState(TransportOrderState.INITIALIZED);
-                    transportOrder.setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getActualLocation().toString());
+                    transportOrder
+                            .changeState(TransportOrderState.INITIALIZED)
+                            .setSourceLocation(commonGateway.getTransportUnit(transportOrder.getTransportUnitBK()).orElseThrow(NotFoundException::new).getActualLocation().toString());
                     transportOrder = repository.save(transportOrder);
                     LOGGER.debug("TransportOrder with PK [{}] INITIALIZED", transportOrder.getPk());
                 } catch (StateChangeException sce) {

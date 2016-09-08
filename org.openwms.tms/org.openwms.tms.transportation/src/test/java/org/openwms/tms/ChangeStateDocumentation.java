@@ -88,6 +88,7 @@ public class ChangeStateDocumentation extends DocumentationBase {
         vo2.setState(TransportOrderState.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
+        LOGGER.debug("Calling API:"+vo2);
         // test ...
         mockMvc.perform(
                 patch(TMSConstants.ROOT_ENTITIES)

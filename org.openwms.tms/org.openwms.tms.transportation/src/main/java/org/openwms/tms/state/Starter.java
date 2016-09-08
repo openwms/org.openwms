@@ -98,7 +98,7 @@ class Starter implements ApplicationListener<TransportServiceEvent> {
                     throw new StateChangeException(
                             "Cannot start TransportOrder for TransportUnit [" + to.getTransportUnitBK() + "] because " + others.size() + " TransportOrders already started");
                 }
-                to.setState(TransportOrderState.STARTED);
+                to.changeState(TransportOrderState.STARTED);
                 repository.save(to);
                 LOGGER.info("TransportOrder for TransportUnit with Barcode {} STARTED at {}. Persisted key is {}", to.getTransportUnitBK(), to.getStartDate(), to.getPk());
                 break;

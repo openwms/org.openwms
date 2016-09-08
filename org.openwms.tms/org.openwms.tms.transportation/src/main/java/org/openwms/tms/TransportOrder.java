@@ -267,7 +267,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * else then {@link TransportOrderState#INITIALIZED} or {@link TransportOrderState#CANCELED}</li> <li>the {@code TransportOrder} is
      * {@link TransportOrderState#CREATED} and shall be {@link TransportOrderState#INITIALIZED} but it is incomplete</li> </ul>
      */
-    public void setState(TransportOrderState newState) throws StateChangeException {
+    public TransportOrder changeState(TransportOrderState newState) throws StateChangeException {
         validateStateChange(newState);
         switch (newState) {
             case STARTED:
@@ -282,6 +282,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 // OK for all others
         }
         state = newState;
+        return this;
         // TODO [openwms]: 24/07/16 publish state changed here!
     }
 

@@ -40,7 +40,7 @@ class ChangeState implements UpdateFunction {
         if (saved.getState() != toUpdate.getState() && toUpdate.getState() != null) {
 
             // Request to change TO's state...
-            saved.setState(toUpdate.getState());
+            saved.changeState(toUpdate.getState());
         }
     }
 }

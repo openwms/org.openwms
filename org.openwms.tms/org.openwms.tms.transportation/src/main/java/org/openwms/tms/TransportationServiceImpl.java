@@ -127,7 +127,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 LOGGER.debug("Trying to turn TransportOrder [{}] into state [{}]", transportOrder.getPk(), state);
-                transportOrder.setState(state);
+                transportOrder.changeState(state);
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(), TransportOrderUtil
                         .convertToEventType(state)));
             } catch (StateChangeException sce) {

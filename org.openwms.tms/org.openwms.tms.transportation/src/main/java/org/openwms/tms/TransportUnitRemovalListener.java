@@ -77,7 +77,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
                 try {
-                    transportOrder.setState(TransportOrderState.CANCELED);
+                    transportOrder.changeState(TransportOrderState.CANCELED);
                     transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit
                             + " was removed, order was canceled").build());
                     transportOrder.setTransportUnitBK(null);
