@@ -37,6 +37,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.ameba.i18n.Translator;
 import org.ameba.integration.jpa.ApplicationEntity;
@@ -130,6 +131,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     private TransportOrderRepository repo;
 
     /* ----------------------------- constructors ------------------- */
+
     /** Dear JPA and Dozer ... */
     protected TransportOrder() {
     }
@@ -239,7 +241,9 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
                 if (newState == STARTED && numberOfStartedTOExists() > 0) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
                 }
-                LOGGER.debug("Current State is [{}], new state is [{}], #Started is [{}]", state, newState, repo.numberOfTransportOrders(transportUnitBK, STARTED));
+                List<TransportOrder> orders = repo.findByTransportUnitBKAndStates(transportUnitBK, STARTED);
+                orders.forEach(System.out::println);
+                LOGGER.debug("Current State is [{}], new state is [{}], # of started is [{}]", state, newState, repo.numberOfTransportOrders(transportUnitBK, STARTED));
                 break;
             case STARTED:
                 // new state may be one of the following, no additional if-check required here
@@ -251,11 +255,11 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
             default:
                 throw new IllegalStateException("State not managed: " + state);
         }
-        LOGGER.debug("< Request processed, order is now "+newState);
+        LOGGER.debug("< Request processed, order is now [{}]", newState);
     }
 
     private int numberOfStartedTOExists() {
-        return repo.numberOfTransportOrders(transportUnitBK, STARTED);
+        return repo.findByTransportUnitBKAndStates(transportUnitBK, STARTED).size();
     }
 
     /**
