@@ -51,7 +51,7 @@ public enum TransportOrderState {
 
     private final int order;
 
-    private TransportOrderState(int sortOrder) {
+    TransportOrderState(int sortOrder) {
         this.order = sortOrder;
     }
 

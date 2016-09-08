@@ -20,15 +20,15 @@
 
     <logger name="org.dozer" level="ERROR"/>
     <logger name="org.hibernate.SQL" level="DEBUG"/>
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+    <logger name="org.hibernate.type" level="TRACE"/>
     <logger name="org.junit" level="DEBUG"/>
     <logger name="org.openwms" level="DEBUG"/>
 
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="OFF"/>
     <logger name="SERVICE_LAYER_ACCESS" level="DEBUG"/>
-    <logger name="SERVICE_LAYER_EXCEPTION" level="OFF"/>
+    <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR"/>
     <logger name="INTEGRATION_LAYER_ACCESS" level="DEBUG"/>
-    <logger name="INTEGRATION_LAYER_EXCEPTION" level="OFF"/>
+    <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR"/>
 
     <root level="WARN">
         <appender-ref ref="STDOUT"/>
