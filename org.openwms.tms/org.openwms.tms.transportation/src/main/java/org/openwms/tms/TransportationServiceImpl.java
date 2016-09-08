@@ -114,7 +114,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
         for (UpdateFunction up : updateFunctions) {
             up.update(saved, transportOrder);
         }
-        return saved;
+        return repository.save(saved);
     }
 
     /**
