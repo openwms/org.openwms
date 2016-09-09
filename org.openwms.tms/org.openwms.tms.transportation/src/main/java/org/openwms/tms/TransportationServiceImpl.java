@@ -111,9 +111,7 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
         TransportOrder saved = findBy(transportOrder.getPersistentKey());
-        for (UpdateFunction up : updateFunctions) {
-            up.update(saved, transportOrder);
-        }
+        updateFunctions.forEach(up -> up.update(saved, transportOrder));
         return repository.save(saved);
     }
 

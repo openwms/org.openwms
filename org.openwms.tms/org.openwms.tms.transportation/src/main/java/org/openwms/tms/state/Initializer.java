@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +47,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Transactional(propagation = Propagation.MANDATORY)
-@Lazy
 @Component
 class Initializer implements ApplicationListener<TransportServiceEvent> {
 
@@ -80,6 +78,7 @@ class Initializer implements ApplicationListener<TransportServiceEvent> {
                     LOGGER.debug("TransportOrder with PK [{}] INITIALIZED", transportOrder.getPk());
                 } catch (StateChangeException sce) {
                     LOGGER.warn("Could not initialize TransportOrder with PK [{}]. Message: [{}]", transportOrder.getPk(), sce.getMessage());
+                    continue;
                 }
                 try {
                     ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(),

@@ -79,16 +79,14 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // setup ...
         CreateTransportOrderVO vo = createTO();
         postTOAndValidate(vo, NOTLOGGED);
-        LOGGER.debug("Order 1: " + vo);
         // create a second one that shall wait in INITIALIZED
         CreateTransportOrderVO vo2 = createTO();
         postTOAndValidate(vo2, NOTLOGGED);
         em.flush();
-        LOGGER.debug("Order 2: " + vo2);
         vo2.setState(TransportOrderState.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
-        LOGGER.debug("Calling API:"+vo2);
+        LOGGER.debug("Calling API with:" + vo2);
         // test ...
         mockMvc.perform(
                 patch(TMSConstants.ROOT_ENTITIES)
@@ -99,7 +97,6 @@ public class ChangeStateDocumentation extends DocumentationBase {
                 .andExpect(jsonPath("messageKey", is(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE)))
                 .andDo(document("to-patch-state-change-start-no-allowed-one-exists"))
         ;
-        LOGGER.debug("ENDE");
     }
 
     public
