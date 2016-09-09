@@ -82,7 +82,6 @@ public class ChangeStateDocumentation extends DocumentationBase {
         // create a second one that shall wait in INITIALIZED
         CreateTransportOrderVO vo2 = createTO();
         postTOAndValidate(vo2, NOTLOGGED);
-        em.flush();
         vo2.setState(TransportOrderState.STARTED.toString());
         given(commonGateway.getTransportUnit(KNOWN)).willReturn(Optional.of(new TransportUnit(KNOWN, INIT_LOC, ERR_LOC_STRING)));
 
