@@ -80,6 +80,7 @@ interface TransportUnitService<T extends TransportUnit> {
      * Find and return a {@link TransportUnit} with a particular {@link Barcode}.
      *
      * @param barcode {@link Barcode} of the {@link TransportUnit} to search for
+     * @throws org.ameba.exception.NotFoundException may throw if not found
      * @return The {@link TransportUnit} or {@literal null} when no {@link TransportUnit} with this {@link Barcode} exists
      */
     T findByBarcode(Barcode barcode);

@@ -35,15 +35,15 @@ import org.springframework.context.annotation.Profile;
  * @version 1.0
  * @since 1.0
  */
-@Profile("default")
 @Configuration
 class LocationConfig {
 
+    @Profile("default")
     @Bean
     CommandLineRunner locationRunner(LocationRepository lr) {
         return args -> {
             lr.deleteAll();
-            Arrays.asList("ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
+            Arrays.asList("INIT/0000/0000/0000/0000,ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
                     .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
         };
     }

@@ -29,6 +29,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Profile;
 
 /**
  * A TransportConfig.
@@ -40,6 +41,7 @@ import org.springframework.context.annotation.DependsOn;
 @Configuration
 class TransportConfig {
 
+    @Profile("default")
     @Bean
     @DependsOn("locationRunner")
     CommandLineRunner transportRunner(TransportUnitRepository tur, TransportUnitTypeRepository tutr, LocationService ls) {
@@ -50,7 +52,7 @@ class TransportConfig {
                     .forEach(bc -> {
                         TransportUnit tu = new TransportUnit(new Barcode(bc));
                         tu.setTransportUnitType(tut);
-                        tu.setActualLocation(ls.findByLocationId(LocationPK.fromString("ERR_/0000/0000/0000/0000")));
+                        tu.setActualLocation(ls.findByLocationId(LocationPK.fromString("INIT/0000/0000/0000/0000")));
                         tur.save(tu);
                     });
         };

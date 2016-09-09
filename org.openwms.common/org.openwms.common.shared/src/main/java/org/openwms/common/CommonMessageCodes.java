@@ -25,12 +25,13 @@ package org.openwms.common;
  * A CommonMessageCodes.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 public class CommonMessageCodes {
 
     /** Code to signal that no TransportUnit with given Barcode exists. */
     public static final String BARCODE_NOT_FOUND ="COMMON.BARCODE_NOT_FOUND";
+    public static final String LOCATION_NOT_FOUND = "COMMON.LOCATION_NOT_FOUND";
     public static final String LOCATION_GROUP_NOT_FOUND = "COMMON.LOCATION_GROUP_NOT_FOUND";
+    public static final String TRANSPORT_UNIT_TYPE_NOT_FOUND = "COMMON.TRANSPORT_UNIT_TYPE_NOT_FOUND";
 }

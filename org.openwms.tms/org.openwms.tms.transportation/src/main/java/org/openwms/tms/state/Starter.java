@@ -94,7 +94,7 @@ class Starter implements ApplicationListener<TransportServiceEvent> {
                 List<TransportOrder> others = repository.findByTransportUnitBKAndStates(to.getTransportUnitBK(), TransportOrderState.STARTED);
                 if (!others.isEmpty()) {
                     throw new StateChangeException(
-                            "Cannot start TransportOrder for TransportUnit [" + to.getTransportUnitBK() + "] because " + others.size() + " TransportOrders already started");
+                            "Cannot start TransportOrder for TransportUnit [" + to.getTransportUnitBK() + "] because " + others.size() + " TransportOrders already started [" + others.get(0).getPersistentKey() + "]");
                 }
                 to.changeState(TransportOrderState.STARTED);
                 repository.save(to);

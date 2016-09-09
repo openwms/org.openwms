@@ -12,6 +12,14 @@
 				<class-a>java.time.LocalDateTime</class-a>
 				<class-b>java.time.LocalDateTime</class-b>
 			</converter>
+			<converter type="org.openwms.common.location.LocationConverter">
+				<class-a>java.lang.String</class-a>
+				<class-b>org.openwms.common.location.Location</class-b>
+			</converter>
+			<converter type="org.openwms.common.transport.TransportUnitTypeConverter">
+				<class-a>java.lang.String</class-a>
+				<class-b>org.openwms.common.transport.TransportUnitType</class-b>
+			</converter>
         </custom-converters>
 	</configuration>
 
@@ -25,6 +33,10 @@
 		<field>
 			<a is-accessible="true">actualLocation</a>
 			<b is-accessible="true">actualLocation</b>
+		</field>
+		<field>
+			<a is-accessible="true">transportUnitType</a>
+			<b is-accessible="true">transportUnitType</b>
 		</field>
     </mapping>
 

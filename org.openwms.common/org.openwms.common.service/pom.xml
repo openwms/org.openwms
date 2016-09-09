@@ -32,11 +32,13 @@
     </parent>
     <artifactId>org.openwms.common.service</artifactId>
     <name>${project.artifactId}</name>
+
     <properties>
         <moduleDir>../..</moduleDir>
         <eventsourcing.version>0.3.1</eventsourcing.version>
         <commons-lang3.version>3.4</commons-lang3.version>
     </properties>
+
     <profiles>
         <profile>
             <id>default</id>
@@ -51,6 +53,16 @@
             </dependencies>
         </profile>
     </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>aspectj-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
@@ -64,6 +76,18 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
         </dependency>
 
         <!-- Project dependencies -->

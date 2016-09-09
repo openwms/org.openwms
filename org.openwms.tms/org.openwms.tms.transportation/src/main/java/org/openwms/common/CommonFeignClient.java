@@ -39,15 +39,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(url = "${common.url}", name = "COMMON-1", decode404 = true)
 interface CommonFeignClient {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locations", params = {"locationPK"})
+    @RequestMapping(method = RequestMethod.GET, value = CommonConstants.API_LOCATIONS, params = {"locationPK"})
     Location getLocation(@RequestParam("locationPK") String locationPk);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/locationGroups", params = {"name"})
+    @RequestMapping(method = RequestMethod.GET, value = CommonConstants.API_LOCATIONGROUPS, params = {"name"})
     LocationGroup getLocationGroup(@RequestParam("name") String name);
 
-    @RequestMapping(method = RequestMethod.GET, value = "/transportUnits", params = {"bk"})
+    @RequestMapping(method = RequestMethod.GET, value = CommonConstants.API_TRANSPORTUNITS, params = {"bk"})
     TransportUnit getTransportUnit(@RequestParam("bk") String transportUnitBK);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/transportUnits", params = {"bk"})
+    @RequestMapping(method = RequestMethod.PUT, value = CommonConstants.API_TRANSPORTUNITS, params = {"bk"})
     Response updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu);
 }

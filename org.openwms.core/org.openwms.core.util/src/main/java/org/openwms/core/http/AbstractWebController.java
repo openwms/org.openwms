@@ -24,10 +24,17 @@ package org.openwms.core.http;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
 import javax.validation.Validator;
+import java.io.Serializable;
 
+import org.ameba.LoggingCategories;
+import org.ameba.exception.BehaviorAwareException;
+import org.ameba.exception.BusinessRuntimeException;
+import org.ameba.exception.TechnicalRuntimeException;
 import org.ameba.http.AbstractBase;
 import org.ameba.http.Response;
 import org.openwms.core.exception.ExceptionCodes;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -41,11 +48,11 @@ import org.springframework.web.util.UriTemplate;
  * A AbstractWebController.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
+ * @since 1.0
  */
 public abstract class AbstractWebController {
 
+    private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.PRESENTATION_LAYER_EXCEPTION);
     @Autowired
     private MessageSource messageSource;
     @Autowired
@@ -59,16 +66,30 @@ public abstract class AbstractWebController {
      * @return A response object wraps the server result
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response> handleException(Exception ex) {
-        if (ex.getClass().equals(HttpBusinessException.class)) {
+    public ResponseEntity<Response<Serializable>> handleException(Exception ex) {
+        EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
+        if (ex instanceof BehaviorAwareException) {
+            BehaviorAwareException bae = (BehaviorAwareException) ex;
+            return bae.toResponse(bae.getData());
+        }
+        if (ex instanceof BusinessRuntimeException) {
+            BusinessRuntimeException bre = (BusinessRuntimeException) ex;
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), bre.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{bre.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        if (ex instanceof HttpBusinessException) {
             HttpBusinessException e = (HttpBusinessException) ex;
-            return new ResponseEntity<>(new Response(ex.getMessage(), e.getHttpStatus().toString()), e.getHttpStatus());
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), e.getHttpStatus().toString()), e.getHttpStatus());
         }
-        if (ex.getClass().equals(ValidationException.class)) {
-            return new ResponseEntity<>(new Response(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()),
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+        if (ex instanceof ValidationException) {
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.BAD_REQUEST.toString()),
+                    HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(new Response(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()),
+        if (ex instanceof TechnicalRuntimeException) {
+            TechnicalRuntimeException be = (TechnicalRuntimeException) ex;
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.BAD_GATEWAY.toString()),
+                    HttpStatus.BAD_GATEWAY);
+        }
+        return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -96,8 +117,7 @@ public abstract class AbstractWebController {
     }
 
     /**
-     * Build a response object that signals a not-okay response with a given
-     * status {@code code}.
+     * Build a response object that signals a not-okay response with a given status {@code code}.
      *
      * @param <T> Some type extending the AbstractBase entity
      * @param code The status code to set as response code
@@ -113,8 +133,7 @@ public abstract class AbstractWebController {
     }
 
     /**
-     * Build a response object that signals a not-okay response with a given
-     * status {@code code} and with given http headers.
+     * Build a response object that signals a not-okay response with a given status {@code code} and with given http headers.
      *
      * @param <T> Some type extending the AbstractBase entity
      * @param code The status code to set as response code
@@ -141,8 +160,7 @@ public abstract class AbstractWebController {
     }
 
     /**
-     * Build a response object that signals a not-okay response with a given
-     * status {@code code}.
+     * Build a response object that signals a not-okay response with a given status {@code code}.
      *
      * @param <T> Some type extending the AbstractBase entity
      * @param code The status code to set as response code
@@ -156,8 +174,7 @@ public abstract class AbstractWebController {
     }
 
     /**
-     * Build a response object that signals a not-okay response with a given
-     * status {@code code}.
+     * Build a response object that signals a not-okay response with a given status {@code code}.
      *
      * @param <T> Some type extending the AbstractBase entity
      * @param code The status code to set as response code
@@ -181,5 +198,4 @@ public abstract class AbstractWebController {
         UriTemplate template = new UriTemplate(url.append("/{objId}/").toString());
         return template.expand(objId).toASCIIString();
     }
-
 }

@@ -36,6 +36,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -44,11 +45,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  * A Starter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @SpringBootApplication(scanBasePackageClasses = {CommonStarter.class, SolutionApp.class})
 @EnableAspects
+@EnableSpringConfigured
 @EnableJpaAuditing
 @EnableMultiTenancy
 public class CommonStarter {
