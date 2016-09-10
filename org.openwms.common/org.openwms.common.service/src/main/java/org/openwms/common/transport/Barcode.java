@@ -34,7 +34,6 @@ import org.apache.commons.lang3.StringUtils;
  * padding character.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @GlossaryTerm
  * @since 0.1
  */

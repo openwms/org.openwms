@@ -31,7 +31,6 @@ import org.springframework.data.jpa.repository.Query;
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.1
- * @see TransportUnit
  */
 interface TransportUnitRepository extends JpaRepository<TransportUnit, Long> {
 

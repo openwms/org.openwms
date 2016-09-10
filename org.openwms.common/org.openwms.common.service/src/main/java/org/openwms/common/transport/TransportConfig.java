@@ -35,12 +35,19 @@ import org.springframework.context.annotation.Profile;
  * A TransportConfig.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Configuration
 class TransportConfig {
 
+    /**
+     * This bean is responsible to generate some test data, only in default Spring environment.
+     *
+     * @param tur
+     * @param tutr
+     * @param ls
+     * @return
+     */
     @Profile("default")
     @Bean
     @DependsOn("locationRunner")

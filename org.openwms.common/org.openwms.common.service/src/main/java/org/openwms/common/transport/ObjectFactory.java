@@ -30,7 +30,6 @@ import org.springframework.beans.factory.annotation.Configurable;
  * A ObjectFactory.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @Configurable
