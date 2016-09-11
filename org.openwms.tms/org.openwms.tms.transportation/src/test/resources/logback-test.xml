@@ -24,12 +24,11 @@
     <logger name="org.junit" level="OFF"/>
     <logger name="org.openwms" level="DEBUG"/>
 
-    <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG"/>
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="OFF"/>
-    <logger name="SERVICE_LAYER_ACCESS" level="DEBUG"/>
-    <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR"/>
-    <logger name="INTEGRATION_LAYER_ACCESS" level="DEBUG"/>
-    <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR"/>
+    <logger name="SERVICE_LAYER_ACCESS" level="OFF"/>
+    <logger name="SERVICE_LAYER_EXCEPTION" level="OFF"/>
+    <logger name="INTEGRATION_LAYER_ACCESS" level="OFF"/>
+    <logger name="INTEGRATION_LAYER_EXCEPTION" level="OFF"/>
 
     <root level="WARN">
         <appender-ref ref="STDOUT"/>

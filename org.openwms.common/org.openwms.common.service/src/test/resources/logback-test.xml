@@ -24,7 +24,6 @@
     <logger name="org.hibernate.type" level="OFF"/>
     <logger name="org.openwms" level="DEBUG"/>
 
-    <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG"/>
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="OFF"/>
     <logger name="SERVICE_LAYER_ACCESS" level="OFF"/>
     <logger name="SERVICE_LAYER_EXCEPTION" level="OFF"/>
