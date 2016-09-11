@@ -437,8 +437,8 @@
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
         <argLine><![CDATA[-Dcatalina.base=${project.build.directory}
-        -Dorg.springframework.restdocs.outputDir=${project.build.directory}/generated-snippets
-        -Ddocumentation.dir=${project.build.directory}/generated-snippets
+        -Dorg.springframework.restdocs.outputDir=target/generated-snippets
+        -Ddocumentation.dir=target/generated-snippets
         -Dorg.jboss.logging.provider=slf4j
         -Dfile.encoding=${project.build.sourceEncoding}]]>
         </argLine>
@@ -452,7 +452,7 @@
         <maven.min.version>3.0.4</maven.min.version>
         <debug.info>true</debug.info>
         <ci.buildNumber>MANUAL</ci.buildNumber>
-        <documentation.dir>${project.build.directory}</documentation.dir>
+        <documentation.dir>target</documentation.dir>
         <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
         <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
         <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
