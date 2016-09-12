@@ -31,6 +31,11 @@ public class LocationGroup implements Target {
 
     private boolean incomingActive = true;
 
+    /* JSON */
+    LocationGroup() {
+
+    }
+
     public LocationGroup(String name) {
         this.name = name;
     }

@@ -4,11 +4,12 @@
     <property name="LOG_TEMP" value="/tmp/owms"/>
     <property name="MODULE_NAME" value="TMS"/>
 
+    <conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" />
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
     <property name="LOG_PATH" value="${LOG_PATH:-${CATALINA.BASE:-${LOG_TEMP:-${java.io.tmpdir:-/tmp/owms}}}}"/>
-    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{YYYY-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{YYYY-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([${PID:- }/%tid]){magenta} %clr(-){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
     <variable scope="context" name="mdcPattern" value="%replace(;%X{MSGKEY};%X{MSGDATA}){';+( |$)', ''}"/>
 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -41,7 +42,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level \(%thread\) [%-40.40logger{39}]${mdcPattern} - %msg%n</pattern>
+                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level %clr([${PID:- }/%tid]){magenta} %clr(-){faint} [%-40.40logger{39}]${mdcPattern} : %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -68,7 +69,7 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level \(%thread\) [%-40.40logger{39}]${mdcPattern} - %msg%n</pattern>
+                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level %clr([${PID:- }/%tid]){magenta} %clr(-){faint} [%-40.40logger{39}]${mdcPattern} : %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>
@@ -95,17 +96,21 @@
                 </triggeringPolicy>
 
                 <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} \(%thread\) [%-29.29logger{28}] - %msg%n</pattern>
+                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level %clr([${PID:- }/%tid]){magenta} %clr(-){faint} [%-40.40logger{39}]${mdcPattern} : %msg%n</pattern>
                 </encoder>
             </appender>
         </sift>
     </appender>
 
+    <logger name="org.dozer" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type" level="OFF"/>
     <logger name="org.openwms" level="DEBUG"/>
-    <logger name="org.hibernate" level="WARN"/>
-    <logger name="org.springframework" level="INFO"/>
 
     <!-- Specialized loggers -->
+    <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG" additivity="false">
+        <appender-ref ref="TSL"/>
+    </logger>
     <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
         <appender-ref ref="EXCFILE"/>
         <appender-ref ref="LOGFILE"/>

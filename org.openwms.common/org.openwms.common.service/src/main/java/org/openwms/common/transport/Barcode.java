@@ -34,7 +34,6 @@ import org.apache.commons.lang3.StringUtils;
  * padding character.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @GlossaryTerm
  * @since 0.1
  */
@@ -94,6 +93,15 @@ public class Barcode implements Serializable {
         adjustBarcode(value);
     }
 
+    /**
+     * Simple factory method to replace default constructor in application logic (still needed for framework stuff).
+     *
+     * @param value The value of the {@code Barcode} as String
+     * @return Formatted Barcode instance
+     */
+    public static Barcode of(String value) {
+        return new Barcode(value);
+    }
     /*~ ----------------------------- methods ------------------- */
 
     /**

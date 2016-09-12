@@ -57,7 +57,8 @@ class HttpCommonGateway implements CommonGateway {
         try {
             return Optional.of(commonFeignClient.getLocationGroup(target));
         } catch (Exception ex) {
-            if (translate(ex) == 404) {
+            int code = translate(ex);
+            if (code == 404) {
                 return Optional.empty();
             } else {
                 LOGGER.error(ex.getMessage(), ex);

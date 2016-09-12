@@ -76,7 +76,7 @@ public class AddProblemDocumentation extends DocumentationBase {
     void testAddProblem() throws Exception {
         // setup ...
         CreateTransportOrderVO vo = createTO();
-        MvcResult res = postTOAndValidate(vo, NOTLOGGED);
+        postTOAndValidate(vo, NOTLOGGED);
         Message msg = new Message.Builder().withMessage("text").withMessageNo("77").build();
         vo.setProblem(msg);
 

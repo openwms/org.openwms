@@ -58,7 +58,6 @@ import org.springframework.web.filter.CharacterEncodingFilter;
  * A DocumentationBase.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @since 1.0
  */
 @RunWith(SpringRunner.class)
@@ -105,12 +104,11 @@ public abstract class DocumentationBase {
         ERR_LOC = new Location(ERR_LOC_STRING);
         INIT_LOCGRB = new LocationGroup(INIT_LOCGB_STRING);
         ERR_LOCGRB = new LocationGroup(ERR_LOCGB_STRING);
-        CharacterEncodingFilter filter = new CharacterEncodingFilter("UTF-8", true);
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(MockMvcRestDocumentation.documentationConfiguration(restDocumentation).uris()
                         .withPort(8888))
-                .addFilters(filter)
+                .addFilters(new CharacterEncodingFilter("UTF-8", true))
                 .build();
     }
 

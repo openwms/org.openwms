@@ -21,18 +21,14 @@
  */
 package org.openwms.common.transport;
 
-import java.io.Serializable;
+import javax.servlet.http.HttpServletRequest;
 
-import org.ameba.exception.BehaviorAwareException;
-import org.ameba.exception.BusinessRuntimeException;
-import org.ameba.http.Response;
 import org.ameba.mapping.BeanMapper;
 import org.openwms.common.CommonConstants;
+import org.openwms.core.http.AbstractWebController;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2.0
  */
 @RestController(CommonConstants.API_TRANSPORTUNITS)
-public class TransportUnitController {
+public class TransportUnitController extends AbstractWebController {
 
     @Autowired
     private TransportUnitService<TransportUnit> service;
@@ -58,17 +54,19 @@ public class TransportUnitController {
         return mapper.map(service.findByBarcode(new Barcode(transportUnitBK)), TransportUnitVO.class);
     }
 
+    @PostMapping(params = {"bk"})
+    public @ResponseBody void createTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu, HttpServletRequest req) {
+
+        // check if already exists ...
+        service.findByBarcode(Barcode.of(transportUnitBK));
+
+        TransportUnit toCreate = mapper.map(tu, TransportUnit.class);
+        TransportUnit created = service.create(new Barcode(transportUnitBK), toCreate.getTransportUnitType(), toCreate.getActualLocation().getLocationId());
+        getLocationForCreatedResource(req, created.getPersistentKey());
+    }
+
     @PutMapping(params = {"bk"})
     public @ResponseBody TransportUnitVO updateTU(@RequestParam("bk") String transportUnitBK, @RequestBody TransportUnitVO tu) {
         return mapper.map(service.update(new Barcode(transportUnitBK), mapper.map(tu, TransportUnit.class)), TransportUnitVO.class);
-    }
-
-    @ExceptionHandler(BusinessRuntimeException.class)
-    public ResponseEntity<Response<Serializable>> handleBRE(BusinessRuntimeException ex) throws Exception {
-        if (ex instanceof BehaviorAwareException) {
-            BehaviorAwareException bae = (BehaviorAwareException) ex;
-            return bae.toResponse(bae.getData());
-        }
-        return new ResponseEntity<>(new Response<>(ex.getMessage(), ex.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{ex.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

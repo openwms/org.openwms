@@ -55,7 +55,6 @@ import org.springframework.util.Assert;
  * as container to transport items like {@code LoadUnit}s. It can be moved between {@code Location}s. </p>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
  * @GlossaryTerm
  * @since 0.1
  */

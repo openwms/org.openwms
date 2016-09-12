@@ -42,8 +42,8 @@ import org.springframework.context.ApplicationContext;
  * A TransportationServiceImpl is a Spring managed transactional service.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 1.0
  * @see TransportationService
+ * @since 1.0
  */
 @TxService
 class TransportationServiceImpl implements TransportationService<TransportOrder> {
@@ -91,17 +91,17 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
             throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
         }
         LOGGER.debug("Trying to create TransportOrder with Barcode [{}], to Target [{}], with Priority [{}]", barcode, target, priority);
-        TransportOrder transportOrder = new TransportOrder();
-        transportOrder.setTransportUnitBK(barcode);
-
-        transportOrder.setTargetLocation(target);
-        transportOrder.setTargetLocationGroup(target);
+        TransportOrder transportOrder = new TransportOrder(barcode)
+                .setTargetLocation(target)
+                .setTargetLocationGroup(target);
         if (priority != null) {
             transportOrder.setPriority(priority);
         }
         transportOrder = repository.save(transportOrder);
+        LOGGER.debug("TransportOrder for Barcode [{}] created. PKey is [{}], PK is [{}]", barcode, transportOrder.getPersistentKey(), transportOrder.getPk());
         ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(),
                 TransportServiceEvent.TYPE.TRANSPORT_CREATED));
+        LOGGER.debug("TransportOrder for Barcode [{}] persisted. PKey is [{}], PK is [{}]", barcode, transportOrder.getPersistentKey(), transportOrder.getPk());
         return transportOrder;
     }
 
@@ -111,23 +111,21 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     @Override
     public TransportOrder update(TransportOrder transportOrder) {
         TransportOrder saved = findBy(transportOrder.getPersistentKey());
-        for (UpdateFunction up : updateFunctions) {
-            up.update(saved, transportOrder);
-        }
-        return saved;
+        updateFunctions.forEach(up -> up.update(saved, transportOrder));
+        return repository.save(saved);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Collection<String> change(Collection<String> pKeys, TransportOrder.State state) {
+    public Collection<String> change(Collection<String> pKeys, TransportOrderState state) {
         List<String> failure = new ArrayList<>(pKeys.size());
         List<TransportOrder> transportOrders = repository.findByPKey(new ArrayList<>(pKeys));
         for (TransportOrder transportOrder : transportOrders) {
             try {
                 LOGGER.debug("Trying to turn TransportOrder [{}] into state [{}]", transportOrder.getPk(), state);
-                transportOrder.setState(state);
+                transportOrder.changeState(state);
                 ctx.publishEvent(new TransportServiceEvent(transportOrder.getPk(), TransportOrderUtil
                         .convertToEventType(state)));
             } catch (StateChangeException sce) {

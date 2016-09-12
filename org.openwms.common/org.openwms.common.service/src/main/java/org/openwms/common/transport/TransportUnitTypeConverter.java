@@ -19,46 +19,48 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.common.transport;
 
+import org.ameba.exception.NotFoundException;
+import org.ameba.i18n.Translator;
+import org.dozer.DozerConverter;
+import org.openwms.common.CommonMessageCodes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Configurable;
 
 /**
- * A AddProblem.
+ * A TransportUnitTypeConverter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 1.0
  */
-@Component
-class AddProblem implements UpdateFunction {
+@Configurable
+public class TransportUnitTypeConverter extends DozerConverter<String, TransportUnitType> {
 
     @Autowired
-    private ProblemHistoryRepository repository;
+    private TransportUnitTypeRepository repository;
+    @Autowired
+    private Translator translator;
+
+    /**
+     * {@inheritDoc}
+     */
+    public TransportUnitTypeConverter() {
+        super(String.class, TransportUnitType.class);
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem()) ||
-                !saved.hasProblem() && toUpdate.hasProblem()) {
-
-            // A Problem occurred and must be added to the TO ...
-            add(toUpdate.getProblem(), saved);
-        }
+    public TransportUnitType convertTo(String source, TransportUnitType destination) {
+        return repository.findByType(source).orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.TRANSPORT_UNIT_TYPE_NOT_FOUND, new String[]{source}, source));
     }
 
     /**
-     * To be accessed from the same package!
-     *
-     * @param problem The Message to add
-     * @param to The TransportOrder to put the Message on
+     * {@inheritDoc}
      */
-    void add(Message problem, TransportOrder to) {
-        if (to.hasProblem()) {
-            repository.save(new ProblemHistory(to, to.getProblem()));
-        }
-        to.setProblem(problem);
+    @Override
+    public String convertFrom(TransportUnitType source, String destination) {
+        return source.getType();
     }
 }

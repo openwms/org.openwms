@@ -87,4 +87,16 @@ public class CreateTransportOrderVO implements Serializable {
     public void setTarget(String target) {
         this.target = target;
     }
+
+    @Override
+    public String toString() {
+        return "CreateTransportOrderVO{" +
+                "pKey='" + pKey + '\'' +
+                ", barcode='" + barcode + '\'' +
+                ", priority='" + priority + '\'' +
+                ", problem=" + problem +
+                ", state='" + state + '\'' +
+                ", target='" + target + '\'' +
+                '}';
+    }
 }

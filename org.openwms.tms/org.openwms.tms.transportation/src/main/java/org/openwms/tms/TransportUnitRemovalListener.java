@@ -72,12 +72,12 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
 
     protected void cancelInitializedOrders(TransportUnit transportUnit) {
         LOGGER.debug("Trying to cancel and remove already created but not started TransportOrders");
-        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrder.State.CREATED,
-                TransportOrder.State.INITIALIZED);
+        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrderState.CREATED,
+                TransportOrderState.INITIALIZED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
                 try {
-                    transportOrder.setState(TransportOrder.State.CANCELED);
+                    transportOrder.changeState(TransportOrderState.CANCELED);
                     transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit
                             + " was removed, order was canceled").build());
                     transportOrder.setTransportUnitBK(null);
@@ -95,8 +95,8 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Trying to unlink finished and failed TransportOrders for TransportUnit: " + transportUnit);
         }
-        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrder.State.FINISHED,
-                TransportOrder.State.ONFAILURE);
+        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrderState.FINISHED,
+                TransportOrderState.ONFAILURE);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
                 transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit
@@ -109,7 +109,7 @@ class TransportUnitRemovalListener implements OnRemovalListener<TransportUnit> {
     }
 
     protected void unlinkCanceledOrders(TransportUnit transportUnit) {
-        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrder.State.CANCELED);
+        List<TransportOrder> transportOrders = repository.findByTransportUnitBKAndStates(transportUnit.getBarcode(), TransportOrderState.CANCELED);
         if (!transportOrders.isEmpty()) {
             for (TransportOrder transportOrder : transportOrders) {
                 transportOrder.setProblem(new Message.Builder().withMessage("TransportUnit " + transportUnit

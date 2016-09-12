@@ -31,7 +31,7 @@ import org.springframework.context.ApplicationEvent;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @since 1.0
  */
-public class TransportServiceEvent extends ApplicationEvent implements Serializable {
+public class TransportServiceEvent<T extends TransportServiceEvent.TYPE> extends ApplicationEvent implements Serializable {
 
     private TYPE type;
 
@@ -39,36 +39,32 @@ public class TransportServiceEvent extends ApplicationEvent implements Serializa
      * All possible types of this event.
      *
      * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
-     * @version $Revision$
      * @since 0.1
      */
     public enum TYPE {
 
-        /**
-         * A TransportOrder was created.
-         */
+        /** A TransportOrder has been created. */
         TRANSPORT_CREATED,
 
-        /**
-         * A TransportOrder was interrupted.
-         */
+        /** TransportOrder has been initialized. */
+        INITIALIZED,
+
+        /** TransportOrder has been started. */
+        STARTED,
+
+        /** A TransportOrder was interrupted. */
         TRANSPORT_INTERRUPTED,
 
-        /**
-         * A TransportOrder was set on failure.
-         */
+        /** A TransportOrder was set on failure. */
         TRANSPORT_ONFAILURE,
 
-        /**
-         * A TransportOrder was canceled.
-         */
+        /** A TransportOrder was canceled. */
         TRANSPORT_CANCELED,
 
-        /**
-         * A TransportOrder was finished.
-         */
+        /** A TransportOrder was finished. */
         TRANSPORT_FINISHED
     }
+
 
     /**
      * Create a new RootApplicationEvent.

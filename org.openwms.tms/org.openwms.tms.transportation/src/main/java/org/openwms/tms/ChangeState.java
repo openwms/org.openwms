@@ -22,6 +22,8 @@
 package org.openwms.tms;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ChangeState.
@@ -29,6 +31,7 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
+@Transactional(propagation = Propagation.MANDATORY)
 @Component
 class ChangeState implements UpdateFunction {
 
@@ -40,7 +43,7 @@ class ChangeState implements UpdateFunction {
         if (saved.getState() != toUpdate.getState() && toUpdate.getState() != null) {
 
             // Request to change TO's state...
-            saved.setState(toUpdate.getState());
+            saved.changeState(toUpdate.getState());
         }
     }
 }

@@ -40,7 +40,7 @@ public class TransportOrderTests extends AbstractJpaSpringContextTests {
     public final void testSetState() {
         TransportOrder transportOrder = new TransportOrder();
         try {
-            transportOrder.setState(TransportOrderState.INITIALIZED);
+            transportOrder.changeState(TransportOrderState.INITIALIZED);
             fail("Exception expected while switching to next state without transportUnit");
         } catch (StateChangeException sce) {
             LOGGER.debug("OK:Exception while switching to next state without transportUnit");
@@ -51,7 +51,7 @@ public class TransportOrderTests extends AbstractJpaSpringContextTests {
         TransportUnit transportUnit = new TransportUnit("TEST_UNIT");
         transportOrder.setTransportUnit(transportUnit);
         try {
-            transportOrder.setState(TransportOrderState.INITIALIZED);
+            transportOrder.changeState(TransportOrderState.INITIALIZED);
             fail("TransportOrder must not be switched in next mode without setting a target");
         } catch (StateChangeException sce) {
             LOGGER.debug("OK:Exception while switching to next state without target");
@@ -60,7 +60,7 @@ public class TransportOrderTests extends AbstractJpaSpringContextTests {
         Location targetLocation = new Location(new LocationPK("KNO", "KNO", "KNO", "KNO", "KNO"));
         transportOrder.setTargetLocation(targetLocation);
         try {
-            transportOrder.setState(TransportOrderState.INITIALIZED);
+            transportOrder.changeState(TransportOrderState.INITIALIZED);
             LOGGER.debug("transportUnit set and target set");
         } catch (Exception e) {
             fail("TransportOrder could be switched in next mode");
@@ -71,7 +71,7 @@ public class TransportOrderTests extends AbstractJpaSpringContextTests {
         transportOrder2.setTransportUnit(transportUnit);
         transportOrder2.setTargetLocationGroup(targetLocationGroup);
         try {
-            transportOrder.setState(TransportOrderState.INITIALIZED);
+            transportOrder.changeState(TransportOrderState.INITIALIZED);
             LOGGER.debug("transportUnit set and targetLocationGroup set");
         } catch (Exception e) {
             fail("TransportOrder could be switched in next mode");

@@ -437,8 +437,8 @@
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
         <argLine><![CDATA[-Dcatalina.base=${project.build.directory}
-        -Dorg.springframework.restdocs.outputDir=${project.build.directory}/generated-snippets
-        -Ddocumentation.dir=${project.build.directory}/generated-snippets
+        -Dorg.springframework.restdocs.outputDir=target/generated-snippets
+        -Ddocumentation.dir=target/generated-snippets
         -Dorg.jboss.logging.provider=slf4j
         -Dfile.encoding=${project.build.sourceEncoding}]]>
         </argLine>
@@ -782,11 +782,11 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${plugin.surefire.version}</version>
                     <configuration>
-                        <!--forkCount>0</forkCount>
+                        <forkCount>0</forkCount>
                         <threadCount>1</threadCount>
                         <useSystemClassLoader>true</useSystemClassLoader>
                         <skipTests>false</skipTests>
-                        <trimStackTrace>true</trimStackTrace-->
+                        <trimStackTrace>true</trimStackTrace>
                         <includes>
                             <include>**/*Test.java</include>
                             <include>**/*IT.java</include>
@@ -877,13 +877,6 @@
             </dependency>
 
             <!-- Spring Framework Libraries -->
-            <!--dependency>
-                <groupId>io.spring.platform</groupId>
-                <artifactId>platform-bom</artifactId>
-                <version>${spring.io.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -939,6 +932,23 @@
                 <artifactId>oracle.jdbc.driver</artifactId>
                 <version>${jdbc.oracle.version}</version>
                 <optional>true</optional>
+            </dependency>
+
+            <!-- Fix version here -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjtools</artifactId>
+                <version>${aspectj.version}</version>
             </dependency>
 
             <!-- REST dependencies -->

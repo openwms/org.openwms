@@ -106,6 +106,9 @@ class TransportUnitServiceImpl implements TransportUnitService<TransportUnit> {
         return transportUnit;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public TransportUnit update(Barcode barcode, TransportUnit tu) {
         TransportUnit savedTu = dao.findByBarcode(barcode).orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.BARCODE_NOT_FOUND, new String[]{barcode.toString()}, barcode));

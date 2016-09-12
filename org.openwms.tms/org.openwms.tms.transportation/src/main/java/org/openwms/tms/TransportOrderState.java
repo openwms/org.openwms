@@ -21,44 +21,46 @@
  */
 package org.openwms.tms;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 /**
- * A AddProblem.
+ * A TransportOrderState defines all possible states a {@link TransportOrder} may resist in.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 1.0
  */
-@Component
-class AddProblem implements UpdateFunction {
+public enum TransportOrderState {
 
-    @Autowired
-    private ProblemHistoryRepository repository;
+    /** Status of new created {@code TransportOrder}s. */
+    CREATED(10),
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem()) ||
-                !saved.hasProblem() && toUpdate.hasProblem()) {
+    /** Status of a full initialized {@code TransportOrder}, ready to be started. */
+    INITIALIZED(20),
 
-            // A Problem occurred and must be added to the TO ...
-            add(toUpdate.getProblem(), saved);
-        }
+    /** A started and active{@code TransportOrder}, ready to be executed. */
+    STARTED(30),
+
+    /** Status to indicate that the {@code TransportOrder} is paused. Not active anymore. */
+    INTERRUPTED(40),
+
+    /** Status to indicate a failure on the {@code TransportOrder}. Not active anymore. */
+    ONFAILURE(50),
+
+    /** Status of a aborted {@code TransportOrder}. Not active anymore. */
+    CANCELED(60),
+
+    /** Status to indicate that the {@code TransportOrder} completed successfully. */
+    FINISHED(70);
+
+    private final int order;
+
+    TransportOrderState(int sortOrder) {
+        this.order = sortOrder;
     }
 
     /**
-     * To be accessed from the same package!
+     * Get the order.
      *
-     * @param problem The Message to add
-     * @param to The TransportOrder to put the Message on
+     * @return the order.
      */
-    void add(Message problem, TransportOrder to) {
-        if (to.hasProblem()) {
-            repository.save(new ProblemHistory(to, to.getProblem()));
-        }
-        to.setProblem(problem);
+    public int getOrder() {
+        return order;
     }
 }

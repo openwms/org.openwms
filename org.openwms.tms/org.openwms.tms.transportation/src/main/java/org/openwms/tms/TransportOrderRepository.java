@@ -26,6 +26,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * A TransportOrderRepository provides functionality regarding {@link TransportOrder} entity classes.
@@ -42,12 +43,10 @@ public interface TransportOrderRepository extends JpaRepository<TransportOrder, 
     List<TransportOrder> findByPKey(List<String> pKeys);
 
     @Query("select to from TransportOrder to where to.transportUnitBK = ?1 and to.state in ?2")
-    List<TransportOrder> findByTransportUnitBKAndStates(String transportUnitBK, TransportOrder.State... states);
+    List<TransportOrder> findByTransportUnitBKAndStates(String transportUnitBK, TransportOrderState... states);
 
     List<TransportOrder> findByTargetLocation(String targetLocation);
 
-    List<TransportOrder> findByTargetLocationGroup(String targetLocationGroup);
-
-    @Query("select count(to) from TransportOrder to where to.transportUnitBK = ?1 and to.state = ?2")
-    int numberOfTransportOrders(String transportUnitBK, TransportOrder.State state);
+    @Query("select count(to) from TransportOrder to where to.transportUnitBK = :transportUnitBK and to.state = :state")
+    int numberOfTransportOrders(@Param("transportUnitBK") String transportUnitBK, @Param("state") TransportOrderState state);
 }
