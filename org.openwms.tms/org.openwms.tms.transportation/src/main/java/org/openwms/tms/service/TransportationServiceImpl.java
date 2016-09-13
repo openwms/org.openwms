@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,10 +29,18 @@ import java.util.Optional;
 import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.i18n.Translator;
-import org.openwms.tms.exception.StateChangeException;
-import org.openwms.tms.exception.TransportOrderServiceException;
-import org.openwms.tms.targets.Target;
-import org.openwms.tms.targets.TargetResolver;
+import org.openwms.tms.Message;
+import org.openwms.tms.PriorityLevel;
+import org.openwms.tms.StateChangeException;
+import org.openwms.tms.TMSMessageCodes;
+import org.openwms.tms.Target;
+import org.openwms.tms.TargetResolver;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.TransportOrderRepository;
+import org.openwms.tms.TransportOrderState;
+import org.openwms.tms.TransportServiceEvent;
+import org.openwms.tms.TransportationService;
+import org.openwms.tms.UpdateFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,13 +90,13 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
      * Checks that all necessary data to create a TransportOrder is given, does not do any logical checks, whether a target is blocked or a
      * {@link TransportOrder} for the {@code TransportUnit} exist.
      *
-     * @throws TransportOrderServiceException when the barcode is {@literal null} or no transportUnit with barcode can be found or no target
+     * @throws NotFoundException when the barcode is {@literal null} or no transportUnit with barcode can be found or no target
      * can be found.
      */
     @Override
     public TransportOrder create(String barcode, String target, PriorityLevel priority) {
         if (barcode == null) {
-            throw new TransportOrderServiceException("Barcode cannot be null when creating a TransportOrder");
+            throw new NotFoundException("Barcode cannot be null when creating a TransportOrder");
         }
         LOGGER.debug("Trying to create TransportOrder with Barcode [{}], to Target [{}], with Priority [{}]", barcode, target, priority);
         TransportOrder transportOrder = new TransportOrder(barcode)

@@ -27,7 +27,7 @@ package org.openwms.tms;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class TMSConstants {
+public final class TMSConstants {
 
     /** API version. */
     public static final String API_VERSION = "v1";

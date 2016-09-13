@@ -26,13 +26,13 @@ import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
+import org.openwms.tms.Location;
+import org.openwms.tms.LocationGroup;
+import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
 import org.openwms.tms.TransportOrderState;
 import org.openwms.tms.TransportServiceEvent;
-import org.openwms.tms.exception.StateChangeException;
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

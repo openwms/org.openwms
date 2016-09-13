@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.targets;
+package org.openwms.tms;
 
 /**
  * A TargetHandler offers a set of functions according to the specific of the {@code Target} implementation.

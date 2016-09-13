@@ -19,7 +19,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.tms;
+
 /**
- * Exception classes of the TMS module.
+ * A Target represents a target of a TransportOrder.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @since 1.0
  */
-package org.openwms.tms.exception;
+public interface Target {
+
+    /**
+     * Returns the unique business key of the Target.
+     *
+     * @return Unique business key
+     */
+    String asString();
+}

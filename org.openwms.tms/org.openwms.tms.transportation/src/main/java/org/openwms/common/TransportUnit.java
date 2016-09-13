@@ -24,7 +24,7 @@ package org.openwms.common;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.openwms.tms.targets.Location;
+import org.openwms.tms.Location;
 
 /**
  * A TransportUnit.

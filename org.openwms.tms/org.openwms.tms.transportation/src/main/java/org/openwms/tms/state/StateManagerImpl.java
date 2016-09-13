@@ -30,12 +30,12 @@ import javax.persistence.Transient;
 import java.util.List;
 
 import org.ameba.i18n.Translator;
+import org.openwms.tms.StateChangeException;
 import org.openwms.tms.StateManager;
 import org.openwms.tms.TMSMessageCodes;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
 import org.openwms.tms.TransportOrderState;
-import org.openwms.tms.exception.StateChangeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

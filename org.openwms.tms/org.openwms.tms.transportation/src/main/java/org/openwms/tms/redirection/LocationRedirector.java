@@ -19,44 +19,43 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms.redirection;
 
 import java.util.Optional;
 
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.targets.LocationGroup;
+import org.openwms.tms.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /**
- * A LocationGroupRedirector votes for a {@link RedirectVote} whether the target locationGroup is enabled for infeed. The class is lazy
- * initialized.
+ * A LocationRedirector votes for a {@link RedirectVote} whether the target location is enabled for infeed. The class is lazy initialized.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
 @Lazy
-@Order(10)
+@Order(5)
 @Component
-class LocationGroupRedirector extends TargetRedirector<LocationGroup> {
+class LocationRedirector extends TargetRedirector<Location> {
 
     @Autowired
     private CommonGateway commonGateway;
 
     @Override
-    protected boolean isTargetAvailable(LocationGroup target) {
-        return !target.isInfeedBlocked();
+    protected boolean isTargetAvailable(Location target) {
+        return target.isIncomingActive();
     }
 
     @Override
-    protected Optional<LocationGroup> resolveTarget(RedirectVote vote) {
-        return commonGateway.getLocationGroup(vote.getTarget());
+    protected Optional<Location> resolveTarget(RedirectVote vote) {
+        return commonGateway.getLocation(vote.getTarget());
     }
 
     @Override
     protected void assignTarget(RedirectVote vote) {
-        vote.getTransportOrder().setTargetLocationGroup(vote.getTarget());
+        vote.getTransportOrder().setTargetLocation(vote.getTarget());
     }
 }

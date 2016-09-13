@@ -19,26 +19,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.exception;
-
-import org.ameba.exception.ServiceLayerException;
+package org.openwms.tms.removal;
 
 /**
- * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an entity.
- * 
+ * An OnRemovalListener is able to hook in the lifecycle of an entity class. A class implementing this interface is called before an entity
+ * of type <code>T</code> is removed.
+ *
+ * @param <T> Any entity
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @since 1.0
  */
-public class RemovalNotAllowedException extends ServiceLayerException {
+public interface OnRemovalListener<T> {
 
     /**
-     * Create a new RemovalNotAllowedException.
-     * 
-     * @param message
-     *            Detail message
+     * Do something prior the <code>entity</code> instance is been removed.
+     *
+     * @param entity The instance to be removed.
+     * @return <code>true</code> if removal is allowed, otherwise <code>false</code>
+     * @throws RemovalNotAllowedException When it is not allowed to remove the entity, because depending items exist
      */
-    public RemovalNotAllowedException(String message) {
-        super(message);
-    }
-
+    void preRemove(T entity) throws RemovalNotAllowedException;
 }

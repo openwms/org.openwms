@@ -19,37 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.exception;
-
-import java.io.Serializable;
-
-import org.ameba.exception.ServiceLayerException;
-
 /**
- * A TransportOrderServiceException.
- *
- * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @since 1.0
+ * Exception classes of the TMS module.
  */
-public class TransportOrderServiceException extends ServiceLayerException implements Serializable {
-
-    /**
-     * Create a new TransportOrderServiceException.
-     *
-     * @param message Detail message
-     */
-    public TransportOrderServiceException(String message) {
-        super(message);
-    }
-
-
-    /**
-     * Create a new TransportOrderServiceException.
-     *
-     * @param message Detail message
-     * @param cause Root cause
-     */
-    public TransportOrderServiceException(String message, Throwable cause) {
-        super(message, cause);
-    }
-}
+package org.openwms.tms.removal;

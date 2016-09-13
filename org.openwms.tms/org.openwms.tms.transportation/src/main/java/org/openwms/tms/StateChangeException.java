@@ -19,43 +19,46 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms;
 
-import java.util.Optional;
+import java.io.Serializable;
 
-import org.openwms.common.CommonGateway;
-import org.openwms.tms.targets.Location;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
+import org.ameba.exception.BehaviorAwareException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A LocationRedirector votes for a {@link RedirectVote} whether the target location is enabled for infeed. The class is lazy initialized.
+ * A StateChangeException signals that the request to change the state of a {@code TransportOrder} was not allowed.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@Lazy
-@Order(5)
-@Component
-class LocationRedirector extends TargetRedirector<Location> {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class StateChangeException extends BehaviorAwareException {
 
-    @Autowired
-    private CommonGateway commonGateway;
-
-    @Override
-    protected boolean isTargetAvailable(Location target) {
-        return target.isIncomingActive();
+    /**
+     * {@inheritDoc}
+     */
+    public StateChangeException(String s) {
+        super(s);
     }
 
-    @Override
-    protected Optional<Location> resolveTarget(RedirectVote vote) {
-        return commonGateway.getLocation(vote.getTarget());
+    /**
+     * {@inheritDoc}
+     *
+     * @param message
+     * @param msgKey
+     * @param data
+     */
+    public StateChangeException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void assignTarget(RedirectVote vote) {
-        vote.getTransportOrder().setTargetLocation(vote.getTarget());
+    public HttpStatus getStatus() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

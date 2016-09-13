@@ -21,26 +21,40 @@
  */
 package org.openwms.tms;
 
-import org.springframework.stereotype.Component;
-
 /**
- * A PrioritizeTO is responsible to change the priority of a {@link TransportOrder}.
+ * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@Component
-class PrioritizeTO implements UpdateFunction {
+public class LocationGroup implements Target {
+
+    private boolean incomingActive = true;
+
+    /* JSON */
+    LocationGroup() {
+
+    }
+
+    public LocationGroup(String name) {
+        this.name = name;
+    }
+
+    private String name;
+
+    public boolean isInfeedBlocked() {
+        return !incomingActive;
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getPriority() != toUpdate.getPriority()) {
+    public String asString() {
+        return name;
+    }
 
-            // Request to change priority
-            saved.setPriority(toUpdate.getPriority());
-        }
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 }

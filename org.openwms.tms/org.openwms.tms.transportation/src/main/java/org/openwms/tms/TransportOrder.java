@@ -34,7 +34,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 import org.ameba.integration.jpa.ApplicationEntity;
-import org.openwms.tms.exception.StateChangeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * TransportOrder}s without {@code TransportUnit}s.
      */
     @Column(name = "C_TRANSPORT_UNIT_BK")
-    @Min(value = 1, groups = ChangeTU.class)
+    @Min(value = 1, groups = ValidationGroups.ValidateBKAndTarget.class)
     private String transportUnitBK;
 
     /**
@@ -112,7 +111,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * A {@code LocationGroup} can also be set as target. At least one target must be set when the {@code TransportOrder} is being started.
      */
     @Column(name = "C_TARGET_LOCATION_GROUP")
-    @Min(value = 1, groups = ChangeTU.class)
+    @Min(value = 1, groups = ValidationGroups.ValidateBKAndTarget.class)
     private String targetLocationGroup;
 
     @Transient
@@ -312,7 +311,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      *
      * @return {@literal true} if so, otherwise {@literal false}
      */
-    boolean hasProblem() {
+    public boolean hasProblem() {
         return problem != null;
     }
 

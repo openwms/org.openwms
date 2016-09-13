@@ -31,7 +31,7 @@ import feign.Response;
 import feign.Util;
 import feign.codec.DecodeException;
 import feign.codec.Decoder;
-import org.openwms.tms.targets.LocationGroup;
+import org.openwms.tms.LocationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

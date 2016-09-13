@@ -31,7 +31,7 @@ import org.springframework.context.ApplicationEvent;
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @since 1.0
  */
-public class TransportServiceEvent<T extends TransportServiceEvent.TYPE> extends ApplicationEvent implements Serializable {
+public final class TransportServiceEvent<T extends TransportServiceEvent.TYPE> extends ApplicationEvent implements Serializable {
 
     private TYPE type;
 

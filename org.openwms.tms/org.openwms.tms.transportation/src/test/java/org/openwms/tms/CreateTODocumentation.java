@@ -34,7 +34,6 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.openwms.tms.api.CreateTransportOrderVO;
-import org.openwms.tms.targets.Location;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.Rollback;

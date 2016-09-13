@@ -19,10 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.state;
 
 import java.io.Serializable;
 import java.util.Comparator;
+
+import org.openwms.tms.PriorityLevel;
+import org.openwms.tms.TransportOrder;
 
 /**
  * A TransportStartComparator. I used to sort TransportOrders is a particular order. Unfortunately some fields of the TransportOrder class
@@ -33,7 +36,7 @@ import java.util.Comparator;
  * @since 1.0
  * @see PriorityLevel
  */
-public class TransportStartComparator implements Comparator<TransportOrder>, Serializable {
+class TransportStartComparator implements Comparator<TransportOrder>, Serializable {
 
     /**
      * First the priority or orders is compared, when both are equals the id is compared too.

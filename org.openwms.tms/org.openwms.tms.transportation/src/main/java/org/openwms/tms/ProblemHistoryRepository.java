@@ -29,6 +29,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-interface ProblemHistoryRepository extends JpaRepository<ProblemHistory, Long> {
+public interface ProblemHistoryRepository extends JpaRepository<ProblemHistory, Long> {
 
 }

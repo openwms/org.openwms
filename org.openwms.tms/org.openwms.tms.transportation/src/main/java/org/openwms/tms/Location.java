@@ -19,42 +19,59 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import org.openwms.tms.Message;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
- * A Vote stores all information used by {@link DecisionVoter}s to vote for or against an action that shall be executed. Acts as a
- * superclass for certain votes.
+ * A Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class Vote {
+public class Location implements Target, Serializable {
 
-    private List<Message> messages = new ArrayList<>();
-    private boolean completed = false;
+    private String locationId;
+    private boolean incomingActive = true;
 
-    public boolean addMessage(Message message) {
-        return messages.add(message);
+    @JsonCreator
+    public Location() {
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    @JsonCreator
+    public Location(String locationId) {
+        this.locationId = locationId;
     }
 
-    public boolean hasMessages() {
-        return messages != null && !messages.isEmpty();
+    public boolean isIncomingActive() {
+        return incomingActive;
     }
 
-    public void complete() {
-        this.completed = true;
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 
-    public boolean completed() {
-        return completed;
+    /**
+     * Return the {@code locationId}.
+     *
+     * @return String locationId
+     */
+    @Override
+    public String toString() {
+        return locationId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String asString() {
+        return locationId;
+    }
+
+    public boolean isInfeedBlocked() {
+        return !incomingActive;
     }
 }

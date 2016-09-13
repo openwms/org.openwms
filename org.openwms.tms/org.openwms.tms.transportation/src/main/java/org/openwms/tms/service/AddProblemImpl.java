@@ -19,31 +19,53 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.service;
 
+import org.openwms.tms.AddProblem;
+import org.openwms.tms.Message;
+import org.openwms.tms.ProblemHistory;
+import org.openwms.tms.ProblemHistoryRepository;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.UpdateFunction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A ChangeState.
+ * A AddProblem.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@Transactional(propagation = Propagation.MANDATORY)
 @Component
-class ChangeState implements UpdateFunction {
+class AddProblemImpl implements UpdateFunction, AddProblem {
+
+    @Autowired
+    private ProblemHistoryRepository repository;
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getState() != toUpdate.getState() && toUpdate.getState() != null) {
+        if (saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem()) ||
+                !saved.hasProblem() && toUpdate.hasProblem()) {
 
-            // Request to change TO's state...
-            saved.changeState(toUpdate.getState());
+            // A Problem occurred and must be added to the TO ...
+            add(toUpdate.getProblem(), saved);
         }
+    }
+
+    /**
+     * To be accessed from the same package!
+     *
+     * @param problem The Message to add
+     * @param to The TransportOrder to put the Message on
+     */
+    @Override
+    public void add(Message problem, TransportOrder to) {
+        if (to.hasProblem()) {
+            repository.save(new ProblemHistory(to, to.getProblem()));
+        }
+        to.setProblem(problem);
     }
 }

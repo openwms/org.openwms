@@ -19,25 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms;
 
 /**
- * A DecisionVoter is asked to vote for a business action.
- * 
- * @param <T>
- *            Any type of Vote
+ * A ChangeTUValidation.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public interface DecisionVoter<T extends Vote> {
+public interface ValidationGroups {
 
-    /**
-     * The implementation has to vote for a certain vote on particular rules that are implemented by the voter.
-     * 
-     * @param vote
-     *            The vote to vote for
-     * @throws DeniedException
-     *             is thrown when the voter cannot vote for the action
-     */
-    void voteFor(T vote) throws DeniedException;
+    interface ValidateBKAndTarget{};
+
 }

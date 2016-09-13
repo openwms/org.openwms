@@ -19,14 +19,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms.redirection;
 
 import java.util.Optional;
 
 import org.ameba.i18n.Translator;
 import org.openwms.tms.Message;
 import org.openwms.tms.TMSMessageCodes;
-import org.openwms.tms.targets.Target;
+import org.openwms.tms.Target;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

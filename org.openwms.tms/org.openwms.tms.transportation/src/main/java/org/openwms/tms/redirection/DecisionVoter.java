@@ -19,46 +19,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
-
-
-import org.ameba.exception.ServiceLayerException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+package org.openwms.tms.redirection;
 
 /**
- * A DeniedException is thrown by a {@link DecisionVoter}s in case a business action is not allowed to be executed.
+ * A DecisionVoter is asked to vote for a business action.
  * 
+ * @param <T>
+ *            Any type of Vote
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@ResponseStatus(HttpStatus.CONFLICT)
-public class DeniedException extends ServiceLayerException {
+interface DecisionVoter<T extends Vote> {
 
     /**
-     * Create a new DeniedException.
+     * The implementation has to vote for a certain vote on particular rules that are implemented by the voter.
      * 
-     * @param message
-     *            Detail message
+     * @param vote
+     *            The vote to vote for
+     * @throws DeniedException
+     *             is thrown when the voter cannot vote for the action
      */
-    public DeniedException(String message) {
-        super(message);
-    }
-
-    /**
-     * Create a new DeniedException.
-     * 
-     * @param message
-     *            Detail message
-     * @param cause
-     *            Root cause
-     */
-    public DeniedException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-
-    public static final DeniedException with(String msg) {
-        return new DeniedException(msg);
-    }
+    void voteFor(T vote) throws DeniedException;
 }

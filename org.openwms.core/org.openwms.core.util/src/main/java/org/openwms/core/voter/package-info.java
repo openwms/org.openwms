@@ -22,4 +22,4 @@
 /**
  * Types, exceptions and interfaces related to the voter pattern.
  */
-package org.openwms.tms.voter;
+package org.openwms.core.voter;

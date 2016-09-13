@@ -19,42 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.targets;
-
 /**
- * A LocationGroup.
- *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 1.0
+ * This package contains classes implementing the voter pattern.
  */
-public class LocationGroup implements Target {
-
-    private boolean incomingActive = true;
-
-    /* JSON */
-    LocationGroup() {
-
-    }
-
-    public LocationGroup(String name) {
-        this.name = name;
-    }
-
-    private String name;
-
-    public boolean isInfeedBlocked() {
-        return !incomingActive;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String asString() {
-        return name;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
-}
+package org.openwms.tms.redirection;

@@ -21,8 +21,6 @@
  */
 package org.openwms.tms;
 
-import org.openwms.tms.exception.StateChangeException;
-
 /**
  * A StateManager.
  *

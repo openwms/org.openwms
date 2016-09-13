@@ -19,26 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.targets;
+package org.openwms.tms.service;
 
-import java.util.Optional;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.UpdateFunction;
+import org.springframework.stereotype.Component;
 
 /**
- * A TargetResolver is responsible to resolve a {@link Target}.
+ * A PrioritizeTO is responsible to change the priority of a {@link TransportOrder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public interface TargetResolver<T extends Target> {
+@Component
+class PrioritizeTO implements UpdateFunction {
 
     /**
-     * Resolves a {@link Target} for a given {@code target}.
-     *
-     * @param target The target to resolve
-     * @return The target instance
-     * @throws org.ameba.exception.NotFoundException
+     * {@inheritDoc}
      */
-    Optional<T> resolve(String target);
+    @Override
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getPriority() != toUpdate.getPriority()) {
 
-    TargetHandler<T> getHandler();
+            // Request to change priority
+            saved.setPriority(toUpdate.getPriority());
+        }
+    }
 }

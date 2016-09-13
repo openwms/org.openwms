@@ -19,13 +19,15 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.service;
 
 import javax.validation.Validator;
 
 import org.openwms.common.CommonGateway;
 import org.openwms.common.TransportUnit;
-import org.openwms.tms.validation.ChangeTUValidation;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.UpdateFunction;
+import org.openwms.tms.ValidationGroups;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -69,6 +71,6 @@ class ChangeTU implements UpdateFunction {
     }
 
     private void validateAttributes(TransportOrder to) {
-        validator.validate(to, ChangeTUValidation.class);
+        validator.validate(to, ValidationGroups.class);
     }
 }

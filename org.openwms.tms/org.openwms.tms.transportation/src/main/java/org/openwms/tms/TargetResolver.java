@@ -19,14 +19,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.validation;
+package org.openwms.tms;
+
+import java.util.Optional;
 
 /**
- * A ChangeTUValidation.
+ * A TargetResolver is responsible to resolve a {@link Target}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public interface ChangeTUValidation {
+public interface TargetResolver<T extends Target> {
 
+    /**
+     * Resolves a {@link Target} for a given {@code target}.
+     *
+     * @param target The target to resolve
+     * @return The target instance
+     * @throws org.ameba.exception.NotFoundException
+     */
+    Optional<T> resolve(String target);
+
+    TargetHandler<T> getHandler();
 }
