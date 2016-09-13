@@ -23,6 +23,8 @@ package org.openwms.tms;
 
 import java.util.Optional;
 
+import org.openwms.common.Target;
+
 /**
  * A TargetResolver is responsible to resolve a {@link Target}.
  *

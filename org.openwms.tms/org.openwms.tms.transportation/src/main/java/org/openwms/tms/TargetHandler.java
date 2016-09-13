@@ -21,6 +21,8 @@
  */
 package org.openwms.tms;
 
+import org.openwms.common.Target;
+
 /**
  * A TargetHandler offers a set of functions according to the specific of the {@code Target} implementation.
  *

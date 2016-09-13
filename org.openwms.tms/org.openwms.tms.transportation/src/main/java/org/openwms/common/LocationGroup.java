@@ -21,8 +21,6 @@
  */
 package org.openwms.common;
 
-import org.openwms.tms.Target;
-
 /**
  * A LocationGroup.
  *

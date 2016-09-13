@@ -24,7 +24,6 @@ package org.openwms.common;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.openwms.tms.Target;
 
 /**
  * A Location.

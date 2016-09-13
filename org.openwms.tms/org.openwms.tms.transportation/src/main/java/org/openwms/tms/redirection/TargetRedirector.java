@@ -24,9 +24,9 @@ package org.openwms.tms.redirection;
 import java.util.Optional;
 
 import org.ameba.i18n.Translator;
+import org.openwms.common.Target;
 import org.openwms.tms.Message;
 import org.openwms.tms.TMSMessageCodes;
-import org.openwms.tms.Target;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
