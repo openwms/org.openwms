@@ -23,8 +23,8 @@ package org.openwms.tms.targets;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openwms.common.Location;
 import org.openwms.core.test.IntegrationTest;
-import org.openwms.tms.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringRunner;
 

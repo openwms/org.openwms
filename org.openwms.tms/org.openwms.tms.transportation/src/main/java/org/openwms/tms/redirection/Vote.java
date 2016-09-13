@@ -33,7 +33,7 @@ import org.openwms.tms.Message;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public final class Vote {
+public class Vote {
 
     private List<Message> messages = new ArrayList<>();
     private boolean completed = false;

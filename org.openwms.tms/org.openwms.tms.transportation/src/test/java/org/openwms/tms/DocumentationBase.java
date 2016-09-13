@@ -33,6 +33,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openwms.common.CommonGateway;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
 import org.openwms.common.TransportUnit;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.springframework.beans.factory.annotation.Autowired;

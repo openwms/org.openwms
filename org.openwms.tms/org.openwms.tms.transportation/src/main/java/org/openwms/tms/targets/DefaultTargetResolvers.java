@@ -24,8 +24,8 @@ package org.openwms.tms.targets;
 import java.util.Optional;
 
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.Location;
-import org.openwms.tms.LocationGroup;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
 import org.openwms.tms.TargetHandler;
 import org.openwms.tms.TargetResolver;
 import org.springframework.beans.factory.annotation.Autowired;

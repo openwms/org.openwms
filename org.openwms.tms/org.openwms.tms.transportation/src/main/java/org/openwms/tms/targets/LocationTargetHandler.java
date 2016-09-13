@@ -23,7 +23,7 @@ package org.openwms.tms.targets;
 
 import java.util.List;
 
-import org.openwms.tms.Location;
+import org.openwms.common.Location;
 import org.openwms.tms.TargetHandler;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;

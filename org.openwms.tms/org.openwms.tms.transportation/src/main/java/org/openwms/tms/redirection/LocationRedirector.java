@@ -24,7 +24,7 @@ package org.openwms.tms.redirection;
 import java.util.Optional;
 
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.Location;
+import org.openwms.common.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.Order;

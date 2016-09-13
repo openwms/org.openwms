@@ -33,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.Optional;
 
 import org.junit.Test;
+import org.openwms.common.Location;
 import org.openwms.tms.api.CreateTransportOrderVO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

@@ -26,8 +26,8 @@ import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
-import org.openwms.tms.Location;
-import org.openwms.tms.LocationGroup;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
 import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
