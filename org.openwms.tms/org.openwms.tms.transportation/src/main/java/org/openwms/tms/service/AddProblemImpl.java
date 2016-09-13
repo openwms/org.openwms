@@ -29,13 +29,16 @@ import org.openwms.tms.TransportOrder;
 import org.openwms.tms.UpdateFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A AddProblem.
+ * A AddProblemImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
+@Transactional(propagation = Propagation.MANDATORY)
 @Component
 class AddProblemImpl implements UpdateFunction, AddProblem {
 
@@ -56,16 +59,13 @@ class AddProblemImpl implements UpdateFunction, AddProblem {
     }
 
     /**
-     * To be accessed from the same package!
-     *
-     * @param problem The Message to add
-     * @param to The TransportOrder to put the Message on
+     * {@inheritDoc}
      */
     @Override
-    public void add(Message problem, TransportOrder to) {
-        if (to.hasProblem()) {
-            repository.save(new ProblemHistory(to, to.getProblem()));
+    public void add(Message problem, TransportOrder transportOrder) {
+        if (transportOrder.hasProblem()) {
+            repository.save(new ProblemHistory(transportOrder, transportOrder.getProblem()));
         }
-        to.setProblem(problem);
+        transportOrder.setProblem(problem);
     }
 }

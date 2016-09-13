@@ -52,6 +52,11 @@ public enum PriorityLevel implements Serializable {
     PriorityLevel() {
     }
 
+    /**
+     * Initializing constructor.
+     *
+     * @param order The order
+     */
     PriorityLevel(int order) {
         this.order = order;
     }

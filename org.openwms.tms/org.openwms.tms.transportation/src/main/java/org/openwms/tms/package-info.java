@@ -20,6 +20,6 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 /**
- * Interfaces of the TMS service layer; implementations provide business logic specific to TMS.
+ * The outer module package contains functional interfaces and entities.
  */
 package org.openwms.tms;

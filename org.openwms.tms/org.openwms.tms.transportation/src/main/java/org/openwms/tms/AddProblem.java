@@ -22,11 +22,17 @@
 package org.openwms.tms;
 
 /**
- * A AddProblem.
+ * A AddProblem implementation is able to add a problem (as {@code Message} to a {@code TransportOrder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface AddProblem {
 
-    void add(Message problem, TransportOrder to);
+    /**
+     * Add a {@code problem} to the {@code transportOrder}.
+     *
+     * @param problem The problem to add
+     * @param transportOrder The TransportOrder to assign the problem to
+     */
+    void add(Message problem, TransportOrder transportOrder);
 }

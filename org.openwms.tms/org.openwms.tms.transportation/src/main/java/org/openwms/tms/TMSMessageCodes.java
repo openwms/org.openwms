@@ -22,7 +22,7 @@
 package org.openwms.tms;
 
 /**
- * A TMSMessageCodes.
+ * A TMSMessageCodes is a collection with message codes unique within this module.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0

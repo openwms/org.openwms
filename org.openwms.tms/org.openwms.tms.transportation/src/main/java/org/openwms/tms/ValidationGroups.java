@@ -22,13 +22,15 @@
 package org.openwms.tms;
 
 /**
- * A ChangeTUValidation.
+ * A ValidationGroups is a collection of marker interfaces used for Bean Validation with JSR-303.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
 public interface ValidationGroups {
 
+    /**
+     * Validate that a transportUnitBK and at least one target exist.
+     */
     interface ValidateBKAndTarget{};
-
 }
