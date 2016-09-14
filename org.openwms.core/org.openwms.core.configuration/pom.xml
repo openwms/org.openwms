@@ -85,11 +85,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-oxm</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
 
         <!-- Currently in test -->
         <dependency>
@@ -109,12 +104,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <repository>
-            <id>spring-milestone-repository</id>
-            <url>http://repo.spring.io/milestone</url>
-        </repository>
-    </repositories>
 
 </project>

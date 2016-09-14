@@ -476,7 +476,8 @@
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
-        <hibernate.version>5.1.0.Final</hibernate.version> <!-- Keep in sync with Spring Data JPA -->
+        <hibernate-entitymanager.version>5.0.9.Final</hibernate-entitymanager.version> <!-- Keep in sync with Spring Data JPA -->
+        <hibernate-core.version>5.0.9.Final</hibernate-core.version> <!-- Keep in sync with hibernate-entitymanager.version -->
         <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
@@ -571,19 +572,19 @@
             <id>typescript-maven-plugin</id>
             <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
         </pluginRepository>
-        <pluginRepository>
+        <!--pluginRepository>
             <id>spring-snapshots</id>
             <name>Spring Snapshots</name>
             <url>https://repo.spring.io/snapshot</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
-        </pluginRepository>
-        <pluginRepository>
+        </pluginRepository-->
+        <!--pluginRepository>
             <id>bintray</id>
             <name>Bintray Openwms</name>
             <url>https://dl.bintray.com/openwms/github</url>
-        </pluginRepository>
+        </pluginRepository-->
     </pluginRepositories>
 
     <build>
@@ -625,7 +626,7 @@
                     </configuration>
                 </plugin>
 
-                <!--plugin>
+                <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${plugin.enforcer.version}</version>
                     <configuration>
@@ -641,7 +642,7 @@
                             <DependencyConvergence />
                         </rules>
                     </configuration>
-                </plugin-->
+                </plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
@@ -923,7 +924,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate.version}</version>
+                <version>${hibernate-entitymanager.version}</version>
             </dependency>
 
             <!-- Database libraries -->
