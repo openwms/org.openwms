@@ -22,7 +22,7 @@
  */  
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -213,13 +213,16 @@
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}
+                </distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>shell.sourceforge.net</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>scp</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/releases</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/releases
+                </distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots
+                </distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
 
@@ -230,13 +233,16 @@
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}
+                </distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>openwms.mooo.com</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>http</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots
+                </distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots
+                </distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
 
@@ -247,13 +253,16 @@
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}
+                </distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2
+                </distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots
+                </distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
 
@@ -431,6 +440,44 @@
             </build>
         </profile>
 
+        <profile>
+            <id>not-travis</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>sonatype-nexus-snapshots</id>
+                    <name>Snapshot Repository</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <releases>
+                        <enabled>false</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <!--pluginRepository>
+                    <id>central</id>
+                    <name>Maven Plugin Repository</name>
+                    <url>http://repo.maven.apache.org/maven2</url>
+                </pluginRepository-->
+                <pluginRepository>
+                    <id>typescript-maven-plugin</id>
+                    <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+
     </profiles>
 
     <properties>
@@ -462,7 +509,7 @@
 
         <!-- Used to make the Maven description property available from Bundlor -->
         <project.description>${project.description}</project.description>
-        
+
         <!-- =================== -->
         <!-- Submodule versions  -->
         <!-- =================== -->
@@ -527,66 +574,6 @@
         <plugin.github-site.version>0.13.1</plugin.github-site.version>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>bintray</id>
-            <name>Bintray Openwms</name>
-            <url>https://dl.bintray.com/openwms/github</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>central</id>
-            <name>Maven Plugin Repository</name>
-            <url>http://repo.maven.apache.org/maven2</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>typescript-maven-plugin</id>
-            <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
-        </pluginRepository>
-        <!--pluginRepository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository-->
-        <!--pluginRepository>
-            <id>bintray</id>
-            <name>Bintray Openwms</name>
-            <url>https://dl.bintray.com/openwms/github</url>
-        </pluginRepository-->
-    </pluginRepositories>
-
     <build>
         <extensions>
             <extension>
@@ -639,7 +626,7 @@
                                 <message>At least a JDK in version ${java.version} is required.</message>
                                 <version>${java.version}</version>
                             </requireJavaVersion>
-                            <DependencyConvergence />
+                            <DependencyConvergence/>
                         </rules>
                     </configuration>
                 </plugin>
