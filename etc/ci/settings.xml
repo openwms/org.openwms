@@ -15,11 +15,11 @@
                  breaks the build with enforcer rules. -->
             <repositories>
                 <repository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Snapshot Repository</name>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <id>sonatype-nexus-staging</id>
+                    <name>Staging Repository</name>
+                    <url>https://oss.sonatype.org/content/groups/staging</url>
                     <releases>
-                        <enabled>false</enabled>
+                        <enabled>true</enabled>
                     </releases>
                     <snapshots>
                         <enabled>true</enabled>
