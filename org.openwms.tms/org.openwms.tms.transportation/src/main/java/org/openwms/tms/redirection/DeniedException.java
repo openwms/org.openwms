@@ -32,8 +32,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
+@SuppressWarnings("serial")
 @ResponseStatus(HttpStatus.CONFLICT)
-public final class DeniedException extends ServiceLayerException {
+public class DeniedException extends ServiceLayerException {
 
     /**
      * Create a new DeniedException.
