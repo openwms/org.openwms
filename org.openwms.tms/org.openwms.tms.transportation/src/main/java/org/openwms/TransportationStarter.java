@@ -49,6 +49,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -63,6 +64,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableCircuitBreaker
 @SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})
 @EnableSpringConfigured
+@EnableTransactionManagement
 @EnableAspects(propagateRootCause = true)
 @EnableMultiTenancy
 public class TransportationStarter {
