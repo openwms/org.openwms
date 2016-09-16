@@ -26,7 +26,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import org.ameba.annotation.TxService;
 import org.ameba.exception.NotFoundException;
 import org.ameba.i18n.Translator;
 import org.openwms.common.Target;
@@ -45,6 +44,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportationServiceImpl is a Spring managed transactional service.
@@ -53,7 +55,8 @@ import org.springframework.context.ApplicationContext;
  * @see TransportationService
  * @since 1.0
  */
-@TxService
+@Transactional(propagation = Propagation.MANDATORY)
+@Service
 class TransportationServiceImpl implements TransportationService<TransportOrder> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TransportationServiceImpl.class);
