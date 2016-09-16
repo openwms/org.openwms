@@ -484,8 +484,8 @@
         <moduleDir>.</moduleDir>
         <!-- used by surefire plugin in combination with jacoco -->
         <argLine><![CDATA[-Dcatalina.base=${project.build.directory}
-        -Dorg.springframework.restdocs.outputDir=target/generated-snippets
-        -Ddocumentation.dir=target/generated-snippets
+        -Dorg.springframework.restdocs.outputDir=./target/generated-snippets
+        -Ddocumentation.dir=./target
         -Dorg.jboss.logging.provider=slf4j
         -Dfile.encoding=${project.build.sourceEncoding}]]>
         </argLine>

@@ -29,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.ameba.IDGenerator;
 import org.ameba.JdkIDGenerator;
-import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.http.EnableMultiTenancy;
 import org.ameba.http.RequestIDFilter;
@@ -49,7 +48,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.Ordered;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
@@ -64,8 +62,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableCircuitBreaker
 @SpringBootApplication(scanBasePackageClasses = {TransportationStarter.class, SolutionApp.class})
 @EnableSpringConfigured
-@EnableTransactionManagement
-@EnableAspects(propagateRootCause = true)
+//@EnableAspects(propagateRootCause = true)
 @EnableMultiTenancy
 public class TransportationStarter {
 
