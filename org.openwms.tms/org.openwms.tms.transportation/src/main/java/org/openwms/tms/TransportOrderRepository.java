@@ -27,8 +27,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A TransportOrderRepository provides CRUD functionality regarding {@link TransportOrder} entity classes. It requires an existing transaction.
@@ -36,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@Transactional(propagation = Propagation.MANDATORY)
+//@Transactional(propagation = Propagation.MANDATORY)
 public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
 
     @Query("select to from TransportOrder to where to.pKey = ?1")
