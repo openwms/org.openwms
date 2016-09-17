@@ -29,7 +29,7 @@ import java.io.Serializable;
 import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A ProblemHistory.
+ * A ProblemHistory stores an occurred problem, in form of {@code Message}, recorded on {@code TransportOrder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
@@ -56,5 +56,23 @@ public class ProblemHistory extends BaseEntity implements Serializable {
     public ProblemHistory(TransportOrder transportOrder, Message problem) {
         this.transportOrder = transportOrder;
         this.problem = problem;
+    }
+
+    /**
+     * Get the problem.
+     *
+     * @return The problem
+     */
+    public Message getProblem() {
+        return problem;
+    }
+
+    /**
+     * Get the corresponding {@code TransportOrder}.
+     *
+     * @return The transportOrder
+     */
+    public TransportOrder getTransportOrder() {
+        return transportOrder;
     }
 }

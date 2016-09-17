@@ -19,14 +19,59 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.validation;
+package org.openwms.common;
+
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
- * A ChangeTUValidation.
+ * A Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public interface ChangeTUValidation {
+public class Location implements Target, Serializable {
 
+    private String locationId;
+    private boolean incomingActive = true;
+
+    @JsonCreator
+    public Location() {
+    }
+
+    @JsonCreator
+    public Location(String locationId) {
+        this.locationId = locationId;
+    }
+
+    public boolean isIncomingActive() {
+        return incomingActive;
+    }
+
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
+    }
+
+    /**
+     * Return the {@code locationId}.
+     *
+     * @return String locationId
+     */
+    @Override
+    public String toString() {
+        return locationId;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String asString() {
+        return locationId;
+    }
+
+    public boolean isInfeedBlocked() {
+        return !incomingActive;
+    }
 }

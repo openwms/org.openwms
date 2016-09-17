@@ -19,35 +19,53 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.targets;
+package org.openwms.tms.service;
 
-import java.util.List;
-
-import org.openwms.common.Location;
-import org.openwms.tms.TargetHandler;
+import org.openwms.tms.AddProblem;
+import org.openwms.tms.Message;
+import org.openwms.tms.ProblemHistory;
+import org.openwms.tms.ProblemHistoryRepository;
 import org.openwms.tms.TransportOrder;
-import org.openwms.tms.TransportOrderRepository;
+import org.openwms.tms.UpdateFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A LocationTargetHandler.
+ * A AddProblemImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
+@Transactional(propagation = Propagation.MANDATORY)
 @Component
-class LocationTargetHandler implements TargetHandler<Location> {
+class AddProblemImpl implements UpdateFunction, AddProblem {
 
     @Autowired
-    private TransportOrderRepository repository;
+    private ProblemHistoryRepository repository;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public int getNoTOToTarget(Location target) {
-        List<TransportOrder> result = repository.findByTargetLocation(target.asString());
-        return result != null ? result.size() : 0;
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.hasProblem() && toUpdate.hasProblem() && !saved.getProblem().equals(toUpdate.getProblem()) ||
+                !saved.hasProblem() && toUpdate.hasProblem()) {
+
+            // A Problem occurred and must be added to the TO ...
+            add(toUpdate.getProblem(), saved);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void add(Message problem, TransportOrder transportOrder) {
+        if (transportOrder.hasProblem()) {
+            repository.save(new ProblemHistory(transportOrder, transportOrder.getProblem()));
+        }
+        transportOrder.setProblem(problem);
     }
 }

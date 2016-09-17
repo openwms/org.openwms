@@ -22,6 +22,8 @@
 package org.openwms.tms;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A ProblemHistoryRepository.
@@ -29,6 +31,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-interface ProblemHistoryRepository extends JpaRepository<ProblemHistory, Long> {
+@Transactional(propagation = Propagation.MANDATORY)
+public interface ProblemHistoryRepository extends JpaRepository<ProblemHistory, Long> {
 
 }

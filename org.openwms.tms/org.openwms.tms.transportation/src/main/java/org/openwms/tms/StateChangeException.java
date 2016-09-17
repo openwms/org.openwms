@@ -19,42 +19,46 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-import org.openwms.tms.Message;
+import org.ameba.exception.BehaviorAwareException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A Vote stores all information used by {@link DecisionVoter}s to vote for or against an action that shall be executed. Acts as a
- * superclass for certain votes.
+ * A StateChangeException signals that the request to change the state of a {@code TransportOrder} was not allowed.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class Vote {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class StateChangeException extends BehaviorAwareException {
 
-    private List<Message> messages = new ArrayList<>();
-    private boolean completed = false;
-
-    public boolean addMessage(Message message) {
-        return messages.add(message);
+    /**
+     * {@inheritDoc}
+     */
+    public StateChangeException(String s) {
+        super(s);
     }
 
-    public List<Message> getMessages() {
-        return messages;
+    /**
+     * {@inheritDoc}
+     *
+     * @param message
+     * @param msgKey
+     * @param data
+     */
+    public StateChangeException(String message, String msgKey, Serializable... data) {
+        super(message, msgKey, data);
     }
 
-    public boolean hasMessages() {
-        return messages != null && !messages.isEmpty();
-    }
-
-    public void complete() {
-        this.completed = true;
-    }
-
-    public boolean completed() {
-        return completed;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public HttpStatus getStatus() {
+        return HttpStatus.BAD_REQUEST;
     }
 }

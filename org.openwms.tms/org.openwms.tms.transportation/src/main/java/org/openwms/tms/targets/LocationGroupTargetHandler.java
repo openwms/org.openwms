@@ -23,6 +23,8 @@ package org.openwms.tms.targets;
 
 import java.util.List;
 
+import org.openwms.common.LocationGroup;
+import org.openwms.tms.TargetHandler;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

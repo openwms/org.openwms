@@ -137,7 +137,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-core</artifactId>
-                <version>${hibernate.version}</version>
+                <version>${hibernate-core.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.querydsl</groupId>

@@ -21,11 +21,6 @@
  */
 package org.openwms.tms;
 
-import static org.openwms.tms.TransportOrderState.CANCELED;
-import static org.openwms.tms.TransportOrderState.INITIALIZED;
-import static org.openwms.tms.TransportOrderState.ONFAILURE;
-import static org.openwms.tms.TransportOrderState.STARTED;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,11 +32,8 @@ import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import org.ameba.i18n.Translator;
 import org.ameba.integration.jpa.ApplicationEntity;
-import org.openwms.tms.exception.StateChangeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +57,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * TransportOrder}s without {@code TransportUnit}s.
      */
     @Column(name = "C_TRANSPORT_UNIT_BK")
-    @Min(value = 1, groups = ChangeTU.class)
+    @Min(value = 1, groups = ValidationGroups.ValidateBKAndTarget.class)
     private String transportUnitBK;
 
     /**
@@ -119,16 +111,12 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * A {@code LocationGroup} can also be set as target. At least one target must be set when the {@code TransportOrder} is being started.
      */
     @Column(name = "C_TARGET_LOCATION_GROUP")
-    @Min(value = 1, groups = ChangeTU.class)
+    @Min(value = 1, groups = ValidationGroups.ValidateBKAndTarget.class)
     private String targetLocationGroup;
 
     @Transient
     @Autowired
-    private Translator translator;
-
-    @Transient
-    @Autowired
-    private TransportOrderRepository repo;
+    private StateManager stateManager;
 
     /* ----------------------------- constructors ------------------- */
 
@@ -202,66 +190,6 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         return state;
     }
 
-    private void validateInitializationCondition() {
-        if (transportUnitBK == null || transportUnitBK.isEmpty() || (targetLocation == null && targetLocationGroup == null)) {
-            throw new StateChangeException(String.format("Not all properties set to turn TransportOrder into next state! transportUnit's barcode [%s], targetLocation [%s], targetLocationGroup [%s]", transportUnitBK, targetLocation, targetLocationGroup));
-        }
-    }
-
-    /**
-     * Validate whether a state change is valid or not. States must be changed in a defined order. Mostly the order is defined by the
-     * ordering if the states in {@link TransportOrderState} enum class. But some other rules are checked here too and an exception is
-     * thrown in case the sequence of states is violated.
-     *
-     * @param newState The new state of the order
-     * @throws StateChangeException when <li>newState is {@literal null} or</li><li>the state shall be turned back to a prior state
-     * or</li><li>when the caller tries to leap the state {@link TransportOrderState#INITIALIZED}</li>
-     */
-    private void validateStateChange(TransportOrderState newState) throws StateChangeException {
-        LOGGER.debug("> Request for state change of TransportOrder with PK [{}] from [{}] to [{}]", getPk(), state, newState);
-
-        if (newState == null) {
-            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, getPersistentKey());
-        }
-        if (state.compareTo(newState) > 0) {
-            // Don't allow to turn back the state!
-            throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_BACKWARDS_NOT_ALLOWED, getPersistentKey());
-        }
-        switch (state) {
-            case CREATED:
-                if (newState != INITIALIZED && newState != CANCELED) {
-                    throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, newState, getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, newState, getPersistentKey());
-                }
-                validateInitializationCondition();
-                break;
-            case INITIALIZED:
-                if (newState != STARTED && newState != CANCELED && newState != ONFAILURE) {
-                    throw new StateChangeException(translator.translate(TMSMessageCodes.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO, getPersistentKey()), TMSMessageCodes.STATE_CHANGE_ERROR_FOR_INITIALIZED_TO, getPersistentKey());
-                }
-                if (newState == STARTED && numberOfStartedTOExists() > 0) {
-                    throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportUnitBK, getPersistentKey());
-                }
-                List<TransportOrder> orders = repo.findByTransportUnitBKAndStates(transportUnitBK, STARTED);
-                orders.forEach(System.out::println);
-                LOGGER.debug("Current State is [{}], new state is [{}], # of started is [{}]", state, newState, repo.numberOfTransportOrders(transportUnitBK, STARTED));
-                break;
-            case STARTED:
-                // new state may be one of the following, no additional if-check required here
-                break;
-            case FINISHED:
-            case ONFAILURE:
-            case CANCELED:
-                throw new StateChangeException("Not allowed to change the state of a TransportOrder that has already been completed. Current state is CANCELED");
-            default:
-                throw new IllegalStateException("State not managed: " + state);
-        }
-        LOGGER.debug("< Request processed, order is now [{}]", newState);
-    }
-
-    private int numberOfStartedTOExists() {
-        return repo.findByTransportUnitBKAndStates(transportUnitBK, STARTED).size();
-    }
-
     /**
      * Change the state of the {@code TransportOrder} regarding some rules.
      *
@@ -272,7 +200,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      * {@link TransportOrderState#CREATED} and shall be {@link TransportOrderState#INITIALIZED} but it is incomplete</li> </ul>
      */
     public TransportOrder changeState(TransportOrderState newState) throws StateChangeException {
-        validateStateChange(newState);
+        stateManager.validate(newState, this);
         switch (newState) {
             case STARTED:
                 startDate = new Date();
@@ -287,7 +215,6 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
         }
         state = newState;
         return this;
-        // TODO [openwms]: 24/07/16 publish state changed here!
     }
 
     /**
@@ -384,7 +311,7 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      *
      * @return {@literal true} if so, otherwise {@literal false}
      */
-    boolean hasProblem() {
+    public boolean hasProblem() {
         return problem != null;
     }
 

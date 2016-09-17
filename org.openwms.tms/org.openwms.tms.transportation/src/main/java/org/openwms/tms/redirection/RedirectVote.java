@@ -19,42 +19,47 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.targets;
+package org.openwms.tms.redirection;
+
+import org.openwms.tms.TransportOrder;
 
 /**
- * A LocationGroup.
+ * A RedirectVote. Encapsulates a targetLocationGroup and a targetLocation to vote for as targets.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class LocationGroup implements Target {
+public class RedirectVote extends Vote {
 
-    private boolean incomingActive = true;
+    private String target;
+    private TransportOrder transportOrder;
 
-    /* JSON */
-    LocationGroup() {
-
-    }
-
-    public LocationGroup(String name) {
-        this.name = name;
-    }
-
-    private String name;
-
-    public boolean isInfeedBlocked() {
-        return !incomingActive;
+    /**
+     * Create a new RedirectVote.
+     *
+     * @param target The target destination to verify
+     * @param transportOrder
+     */
+    public RedirectVote(String target, TransportOrder transportOrder) {
+        this.target = target;
+        this.transportOrder = transportOrder;
     }
 
     /**
-     * {@inheritDoc}
+     * Get the locationGroup.
+     *
+     * @return the locationGroup.
      */
-    @Override
-    public String asString() {
-        return name;
+    public String getTarget() {
+        return target;
     }
 
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
+    /**
+     * Get the transportOrder.
+     *
+     * @return The transportOrder
+     */
+    public TransportOrder getTransportOrder() {
+        return transportOrder;
     }
 }

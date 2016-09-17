@@ -19,43 +19,42 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
-
-import java.util.Optional;
-
-import org.openwms.common.CommonGateway;
-import org.openwms.tms.targets.Location;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
+package org.openwms.common;
 
 /**
- * A LocationRedirector votes for a {@link RedirectVote} whether the target location is enabled for infeed. The class is lazy initialized.
+ * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@Lazy
-@Order(5)
-@Component
-class LocationRedirector extends TargetRedirector<Location> {
+public class LocationGroup implements Target {
 
-    @Autowired
-    private CommonGateway commonGateway;
+    private boolean incomingActive = true;
 
-    @Override
-    protected boolean isTargetAvailable(Location target) {
-        return target.isIncomingActive();
+    /* JSON */
+    LocationGroup() {
+
     }
 
-    @Override
-    protected Optional<Location> resolveTarget(RedirectVote vote) {
-        return commonGateway.getLocation(vote.getTarget());
+    public LocationGroup(String name) {
+        this.name = name;
     }
 
+    private String name;
+
+    public boolean isInfeedBlocked() {
+        return !incomingActive;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void assignTarget(RedirectVote vote) {
-        vote.getTransportOrder().setTargetLocation(vote.getTarget());
+    public String asString() {
+        return name;
+    }
+
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 }

@@ -19,47 +19,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms;
 
-import org.openwms.tms.TransportOrder;
+import org.openwms.common.Target;
 
 /**
- * A RedirectVote. Encapsulates a targetLocationGroup and a targetLocation to vote for as targets.
+ * A TargetHandler offers a set of functions according to the specific of the {@code Target} implementation.
  *
+ * @param <T> some kind of {@code Target}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class RedirectVote extends Vote {
-
-    private String target;
-    private TransportOrder transportOrder;
+public interface TargetHandler<T extends Target> {
 
     /**
-     * Create a new RedirectVote.
+     * Get the number of {@code TransportOrder}s that are on the way to the specific {@code Target}.
      *
-     * @param target The target destination to verify
-     * @param transportOrder
+     * @param target The target to search for
+     * @return The number of TransportOrders
      */
-    public RedirectVote(String target, TransportOrder transportOrder) {
-        this.target = target;
-        this.transportOrder = transportOrder;
-    }
-
-    /**
-     * Get the locationGroup.
-     *
-     * @return the locationGroup.
-     */
-    public String getTarget() {
-        return target;
-    }
-
-    /**
-     * Get the transportOrder.
-     *
-     * @return The transportOrder
-     */
-    public TransportOrder getTransportOrder() {
-        return transportOrder;
-    }
+    int getNoTOToTarget(T target);
 }

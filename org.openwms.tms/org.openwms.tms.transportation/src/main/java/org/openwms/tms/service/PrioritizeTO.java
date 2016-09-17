@@ -19,25 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.voter;
+package org.openwms.tms.service;
+
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.UpdateFunction;
+import org.springframework.stereotype.Component;
 
 /**
- * A DecisionVoter is asked to vote for a business action.
- * 
- * @param <T>
- *            Any type of Vote
+ * A PrioritizeTO is responsible to change the priority of a {@link TransportOrder}.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public interface DecisionVoter<T extends Vote> {
+@Component
+class PrioritizeTO implements UpdateFunction {
 
     /**
-     * The implementation has to vote for a certain vote on particular rules that are implemented by the voter.
-     * 
-     * @param vote
-     *            The vote to vote for
-     * @throws DeniedException
-     *             is thrown when the voter cannot vote for the action
+     * {@inheritDoc}
      */
-    void voteFor(T vote) throws DeniedException;
+    @Override
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getPriority() != toUpdate.getPriority()) {
+
+            // Request to change priority
+            saved.setPriority(toUpdate.getPriority());
+        }
+    }
 }

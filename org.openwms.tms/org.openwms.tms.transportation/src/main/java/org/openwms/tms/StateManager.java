@@ -21,26 +21,19 @@
  */
 package org.openwms.tms;
 
-import org.springframework.stereotype.Component;
-
 /**
- * A PrioritizeTO is responsible to change the priority of a {@link TransportOrder}.
+ * A StateManager is able to manage the state of a {@link TransportOrder}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 1.0
  */
-@Component
-class PrioritizeTO implements UpdateFunction {
+public interface StateManager {
 
     /**
-     * {@inheritDoc}
+     * Validates if the requested state transition into {@code newState} is valid or not. Does not set the state at the given {@code transportOrder.}
+     *
+     * @param newState The new state
+     * @param transportOrder The TransportOrder to check the state transition for
+     * @throws StateChangeException in case of errors
      */
-    @Override
-    public void update(TransportOrder saved, TransportOrder toUpdate) {
-        if (saved.getPriority() != toUpdate.getPriority()) {
-
-            // Request to change priority
-            saved.setPriority(toUpdate.getPriority());
-        }
-    }
+    void validate(TransportOrderState newState, TransportOrder transportOrder) throws StateChangeException;
 }

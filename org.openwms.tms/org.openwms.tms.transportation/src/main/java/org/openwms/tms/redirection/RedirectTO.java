@@ -19,17 +19,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.redirection;
 
 import java.util.List;
 
-import org.openwms.tms.targets.Target;
-import org.openwms.tms.targets.TargetResolver;
-import org.openwms.tms.voter.DecisionVoter;
-import org.openwms.tms.voter.DeniedException;
-import org.openwms.tms.voter.RedirectVote;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openwms.tms.AddProblem;
+import org.openwms.tms.Message;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.UpdateFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,12 +40,9 @@ import org.springframework.stereotype.Component;
 @Component
 class RedirectTO implements UpdateFunction {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedirectTO.class);
     /** 0..* voters, can be overridden and extended with XML configuration. So far we define only one (default) voter directly. */
     @Autowired(required = false)
     private List<DecisionVoter<RedirectVote>> redirectVoters;
-    @Autowired(required = false)
-    private List<TargetResolver<Target>> targetResolvers;
     @Autowired
     private AddProblem addProblem;
 

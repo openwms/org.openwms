@@ -22,8 +22,6 @@
 package org.openwms.common;
 
 import feign.Response;
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

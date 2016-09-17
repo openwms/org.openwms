@@ -19,41 +19,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms;
+package org.openwms.tms.removal;
+
+import org.ameba.exception.ServiceLayerException;
 
 /**
- * A TransportOrderUtil.
+ * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an entity.
  * 
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  * @since 1.0
  */
-public final class TransportOrderUtil {
+public class RemovalNotAllowedException extends ServiceLayerException {
 
     /**
-     * Hide constructor of utility classes.
-     */
-    private TransportOrderUtil() {}
-
-    /**
-     * Match a {@link TransportOrderState} to a type of event.
+     * Create a new RemovalNotAllowedException.
      * 
-     * @param newState
-     *            The state to be checked
-     * @return the certain type event that matches to newState
+     * @param message
+     *            Detail message
      */
-    public static TransportServiceEvent.TYPE convertToEventType(TransportOrderState newState) {
-        switch (newState) {
-        case FINISHED:
-            return TransportServiceEvent.TYPE.TRANSPORT_FINISHED;
-        case CANCELED:
-            return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
-        case INTERRUPTED:
-            return TransportServiceEvent.TYPE.TRANSPORT_INTERRUPTED;
-        case ONFAILURE:
-            return TransportServiceEvent.TYPE.TRANSPORT_ONFAILURE;
-        default:
-            return TransportServiceEvent.TYPE.TRANSPORT_CANCELED;
-        }
+    public RemovalNotAllowedException(String message) {
+        super(message);
     }
 
 }

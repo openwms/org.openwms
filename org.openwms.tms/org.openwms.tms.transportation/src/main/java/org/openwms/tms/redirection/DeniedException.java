@@ -19,46 +19,47 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.exception;
+package org.openwms.tms.redirection;
 
-import java.io.Serializable;
 
-import org.ameba.exception.BehaviorAwareException;
+import org.ameba.exception.ServiceLayerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
- * A StateChangeException signals that the request to change the state of a {@code TransportOrder} was not allowed.
- *
+ * A DeniedException is thrown by a {@link DecisionVoter}s in case a business action is not allowed to be executed.
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-public class StateChangeException extends BehaviorAwareException {
+@SuppressWarnings("serial")
+@ResponseStatus(HttpStatus.CONFLICT)
+public class DeniedException extends ServiceLayerException {
 
     /**
-     * {@inheritDoc}
-     */
-    public StateChangeException(String s) {
-        super(s);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
+     * Create a new DeniedException.
+     * 
      * @param message
-     * @param msgKey
-     * @param data
+     *            Detail message
      */
-    public StateChangeException(String message, String msgKey, Serializable... data) {
-        super(message, msgKey, data);
+    public DeniedException(String message) {
+        super(message);
     }
 
     /**
-     * {@inheritDoc}
+     * Create a new DeniedException.
+     * 
+     * @param message
+     *            Detail message
+     * @param cause
+     *            Root cause
      */
-    @Override
-    public HttpStatus getStatus() {
-        return HttpStatus.BAD_REQUEST;
+    public DeniedException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+
+    public static final DeniedException with(String msg) {
+        return new DeniedException(msg);
     }
 }

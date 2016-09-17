@@ -26,27 +26,25 @@ import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.CommonGateway;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+import org.openwms.tms.StateChangeException;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.TransportOrderRepository;
 import org.openwms.tms.TransportOrderState;
 import org.openwms.tms.TransportServiceEvent;
-import org.openwms.tms.exception.StateChangeException;
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A Starter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Transactional(propagation = Propagation.MANDATORY)
+//@Transactional(propagation = Propagation.MANDATORY)
 @Component
 class Starter implements ApplicationListener<TransportServiceEvent> {
 

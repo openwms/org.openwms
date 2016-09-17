@@ -29,11 +29,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * A TransportOrderRepository provides functionality regarding {@link TransportOrder} entity classes.
+ * A TransportOrderRepository provides CRUD functionality regarding {@link TransportOrder} entity classes. It requires an existing transaction.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
+//@Transactional(propagation = Propagation.MANDATORY)
 public interface TransportOrderRepository extends JpaRepository<TransportOrder, Long> {
 
     @Query("select to from TransportOrder to where to.pKey = ?1")

@@ -19,59 +19,33 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.targets;
+package org.openwms.tms.state;
 
-import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
+import org.openwms.tms.TransportOrder;
+import org.openwms.tms.UpdateFunction;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
- * A Location.
+ * A ChangeState.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class Location implements Target, Serializable {
-
-    private String locationId;
-    private boolean incomingActive = true;
-
-    @JsonCreator
-    public Location() {
-    }
-
-    @JsonCreator
-    public Location(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public boolean isIncomingActive() {
-        return incomingActive;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
-    }
-
-    /**
-     * Return the {@code locationId}.
-     *
-     * @return String locationId
-     */
-    @Override
-    public String toString() {
-        return locationId;
-    }
+@Transactional(propagation = Propagation.MANDATORY)
+@Component
+class ChangeState implements UpdateFunction {
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String asString() {
-        return locationId;
-    }
+    public void update(TransportOrder saved, TransportOrder toUpdate) {
+        if (saved.getState() != toUpdate.getState() && toUpdate.getState() != null) {
 
-    public boolean isInfeedBlocked() {
-        return !incomingActive;
+            // Request to change TO's state...
+            saved.changeState(toUpdate.getState());
+        }
     }
 }

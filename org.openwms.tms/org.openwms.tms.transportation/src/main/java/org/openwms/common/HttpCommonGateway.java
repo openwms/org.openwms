@@ -30,8 +30,6 @@ import org.ameba.Messages;
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
 import org.ameba.mapping.BeanMapper;
-import org.openwms.tms.targets.Location;
-import org.openwms.tms.targets.LocationGroup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
