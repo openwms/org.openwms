@@ -45,7 +45,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -55,7 +54,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @see TransportationService
  * @since 1.0
  */
-@Transactional(propagation = Propagation.MANDATORY)
+@Transactional
 @Service
 class TransportationServiceImpl implements TransportationService<TransportOrder> {
 
