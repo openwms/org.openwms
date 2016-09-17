@@ -29,7 +29,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.ameba.IDGenerator;
 import org.ameba.JdkIDGenerator;
-import org.ameba.annotation.EnableAspects;
 import org.ameba.app.SolutionApp;
 import org.ameba.http.EnableMultiTenancy;
 import org.ameba.http.RequestIDFilter;
@@ -67,7 +66,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 @EnableSpringConfigured
 @EnableJpaAuditing
 @EnableJpaRepositories(basePackageClasses = TransportationStarter.class)
-@EnableAspects(propagateRootCause = true)
+//@EnableAspects(propagateRootCause = true)
 @EnableMultiTenancy
 public class TransportationStarter {
 
