@@ -38,15 +38,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * A Starter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Transactional(propagation = Propagation.MANDATORY)
+//@Transactional(propagation = Propagation.MANDATORY)
 @Component
 class Starter implements ApplicationListener<TransportServiceEvent> {
 
