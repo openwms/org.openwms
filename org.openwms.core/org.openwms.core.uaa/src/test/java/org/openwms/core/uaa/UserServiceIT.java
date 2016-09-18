@@ -24,6 +24,7 @@ package org.openwms.core.uaa;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -33,7 +34,6 @@ import java.util.Collection;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.exception.ServiceLayerException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -170,7 +170,7 @@ public class UserServiceIT {
         entityManager.flush();
         entityManager.clear();
         thrown.expect(NoResultException.class);
-        user = findUser(KNOWN_USER);
+        findUser(KNOWN_USER);
     }
 
     /**
@@ -250,7 +250,7 @@ public class UserServiceIT {
         Collection<User> users = srv.findAll();
         assertEquals("1 User is expected", 1, users.size());
         User user = srv.findById(users.iterator().next().getPk());
-        Assert.assertNotNull("We expect to get back an instance", user);
+        assertNotNull("We expect to get back an instance", user);
     }
 
     /**
@@ -261,7 +261,7 @@ public class UserServiceIT {
         Collection<User> users = srv.findAll();
         assertEquals("1 User is expected", 1, users.size());
         srv.findById(users.iterator().next().getPk() + 1);
-        Assert.fail("We expect to run into some kind of RuntimeException when search for an User with a technical key greater than that previously assigned one, because that User should not exist");
+        fail("We expect to run into some kind of RuntimeException when search for an User with a technical key greater than that previously assigned one, because that User should not exist");
     }
 
     /**

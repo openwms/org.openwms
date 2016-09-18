@@ -30,20 +30,32 @@ package org.openwms.common;
 public class LocationGroup implements Target {
 
     private boolean incomingActive = true;
+    private String name;
 
     /* JSON */
     LocationGroup() {
-
     }
 
+    /**
+     * Create a LocationGroup with unique name.
+     *
+     * @param name The unique name
+     */
     public LocationGroup(String name) {
         this.name = name;
     }
 
-    private String name;
-
+    /**
+     * Checks whether the Locationgroup is blocked for incoming goods.
+     *
+     * @return {@literal true} if blocked, otherwise {@literal false}
+     */
     public boolean isInfeedBlocked() {
         return !incomingActive;
+    }
+
+    public void setIncomingActive(boolean incomingActive) {
+        this.incomingActive = incomingActive;
     }
 
     /**
@@ -52,9 +64,5 @@ public class LocationGroup implements Target {
     @Override
     public String asString() {
         return name;
-    }
-
-    public void setIncomingActive(boolean incomingActive) {
-        this.incomingActive = incomingActive;
     }
 }

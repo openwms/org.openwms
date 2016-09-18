@@ -55,6 +55,7 @@ import java.util.UUID;
  * @version $Revision$
  * @since 0.1
  */
+@Deprecated
 @XmlTransient
 @MappedSuperclass
 @EntityListeners({ AbstractEntity.AbstractEntityListener.class })
@@ -136,7 +137,7 @@ public abstract class AbstractEntity<ID extends Serializable> implements DomainO
      * Set the creation date.
      */
     @PrePersist
-    void prePersist() {
+    protected void prePersist() {
         this.createdDate = new Date();
     }
 
