@@ -31,10 +31,10 @@ import java.io.Serializable;
  */
 public class TransportUnitVO implements Serializable {
 
-    String barcode;
-    String actualLocation;
-    String target;
-    String transportUnitType;
+    private String barcode;
+    private String actualLocation;
+    private String target;
+    private String transportUnitType;
 
     public String getBarcode() {
         return barcode;
@@ -58,5 +58,9 @@ public class TransportUnitVO implements Serializable {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getTransportUnitType() {
+        return transportUnitType;
     }
 }

@@ -75,7 +75,7 @@ class StateManagerImpl implements StateManager {
                 if (newState != INITIALIZED && newState != CANCELED) {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, newState, transportOrder.getPersistentKey()), TMSMessageCodes.TO_STATE_CHANGE_NOT_READY, newState, transportOrder.getPersistentKey());
                 }
-                if (transportOrder.getTransportUnitBK() == null || transportOrder.getTransportUnitBK().isEmpty() || (transportOrder.getTargetLocation() == null && transportOrder.getTargetLocationGroup() == null)) {
+                if (transportOrder.getTransportUnitBK() == null || transportOrder.getTransportUnitBK().isEmpty() || transportOrder.getTargetLocation() == null && transportOrder.getTargetLocationGroup() == null) {
                     throw new StateChangeException(String.format("Not all properties set to turn TransportOrder into next state! transportUnit's barcode [%s], targetLocation [%s], targetLocationGroup [%s]", transportOrder.getTransportUnitBK(), transportOrder.getTargetLocation(), transportOrder.getTargetLocationGroup()));
                 }
                 break;
