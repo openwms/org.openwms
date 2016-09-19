@@ -29,11 +29,11 @@ import java.io.Serializable;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class TransportUnitVO implements Serializable {
+class TransportUnitVO implements Serializable {
 
-    String barcode;
-    String actualLocation;
-    String target;
+    private String barcode;
+    private String actualLocation;
+    private String target;
 
     public String getBarcode() {
         return barcode;
