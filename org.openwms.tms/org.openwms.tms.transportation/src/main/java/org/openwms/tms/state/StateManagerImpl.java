@@ -27,6 +27,7 @@ import static org.openwms.tms.TransportOrderState.ONFAILURE;
 import static org.openwms.tms.TransportOrderState.STARTED;
 
 import javax.persistence.Transient;
+import java.util.Date;
 import java.util.List;
 
 import org.ameba.i18n.Translator;
@@ -62,7 +63,7 @@ class StateManagerImpl implements StateManager {
     @Override
     public void validate(TransportOrderState newState, TransportOrder transportOrder) throws StateChangeException {
         TransportOrderState state = transportOrder.getState();
-        LOGGER.debug("> Request for state change of TransportOrder with PK [{}] from [{}] to [{}]", transportOrder.getPk(), state, newState);
+        LOGGER.debug("Request for state change of TransportOrder with PK [{}] from [{}] to [{}]", transportOrder.getPk(), state, newState);
         if (newState == null) {
             throw new StateChangeException(translator.translate(TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE), TMSMessageCodes.TO_STATE_CHANGE_NULL_STATE, transportOrder.getPersistentKey());
         }
@@ -87,7 +88,6 @@ class StateManagerImpl implements StateManager {
                     throw new StateChangeException(translator.translate(TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportOrder.getTransportUnitBK(), transportOrder.getPersistentKey()), TMSMessageCodes.START_TO_NOT_ALLOWED_ALREADY_STARTED_ONE, transportOrder.getTransportUnitBK(), transportOrder.getPersistentKey());
                 }
                 List<TransportOrder> orders = repo.findByTransportUnitBKAndStates(transportOrder.getTransportUnitBK(), STARTED);
-                orders.forEach(System.out::println);
                 LOGGER.debug("Current State is [{}], new state is [{}], # of started is [{}]", state, newState, repo.numberOfTransportOrders(transportOrder.getTransportUnitBK(), STARTED));
                 break;
             case STARTED:
@@ -100,6 +100,18 @@ class StateManagerImpl implements StateManager {
             default:
                 throw new IllegalStateException("State not managed: " + state);
         }
-        LOGGER.debug("< Request processed, order is now [{}]", newState);
+        switch (newState) {
+            case STARTED:
+                transportOrder.setStartDate(new Date());
+                break;
+            case FINISHED:
+            case ONFAILURE:
+            case CANCELED:
+                transportOrder.setEndDate(new Date());
+                break;
+            default:
+                // OK for all others
+        }
+        LOGGER.debug("Request processed, order is now [{}]", newState);
     }
 }
