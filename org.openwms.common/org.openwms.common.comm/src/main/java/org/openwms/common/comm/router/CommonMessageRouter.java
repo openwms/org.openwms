@@ -40,7 +40,6 @@ import org.springframework.stereotype.Component;
  * default exception channel.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 @Component

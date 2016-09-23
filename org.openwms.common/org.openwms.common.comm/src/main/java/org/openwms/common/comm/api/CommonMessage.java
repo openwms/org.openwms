@@ -90,7 +90,7 @@ public abstract class CommonMessage implements Serializable {
     /**
      * Does this type of message needs to be replied to?
      * 
-     * @return <code>true</code> no reply needed, otherwise <code>false</code>
+     * @return {@literal true} no reply needed, otherwise {@literal false}
      */
     public abstract boolean isWithoutReply();
 

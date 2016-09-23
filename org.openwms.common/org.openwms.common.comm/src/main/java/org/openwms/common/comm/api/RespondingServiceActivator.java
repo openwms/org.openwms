@@ -29,7 +29,6 @@ package org.openwms.common.comm.api;
  * @param <U>
  *            Type of outgoing message that is returned
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public interface RespondingServiceActivator<T extends CommonMessage, U extends CommonMessage> extends

@@ -33,12 +33,10 @@ import org.openwms.common.transport.Barcode;
  * A RequestMessage requests an order for a TransportUnit with id <tt>Barcode</tt> on a particular location <tt>actualLocation</tt>.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public class RequestMessage extends CommonMessage {
 
-    private static final long serialVersionUID = 1L;
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "REQ_";
     private final String identifier = IDENTIFIER;
