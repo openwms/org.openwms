@@ -163,6 +163,15 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
     }
 
     /**
+     * Set the date when the TransportOrder has been activated for processing.
+     *
+     * @param startDate The start date
+     */
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    /**
      * Get the {@code TransportUnit} assigned to the {@code TransportOrder} .
      *
      * @return The business key of the assigned {@code TransportUnit}
@@ -201,18 +210,6 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      */
     public TransportOrder changeState(TransportOrderState newState) throws StateChangeException {
         stateManager.validate(newState, this);
-        switch (newState) {
-            case STARTED:
-                startDate = new Date();
-                break;
-            case FINISHED:
-            case ONFAILURE:
-            case CANCELED:
-                endDate = new Date();
-                break;
-            default:
-                // OK for all others
-        }
         state = newState;
         return this;
     }
@@ -284,6 +281,15 @@ public class TransportOrder extends ApplicationEntity implements Serializable {
      */
     public Date getEndDate() {
         return endDate;
+    }
+
+    /**
+     * Set the date when the TransportOrder has been deactivated for processing.
+     *
+     * @param endDate The end date
+     */
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     /**
