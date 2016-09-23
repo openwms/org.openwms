@@ -21,13 +21,15 @@
  */
 package org.openwms.common;
 
+import java.io.Serializable;
+
 /**
  * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 1.0
  */
-public class LocationGroup implements Target {
+public class LocationGroup implements Target, Serializable {
 
     private boolean incomingActive = true;
     private String name;
