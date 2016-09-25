@@ -4,134 +4,13 @@
     <property name="LOG_TEMP" value="/tmp/owms"/>
     <property name="MODULE_NAME" value="COMMON"/>
 
-    <conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" />
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
-    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
-    <property name="LOG_PATH" value="${LOG_PATH:-${CATALINA.BASE:-${LOG_TEMP:-${java.io.tmpdir:-/tmp/owms}}}}"/>
-    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{YYYY-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([${PID:- }/%tid]){magenta} %clr(-){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-    <variable scope="context" name="mdcPattern" value="%replace(;%X{MSGKEY};%X{MSGDATA}){';+( |$)', ''}"/>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>TRACE</level>
-        </filter>
-    </appender>
-    <appender name="LOGFILE" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="FILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.log</file>
-                <!--prudent>false</prudent-->
-
-                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.log
-                    </fileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
-                </rollingPolicy>
-
-                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
-                </triggeringPolicy>
-
-                <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level %clr([${PID:- }/%tid]){magenta} %clr(-){faint} [%-40.40logger{39}]${mdcPattern} : %msg%n</pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
-    <appender name="EXCFILE" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="EXCFILE-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.exlog</file>
-                <!--prudent>false</prudent-->
-
-                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.exlog
-                    </fileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
-                </rollingPolicy>
-
-                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
-                </triggeringPolicy>
-
-                <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level %clr([${PID:- }/%tid]){magenta} %clr(-){faint} [%-40.40logger{39}]${mdcPattern} : %msg%n</pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
-    <appender name="TSL" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>Tenant</key>
-            <defaultValue>BOOT</defaultValue>
-        </discriminator>
-        <sift>
-            <appender name="TSL-${Tenant}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-                <file>${LOG_PATH}/${Tenant}-${MODULE_NAME}.tslog</file>
-                <!--prudent>false</prudent-->
-
-                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                    <fileNamePattern>${LOG_PATH}/${Tenant}--%d{YYYY-MM-DD HH:mm:ss}-${MODULE_NAME}.%i.tslog
-                    </fileNamePattern>
-                    <MinIndex>1</MinIndex>
-                    <MaxIndex>10</MaxIndex>
-                </rollingPolicy>
-
-                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                    <MaxFileSize>10MB</MaxFileSize>
-                </triggeringPolicy>
-
-                <encoder>
-                    <pattern>${Tenant} ${MODULE_NAME} %d{YYYY-MM-dd HH:mm:ss.SSS} %X{X-RequestID} %-5level %clr([${PID:- }/%tid]){magenta} %clr(-){faint} [%-40.40logger{39}]${mdcPattern} : %msg%n</pattern>
-                </encoder>
-            </appender>
-        </sift>
-    </appender>
+    <include resource="logback-appenders.xml" />
+    <include resource="logback-loggers.xml" />
 
     <logger name="org.dozer" level="ERROR"/>
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
-    <logger name="org.openwms" level="DEBUG"/>
-
-    <!-- Specialized loggers -->
-    <logger name="PRESENTATION_LAYER_ACCESS" level="DEBUG" additivity="false">
-        <appender-ref ref="TSL"/>
-    </logger>
-    <logger name="PRESENTATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
-        <appender-ref ref="EXCFILE"/>
-        <appender-ref ref="LOGFILE"/>
-    </logger>
-    <logger name="SERVICE_LAYER_ACCESS" level="DEBUG" additivity="false">
-        <appender-ref ref="TSL"/>
-    </logger>
-    <logger name="SERVICE_LAYER_EXCEPTION" level="ERROR" additivity="false">
-        <appender-ref ref="EXCFILE"/>
-        <appender-ref ref="LOGFILE"/>
-    </logger>
-    <logger name="INTEGRATION_LAYER_ACCESS" level="DEBUG" additivity="false">
-        <appender-ref ref="TSL"/>
-    </logger>
-    <logger name="INTEGRATION_LAYER_EXCEPTION" level="ERROR" additivity="false">
-        <appender-ref ref="EXCFILE"/>
-        <appender-ref ref="LOGFILE"/>
-    </logger>
-    <logger name="MEASURED" level="DEBUG" additivity="false">
-        <appender-ref ref="TSL"/>
-    </logger>
+    <logger name="org.openwms" level="WARN"/>
 
     <root level="INFO">
         <appender-ref ref="STDOUT"/>

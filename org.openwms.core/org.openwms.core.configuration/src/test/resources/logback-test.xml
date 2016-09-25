@@ -2,33 +2,16 @@
 <configuration debug="false" scan="false">
 
     <property name="LOG_TEMP" value="/tmp/owms"/>
-    <property name="MODULE_NAME" value="CORE"/>
+    <property name="MODULE_NAME" value="TEST"/>
 
-    <conversionRule conversionWord="tid" converterClass="org.ameba.logging.ThreadIdProvider" />
-    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
-    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
-    <property name="CONSOLE_LOG_PATTERN"
-              value="${CONSOLE_LOG_PATTERN:-%clr(%d{YYYY-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr([${PID:- }/%tid]){magenta} %clr(-){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
-
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-        </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>TRACE</level>
-        </filter>
-    </appender>
+    <include resource="logback-appenders.xml" />
+    <include resource="logback-loggers.xml" />
 
     <logger name="org.dozer" level="ERROR"/>
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
+    <logger name="org.junit" level="OFF"/>
     <logger name="org.openwms" level="DEBUG"/>
-
-    <logger name="PRESENTATION_LAYER_EXCEPTION" level="OFF"/>
-    <logger name="SERVICE_LAYER_ACCESS" level="OFF"/>
-    <logger name="SERVICE_LAYER_EXCEPTION" level="OFF"/>
-    <logger name="INTEGRATION_LAYER_ACCESS" level="OFF"/>
-    <logger name="INTEGRATION_LAYER_EXCEPTION" level="OFF"/>
 
     <root level="WARN">
         <appender-ref ref="STDOUT"/>
