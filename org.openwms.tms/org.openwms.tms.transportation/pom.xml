@@ -64,6 +64,24 @@
     </dependencyManagement>
 
     <dependencies>
+
+        <!-- Project dependencies -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.shared</artifactId>
+        </dependency>
+
+        <!-- 3rd party dependencies -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -120,12 +138,7 @@
             <artifactId>aspectjweaver</artifactId>
         </dependency>
 
-        <!-- Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.shared</artifactId>
-        </dependency>
-
+        <!-- Test dependencies -->
         <dependency>
             <groupId>org.springframework.restdocs</groupId>
             <artifactId>spring-restdocs-mockmvc</artifactId>
@@ -147,17 +160,6 @@
                 </exclusion>
             </exclusions>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.dozer</groupId>
-            <artifactId>dozer</artifactId>
-            <version>5.5.1</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 

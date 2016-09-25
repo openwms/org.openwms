@@ -2,7 +2,7 @@
 <configuration debug="false" scan="false">
 
     <property name="LOG_TEMP" value="/tmp/owms"/>
-    <property name="MODULE_NAME" value="TEST"/>
+    <property name="MODULE_NAME" value="CORE"/>
 
     <include resource="logback-appenders.xml" />
     <include resource="logback-loggers.xml" />
