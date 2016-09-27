@@ -19,7 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.common.comm.sysu;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.messaging.MessageChannel;
+
 /**
- * This package contains types for {@code RequestMessage} handling specific to tcp/ip.
+ * A SYSUConfiguration is the Spring configuration for the SYSU component.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.request.tcp;
+@Configuration
+class SYSUConfiguration {
+
+    /**
+     * Create a MessageChannel with the proper name dynamically.
+     *
+     * @return A DirectChannel instance
+     */
+    @Bean(name = SystemUpdateServiceActivator.INPUT_CHANNEL_NAME)
+    public MessageChannel getMessageChannel() {
+        return new DirectChannel();
+    }
+}

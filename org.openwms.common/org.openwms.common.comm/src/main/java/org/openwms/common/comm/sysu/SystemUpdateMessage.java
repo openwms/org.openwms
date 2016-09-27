@@ -25,22 +25,22 @@ import org.openwms.common.comm.api.CommonHeader;
 import org.openwms.common.comm.api.CommonMessage;
 
 /**
- * A SystemUpdateRequest.
+ * A SystemUpdateMessage.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class SystemUpdateRequest extends CommonMessage {
+public class SystemUpdateMessage extends CommonMessage {
 
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "SYSU";
     private final String identifier = IDENTIFIER;
 
     /**
-     * Create a new CommonMessage.
+     * Create a new SystemUpdateMessage.
      *
      * @param header The message header
      */
-    public SystemUpdateRequest(CommonHeader header) {
+    public SystemUpdateMessage(CommonHeader header) {
         super(header);
     }
 
@@ -57,7 +57,7 @@ class SystemUpdateRequest extends CommonMessage {
     /**
      * Does this type of message needs to be replied to?
      *
-     * @return <code>true</code> no reply needed, otherwise <code>false</code>
+     * @return {@literal true} no reply needed, otherwise {@literal false}
      */
     @Override
     public boolean isWithoutReply() {

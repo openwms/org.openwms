@@ -30,11 +30,9 @@ import org.springframework.messaging.MessageChannel;
  * A RequestMessageConfiguration creates beans dynamically without the use of XML.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 @Configuration
-public class RequestMessageConfiguration {
+class RequestMessageConfiguration {
 
     /**
      * Create a MessageChannel with the proper name dynamically.

@@ -19,7 +19,33 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.common.comm.sysu.tcp;
+
+import org.openwms.common.comm.api.MessageMapper;
+import org.openwms.common.comm.sysu.SystemUpdateMessage;
+import org.springframework.stereotype.Component;
+
 /**
- * This package contains types for {@code RequestMessage} handling specific to tcp/ip.
+ * A SYSUTelegramMapper.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.request.tcp;
+@Component
+class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SystemUpdateMessage mapTo(String telegram) {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String forType() {
+        return null;
+    }
+}

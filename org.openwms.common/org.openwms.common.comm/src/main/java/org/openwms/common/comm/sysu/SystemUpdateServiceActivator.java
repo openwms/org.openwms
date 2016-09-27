@@ -33,10 +33,10 @@ import org.springframework.messaging.MessageChannel;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class SystemUpdateServiceActivator implements NotRespondingServiceActivator<SystemUpdateRequest> {
+class SystemUpdateServiceActivator implements NotRespondingServiceActivator<SystemUpdateMessage> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
-    public static final String INPUT_CHANNEL_NAME = SystemUpdateRequest.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    public static final String INPUT_CHANNEL_NAME = SystemUpdateMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
 
     @Autowired
     private ApplicationContext ctx;
@@ -46,7 +46,7 @@ class SystemUpdateServiceActivator implements NotRespondingServiceActivator<Syst
      */
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
-    public void wakeUp(SystemUpdateRequest message) {
+    public void wakeUp(SystemUpdateMessage message) {
     }
 
     /**

@@ -38,10 +38,9 @@ import org.springframework.stereotype.Component;
  * A RequestTelegramMapper tries to map a telegram String to a {@link RequestMessage}.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
 @Component
-public class RequestTelegramMapper implements MessageMapper<RequestMessage> {
+class RequestTelegramMapper implements MessageMapper<RequestMessage> {
 
     /**
      * {@inheritDoc}
