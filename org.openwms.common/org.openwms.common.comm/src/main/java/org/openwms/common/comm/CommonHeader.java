@@ -19,22 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm;
 
 import java.io.Serializable;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * A CommonHeader represents the header part of a CommonMessage.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public class CommonHeader implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     private String sync;
     private short messageLength;
     private String sender;
@@ -316,12 +312,14 @@ public class CommonHeader implements Serializable {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
-        return new StringBuilder().append(this.sync).append(StringUtils.leftPad("" + this.messageLength, LENGTH_MESSAGE_LENGTH_FIELD, "0")).append(this.sender)
-                .append(this.receiver).append(StringUtils.leftPad("" + this.sequenceNo, LENGTH_SEQUENCE_NO_FIELD, "0")).toString();
+        return "CommonHeader{" +
+                "sync='" + sync + '\'' +
+                ", messageLength=" + messageLength +
+                ", sender='" + sender + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", sequenceNo=" + sequenceNo +
+                '}';
     }
 }

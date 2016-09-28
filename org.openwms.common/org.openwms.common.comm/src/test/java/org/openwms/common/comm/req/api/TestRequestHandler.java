@@ -19,7 +19,26 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.common.comm.req.api;
+
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.req.RequestMessage;
+import org.openwms.common.comm.req.ResponseMessage;
+import org.springframework.stereotype.Component;
+
 /**
- * This package contains types for {@code RequestMessage} handling specific to tcp/ip.
+ * A TestRequestHandler.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.request.tcp;
+@Component
+class TestRequestHandler implements RequestHandler {
+
+    @Override
+    public ResponseMessage handle(RequestMessage message) {
+        CommonHeader header = new CommonHeader(message.getHeader());
+        header.setSender(message.getHeader().getReceiver());
+        header.setReceiver(message.getHeader().getSender());
+        return new ResponseMessage(header);
+    }
+}

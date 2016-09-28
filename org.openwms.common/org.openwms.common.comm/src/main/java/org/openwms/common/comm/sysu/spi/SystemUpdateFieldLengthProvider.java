@@ -19,31 +19,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
-
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+package org.openwms.common.comm.sysu.spi;
 
 /**
- * A SocketRunner is bootstrapping the server's ApplicationContext.
- * 
+ * A SystemUpdateFieldLengthProvider.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public final class SocketRunner {
+public interface SystemUpdateFieldLengthProvider {
 
-    /**
-     * Create a new SocketRunner.
-     */
-    private SocketRunner() {}
-
-    /**
-     * Create the application.
-     * 
-     * @param args
-     *            Args
-     */
-    public static void main(String[] args) {
-        new ClassPathXmlApplicationContext("META-INF/spring/module-context.xml");
-    }
+    int lengthLocationGroupName();
 }

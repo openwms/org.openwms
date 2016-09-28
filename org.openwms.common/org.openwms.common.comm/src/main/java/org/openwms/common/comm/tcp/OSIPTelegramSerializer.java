@@ -21,14 +21,16 @@
  */
 package org.openwms.common.comm.tcp;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommonMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.serializer.Serializer;
-import org.springframework.integration.ip.tcp.serializer.SoftEndOfStreamException;
 
 /**
  * An OSIPTelegramSerializer is able to read OSIP telegram structures from an InputStream (deserialization) and can also serialize Object

@@ -19,19 +19,19 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.request.tcp;
+package org.openwms.common.comm.req.tcp;
 
 import java.text.ParseException;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMissmatchException;
-import org.openwms.common.comm.request.RequestMessage;
+import org.openwms.common.comm.req.RequestMessage;
+import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
 import org.openwms.common.comm.util.CommonMessageFactory;
-import org.openwms.common.location.LocationPK;
-import org.openwms.common.transport.Barcode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -42,27 +42,33 @@ import org.springframework.stereotype.Component;
 @Component
 class RequestTelegramMapper implements MessageMapper<RequestMessage> {
 
+    @Autowired(required = false)
+    private RequestFieldLengthProvider provider;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public RequestMessage mapTo(String telegram) {
+        if (provider == null) {
+            throw new RuntimeException("Telegram handling "+ RequestMessage.IDENTIFIER+" not supported");
+        }
         int startPayload = CommonHeader.getHeaderLength() + forType().length();
-        int startActualLocation = startPayload + Barcode.BARCODE_LENGTH;
-        int startTargetLocation = startActualLocation + LocationPK.getKeyLength();
-        int startErrorCode = startTargetLocation + LocationPK.getKeyLength();
+        int startActualLocation = startPayload + provider.barcodeLength();
+        int startTargetLocation = startActualLocation + provider.locationIdLength();
+        int startErrorCode = startTargetLocation + provider.locationIdLength();
         int startCreateDate = startErrorCode + CommonMessage.getErrorCodeLength();
 
         RequestMessage message;
         try {
             message = new RequestMessage.Builder(CommonMessageFactory.createHeader(telegram))
-                    .withBarcode(new Barcode(telegram.substring(startPayload, startActualLocation)))
-                    .withActualLocation(
-                            new LocationPK((telegram.substring(startActualLocation, startTargetLocation))
-                                    .split("(?<=\\G.{" + LocationPK.getKeyLength() / LocationPK.NUMBER_OF_KEYS + "})")))
-                    .withTargetLocation(
-                            new LocationPK((telegram.substring(startTargetLocation, startErrorCode)).split("(?<=\\G.{"
-                                    + LocationPK.getKeyLength() / LocationPK.NUMBER_OF_KEYS + "})")))
+                    .withBarcode(telegram.substring(startPayload, startActualLocation))
+                    .withActualLocation(String.join("/",
+                            (telegram.substring(startActualLocation, startTargetLocation))
+                                    .split("(?<=\\G.{" + provider.locationIdLength() / provider.noLocationIdFields() + "})")))
+                    .withTargetLocation(String.join("/",
+                            (telegram.substring(startTargetLocation, startErrorCode)).split("(?<=\\G.{"
+                                    + provider.locationIdLength() / provider.noLocationIdFields() + "})")))
 
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
                     .withCreateDate(

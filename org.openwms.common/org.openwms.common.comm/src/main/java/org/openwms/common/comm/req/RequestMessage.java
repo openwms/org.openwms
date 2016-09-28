@@ -19,15 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.request;
+package org.openwms.common.comm.req;
 
 import java.util.Date;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
-import org.openwms.common.location.LocationPK;
-import org.openwms.common.transport.Barcode;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 
 /**
  * A RequestMessage requests an order for a TransportUnit with id <tt>Barcode</tt> on a particular location <tt>actualLocation</tt>.
@@ -41,9 +39,9 @@ public class RequestMessage extends CommonMessage {
     public static final String IDENTIFIER = "REQ_";
     private final String identifier = IDENTIFIER;
 
-    private Barcode barcode;
-    private LocationPK actualLocation;
-    private LocationPK targetLocation;
+    private String barcode;
+    private String actualLocation;
+    private String targetLocation;
 
     /**
      * Create a new RequestMessage.
@@ -85,37 +83,37 @@ public class RequestMessage extends CommonMessage {
         }
 
         /**
-         * Add an {@link Barcode} to the message.
+         * Add an {@code Barcode} to the message.
          * 
          * @param barcode
          *            The barcode
          * @return The builder
          */
-        public Builder withBarcode(Barcode barcode) {
+        public Builder withBarcode(String barcode) {
             requestMessage.barcode = barcode;
             return this;
         }
 
         /**
-         * Add a target <tt>Location</tt> identified by a {@link LocationPK}.
+         * Add a target <tt>Location</tt> identified by a {@code LocationPK}.
          * 
          * @param actualLocation
-         *            The {@link LocationPK} of the actual location
+         *            The {@code LocationPK} of the actual location
          * @return The builder
          */
-        public Builder withActualLocation(LocationPK actualLocation) {
+        public Builder withActualLocation(String actualLocation) {
             requestMessage.actualLocation = actualLocation;
             return this;
         }
 
         /**
-         * Add a target <tt>Location</tt> identified by a {@link LocationPK}.
+         * Add a target <tt>Location</tt> identified by a {@code LocationPK}.
          * 
          * @param targetLocation
-         *            The {@link LocationPK} of the target location
+         *            The {@code LocationPK} of the target location
          * @return The builder
          */
-        public Builder withTargetLocation(LocationPK targetLocation) {
+        public Builder withTargetLocation(String targetLocation) {
             requestMessage.targetLocation = targetLocation;
             return this;
         }

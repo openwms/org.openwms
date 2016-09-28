@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm.util;
 
-import org.openwms.common.comm.api.CommonHeader;
+import org.openwms.common.comm.CommonHeader;
 
 /**
  * A CommonMessageFactory.

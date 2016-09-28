@@ -23,9 +23,9 @@ package org.openwms.common.comm.err.tcp;
 
 import java.text.ParseException;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.err.ErrorMessage;
 import org.openwms.common.comm.exception.MessageMissmatchException;

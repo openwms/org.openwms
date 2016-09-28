@@ -55,7 +55,7 @@ public class LocationGroup extends Target implements Serializable {
     @Column(name = "C_NAME", unique = true, nullable = false, length = LENGTH_NAME)
     private String name;
     /** Length of the name field; used for telegram mapping and for column definition. */
-    public static final int LENGTH_NAME = 12;
+    public static final int LENGTH_NAME = 20;
 
     /** Description for the {@code LocationGroup}. */
     @Column(name = "C_DESCRIPTION")

@@ -19,34 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm.req;
 
-import org.openwms.common.comm.CommonMessage;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.channel.DirectChannel;
+import org.springframework.messaging.MessageChannel;
 
 /**
- * A MessageMapper is able to map from a String telegram to a {@link CommonMessage}.
+ * A RequestMessageConfiguration creates beans dynamically without the use of XML.
  * 
- * @param <T>
- *            A type of incoming CommonMessage
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-public interface MessageMapper<T extends CommonMessage> {
+@Configuration
+class RequestMessageConfiguration {
 
     /**
-     * Investigate the telegram String <tt>telegram</tt> and retrieve from the telegram type a subtype of {@link CommonMessage}.
-     * Implementations probably throw some kind of RuntimeExceptions if no telegram type was found.
+     * Create a MessageChannel with the proper name dynamically.
      * 
-     * @param telegram
-     *            The telegram String to investigate
-     * @return The {@link CommonMessage}
+     * @return A DirectChannel instance
      */
-    T mapTo(String telegram);
-
-    /**
-     * Return the telegram type, this mapper is responsible for.
-     * 
-     * @return the telegram type as String
-     */
-    String forType();
+    @Bean(name = RequestMessageServiceActivator.INPUT_CHANNEL_NAME)
+    public MessageChannel getMessageChannel() {
+        return new DirectChannel();
+    }
 }

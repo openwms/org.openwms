@@ -21,11 +21,19 @@
  */
 package org.openwms.common.comm.sysu.tcp;
 
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
+import java.text.ParseException;
+
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
+import org.openwms.common.comm.exception.MessageMissmatchException;
 import org.openwms.common.comm.sysu.SystemUpdateMessage;
-import org.openwms.common.location.LocationGroup;
+import org.openwms.common.comm.sysu.spi.SystemUpdateFieldLengthProvider;
+import org.openwms.common.comm.util.CommonMessageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,14 +44,36 @@ import org.springframework.stereotype.Component;
 @Component
 class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SYSUTelegramMapper.class);
+    @Autowired(required = false)
+    private SystemUpdateFieldLengthProvider provider;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public SystemUpdateMessage mapTo(String telegram) {
+        LOGGER.debug("Telegram to transform: [{}]", telegram);
+        if (provider == null) {
+            throw new RuntimeException("Telegram handling "+SystemUpdateMessage.IDENTIFIER+" not supported");
+        }
         int startLocationGroup = CommonHeader.getHeaderLength() + forType().length();
-        int startState = startLocationGroup + LocationGroup.LENGTH_NAME;
-        int startCreateDate = startState + CommonMessage.getErrorCodeLength();
+        int startErrorCode = startLocationGroup + provider.lengthLocationGroupName();
+        int startCreateDate = startErrorCode + CommonMessage.getErrorCodeLength();
+
+        SystemUpdateMessage message;
+        try {
+            message = new SystemUpdateMessage.Builder(CommonMessageFactory.createHeader(telegram))
+                    .withLocationGroupName(
+                            telegram.substring(startLocationGroup, startErrorCode))
+                    .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
+                    .withCreateDate(
+                            CommConstants.asDate(telegram.substring(startCreateDate,
+                                    startCreateDate + CommonMessage.getDateLength()))).build();
+            return message;
+        } catch (ParseException e) {
+            throw new MessageMissmatchException(e.getMessage());
+        }
     }
 
     /**

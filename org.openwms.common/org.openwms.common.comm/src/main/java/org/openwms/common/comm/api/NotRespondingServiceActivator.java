@@ -21,6 +21,8 @@
  */
 package org.openwms.common.comm.api;
 
+import org.openwms.common.comm.CommonMessage;
+
 /**
  * A NotRespondingServiceActivator.
  * 

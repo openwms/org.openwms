@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm.err;
 
-import org.openwms.common.comm.api.CommConstants;
+import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.NotRespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

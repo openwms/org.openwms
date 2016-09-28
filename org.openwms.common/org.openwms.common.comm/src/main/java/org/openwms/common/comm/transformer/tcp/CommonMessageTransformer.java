@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMissmatchException;
 import org.openwms.common.comm.tcp.TCPCommConstants;

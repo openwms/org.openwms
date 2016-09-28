@@ -19,34 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm.sysu.spi;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.location.LocationGroup;
+import org.springframework.stereotype.Component;
 
 /**
- * A MessageMapper is able to map from a String telegram to a {@link CommonMessage}.
- * 
- * @param <T>
- *            A type of incoming CommonMessage
+ * A SystemUpdateFieldLengthProviderImpl.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-public interface MessageMapper<T extends CommonMessage> {
+@Component
+class SystemUpdateFieldLengthProviderImpl implements SystemUpdateFieldLengthProvider {
 
-    /**
-     * Investigate the telegram String <tt>telegram</tt> and retrieve from the telegram type a subtype of {@link CommonMessage}.
-     * Implementations probably throw some kind of RuntimeExceptions if no telegram type was found.
-     * 
-     * @param telegram
-     *            The telegram String to investigate
-     * @return The {@link CommonMessage}
-     */
-    T mapTo(String telegram);
-
-    /**
-     * Return the telegram type, this mapper is responsible for.
-     * 
-     * @return the telegram type as String
-     */
-    String forType();
+    @Override
+    public int lengthLocationGroupName() {
+        return LocationGroup.LENGTH_NAME;
+    }
 }

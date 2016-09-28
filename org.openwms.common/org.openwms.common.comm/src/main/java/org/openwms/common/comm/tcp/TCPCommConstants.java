@@ -21,8 +21,8 @@
  */
 package org.openwms.common.comm.tcp;
 
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 
 /**
  * A TCPCommConstants.

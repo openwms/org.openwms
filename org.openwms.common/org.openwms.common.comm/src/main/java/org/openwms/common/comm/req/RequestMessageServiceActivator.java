@@ -19,11 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.request;
+package org.openwms.common.comm.req;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
+import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.RespondingServiceActivator;
+import org.openwms.common.comm.req.api.RequestHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -34,19 +36,19 @@ import org.springframework.stereotype.Component;
  * A RequestMessageServiceActivator takes incoming {@link RequestMessage}s and delegates them to an application POJO.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 @Component
-public class RequestMessageServiceActivator implements RespondingServiceActivator<RequestMessage, ResponseMessage> {
+class RequestMessageServiceActivator implements RespondingServiceActivator<RequestMessage, ResponseMessage> {
 
-    /**
-     * The name of the MessageChannel used as input-channel of this message processor.
-     */
+    /** The name of the MessageChannel used as input-channel of this message processor. */
     public static final String INPUT_CHANNEL_NAME = RequestMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestMessageServiceActivator.class);
 
     @Autowired
     private ApplicationContext ctx;
+    @Autowired
+    private RequestHandler handler;
 
     /**
      * {@inheritDoc}
@@ -54,11 +56,8 @@ public class RequestMessageServiceActivator implements RespondingServiceActivato
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
     public ResponseMessage wakeUp(RequestMessage message) {
-        CommonHeader header = new CommonHeader(message.getHeader());
-        header.setSender(message.getHeader().getReceiver());
-        header.setReceiver(message.getHeader().getSender());
-        ResponseMessage response = new ResponseMessage(header);
-        return response;
+        LOGGER.debug("Message ready to process {}", message);
+        return handler.handle(message);
     }
 
     /**

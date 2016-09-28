@@ -19,10 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * A CommonMessage is the abstract superclass of all messages sent to subsystems like PLC or ERP. A CommonMessage has always a message
@@ -95,14 +96,6 @@ public abstract class CommonMessage implements Serializable {
     public abstract boolean isWithoutReply();
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return header.toString();
-    }
-
-    /**
      * Get the header.
      * 
      * @return header
@@ -150,5 +143,28 @@ public abstract class CommonMessage implements Serializable {
      */
     protected void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonMessage that = (CommonMessage) o;
+        return Objects.equals(header, that.header) &&
+                Objects.equals(errorCode, that.errorCode) &&
+                Objects.equals(created, that.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(header, errorCode, created);
+    }
+
+    @Override
+    public String toString() {
+        return "CommonMessage{" +
+                "errorCode='" + errorCode + '\'' +
+                ", created=" + created +
+                "} with " + header;
     }
 }

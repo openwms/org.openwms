@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm.tcp;
 
-import org.openwms.common.comm.api.CommonHeader;
+import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.err.ErrorCodes;
 import org.openwms.common.comm.err.ErrorMessage;
 import org.openwms.common.comm.util.CommonMessageFactory;

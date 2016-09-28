@@ -23,9 +23,9 @@ package org.openwms.common.comm.err;
 
 import java.util.Date;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 
 /**
  * An ErrorMessage signals any error or failure situation from an external system and to external systems.

@@ -19,34 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm.req.api;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.req.RequestMessage;
+import org.openwms.common.comm.req.ResponseMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
- * A MessageMapper is able to map from a String telegram to a {@link CommonMessage}.
- * 
- * @param <T>
- *            A type of incoming CommonMessage
+ * A RequestMessageHander.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-public interface MessageMapper<T extends CommonMessage> {
+@Component
+class RequestHandlerImpl implements RequestHandler{
 
-    /**
-     * Investigate the telegram String <tt>telegram</tt> and retrieve from the telegram type a subtype of {@link CommonMessage}.
-     * Implementations probably throw some kind of RuntimeExceptions if no telegram type was found.
-     * 
-     * @param telegram
-     *            The telegram String to investigate
-     * @return The {@link CommonMessage}
-     */
-    T mapTo(String telegram);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandlerImpl.class);
 
-    /**
-     * Return the telegram type, this mapper is responsible for.
-     * 
-     * @return the telegram type as String
-     */
-    String forType();
+    @Override
+    public ResponseMessage handle(RequestMessage message) {
+        LOGGER.debug("Handling {}", message);
+        return null;
+    }
 }

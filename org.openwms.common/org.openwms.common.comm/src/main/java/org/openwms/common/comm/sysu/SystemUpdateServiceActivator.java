@@ -21,18 +21,21 @@
  */
 package org.openwms.common.comm.sysu;
 
-import org.openwms.common.comm.api.CommConstants;
+import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.NotRespondingServiceActivator;
+import org.openwms.common.comm.sysu.api.SystemUpdateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.stereotype.Component;
 
 /**
  * A SystemUpdateServiceActivator.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
+@Component
 class SystemUpdateServiceActivator implements NotRespondingServiceActivator<SystemUpdateMessage> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
@@ -40,6 +43,8 @@ class SystemUpdateServiceActivator implements NotRespondingServiceActivator<Syst
 
     @Autowired
     private ApplicationContext ctx;
+    @Autowired
+    private SystemUpdateHandler handler;
 
     /**
      * {@inheritDoc}
@@ -47,6 +52,7 @@ class SystemUpdateServiceActivator implements NotRespondingServiceActivator<Syst
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
     public void wakeUp(SystemUpdateMessage message) {
+        handler.handle(message);
     }
 
     /**
