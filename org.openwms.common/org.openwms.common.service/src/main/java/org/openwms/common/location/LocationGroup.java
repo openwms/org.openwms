@@ -52,8 +52,10 @@ import org.springframework.util.Assert;
 public class LocationGroup extends Target implements Serializable {
 
     /** Unique identifier of a {@code LocationGroup}. */
-    @Column(name = "C_NAME", unique = true, nullable = false)
+    @Column(name = "C_NAME", unique = true, nullable = false, length = LENGTH_NAME)
     private String name;
+    /** Length of the name field; used for telegram mapping and for column definition. */
+    public static final int LENGTH_NAME = 12;
 
     /** Description for the {@code LocationGroup}. */
     @Column(name = "C_DESCRIPTION")

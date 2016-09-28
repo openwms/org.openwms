@@ -21,11 +21,10 @@
  */
 package org.openwms.common.comm.transformer.tcp;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.openwms.common.comm.api.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
@@ -41,7 +40,6 @@ import org.springframework.stereotype.Component;
  * A CommonMessageTransformer transforms incoming OSIP telegram structures to {@link CommonMessage}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 @Component(value = "commonMessageTransformer")
@@ -49,15 +47,15 @@ public class CommonMessageTransformer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonMessageTransformer.class);
     @Autowired
-    private List<MessageMapper<CommonMessage>> mappers;
-    private final Map<String, MessageMapper<CommonMessage>> mappersMap = new HashMap<String, MessageMapper<CommonMessage>>();
+    private List<MessageMapper<?>> mappers;
+    private final Map<String, MessageMapper<?>> mappersMap = new HashMap<>();
 
     /**
      * Do this once to query a Map not a List.
      */
     @PostConstruct
     void onPostConstruct() {
-        for (MessageMapper<CommonMessage> mapper : mappers) {
+        for (MessageMapper<?> mapper : mappers) {
             mappersMap.put(mapper.forType(), mapper);
         }
     }
@@ -73,7 +71,7 @@ public class CommonMessageTransformer {
      */
     @Transformer
     public CommonMessage transform(String telegram) {
-        MessageMapper<CommonMessage> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
+        MessageMapper<?> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
         if (mapper == null) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Not mapper found for telegram type " + TCPCommConstants.getTelegramType(telegram));

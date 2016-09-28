@@ -21,8 +21,11 @@
  */
 package org.openwms.common.comm.sysu.tcp;
 
+import org.openwms.common.comm.api.CommonHeader;
+import org.openwms.common.comm.api.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.sysu.SystemUpdateMessage;
+import org.openwms.common.location.LocationGroup;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,7 +41,9 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
      */
     @Override
     public SystemUpdateMessage mapTo(String telegram) {
-        return null;
+        int startLocationGroup = CommonHeader.getHeaderLength() + forType().length();
+        int startState = startLocationGroup + LocationGroup.LENGTH_NAME;
+        int startCreateDate = startState + CommonMessage.getErrorCodeLength();
     }
 
     /**
@@ -46,6 +51,6 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
      */
     @Override
     public String forType() {
-        return null;
+        return SystemUpdateMessage.IDENTIFIER;
     }
 }
