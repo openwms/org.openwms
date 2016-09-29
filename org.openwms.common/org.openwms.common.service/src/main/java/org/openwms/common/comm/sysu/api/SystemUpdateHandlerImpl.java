@@ -21,9 +21,14 @@
  */
 package org.openwms.common.comm.sysu.api;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.sysu.SystemUpdateMessage;
+import org.openwms.common.location.LocationGroup;
+import org.openwms.common.location.LocationGroupService;
+import org.openwms.common.location.LocationGroupState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -32,13 +37,33 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class SystemUpdateHandlerImpl implements SystemUpdateHandler{
+class SystemUpdateHandlerImpl implements SystemUpdateHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SystemUpdateHandlerImpl.class);
+    @Autowired
+    private LocationGroupService<LocationGroup> service;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void handle(SystemUpdateMessage message) {
-
         LOGGER.debug("Handling {}", message);
+        LocationGroup lg = service.findByName(message.getLocationGroupName()).orElseThrow(() -> new NotFoundException(""));
+
+        LocationGroupState[] states = parse(message.getErrorCode());
+        service.changeGroupState(lg.getPk().toString(), states[0], states[1]);
+        LOGGER.debug("Changed group states of LocationGroup {} to infeed:[{}], outfeed:[{}]", lg.getPk(),states[0], states[1]);
+    }
+
+    private LocationGroupState[] parse(String errorCode) {
+        LocationGroupState[] lgs = new LocationGroupState[]{LocationGroupState.NOT_AVAILABLE, LocationGroupState.NOT_AVAILABLE};
+        if (errorCode.endsWith("1")) {
+            lgs[1] = LocationGroupState.AVAILABLE;
+        }
+        if (errorCode.endsWith("11") || errorCode.endsWith("10")) {
+            lgs[0] = LocationGroupState.AVAILABLE;
+        }
+        return lgs;
     }
 }

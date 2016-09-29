@@ -29,20 +29,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * A LocationConfig is a Spring managed configuration class the defines a bean to load a few Locations upfront.
+ * A LocationGroupConfig is a Spring managed configuration class the defines a bean to load a few LocationGroups upfront.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Configuration
-class LocationConfig {
+class LocationGroupConfig {
 
     @Profile("default")
     @Bean
-    CommandLineRunner locationRunner(LocationRepository lr) {
+    CommandLineRunner locationGroupRunner(LocationGroupRepository lgr) {
         return args -> {
-            lr.deleteAll();
-            Stream.of("INIT/0000/0000/0000/0000,ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
-                    .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
+            lgr.deleteAll();
+            Stream.of("PICKING,SHIPPING_AREA".split(","))
+                    .forEach(x -> lgr.save(new LocationGroup(x)));
         };
     }
 }

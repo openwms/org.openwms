@@ -29,7 +29,7 @@ import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
 
 /**
- * A SystemUpdateMessage.
+ * A SystemUpdateMessage reflects the OSIP SYSU telegram type and is used to change the state of a {@code LocationGroup}.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -53,6 +53,15 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
     private SystemUpdateMessage(CommonHeader header, Builder builder) {
         super(header);
         locationGroupName = builder.locationGroupName;
+    }
+
+    /**
+     * Get the name of the LocationGroup.
+     *
+     * @return The name
+     */
+    public String getLocationGroupName() {
+        return locationGroupName;
     }
 
     /**
@@ -86,6 +95,11 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
         private Date created;
         private CommonHeader header;
 
+        /**
+         * Create a Builder.
+         *
+         * @param header With header
+         */
         public Builder(CommonHeader header) {
             this.header = header;
         }

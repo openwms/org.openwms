@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.ameba.annotation.TxService;
-import org.ameba.exception.NotFoundException;
 import org.openwms.core.util.TreeNode;
 import org.openwms.core.util.TreeNodeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +49,12 @@ class LocationGroupServiceImpl implements LocationGroupService<LocationGroup> {
     @Override
     public void changeGroupState(String id, LocationGroupState stateIn, LocationGroupState stateOut) {
         LocationGroup locationGroup = locationGroupRepository.findOne(Long.valueOf(id));
-        NotFoundException.throwIfNull(locationGroup, String.format("No LocationGroup with id %s found", id));
         locationGroup.changeState(stateIn, stateOut);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<LocationGroup> findByName(String name) {
         return Optional.ofNullable(locationGroupRepository.findByName(name));

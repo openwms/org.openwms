@@ -26,19 +26,13 @@ package org.openwms.common.location;
  * 
  * @GlossaryTerm
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version 1.0
- * @since 0.1
  * @see LocationGroup
  */
-enum LocationGroupState {
+public enum LocationGroupState {
 
-    /**
-     * Available.
-     */
+    /** Available. */
     AVAILABLE,
 
-    /**
-     * Not available.
-     */
+    /** Not available. */
     NOT_AVAILABLE;
 }

@@ -35,9 +35,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
- * A SYSUTelegramMapper.
+ * A SYSUTelegramMapper maps the incoming SYSU telegram String into an object representation.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -65,7 +66,7 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
         try {
             message = new SystemUpdateMessage.Builder(CommonMessageFactory.createHeader(telegram))
                     .withLocationGroupName(
-                            telegram.substring(startLocationGroup, startErrorCode))
+                            StringUtils.trimTrailingCharacter(telegram.substring(startLocationGroup, startErrorCode), '_'))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
                     .withCreateDate(
                             CommConstants.asDate(telegram.substring(startCreateDate,
