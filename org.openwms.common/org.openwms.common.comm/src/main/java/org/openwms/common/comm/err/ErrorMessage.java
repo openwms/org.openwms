@@ -21,6 +21,9 @@
  */
 package org.openwms.common.comm.err;
 
+import static org.openwms.common.comm.CommConstants.asDate;
+
+import java.text.ParseException;
 import java.util.Date;
 
 import org.openwms.common.comm.CommConstants;
@@ -93,14 +96,14 @@ public class ErrorMessage extends CommonMessage {
         }
 
         /**
-         * Add a creation Date to the Message.
-         * 
+         * Add the date of creation in an expected format as defined in {@link CommConstants#DATE_FORMAT_PATTERN}.
+         *
          * @param createDate
-         *            The date of creation
+         *            The creation date as String
          * @return The builder
          */
-        public Builder withCreateDate(Date createDate) {
-            message.setCreated(createDate);
+        public Builder withCreateDate(String createDate) throws ParseException {
+            message.setCreated(asDate(createDate));
             return this;
         }
 
