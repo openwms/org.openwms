@@ -19,32 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.req.spi;
+package org.openwms.common.comm.req.api;
 
-import org.openwms.common.location.LocationPK;
-import org.openwms.common.transport.Barcode;
+import java.util.function.Function;
+
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.req.RequestMessage;
+import org.openwms.common.comm.req.ResponseMessage;
 import org.springframework.stereotype.Component;
 
 /**
- * A RequestFieldLengthProvider.
+ * A TestRequestMessageHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class RequestFieldLengthProviderImpl implements RequestFieldLengthProvider{
+class TestRequestMessageHandler implements Function<RequestMessage, ResponseMessage> {
 
     @Override
-    public int barcodeLength() {
-        return Barcode.BARCODE_LENGTH;
-    }
-
-    @Override
-    public int locationIdLength() {
-        return LocationPK.PK_LENGTH;
-    }
-
-    @Override
-    public int noLocationIdFields() {
-        return LocationPK.NUMBER_OF_KEYS;
+    public ResponseMessage apply(RequestMessage message) {
+        CommonHeader header = new CommonHeader(message.getHeader());
+        header.setSender(message.getHeader().getReceiver());
+        header.setReceiver(message.getHeader().getSender());
+        return new ResponseMessage(header);
     }
 }

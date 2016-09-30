@@ -19,32 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.req.spi;
+package org.openwms.common.comm.sysu.api;
 
-import org.openwms.common.location.LocationPK;
-import org.openwms.common.transport.Barcode;
+import java.util.function.Function;
+
+import org.openwms.common.comm.sysu.SystemUpdateMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * A RequestFieldLengthProvider.
+ * A TestSystemUpdateMessageHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class RequestFieldLengthProviderImpl implements RequestFieldLengthProvider{
+class TestSystemUpdateMessageHandler implements Function<SystemUpdateMessage, Void> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TestSystemUpdateMessageHandler.class);
     @Override
-    public int barcodeLength() {
-        return Barcode.BARCODE_LENGTH;
-    }
-
-    @Override
-    public int locationIdLength() {
-        return LocationPK.PK_LENGTH;
-    }
-
-    @Override
-    public int noLocationIdFields() {
-        return LocationPK.NUMBER_OF_KEYS;
+    public Void apply(SystemUpdateMessage message) {
+        LOGGER.info("!! Handle SYSU in test handler !! {}", message);
+        return null;
     }
 }

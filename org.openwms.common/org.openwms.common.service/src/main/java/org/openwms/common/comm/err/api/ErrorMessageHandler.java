@@ -19,27 +19,30 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.req.api;
+package org.openwms.common.comm.err.api;
 
-import org.openwms.common.comm.req.RequestMessage;
-import org.openwms.common.comm.req.ResponseMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.function.Function;
+
+import org.openwms.common.comm.err.ErrorMessage;
 import org.springframework.stereotype.Component;
 
 /**
- * A RequestMessageHander.
+ * A ErrorMessageHandler is the default implementation to handle {@link ErrorMessage}s but does not do anything, it's just to satisfy the
+ * dependency. The error handling functionality must be implemented in the actual project, because the OSIP specification does not make
+ * any requirements nor assumptions to error handling.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class RequestHandlerImpl implements RequestHandler{
+class ErrorMessageHandler implements Function<ErrorMessage, Void> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestHandlerImpl.class);
-
+    /**
+     * Does not do anything.
+     */
     @Override
-    public ResponseMessage handle(RequestMessage message) {
-        LOGGER.debug("Handling {}", message);
+    public Void apply(ErrorMessage errorMessage) {
+
+        // Currently no error handling happens in the base.
         return null;
     }
 }

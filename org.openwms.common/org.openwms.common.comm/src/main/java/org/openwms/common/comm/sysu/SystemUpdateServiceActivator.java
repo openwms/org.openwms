@@ -21,9 +21,10 @@
  */
 package org.openwms.common.comm.sysu;
 
+import java.util.function.Function;
+
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.NotRespondingServiceActivator;
-import org.openwms.common.comm.sysu.api.SystemUpdateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -44,7 +45,7 @@ class SystemUpdateServiceActivator implements NotRespondingServiceActivator<Syst
     @Autowired
     private ApplicationContext ctx;
     @Autowired
-    private SystemUpdateHandler handler;
+    private Function<SystemUpdateMessage, Void> handler;
 
     /**
      * {@inheritDoc}
@@ -52,7 +53,7 @@ class SystemUpdateServiceActivator implements NotRespondingServiceActivator<Syst
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
     public void wakeUp(SystemUpdateMessage message) {
-        handler.handle(message);
+        handler.apply(message);
     }
 
     /**

@@ -21,11 +21,10 @@
  */
 package org.openwms.common.comm.req;
 
+import java.util.function.Function;
+
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.RespondingServiceActivator;
-import org.openwms.common.comm.req.api.RequestHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -43,12 +42,11 @@ class RequestMessageServiceActivator implements RespondingServiceActivator<Reque
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
     public static final String INPUT_CHANNEL_NAME = RequestMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestMessageServiceActivator.class);
 
     @Autowired
     private ApplicationContext ctx;
     @Autowired
-    private RequestHandler handler;
+    private Function<RequestMessage, ResponseMessage> handler;
 
     /**
      * {@inheritDoc}
@@ -56,8 +54,7 @@ class RequestMessageServiceActivator implements RespondingServiceActivator<Reque
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
     public ResponseMessage wakeUp(RequestMessage message) {
-        LOGGER.debug("Message ready to process {}", message);
-        return handler.handle(message);
+        return handler.apply(message);
     }
 
     /**

@@ -21,6 +21,8 @@
  */
 package org.openwms.common.comm.sysu.api;
 
+import java.util.function.Function;
+
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.comm.sysu.SystemUpdateMessage;
 import org.openwms.common.location.LocationGroup;
@@ -37,9 +39,9 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class SystemUpdateHandlerImpl implements SystemUpdateHandler {
+class SystemUpdateMessageHandler implements Function<SystemUpdateMessage, Void> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SystemUpdateHandlerImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SystemUpdateMessageHandler.class);
     @Autowired
     private LocationGroupService<LocationGroup> service;
 
@@ -47,13 +49,14 @@ class SystemUpdateHandlerImpl implements SystemUpdateHandler {
      * {@inheritDoc}
      */
     @Override
-    public void handle(SystemUpdateMessage message) {
+    public Void apply(SystemUpdateMessage message) {
         LOGGER.debug("Handling {}", message);
         LocationGroup lg = service.findByName(message.getLocationGroupName()).orElseThrow(() -> new NotFoundException(""));
 
         LocationGroupState[] states = parse(message.getErrorCode());
         service.changeGroupState(lg.getPk().toString(), states[0], states[1]);
         LOGGER.debug("Changed group states of LocationGroup {} to infeed:[{}], outfeed:[{}]", lg.getPk(),states[0], states[1]);
+        return null;
     }
 
     private LocationGroupState[] parse(String errorCode) {
