@@ -21,10 +21,14 @@
  */
 package org.openwms.common.comm.sysu;
 
+import static org.openwms.common.comm.CommConstants.asDate;
+
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Objects;
 
+import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
 
@@ -128,14 +132,14 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
         }
 
         /**
-         * Add the date of creation.
+         * Add the date of creation in an expected format as defined in {@link CommConstants#DATE_FORMAT_PATTERN}.
          *
          * @param createDate
          *            The creation date
          * @return The builder
          */
-        public Builder withCreateDate(Date createDate) {
-            this.created = createDate;
+        public Builder withCreateDate(String createDate) throws ParseException {
+            this.created = asDate(createDate);
             return this;
         }
 

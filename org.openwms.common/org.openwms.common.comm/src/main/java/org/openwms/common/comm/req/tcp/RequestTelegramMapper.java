@@ -23,7 +23,6 @@ package org.openwms.common.comm.req.tcp;
 
 import java.text.ParseException;
 
-import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
@@ -57,23 +56,16 @@ class RequestTelegramMapper implements MessageMapper<RequestMessage> {
         int startActualLocation = startPayload + provider.barcodeLength();
         int startTargetLocation = startActualLocation + provider.locationIdLength();
         int startErrorCode = startTargetLocation + provider.locationIdLength();
-        int startCreateDate = startErrorCode + CommonMessage.getErrorCodeLength();
+        int startCreateDate = startErrorCode + CommonMessage.ERROR_CODE_LENGTH;
 
         RequestMessage message;
         try {
-            message = new RequestMessage.Builder(CommonMessageFactory.createHeader(telegram))
+            message = new RequestMessage.Builder(provider, CommonMessageFactory.createHeader(telegram))
                     .withBarcode(telegram.substring(startPayload, startActualLocation))
-                    .withActualLocation(String.join("/",
-                            (telegram.substring(startActualLocation, startTargetLocation))
-                                    .split("(?<=\\G.{" + provider.locationIdLength() / provider.noLocationIdFields() + "})")))
-                    .withTargetLocation(String.join("/",
-                            (telegram.substring(startTargetLocation, startErrorCode)).split("(?<=\\G.{"
-                                    + provider.locationIdLength() / provider.noLocationIdFields() + "})")))
-
+                    .withActualLocation(telegram.substring(startActualLocation, startTargetLocation))
+                    .withTargetLocation(telegram.substring(startTargetLocation, startErrorCode))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
-                    .withCreateDate(
-                            CommConstants.asDate(telegram.substring(startCreateDate,
-                                    startCreateDate + CommonMessage.getDateLength()))).build();
+                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + CommonMessage.DATE_LENGTH)).build();
             return message;
         } catch (ParseException e) {
             throw new MessageMissmatchException(e.getMessage());

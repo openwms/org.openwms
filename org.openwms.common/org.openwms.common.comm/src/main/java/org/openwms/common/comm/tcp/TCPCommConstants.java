@@ -51,6 +51,6 @@ public final class TCPCommConstants {
      */
     public static String getTelegramType(String telegram) {
         short headerLength = CommonHeader.getHeaderLength();
-        return telegram.substring(headerLength, headerLength + CommonMessage.getMessageIdentifierLength());
+        return telegram.substring(headerLength, headerLength + CommonMessage.MESSAGE_IDENTIFIER_LENGTH);
     }
 }

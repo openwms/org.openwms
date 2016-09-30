@@ -23,7 +23,6 @@ package org.openwms.common.comm.sysu.tcp;
 
 import java.text.ParseException;
 
-import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
@@ -35,7 +34,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 /**
  * A SYSUTelegramMapper maps the incoming SYSU telegram String into an object representation.
@@ -56,21 +54,18 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
     public SystemUpdateMessage mapTo(String telegram) {
         LOGGER.debug("Telegram to transform: [{}]", telegram);
         if (provider == null) {
-            throw new RuntimeException("Telegram handling "+SystemUpdateMessage.IDENTIFIER+" not supported");
+            throw new RuntimeException("Telegram handling " + SystemUpdateMessage.IDENTIFIER + " not supported");
         }
         int startLocationGroup = CommonHeader.getHeaderLength() + forType().length();
         int startErrorCode = startLocationGroup + provider.lengthLocationGroupName();
-        int startCreateDate = startErrorCode + CommonMessage.getErrorCodeLength();
+        int startCreateDate = startErrorCode + CommonMessage.ERROR_CODE_LENGTH;
 
         SystemUpdateMessage message;
         try {
             message = new SystemUpdateMessage.Builder(CommonMessageFactory.createHeader(telegram))
-                    .withLocationGroupName(
-                            StringUtils.trimTrailingCharacter(telegram.substring(startLocationGroup, startErrorCode), '_'))
+                    .withLocationGroupName(telegram.substring(startLocationGroup, startErrorCode))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
-                    .withCreateDate(
-                            CommConstants.asDate(telegram.substring(startCreateDate,
-                                    startCreateDate + CommonMessage.getDateLength()))).build();
+                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + CommonMessage.DATE_LENGTH)).build();
             return message;
         } catch (ParseException e) {
             throw new MessageMissmatchException(e.getMessage());

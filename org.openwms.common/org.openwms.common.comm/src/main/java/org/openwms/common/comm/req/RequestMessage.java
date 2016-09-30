@@ -21,11 +21,14 @@
  */
 package org.openwms.common.comm.req;
 
-import java.util.Date;
+import static org.openwms.common.comm.CommConstants.asDate;
+
+import java.text.ParseException;
 
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
 
 /**
  * A RequestMessage requests an order for a TransportUnit with id <tt>Barcode</tt> on a particular location <tt>actualLocation</tt>.
@@ -71,6 +74,7 @@ public class RequestMessage extends CommonMessage {
     public static class Builder {
 
         private final RequestMessage requestMessage;
+        private final RequestFieldLengthProvider provider;
 
         /**
          * Create a new RequestMessage.Builder.
@@ -78,7 +82,8 @@ public class RequestMessage extends CommonMessage {
          * @param header
          *            The message header
          */
-        public Builder(CommonHeader header) {
+        public Builder(RequestFieldLengthProvider provider, CommonHeader header) {
+            this.provider = provider;
             this.requestMessage = new RequestMessage(header);
         }
 
@@ -95,26 +100,30 @@ public class RequestMessage extends CommonMessage {
         }
 
         /**
-         * Add a target <tt>Location</tt> identified by a {@code LocationPK}.
+         * Add an actual {@code Location} by the given unique {@code LocationPk} in an expected format like {@literal AAAAAAA/BBBBBB/...}.
+         * Where the number of digits each coordinate has and the number of coordinates at all is defined by the {@code RequestFieldLengthProvider}.
          * 
          * @param actualLocation
-         *            The {@code LocationPK} of the actual location
+         *            The String representation of {@code LocationPK} of the actual location
          * @return The builder
          */
         public Builder withActualLocation(String actualLocation) {
-            requestMessage.actualLocation = actualLocation;
+            requestMessage.actualLocation = String.join("/",
+                    actualLocation.split("(?<=\\G.{" + provider.locationIdLength() / provider.noLocationIdFields() + "})"));
             return this;
         }
 
         /**
-         * Add a target <tt>Location</tt> identified by a {@code LocationPK}.
+         * Add an target {@code Location} by the given unique {@code LocationPk} in an expected format like {@literal AAAAAAA/BBBBBB/...}.
+         * Where the number of digits each coordinate has and the number of coordinates at all is defined by the {@code RequestFieldLengthProvider}.
          * 
          * @param targetLocation
-         *            The {@code LocationPK} of the target location
+         *            The String representation of {@code LocationPK} of the target location
          * @return The builder
          */
         public Builder withTargetLocation(String targetLocation) {
-            requestMessage.targetLocation = targetLocation;
+            requestMessage.targetLocation = String.join("/",
+                    targetLocation.split("(?<=\\G.{" + provider.locationIdLength() / provider.noLocationIdFields() + "})"));
             return this;
         }
 
@@ -131,14 +140,14 @@ public class RequestMessage extends CommonMessage {
         }
 
         /**
-         * Add the date of creation.
+         * Add the date of creation in an expected format as defined in {@link CommConstants#DATE_FORMAT_PATTERN}.
          * 
          * @param createDate
-         *            The creation date
+         *            The creation date as String
          * @return The builder
          */
-        public Builder withCreateDate(Date createDate) {
-            requestMessage.setCreated(createDate);
+        public Builder withCreateDate(String createDate) throws ParseException {
+            requestMessage.setCreated(asDate(createDate));
             return this;
         }
 

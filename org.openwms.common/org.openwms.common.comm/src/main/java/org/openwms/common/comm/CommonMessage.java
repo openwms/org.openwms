@@ -40,9 +40,9 @@ public abstract class CommonMessage implements Serializable {
     private String errorCode;
     private Date created;
 
-    private static final short ERROR_CODE_LENGTH = 8;
-    private static final short DATE_LENGTH = 14;
-    private static final int MESSAGE_IDENTIFIER_LENGTH = 4;
+    public static final short ERROR_CODE_LENGTH = 8;
+    public static final short DATE_LENGTH = 14;
+    public static final int MESSAGE_IDENTIFIER_LENGTH = 4;
 
     /**
      * Create a new CommonMessage.
@@ -55,38 +55,11 @@ public abstract class CommonMessage implements Serializable {
     }
 
     /**
-     * Return the length of a date field used in telegram messages.
-     * 
-     * @return Length of a date field
-     */
-    public static final short getDateLength() {
-        return DATE_LENGTH;
-    }
-
-    /**
-     * Return the length of an errorCode field used in telegram messages.
-     * 
-     * @return Length of an errorCode
-     */
-    public static final short getErrorCodeLength() {
-        return ERROR_CODE_LENGTH;
-    }
-
-    /**
      * Subclasses have to return an unique, case-sensitive message identifier.
      * 
      * @return The message TYPE field (see OSIP specification)
      */
     public abstract String getMessageIdentifier();
-
-    /**
-     * Return the length of the message identifier in number of characters.
-     * 
-     * @return Number of Unicode code units of the message identifier
-     */
-    public static int getMessageIdentifierLength() {
-        return MESSAGE_IDENTIFIER_LENGTH;
-    }
 
     /**
      * Does this type of message needs to be replied to?
