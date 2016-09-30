@@ -21,13 +21,14 @@
  */
 package org.openwms.common.comm.api;
 
+import org.openwms.common.comm.CommonMessage;
+
 /**
  * A MessageMapper is able to map from a String telegram to a {@link CommonMessage}.
  * 
  * @param <T>
  *            A type of incoming CommonMessage
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public interface MessageMapper<T extends CommonMessage> {

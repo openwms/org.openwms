@@ -26,8 +26,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.CustomServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.Router;
@@ -40,7 +40,6 @@ import org.springframework.stereotype.Component;
  * default exception channel.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 @Component
@@ -48,7 +47,7 @@ public class CommonMessageRouter {
 
     @Autowired
     private List<CustomServiceActivator> processors;
-    private final Map<String, CustomServiceActivator> processorMap = new HashMap<String, CustomServiceActivator>();
+    private final Map<String, CustomServiceActivator> processorMap = new HashMap<>();
 
     /**
      * From all existing {@link CustomServiceActivator}s build up a Map with key equals to channelName.

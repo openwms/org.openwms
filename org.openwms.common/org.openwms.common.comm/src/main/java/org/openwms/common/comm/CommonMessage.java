@@ -19,10 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * A CommonMessage is the abstract superclass of all messages sent to subsystems like PLC or ERP. A CommonMessage has always a message
@@ -39,9 +40,9 @@ public abstract class CommonMessage implements Serializable {
     private String errorCode;
     private Date created;
 
-    private static final short ERROR_CODE_LENGTH = 8;
-    private static final short DATE_LENGTH = 14;
-    private static final int MESSAGE_IDENTIFIER_LENGTH = 4;
+    public static final short ERROR_CODE_LENGTH = 8;
+    public static final short DATE_LENGTH = 14;
+    public static final int MESSAGE_IDENTIFIER_LENGTH = 4;
 
     /**
      * Create a new CommonMessage.
@@ -54,24 +55,6 @@ public abstract class CommonMessage implements Serializable {
     }
 
     /**
-     * Return the length of a date field used in telegram messages.
-     * 
-     * @return Length of a date field
-     */
-    public static final short getDateLength() {
-        return DATE_LENGTH;
-    }
-
-    /**
-     * Return the length of an errorCode field used in telegram messages.
-     * 
-     * @return Length of an errorCode
-     */
-    public static final short getErrorCodeLength() {
-        return ERROR_CODE_LENGTH;
-    }
-
-    /**
      * Subclasses have to return an unique, case-sensitive message identifier.
      * 
      * @return The message TYPE field (see OSIP specification)
@@ -79,28 +62,11 @@ public abstract class CommonMessage implements Serializable {
     public abstract String getMessageIdentifier();
 
     /**
-     * Return the length of the message identifier in number of characters.
-     * 
-     * @return Number of Unicode code units of the message identifier
-     */
-    public static int getMessageIdentifierLength() {
-        return MESSAGE_IDENTIFIER_LENGTH;
-    }
-
-    /**
      * Does this type of message needs to be replied to?
      * 
-     * @return <code>true</code> no reply needed, otherwise <code>false</code>
+     * @return {@literal true} no reply needed, otherwise {@literal false}
      */
     public abstract boolean isWithoutReply();
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return header.toString();
-    }
 
     /**
      * Get the header.
@@ -150,5 +116,28 @@ public abstract class CommonMessage implements Serializable {
      */
     protected void setCreated(Date created) {
         this.created = created;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CommonMessage that = (CommonMessage) o;
+        return Objects.equals(header, that.header) &&
+                Objects.equals(errorCode, that.errorCode) &&
+                Objects.equals(created, that.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(header, errorCode, created);
+    }
+
+    @Override
+    public String toString() {
+        return "CommonMessage{" +
+                "errorCode='" + errorCode + '\'' +
+                ", created=" + created +
+                "} with " + header;
     }
 }

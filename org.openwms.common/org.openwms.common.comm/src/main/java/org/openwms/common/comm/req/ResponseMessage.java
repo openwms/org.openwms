@@ -19,13 +19,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.request;
+package org.openwms.common.comm.req;
 
 import java.io.Serializable;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
 
 /**
  * A ResponseMessage on <tt>RequestMessage</tt>s.

@@ -97,6 +97,10 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>org.openwms.common.comm</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.core.util</artifactId>
         </dependency>
 

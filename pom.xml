@@ -388,21 +388,21 @@
                         <plugin>
                             <artifactId>maven-gpg-plugin</artifactId>
                             <version>${plugin.gpg.version}</version>
+                            <executions>
+                                <execution>
+                                    <id>sign-artifacts</id>
+                                    <phase>verify</phase>
+                                    <goals>
+                                        <goal>sign</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
                         </plugin>
                     </plugins>
                 </pluginManagement>
                 <plugins>
                     <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
@@ -497,12 +497,13 @@
         <maven.compile.targetLevel>${java.version}</maven.compile.targetLevel>
         <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
-        <debug.info>true</debug.info>
         <ci.buildNumber>MANUAL</ci.buildNumber>
+        <debug.info>true</debug.info>
         <documentation.dir>./target</documentation.dir>
         <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
         <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
         <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
+        <enforcer.skip>true</enforcer.skip>
         <github.global.server>github</github.global.server>
         <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
         <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
@@ -518,7 +519,7 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.7</ameba-lib.version>
+        <ameba-lib.version>1.8-SNAPSHOT</ameba-lib.version>
         <aspectj.version>1.8.9</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
@@ -841,14 +842,12 @@
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
                 <version>${ameba-lib.version}</version>
-                <type>jar</type>
             </dependency>
             <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
                 <version>${ameba-lib.version}</version>
                 <type>test-jar</type>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.hibernate.javax.persistence</groupId>

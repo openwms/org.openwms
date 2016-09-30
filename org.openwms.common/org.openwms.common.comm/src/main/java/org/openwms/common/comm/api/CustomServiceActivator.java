@@ -21,6 +21,7 @@
  */
 package org.openwms.common.comm.api;
 
+import org.openwms.common.comm.CommConstants;
 import org.springframework.messaging.MessageChannel;
 
 /**

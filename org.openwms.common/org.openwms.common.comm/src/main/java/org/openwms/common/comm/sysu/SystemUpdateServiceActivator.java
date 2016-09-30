@@ -19,11 +19,12 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.request;
+package org.openwms.common.comm.sysu;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.RespondingServiceActivator;
+import java.util.function.Function;
+
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.api.NotRespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -31,34 +32,28 @@ import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
 
 /**
- * A RequestMessageServiceActivator takes incoming {@link RequestMessage}s and delegates them to an application POJO.
- * 
+ * A SystemUpdateServiceActivator.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 @Component
-public class RequestMessageServiceActivator implements RespondingServiceActivator<RequestMessage, ResponseMessage> {
+class SystemUpdateServiceActivator implements NotRespondingServiceActivator<SystemUpdateMessage> {
 
-    /**
-     * The name of the MessageChannel used as input-channel of this message processor.
-     */
-    public static final String INPUT_CHANNEL_NAME = RequestMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    /** The name of the MessageChannel used as input-channel of this message processor. */
+    public static final String INPUT_CHANNEL_NAME = SystemUpdateMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
 
     @Autowired
     private ApplicationContext ctx;
+    @Autowired
+    private Function<SystemUpdateMessage, Void> handler;
 
     /**
      * {@inheritDoc}
      */
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
-    public ResponseMessage wakeUp(RequestMessage message) {
-        CommonHeader header = new CommonHeader(message.getHeader());
-        header.setSender(message.getHeader().getReceiver());
-        header.setReceiver(message.getHeader().getSender());
-        ResponseMessage response = new ResponseMessage(header);
-        return response;
+    public void wakeUp(SystemUpdateMessage message) {
+        handler.apply(message);
     }
 
     /**
@@ -68,6 +63,7 @@ public class RequestMessageServiceActivator implements RespondingServiceActivato
     public MessageChannel getChannel() {
         return ctx.getBean(INPUT_CHANNEL_NAME, MessageChannel.class);
     }
+
 
     /**
      * {@inheritDoc}

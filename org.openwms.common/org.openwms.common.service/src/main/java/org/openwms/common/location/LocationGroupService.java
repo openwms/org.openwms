@@ -29,16 +29,24 @@ import java.util.Optional;
  *
  * @param <T> Any kind of {@link LocationGroup}
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
  */
 public interface LocationGroupService<T extends LocationGroup> {
 
     /**
-     * Tries to change the infeed and outfeed state of a {@code Location Group}.
+     * Tries to change the infeed and outfeed state of a {@link LocationGroup}.
+     *
+     * @param id The persisted key of the LocationGroup to change
+     * @param stateIn The new infeed state
+     * @param stateOut The new outfeed state
      */
     void changeGroupState(String id, LocationGroupState stateIn, LocationGroupState stateOut);
 
+    /**
+     * Find and return a {@link LocationGroup} by its unique {@code name}.
+     *
+     * @param name The name to search for
+     * @return The optional LocationGroup
+     */
     Optional<LocationGroup> findByName(String name);
 
     /**

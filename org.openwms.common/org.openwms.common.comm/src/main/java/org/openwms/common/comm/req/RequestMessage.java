@@ -19,33 +19,32 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.request;
+package org.openwms.common.comm.req;
 
-import java.util.Date;
+import static org.openwms.common.comm.CommConstants.asDate;
 
-import org.openwms.common.comm.api.CommConstants;
-import org.openwms.common.comm.api.CommonHeader;
-import org.openwms.common.comm.api.CommonMessage;
-import org.openwms.common.location.LocationPK;
-import org.openwms.common.transport.Barcode;
+import java.text.ParseException;
+
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
 
 /**
  * A RequestMessage requests an order for a TransportUnit with id <tt>Barcode</tt> on a particular location <tt>actualLocation</tt>.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public class RequestMessage extends CommonMessage {
 
-    private static final long serialVersionUID = 1L;
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "REQ_";
     private final String identifier = IDENTIFIER;
 
-    private Barcode barcode;
-    private LocationPK actualLocation;
-    private LocationPK targetLocation;
+    private String barcode;
+    private String actualLocation;
+    private String targetLocation;
 
     /**
      * Create a new RequestMessage.
@@ -75,6 +74,7 @@ public class RequestMessage extends CommonMessage {
     public static class Builder {
 
         private final RequestMessage requestMessage;
+        private final RequestFieldLengthProvider provider;
 
         /**
          * Create a new RequestMessage.Builder.
@@ -82,43 +82,48 @@ public class RequestMessage extends CommonMessage {
          * @param header
          *            The message header
          */
-        public Builder(CommonHeader header) {
+        public Builder(RequestFieldLengthProvider provider, CommonHeader header) {
+            this.provider = provider;
             this.requestMessage = new RequestMessage(header);
         }
 
         /**
-         * Add an {@link Barcode} to the message.
+         * Add an {@code Barcode} to the message.
          * 
          * @param barcode
          *            The barcode
          * @return The builder
          */
-        public Builder withBarcode(Barcode barcode) {
+        public Builder withBarcode(String barcode) {
             requestMessage.barcode = barcode;
             return this;
         }
 
         /**
-         * Add a target <tt>Location</tt> identified by a {@link LocationPK}.
+         * Add an actual {@code Location} by the given unique {@code LocationPk} in an expected format like {@literal AAAAAAA/BBBBBB/...}.
+         * Where the number of digits each coordinate has and the number of coordinates at all is defined by the {@code RequestFieldLengthProvider}.
          * 
          * @param actualLocation
-         *            The {@link LocationPK} of the actual location
+         *            The String representation of {@code LocationPK} of the actual location
          * @return The builder
          */
-        public Builder withActualLocation(LocationPK actualLocation) {
-            requestMessage.actualLocation = actualLocation;
+        public Builder withActualLocation(String actualLocation) {
+            requestMessage.actualLocation = String.join("/",
+                    actualLocation.split("(?<=\\G.{" + provider.locationIdLength() / provider.noLocationIdFields() + "})"));
             return this;
         }
 
         /**
-         * Add a target <tt>Location</tt> identified by a {@link LocationPK}.
+         * Add an target {@code Location} by the given unique {@code LocationPk} in an expected format like {@literal AAAAAAA/BBBBBB/...}.
+         * Where the number of digits each coordinate has and the number of coordinates at all is defined by the {@code RequestFieldLengthProvider}.
          * 
          * @param targetLocation
-         *            The {@link LocationPK} of the target location
+         *            The String representation of {@code LocationPK} of the target location
          * @return The builder
          */
-        public Builder withTargetLocation(LocationPK targetLocation) {
-            requestMessage.targetLocation = targetLocation;
+        public Builder withTargetLocation(String targetLocation) {
+            requestMessage.targetLocation = String.join("/",
+                    targetLocation.split("(?<=\\G.{" + provider.locationIdLength() / provider.noLocationIdFields() + "})"));
             return this;
         }
 
@@ -135,14 +140,14 @@ public class RequestMessage extends CommonMessage {
         }
 
         /**
-         * Add the date of creation.
+         * Add the date of creation in an expected format as defined in {@link CommConstants#DATE_FORMAT_PATTERN}.
          * 
          * @param createDate
-         *            The creation date
+         *            The creation date as String
          * @return The builder
          */
-        public Builder withCreateDate(Date createDate) {
-            requestMessage.setCreated(createDate);
+        public Builder withCreateDate(String createDate) throws ParseException {
+            requestMessage.setCreated(asDate(createDate));
             return this;
         }
 

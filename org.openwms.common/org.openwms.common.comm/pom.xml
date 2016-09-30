@@ -39,9 +39,18 @@
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-ip</artifactId>
@@ -58,8 +67,8 @@
 
         <!-- Project dependencies -->
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.common.service</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
     </dependencies>
 </project>

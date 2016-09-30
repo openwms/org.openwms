@@ -21,7 +21,7 @@
  */
 package org.openwms.common.location;
 
-import java.util.Arrays;
+import java.util.stream.Stream;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -29,11 +29,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * A LocationConfiguration.
+ * A LocationConfig is a Spring managed configuration class the defines a bean to load a few Locations upfront.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
 @Configuration
 class LocationConfig {
@@ -43,7 +41,7 @@ class LocationConfig {
     CommandLineRunner locationRunner(LocationRepository lr) {
         return args -> {
             lr.deleteAll();
-            Arrays.asList("INIT/0000/0000/0000/0000,ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
+            Stream.of("INIT/0000/0000/0000/0000,ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
                     .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
         };
     }

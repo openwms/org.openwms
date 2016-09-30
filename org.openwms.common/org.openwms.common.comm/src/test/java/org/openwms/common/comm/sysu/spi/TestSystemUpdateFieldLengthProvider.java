@@ -19,7 +19,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.common.comm.sysu.spi;
+
+import org.springframework.stereotype.Component;
+
 /**
- * Contains types according to the RequestMessage handling.
+ * A TestSystemUpdateFieldLengthProvider.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.request;
+@Component
+class TestSystemUpdateFieldLengthProvider implements SystemUpdateFieldLengthProvider {
+
+    @Override
+    public int lengthLocationGroupName() {
+        return 20;
+    }
+}

@@ -21,7 +21,9 @@
  */
 package org.openwms.common.comm.err;
 
-import org.openwms.common.comm.api.CommConstants;
+import java.util.function.Function;
+
+import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.NotRespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -33,16 +35,14 @@ import org.springframework.stereotype.Component;
  * A ErrorMessageServiceActivator delegates incoming {@link ErrorMessage}s to the appropriate Application Service.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 @Component
 public class ErrorMessageServiceActivator implements NotRespondingServiceActivator<ErrorMessage> {
 
-    /**
-     * The name of the MessageChannel used as input-channel of this message processor.
-     */
+    /** The name of the MessageChannel used as input-channel of this message processor. */
     public static final String INPUT_CHANNEL_NAME = ErrorMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    @Autowired
+    private Function<ErrorMessage, Void> handler;
 
     @Autowired
     private ApplicationContext ctx;
@@ -69,8 +69,7 @@ public class ErrorMessageServiceActivator implements NotRespondingServiceActivat
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME)
     public void wakeUp(ErrorMessage message) {
-        // TODO [scherrer] :
-        System.out.println("Call Service for ErrorMessage");
+        handler.apply(message);
     }
 
 }

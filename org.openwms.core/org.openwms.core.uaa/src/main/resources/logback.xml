@@ -1,19 +1,20 @@
-<configuration>
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
 
-  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>
-        %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
+  <property name="LOG_TEMP" value="/tmp/owms"/>
+  <property name="MODULE_NAME" value="COMMON"/>
 
-  <logger name="org.openwms" level="warn"/>
-  <logger name="org.springframework" level="warn"/>
-  <logger name="org.hibernate" level="warn"/>
+  <include resource="logback-appenders.xml" />
+  <include resource="logback-loggers.xml" />
 
-  <root level="info">
-    <appender-ref ref="stdout"/>
+  <logger name="org.dozer" level="ERROR"/>
+  <logger name="org.hibernate.SQL" level="OFF"/>
+  <logger name="org.hibernate.type" level="OFF"/>
+  <logger name="org.openwms" level="WARN"/>
+
+  <root level="INFO">
+    <appender-ref ref="STDOUT"/>
+    <appender-ref ref="LOGFILE"/>
   </root>
 
 </configuration>

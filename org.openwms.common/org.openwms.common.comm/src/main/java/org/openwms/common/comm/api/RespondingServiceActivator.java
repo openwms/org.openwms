@@ -21,6 +21,8 @@
  */
 package org.openwms.common.comm.api;
 
+import org.openwms.common.comm.CommonMessage;
+
 /**
  * A RespondingServiceActivator delegates incoming messages to an Application Service and response to the incoming message.
  * 
@@ -29,7 +31,6 @@ package org.openwms.common.comm.api;
  * @param <U>
  *            Type of outgoing message that is returned
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public interface RespondingServiceActivator<T extends CommonMessage, U extends CommonMessage> extends

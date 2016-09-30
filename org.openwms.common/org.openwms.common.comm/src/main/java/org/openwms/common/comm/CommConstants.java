@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,6 +37,7 @@ public final class CommConstants {
     public static final String DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
     /** Used as suffix to create channels dynamically. */
     public static final String CHANNEL_SUFFIX = "MessageInputChannel";
+    public static final char FILLER_CHARACTER = '_';
 
     /**
      * Parses a String representation of a Date into a Date using the pre-defined format.
