@@ -21,9 +21,10 @@
  */
 package org.openwms.common.comm.req.tcp;
 
+import static org.openwms.common.comm.CommonHeader.LENGTH_HEADER;
+
 import java.text.ParseException;
 
-import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMissmatchException;
@@ -52,7 +53,7 @@ class RequestTelegramMapper implements MessageMapper<RequestMessage> {
         if (provider == null) {
             throw new RuntimeException("Telegram handling "+ RequestMessage.IDENTIFIER+" not supported");
         }
-        int startPayload = CommonHeader.getHeaderLength() + forType().length();
+        int startPayload = LENGTH_HEADER + forType().length();
         int startActualLocation = startPayload + provider.barcodeLength();
         int startTargetLocation = startActualLocation + provider.locationIdLength();
         int startErrorCode = startTargetLocation + provider.locationIdLength();

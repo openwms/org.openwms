@@ -37,11 +37,12 @@ public class CommonHeader implements Serializable {
     private String receiver;
     private short sequenceNo;
 
-    private static final short LENGTH_SYNC_FIELD = 3;
-    private static final short LENGTH_MESSAGE_LENGTH_FIELD = 5;
-    private static final short LENGTH_SENDER_FIELD = 5;
-    private static final short LENGTH_RECEIVER_FIELD = 5;
-    private static final short LENGTH_SEQUENCE_NO_FIELD = 5;
+    public static final short LENGTH_SYNC_FIELD = 3;
+    public static final short LENGTH_MESSAGE_LENGTH_FIELD = 5;
+    public static final short LENGTH_SENDER_FIELD = 5;
+    public static final short LENGTH_RECEIVER_FIELD = 5;
+    public static final short LENGTH_SEQUENCE_NO_FIELD = 5;
+    public static final short LENGTH_HEADER = LENGTH_SYNC_FIELD + LENGTH_MESSAGE_LENGTH_FIELD + LENGTH_RECEIVER_FIELD + LENGTH_SENDER_FIELD + LENGTH_SEQUENCE_NO_FIELD;
 
     /**
      * Create a new CommonHeader.
@@ -76,88 +77,6 @@ public class CommonHeader implements Serializable {
     }
 
     /**
-     * Create a new CommonHeader.
-     * 
-     * @param telegram
-     *            The telegram String
-     */
-    // TODO [scherrer] : remove this it is specific to telegrams.
-    public CommonHeader(String telegram) {
-        this.sync = telegram.substring(0, getLengthSyncField());
-
-        int start = sync.length();
-        int end = start + getLengthTelegramLengthField();
-        this.messageLength = Short.parseShort(telegram.substring(start, end));
-
-        start = end;
-        end += getLengthSenderField();
-        this.sender = telegram.substring(start, end);
-
-        start = end;
-        end += getLengthReceiverField();
-        this.receiver = telegram.substring(start, end);
-
-        start = end;
-        end += getLengthSequenceNoField();
-        this.sequenceNo = Short.parseShort(telegram.substring(start, end));
-    }
-
-    /**
-     * Return the number of characters the message header allocates.
-     * 
-     * @return The header length in characters
-     */
-    public static final short getHeaderLength() {
-        return LENGTH_SYNC_FIELD + LENGTH_MESSAGE_LENGTH_FIELD + LENGTH_RECEIVER_FIELD + LENGTH_SENDER_FIELD
-                + LENGTH_SEQUENCE_NO_FIELD;
-    }
-
-    /**
-     * Get the lengthSyncField.
-     * 
-     * @return the lengthSyncField.
-     */
-    public static short getLengthSyncField() {
-        return LENGTH_SYNC_FIELD;
-    }
-
-    /**
-     * Get the lengthTelegramLengthField.
-     * 
-     * @return the lengthTelegramLengthField.
-     */
-    public static short getLengthTelegramLengthField() {
-        return LENGTH_MESSAGE_LENGTH_FIELD;
-    }
-
-    /**
-     * Get the lengthReceiverField.
-     * 
-     * @return the lengthReceiverField.
-     */
-    public static short getLengthReceiverField() {
-        return LENGTH_RECEIVER_FIELD;
-    }
-
-    /**
-     * Get the lengthSenderField.
-     * 
-     * @return the lengthSenderField.
-     */
-    public static short getLengthSenderField() {
-        return LENGTH_SENDER_FIELD;
-    }
-
-    /**
-     * Get the lengthSequenceNoField.
-     * 
-     * @return the lengthSequenceNoField.
-     */
-    public static short getLengthSequenceNoField() {
-        return LENGTH_SEQUENCE_NO_FIELD;
-    }
-
-    /**
      * Get the sync.
      * 
      * @return the sync.
@@ -167,32 +86,12 @@ public class CommonHeader implements Serializable {
     }
 
     /**
-     * Set the sync.
-     * 
-     * @param sync
-     *            The sync to set.
-     */
-    public void setSync(String sync) {
-        this.sync = sync;
-    }
-
-    /**
      * Get the messageLength.
      * 
      * @return the messageLength.
      */
     public short getMessageLength() {
         return messageLength;
-    }
-
-    /**
-     * Set the messageLength.
-     * 
-     * @param messageLength
-     *            The messageLength to set.
-     */
-    public void setMessageLength(short messageLength) {
-        this.messageLength = messageLength;
     }
 
     /**
@@ -240,16 +139,6 @@ public class CommonHeader implements Serializable {
      */
     public short getSequenceNo() {
         return sequenceNo;
-    }
-
-    /**
-     * Set the sequenceNo.
-     * 
-     * @param sequenceNo
-     *            The sequenceNo to set.
-     */
-    public void setSequenceNo(short sequenceNo) {
-        this.sequenceNo = sequenceNo;
     }
 
     /**

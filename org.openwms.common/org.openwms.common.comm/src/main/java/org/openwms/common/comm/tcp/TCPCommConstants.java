@@ -21,14 +21,14 @@
  */
 package org.openwms.common.comm.tcp;
 
-import org.openwms.common.comm.CommonHeader;
+import static org.openwms.common.comm.CommonHeader.LENGTH_HEADER;
+
 import org.openwms.common.comm.CommonMessage;
 
 /**
  * A TCPCommConstants.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
  * @since 0.2
  */
 public final class TCPCommConstants {
@@ -50,7 +50,7 @@ public final class TCPCommConstants {
      * @return The telegram type as case-insensitive String
      */
     public static String getTelegramType(String telegram) {
-        short headerLength = CommonHeader.getHeaderLength();
+        short headerLength = LENGTH_HEADER;
         return telegram.substring(headerLength, headerLength + CommonMessage.MESSAGE_IDENTIFIER_LENGTH);
     }
 }

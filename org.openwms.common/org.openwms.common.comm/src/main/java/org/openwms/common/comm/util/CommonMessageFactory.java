@@ -45,22 +45,22 @@ public final class CommonMessageFactory {
      * @return A {@link CommonHeader} instance
      */
     public static CommonHeader createHeader(String telegram) {
-        String sync = telegram.substring(0, CommonHeader.getLengthSyncField());
+        String sync = telegram.substring(0, CommonHeader.LENGTH_SYNC_FIELD);
 
         int start = sync.length();
-        int end = start + CommonHeader.getLengthTelegramLengthField();
+        int end = start + CommonHeader.LENGTH_MESSAGE_LENGTH_FIELD;
         short messageLength = Short.parseShort(telegram.substring(start, end));
 
         start = end;
-        end += CommonHeader.getLengthSenderField();
+        end += CommonHeader.LENGTH_SENDER_FIELD;
         String sender = telegram.substring(start, end);
 
         start = end;
-        end += CommonHeader.getLengthReceiverField();
+        end += CommonHeader.LENGTH_RECEIVER_FIELD;
         String receiver = telegram.substring(start, end);
 
         start = end;
-        end += CommonHeader.getLengthSequenceNoField();
+        end += CommonHeader.LENGTH_SEQUENCE_NO_FIELD;
         short sequenceNo = Short.parseShort(telegram.substring(start, end));
         return new CommonHeader(sync, messageLength, sender, receiver, sequenceNo);
     }

@@ -31,6 +31,7 @@ import java.util.Objects;
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommonHeader;
 import org.openwms.common.comm.CommonMessage;
+import org.springframework.util.StringUtils;
 
 /**
  * A SystemUpdateMessage reflects the OSIP SYSU telegram type and is used to change the state of a {@code LocationGroup}.
@@ -115,7 +116,7 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
          * @return a reference to this Builder
          */
         public Builder withLocationGroupName(String locationGroupName) {
-            this.locationGroupName = locationGroupName;
+            this.locationGroupName = StringUtils.trimTrailingCharacter(locationGroupName, CommConstants.FILLER_CHARACTER);
             return this;
         }
 

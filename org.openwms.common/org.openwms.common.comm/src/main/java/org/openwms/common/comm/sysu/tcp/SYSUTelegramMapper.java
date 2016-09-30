@@ -21,10 +21,12 @@
  */
 package org.openwms.common.comm.sysu.tcp;
 
+import static org.openwms.common.comm.CommonHeader.LENGTH_HEADER;
+import static org.openwms.common.comm.CommonMessage.DATE_LENGTH;
+import static org.openwms.common.comm.CommonMessage.ERROR_CODE_LENGTH;
+
 import java.text.ParseException;
 
-import org.openwms.common.comm.CommonHeader;
-import org.openwms.common.comm.CommonMessage;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMissmatchException;
 import org.openwms.common.comm.sysu.SystemUpdateMessage;
@@ -56,16 +58,16 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
         if (provider == null) {
             throw new RuntimeException("Telegram handling " + SystemUpdateMessage.IDENTIFIER + " not supported");
         }
-        int startLocationGroup = CommonHeader.getHeaderLength() + forType().length();
+        int startLocationGroup = LENGTH_HEADER + forType().length();
         int startErrorCode = startLocationGroup + provider.lengthLocationGroupName();
-        int startCreateDate = startErrorCode + CommonMessage.ERROR_CODE_LENGTH;
+        int startCreateDate = startErrorCode + ERROR_CODE_LENGTH;
 
         SystemUpdateMessage message;
         try {
             message = new SystemUpdateMessage.Builder(CommonMessageFactory.createHeader(telegram))
                     .withLocationGroupName(telegram.substring(startLocationGroup, startErrorCode))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
-                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + CommonMessage.DATE_LENGTH)).build();
+                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + DATE_LENGTH)).build();
             return message;
         } catch (ParseException e) {
             throw new MessageMissmatchException(e.getMessage());
