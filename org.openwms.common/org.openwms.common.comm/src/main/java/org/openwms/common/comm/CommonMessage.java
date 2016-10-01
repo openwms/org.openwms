@@ -87,6 +87,15 @@ public abstract class CommonMessage implements Serializable {
     }
 
     /**
+     * Checks wether the {@code errorCode} is not {@literal null}.
+     *
+     * @return {@literal true} if errorCode is set, otherwise {@literal false}
+     */
+    public boolean hasErrorCode() {
+        return errorCode != null;
+    }
+
+    /**
      * Set the errorCode.
      * 
      * @param errorCode
@@ -116,6 +125,16 @@ public abstract class CommonMessage implements Serializable {
      */
     protected void setCreated(Date created) {
         this.created = created;
+    }
+
+    /**
+     * Checks if the given {@code str} starts with an '*'. An optional telegram value contains '*' only.
+     *
+     * @param str to check
+     * @return true if set
+     */
+    public static boolean exists(String str) {
+        return !str.startsWith("*");
     }
 
     @Override

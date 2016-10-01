@@ -29,26 +29,34 @@ import org.openwms.common.comm.CommonMessage;
 
 /**
  * A ResponseMessage on <tt>RequestMessage</tt>s.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 public class ResponseMessage extends CommonMessage implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "RES_";
-    private final String identifier = IDENTIFIER;
+
+    private String barcode;
+    private String actualLocation;
+    private String targetLocation;
+    private String targetLocationGroup;
 
     /**
      * Create a new ResponseMessage.
-     * 
-     * @param header
-     *            The message header
+     *
+     * @param header The message header
      */
     public ResponseMessage(CommonHeader header) {
         super(header);
+    }
+
+    private ResponseMessage(Builder builder) {
+        super(CommonHeader.empty());
+        barcode = builder.barcode;
+        actualLocation = builder.actualLocation;
+        targetLocation = builder.targetLocation;
+        targetLocationGroup = builder.targetLocationGroup;
     }
 
     /**
@@ -56,8 +64,25 @@ public class ResponseMessage extends CommonMessage implements Serializable {
      */
     @Override
     public String getMessageIdentifier() {
-        return identifier;
+        return IDENTIFIER;
     }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public String getActualLocation() {
+        return actualLocation;
+    }
+
+    public String getTargetLocation() {
+        return targetLocation;
+    }
+
+    public String getTargetLocationGroup() {
+        return targetLocationGroup;
+    }
+
 
     /**
      * {@inheritDoc}
@@ -75,5 +100,73 @@ public class ResponseMessage extends CommonMessage implements Serializable {
     @Override
     public boolean isWithoutReply() {
         return true;
+    }
+
+    /**
+     * {@code ResponseMessage} builder static inner class.
+     */
+    public static final class Builder {
+
+        private String barcode;
+        private String actualLocation;
+        private String targetLocation;
+        private String targetLocationGroup;
+        private CommonHeader header;
+
+        public Builder() {
+        }
+
+        /**
+         * Sets the {@code barcode} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code barcode} to set
+         * @return a reference to this Builder
+         */
+        public Builder withBarcode(String val) {
+            barcode = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code actualLocation} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code actualLocation} to set
+         * @return a reference to this Builder
+         */
+        public Builder withActualLocation(String val) {
+            actualLocation = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code targetLocation} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code targetLocation} to set
+         * @return a reference to this Builder
+         */
+        public Builder withTargetLocation(String val) {
+            targetLocation = val;
+            return this;
+        }
+
+        /**
+         * Sets the {@code targetLocationGroup} and returns a reference to this Builder so that the methods can be chained together.
+         *
+         * @param val the {@code targetLocationGroup} to set
+         * @return a reference to this Builder
+         */
+        public Builder withTargetLocationGroup(String val) {
+            targetLocationGroup = val;
+            return this;
+        }
+
+        /**
+         * Returns a {@code ResponseMessage} built from the parameters previously set.
+         *
+         * @return a {@code ResponseMessage} built with parameters of this {@code ResponseMessage.Builder}
+         */
+        public ResponseMessage build() {
+            return new ResponseMessage(this);
+        }
     }
 }

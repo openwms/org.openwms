@@ -25,7 +25,7 @@ import java.io.Serializable;
 
 /**
  * A CommonHeader represents the header part of a CommonMessage.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.2
  */
@@ -35,7 +35,7 @@ public class CommonHeader implements Serializable {
     private short messageLength;
     private String sender;
     private String receiver;
-    private short sequenceNo;
+    private int sequenceNo;
 
     public static final short LENGTH_SYNC_FIELD = 3;
     public static final short LENGTH_MESSAGE_LENGTH_FIELD = 5;
@@ -46,19 +46,14 @@ public class CommonHeader implements Serializable {
 
     /**
      * Create a new CommonHeader.
-     * 
-     * @param sync
-     *            The sync field
-     * @param messageLength
-     *            The length of the message
-     * @param sender
-     *            The sender identifier
-     * @param receiver
-     *            The receiver identifier
-     * @param sequenceNo
-     *            An incremental sequence number
+     *
+     * @param sync The sync field
+     * @param messageLength The length of the message
+     * @param sender The sender identifier
+     * @param receiver The receiver identifier
+     * @param sequenceNo An incremental sequence number
      */
-    public CommonHeader(String sync, short messageLength, String sender, String receiver, short sequenceNo) {
+    public CommonHeader(String sync, short messageLength, String sender, String receiver, int sequenceNo) {
         super();
         this.sync = sync;
         this.messageLength = messageLength;
@@ -76,9 +71,14 @@ public class CommonHeader implements Serializable {
         this(commonHeader.getSync(), commonHeader.getMessageLength(), commonHeader.getSender(), commonHeader.getReceiver(), commonHeader.getSequenceNo());
     }
 
+    private CommonHeader(){}
+
+    public static CommonHeader empty() {
+        return new CommonHeader();
+    }
     /**
      * Get the sync.
-     * 
+     *
      * @return the sync.
      */
     public String getSync() {
@@ -87,7 +87,7 @@ public class CommonHeader implements Serializable {
 
     /**
      * Get the messageLength.
-     * 
+     *
      * @return the messageLength.
      */
     public short getMessageLength() {
@@ -96,7 +96,7 @@ public class CommonHeader implements Serializable {
 
     /**
      * Get the sender.
-     * 
+     *
      * @return the sender.
      */
     public String getSender() {
@@ -105,9 +105,8 @@ public class CommonHeader implements Serializable {
 
     /**
      * Set the sender.
-     * 
-     * @param sender
-     *            The sender to set.
+     *
+     * @param sender The sender to set.
      */
     public void setSender(String sender) {
         this.sender = sender;
@@ -115,7 +114,7 @@ public class CommonHeader implements Serializable {
 
     /**
      * Get the receiver.
-     * 
+     *
      * @return the receiver.
      */
     public String getReceiver() {
@@ -124,9 +123,8 @@ public class CommonHeader implements Serializable {
 
     /**
      * Set the receiver.
-     * 
-     * @param receiver
-     *            The receiver to set.
+     *
+     * @param receiver The receiver to set.
      */
     public void setReceiver(String receiver) {
         this.receiver = receiver;
@@ -134,10 +132,10 @@ public class CommonHeader implements Serializable {
 
     /**
      * Get the sequenceNo.
-     * 
+     *
      * @return the sequenceNo.
      */
-    public short getSequenceNo() {
+    public int getSequenceNo() {
         return sequenceNo;
     }
 
@@ -195,10 +193,7 @@ public class CommonHeader implements Serializable {
         } else if (!sync.equals(other.sync)) {
             return false;
         }
-        if (messageLength != other.messageLength) {
-            return false;
-        }
-        return true;
+        return messageLength == other.messageLength;
     }
 
     @Override

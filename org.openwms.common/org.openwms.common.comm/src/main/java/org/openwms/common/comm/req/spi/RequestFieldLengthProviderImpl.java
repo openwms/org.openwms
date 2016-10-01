@@ -19,28 +19,33 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm;
+package org.openwms.common.comm.req.spi;
 
-import org.ameba.app.SolutionApp;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
+import org.ameba.app.SpringProfiles;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 /**
- * A DriverStarter.
+ * A RequestFieldLengthProvider.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {DriverStarter.class, SolutionApp.class})
-@ImportResource("META-INF/spring/*-context.xml")
-public class DriverStarter {
+@Profile({SpringProfiles.DEVELOPMENT_PROFILE, SpringProfiles.IT_PROFILE})
+@Component
+class RequestFieldLengthProviderImpl implements RequestFieldLengthProvider{
 
-    /**
-     * Boot up!
-     *
-     * @param args Some args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(DriverStarter.class, args);
+    @Override
+    public int barcodeLength() {
+        return 20;
+    }
+
+    @Override
+    public int locationIdLength() {
+        return 20;
+    }
+
+    @Override
+    public int noLocationIdFields() {
+        return 5;
     }
 }

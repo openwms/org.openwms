@@ -38,6 +38,7 @@ public final class CommConstants {
     /** Used as suffix to create channels dynamically. */
     public static final String CHANNEL_SUFFIX = "MessageInputChannel";
     public static final char FILLER_CHARACTER = '_';
+    public static final String DEFAULT_HTTP_SERVICE_ACCESS = "DEFAULT_HTTP_SERVICE_ACCESS";
 
     /**
      * Parses a String representation of a Date into a Date using the pre-defined format.
