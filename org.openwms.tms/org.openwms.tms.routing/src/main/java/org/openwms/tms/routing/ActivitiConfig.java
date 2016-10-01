@@ -19,32 +19,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.req.spi;
+package org.openwms.tms.routing;
 
-import org.openwms.common.location.LocationPK;
-import org.openwms.common.transport.Barcode;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * A RequestFieldLengthProvider.
+ * A ActivitiConfiguration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class RequestFieldLengthProviderImpl implements RequestFieldLengthProvider{
+@Configuration
+class ActivitiConfig {
 
-    @Override
-    public int barcodeLength() {
-        return Barcode.BARCODE_LENGTH;
-    }
-
-    @Override
-    public int locationIdLength() {
-        return LocationPK.PK_LENGTH;
-    }
-
-    @Override
-    public int noLocationIdFields() {
-        return LocationPK.NUMBER_OF_KEYS;
-    }
 }

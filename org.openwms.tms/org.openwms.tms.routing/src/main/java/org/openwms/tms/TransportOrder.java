@@ -19,21 +19,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.sysu.spi;
-
-import org.openwms.common.location.LocationGroup;
-import org.springframework.stereotype.Component;
+package org.openwms.tms;
 
 /**
- * A SystemUpdateFieldLengthProviderImpl.
+ * A TransportOrder.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class SystemUpdateFieldLengthProviderImpl implements SystemUpdateFieldLengthProvider {
+public class TransportOrder {
 
-    @Override
-    public int lengthLocationGroupName() {
-        return LocationGroup.LENGTH_NAME;
+    private String id;
+    private String transportUnitId;
+    private String routeId;
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTransportUnitId() {
+        return transportUnitId;
+    }
+
+    public String getRouteId() {
+        return routeId;
     }
 }

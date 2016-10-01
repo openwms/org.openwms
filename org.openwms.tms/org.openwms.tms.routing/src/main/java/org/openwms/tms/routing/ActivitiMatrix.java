@@ -19,28 +19,37 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm;
+package org.openwms.tms.routing;
 
-import org.ameba.app.SolutionApp;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.RuntimeService;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
- * A DriverStarter.
+ * A ActivitiMatrix.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {DriverStarter.class, SolutionApp.class})
-@ImportResource("META-INF/spring/*-context.xml")
-public class DriverStarter {
+@Component
+class ActivitiMatrix implements Matrix {
 
-    /**
-     * Boot up!
-     *
-     * @param args Some args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(DriverStarter.class, args);
+    @Autowired
+    private ProcessEngine engine;
+    @Autowired
+    private RuntimeService runtimeService;
+
+    @Override
+    public ControlProgram findBy(Route route, Location location, LocationGroup locationGroup) throws NoRouteException {
+        engine.getRepositoryService();
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("barcode", "");
+        runtimeService.startProcessInstanceById("REQ_", variables);
+        return null;
     }
 }

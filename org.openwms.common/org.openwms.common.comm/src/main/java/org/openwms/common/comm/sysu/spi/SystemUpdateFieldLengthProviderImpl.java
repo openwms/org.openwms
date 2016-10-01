@@ -19,28 +19,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm;
+package org.openwms.common.comm.sysu.spi;
 
-import org.ameba.app.SolutionApp;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.stereotype.Component;
 
 /**
- * A DriverStarter.
+ * A SystemUpdateFieldLengthProviderImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {DriverStarter.class, SolutionApp.class})
-@ImportResource("META-INF/spring/*-context.xml")
-public class DriverStarter {
+@Component
+class SystemUpdateFieldLengthProviderImpl implements SystemUpdateFieldLengthProvider {
 
-    /**
-     * Boot up!
-     *
-     * @param args Some args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(DriverStarter.class, args);
+    @Override
+    public int lengthLocationGroupName() {
+        return 20;
     }
 }

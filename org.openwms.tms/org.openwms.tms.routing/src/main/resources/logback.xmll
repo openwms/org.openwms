@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+
+    <property name="LOG_TEMP" value="/tmp/owms"/>
+    <property name="MODULE_NAME" value="COMMON"/>
+
+    <include resource="logback-appenders.xml" />
+    <include resource="logback-loggers.xml" />
+
+    <logger name="org.dozer" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type" level="OFF"/>
+    <logger name="org.openwms" level="DEBUG"/>
+
+    <logger name="CORE_INTEGRATION_MESSAGING" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LOGFILE"/>
+    </root>
+
+</configuration>

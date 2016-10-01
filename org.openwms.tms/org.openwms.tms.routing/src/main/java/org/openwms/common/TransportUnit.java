@@ -19,29 +19,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.req.api;
-
-import java.util.function.Function;
-
-import org.openwms.common.comm.req.RequestMessage;
-import org.openwms.common.comm.req.ResponseMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+package org.openwms.common;
 
 /**
- * A RequestMessageHandler.
+ * A TransportUnit.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class RequestMessageHandler implements Function<RequestMessage, ResponseMessage> {
+public class TransportUnit {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RequestMessageHandler.class);
-
-    @Override
-    public ResponseMessage apply(RequestMessage message) {
-        LOGGER.debug("Handling {}", message);
-        return null;
-    }
+    private String barcode;
 }

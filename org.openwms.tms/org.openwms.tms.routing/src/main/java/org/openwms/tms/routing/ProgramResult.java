@@ -19,28 +19,34 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm;
-
-import org.ameba.app.SolutionApp;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ImportResource;
+package org.openwms.tms.routing;
 
 /**
- * A DriverStarter.
+ * A ProgramResult.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@SpringBootApplication(scanBasePackageClasses = {DriverStarter.class, SolutionApp.class})
-@ImportResource("META-INF/spring/*-context.xml")
-public class DriverStarter {
+public class ProgramResult {
 
-    /**
-     * Boot up!
-     *
-     * @param args Some args
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(DriverStarter.class, args);
+    private String barcode, actualLocation, targetLocation, locationGroupName, error;
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public String getActualLocation() {
+        return actualLocation;
+    }
+
+    public String getTargetLocation() {
+        return targetLocation;
+    }
+
+    public String getLocationGroupName() {
+        return locationGroupName;
+    }
+
+    public String getError() {
+        return error;
     }
 }

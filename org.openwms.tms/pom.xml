@@ -64,12 +64,14 @@
             </activation>
             <modules>
                 <module>org.openwms.tms.transportation</module>
+                <module>org.openwms.tms.routing</module>
             </modules>
         </profile>
         <profile>
             <id>tms</id>
             <modules>
                 <module>org.openwms.tms.transportation</module>
+                <module>org.openwms.tms.routing</module>
             </modules>
         </profile>
     </profiles>
@@ -87,6 +89,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.tms.transportation</artifactId>
+                <version>${module.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>org.openwms.tms.routing</artifactId>
                 <version>${module.version}</version>
             </dependency>
         </dependencies>
