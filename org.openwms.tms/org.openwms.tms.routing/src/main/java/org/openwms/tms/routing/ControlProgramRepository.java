@@ -25,13 +25,14 @@ import java.util.Optional;
 
 import org.openwms.common.Location;
 import org.openwms.common.LocationGroup;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * A ControlProgramRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface ControlProgramRepository {
+interface ControlProgramRepository extends JpaRepository<Long, ControlProgram> {
 
     Optional<ControlProgram> findByRouteAndLocation(Route route, Location location);
 

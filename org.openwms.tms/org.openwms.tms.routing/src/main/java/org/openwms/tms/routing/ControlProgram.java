@@ -21,11 +21,27 @@
  */
 package org.openwms.tms.routing;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
+import org.ameba.integration.jpa.BaseEntity;
+import org.openwms.common.Location;
+import org.openwms.common.LocationGroup;
+
 /**
  * A ControlProgram.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ControlProgram {
+@Entity
+@Table(name = "TMS_CONTROL_PROGRAM")
+public class ControlProgram extends BaseEntity implements Serializable {
+
+    private Route route;
+    private String name;
+    private Location location;
+    private LocationGroup locationGroup;
+    private String type;
 
 }
