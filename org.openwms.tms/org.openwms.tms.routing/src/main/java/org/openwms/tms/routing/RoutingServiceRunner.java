@@ -51,9 +51,9 @@ public class RoutingServiceRunner {
             @Override
             public void run(String... strings) throws Exception {
                 Route route1 = routeRepository.save(new Route("R001"));
-                repo.save(new ControlProgram(route1,"ACT001","EXT_0000000000000000",null, "REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
-                repo.save(new ControlProgram(route1,"ACT001",null, "ERRORPLACE","REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
-                repo.save(new ControlProgram(route1,"ACT001",null, "ROOT","REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new ControlProgram(route1,"ACT001","EXT_/0000/0000/0000/0000",null, "REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new ControlProgram(route1,"ACT001",null, "ERRORPLACE","REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new ControlProgram(route1,"ACT001",null, "ROOT","REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));
             }
         };
 
