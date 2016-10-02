@@ -21,25 +21,13 @@
  */
 package org.openwms.common;
 
-import org.springframework.hateoas.ResourceSupport;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A LocationGroup.
+ * A LocationRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationGroup extends ResourceSupport {
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    private String name;
-
-    public LocationGroup() {
-    }
-
-    public LocationGroup(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

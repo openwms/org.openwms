@@ -32,6 +32,12 @@ public class TransportOrder {
     private String transportUnitId;
     private String routeId;
 
+    public TransportOrder(String id, String transportUnitId, String routeId) {
+        this.id = id;
+        this.transportUnitId = transportUnitId;
+        this.routeId = routeId;
+    }
+
     public String getId() {
         return id;
     }

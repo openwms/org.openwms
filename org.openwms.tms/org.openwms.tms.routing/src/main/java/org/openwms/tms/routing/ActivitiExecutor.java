@@ -27,6 +27,8 @@ import java.util.Map;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +40,7 @@ import org.springframework.stereotype.Component;
 @Component
 class ActivitiExecutor implements ProgramExecutor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiExecutor.class);
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
@@ -47,12 +50,11 @@ class ActivitiExecutor implements ProgramExecutor {
 
     @Override
     public ProgramResult execute(ControlProgram program) {
-        System.out.println("Number of process definitions : "
-                + repositoryService.createProcessDefinitionQuery().list().get(0));
-        System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
+        LOGGER.debug("Executing program : {}", program);
         Map<String, Object> variables = new HashMap<>();
         variables.put("barcode", "");
-        runtimeService.startProcessInstanceById(repositoryService.createProcessDefinitionQuery().list().get(0).getId());
+        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getControlProgramId()).singleResult().getId();
+        runtimeService.startProcessInstanceById(id);
         return null;
     }
 }

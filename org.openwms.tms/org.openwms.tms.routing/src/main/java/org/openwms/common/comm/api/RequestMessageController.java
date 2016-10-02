@@ -24,7 +24,7 @@ package org.openwms.common.comm.api;
 import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.FetchLocationGroupByName;
 import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
+import org.openwms.common.LocationGroupVO;
 import org.openwms.tms.FetchTransportOrder;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.routing.Matrix;
@@ -73,7 +73,7 @@ class RequestMessageController {
 
          */
         Location location = fetchLocationByCoord.apply(req.getActualLocation());
-        LocationGroup locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
+        LocationGroupVO locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
         TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
         ProgramResult result = executor.execute(matrix.findBy(Route.of(transportOrder.getRouteId()), location, locationGroup));
         //return new ResponseMessage.Builder().withBarcode(result.getBarcode()).withActualLocation(result.getActualLocation()).withTargetLocation(result.getTargetLocation()).withTargetLocationGroup(result.getLocationGroupName()).build();

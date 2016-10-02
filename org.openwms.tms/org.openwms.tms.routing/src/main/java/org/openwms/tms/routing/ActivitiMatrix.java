@@ -23,8 +23,9 @@ package org.openwms.tms.routing;
 
 import java.util.Optional;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
+import org.openwms.common.LocationGroupVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
@@ -44,26 +45,26 @@ class ActivitiMatrix implements Matrix {
     private RestTemplate restTemplate;
 
     @Override
-    public ControlProgram findBy(Route route, Location location, LocationGroup locationGroup) throws NoRouteException {
-        Optional<ControlProgram> prg = repository.findByRouteAndLocation(route, location);
+    public ControlProgram findBy(Route route, Location location, LocationGroupVO locationGroup) throws NoRouteException {
+        Optional<ControlProgram> prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
         if (!prg.isPresent()) {
             prg = findByLocationGroup(route, locationGroup);
         }
-        return prg.get();
+        return prg.orElseThrow(()->new NoRouteException(String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), locationGroup.getName())));
     }
 
-    private Optional<ControlProgram> findByLocationGroup(Route route, LocationGroup locationGroup) {
-        Optional<ControlProgram> cp = repository.findByRouteAndLocationGroup(route, locationGroup);
-        if (!cp.isPresent()) {
-            cp = findByLocationGroup(route, findLocationGroup(route, locationGroup.getLink("parent")));
+    private Optional<ControlProgram> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
+        Optional<ControlProgram> cp = repository.findByRouteAndLocationGroupName(route, locationGroup.getName());
+        if (!cp.isPresent() && locationGroup.hasLink("parent")) {
+            cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("parent")));
         }
         return cp;
     }
 
-    private LocationGroup findLocationGroup(Route route, Link parent) {
-        LocationGroup lg = restTemplate.getForObject(parent.getHref(), LocationGroup.class);
+    private LocationGroupVO findLocationGroup(Link parent) {
+        LocationGroupVO lg = restTemplate.getForObject(parent.getHref(), LocationGroupVO.class);
         if (lg == null) {
-            throw new NoRouteException();
+            throw new NotFoundException(String.format("No LocationGroup at %s found", parent.getHref()));
         }
         return lg;
     }

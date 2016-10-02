@@ -22,7 +22,7 @@
 package org.openwms.tms.routing;
 
 import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
+import org.openwms.common.LocationGroupVO;
 
 /**
  * A Matrix.
@@ -31,5 +31,5 @@ import org.openwms.common.LocationGroup;
  */
 public interface Matrix {
 
-    ControlProgram findBy(Route route, Location location, LocationGroup locationGroup) throws NoRouteException;
+    ControlProgram findBy(Route route, Location location, LocationGroupVO locationGroup) throws NoRouteException;
 }

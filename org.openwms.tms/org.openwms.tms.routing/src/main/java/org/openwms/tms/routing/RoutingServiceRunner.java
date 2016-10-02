@@ -22,8 +22,10 @@
 package org.openwms.tms.routing;
 
 import org.ameba.app.SolutionApp;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 /**
  * A RoutingServiceRunner.
@@ -40,6 +42,21 @@ public class RoutingServiceRunner {
      */
     public static void main(String[] args) {
         SpringApplication.run(RoutingServiceRunner.class, args);
+    }
+
+    @Bean
+    public CommandLineRunner init(final ControlProgramRepository repo, final RouteRepository routeRepository){
+
+        return new CommandLineRunner() {
+            @Override
+            public void run(String... strings) throws Exception {
+                Route route1 = routeRepository.save(new Route("R001"));
+                repo.save(new ControlProgram(route1,"ACT001","EXT_0000000000000000",null, "REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new ControlProgram(route1,"ACT001",null, "ERRORPLACE","REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new ControlProgram(route1,"ACT001",null, "ROOT","REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
+            }
+        };
+
     }
 
 }

@@ -21,12 +21,14 @@
  */
 package org.openwms.common;
 
+import java.io.Serializable;
+
 /**
  * A Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class Location {
+public class Location implements Serializable {
 
     private String coordinate;
     private String locationGroupName;

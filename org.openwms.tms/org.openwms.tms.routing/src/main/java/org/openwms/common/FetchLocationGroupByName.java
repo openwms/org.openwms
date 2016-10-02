@@ -33,14 +33,14 @@ import org.springframework.web.client.RestTemplate;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-public class FetchLocationGroupByName implements Function<String, LocationGroup> {
+public class FetchLocationGroupByName implements Function<String, LocationGroupVO> {
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public LocationGroup apply(String name) {
+    public LocationGroupVO apply(String name) {
         // todo: get the LocationGroup by name....
-        return new LocationGroup(name);
+        return new LocationGroupVO(name);
     }
 }

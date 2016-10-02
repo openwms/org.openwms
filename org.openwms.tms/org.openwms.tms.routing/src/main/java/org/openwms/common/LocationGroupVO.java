@@ -19,24 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
+package org.openwms.common;
 
-import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
- * A ControlProgramRepository.
+ * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface ControlProgramRepository extends JpaRepository<ControlProgram, Long> {
+public class LocationGroupVO extends ResourceSupport {
 
-    @Query("select cp from ControlProgram cp where cp.route = :route and cp.locationKey is not null and cp.locationKey = :locationKey")
-    Optional<ControlProgram> findByRouteAndLocationKey(@Param("route") Route route, @Param("locationKey") String locationKey);
+    private String name;
 
-    @Query("select cp from ControlProgram cp where cp.route = :route and cp.locationGroupName is not null and cp.locationGroupName = :locationGroupName")
-    Optional<ControlProgram> findByRouteAndLocationGroupName(@Param("route") Route route, @Param("locationGroupName") String locationGroupName);
+    public LocationGroupVO() {
+    }
+
+    public LocationGroupVO(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

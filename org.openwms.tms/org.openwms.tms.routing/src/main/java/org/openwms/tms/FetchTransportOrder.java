@@ -41,6 +41,6 @@ public class FetchTransportOrder implements Function<String, TransportOrder> {
     @Override
     public TransportOrder apply(String barcode) {
         // todo: get the LocationGroup by name....
-        return new TransportOrder();
+        return new TransportOrder("1", "4711", "R001");
     }
 }
