@@ -41,6 +41,6 @@ public class FetchLocationGroupByName implements Function<String, LocationGroup>
     @Override
     public LocationGroup apply(String name) {
         // todo: get the LocationGroup by name....
-        return null;
+        return new LocationGroup(name);
     }
 }

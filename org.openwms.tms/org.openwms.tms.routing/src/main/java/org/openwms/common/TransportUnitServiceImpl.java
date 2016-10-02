@@ -36,4 +36,10 @@ class TransportUnitServiceImpl implements TransportUnitService {
         System.out.println("Barcode:"+barcode);
         return null;
     }
+
+    @Override
+    public TransportUnit getByKey() {
+        System.out.println("Hi");
+        return null;
+    }
 }

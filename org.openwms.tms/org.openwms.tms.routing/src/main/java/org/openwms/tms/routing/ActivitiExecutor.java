@@ -21,6 +21,13 @@
  */
 package org.openwms.tms.routing;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,8 +38,21 @@ import org.springframework.stereotype.Component;
 @Component
 class ActivitiExecutor implements ProgramExecutor {
 
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    TaskService taskService;
+    @Autowired
+    RepositoryService repositoryService;
+
     @Override
     public ProgramResult execute(ControlProgram program) {
+        System.out.println("Number of process definitions : "
+                + repositoryService.createProcessDefinitionQuery().list().get(0));
+        System.out.println("Number of tasks : " + taskService.createTaskQuery().count());
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("barcode", "");
+        runtimeService.startProcessInstanceById(repositoryService.createProcessDefinitionQuery().list().get(0).getId());
         return null;
     }
 }

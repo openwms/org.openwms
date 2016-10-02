@@ -41,6 +41,6 @@ public class FetchLocationByCoord implements Function<String, Location> {
     @Override
     public Location apply(String coordinate) {
         // todo: get the LocationGroup by name....
-        return restTemplate.getForObject("http://locations", Location.class, coordinate);
+        return new Location(coordinate);//restTemplate.getForObject("http://locations", Location.class, coordinate);
     }
 }

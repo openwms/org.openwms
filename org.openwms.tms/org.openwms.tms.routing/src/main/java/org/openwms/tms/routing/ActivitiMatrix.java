@@ -21,15 +21,14 @@
  */
 package org.openwms.tms.routing;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Optional;
 
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.RuntimeService;
 import org.openwms.common.Location;
 import org.openwms.common.LocationGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * A ActivitiMatrix.
@@ -40,16 +39,32 @@ import org.springframework.stereotype.Component;
 class ActivitiMatrix implements Matrix {
 
     @Autowired
-    private ProcessEngine engine;
+    private ControlProgramRepository repository;
     @Autowired
-    private RuntimeService runtimeService;
+    private RestTemplate restTemplate;
 
     @Override
     public ControlProgram findBy(Route route, Location location, LocationGroup locationGroup) throws NoRouteException {
-        engine.getRepositoryService();
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("barcode", "");
-        runtimeService.startProcessInstanceById("REQ_", variables);
-        return null;
+        Optional<ControlProgram> prg = repository.findByRouteAndLocation(route, location);
+        if (!prg.isPresent()) {
+            prg = findByLocationGroup(route, locationGroup);
+        }
+        return prg.get();
+    }
+
+    private Optional<ControlProgram> findByLocationGroup(Route route, LocationGroup locationGroup) {
+        Optional<ControlProgram> cp = repository.findByRouteAndLocationGroup(route, locationGroup);
+        if (!cp.isPresent()) {
+            cp = findByLocationGroup(route, findLocationGroup(route, locationGroup.getLink("parent")));
+        }
+        return cp;
+    }
+
+    private LocationGroup findLocationGroup(Route route, Link parent) {
+        LocationGroup lg = restTemplate.getForObject(parent.getHref(), LocationGroup.class);
+        if (lg == null) {
+            throw new NoRouteException();
+        }
+        return lg;
     }
 }

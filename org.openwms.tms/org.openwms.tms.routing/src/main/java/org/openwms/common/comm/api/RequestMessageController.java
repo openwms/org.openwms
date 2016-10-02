@@ -33,6 +33,7 @@ import org.openwms.tms.routing.ProgramResult;
 import org.openwms.tms.routing.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -40,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@RestController
+@RestController("/v1/req")
 class RequestMessageController {
 
     @Autowired
@@ -58,7 +59,7 @@ class RequestMessageController {
      * Takes the passed message, and hands over to the service.
      */
     @PostMapping
-    public void apply(String actualLocation, String locationGroupName, String barcode) {
+    public void apply(@RequestBody RequestVO req) {
 
         /*
 
@@ -71,9 +72,9 @@ class RequestMessageController {
          - type
 
          */
-        Location location = fetchLocationByCoord.apply(actualLocation);
-        LocationGroup locationGroup = fetchLocationGroupByName.apply(locationGroupName);
-        TransportOrder transportOrder = fetchTransportOrder.apply(barcode);
+        Location location = fetchLocationByCoord.apply(req.getActualLocation());
+        LocationGroup locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
+        TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
         ProgramResult result = executor.execute(matrix.findBy(Route.of(transportOrder.getRouteId()), location, locationGroup));
         //return new ResponseMessage.Builder().withBarcode(result.getBarcode()).withActualLocation(result.getActualLocation()).withTargetLocation(result.getTargetLocation()).withTargetLocationGroup(result.getLocationGroupName()).build();
     }

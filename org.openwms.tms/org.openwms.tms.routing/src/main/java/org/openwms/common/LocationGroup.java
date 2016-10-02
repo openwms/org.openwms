@@ -21,14 +21,16 @@
  */
 package org.openwms.common;
 
+import org.springframework.hateoas.ResourceSupport;
+
 /**
  * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationGroup {
+public class LocationGroup extends ResourceSupport {
 
-    String name;
+    private String name;
 
     public LocationGroup() {
     }

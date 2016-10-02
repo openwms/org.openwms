@@ -4,12 +4,12 @@
         xmlns:activiti="http://activiti.org/bpmn"
         targetNamespace="Examples">
 
-    <process id="REQ_">
+    <process id="oneTaskProcess">
 
         <startEvent id="start" />
         <sequenceFlow id="flow1" sourceRef="start" targetRef="print" />
 
-        <serviceTask id="print" activiti:expression="#{transportUnitService.findByKey(barcode)}" />
+        <serviceTask id="print" activiti:expression="#{transportUnitService.getByKey()}" />
         <sequenceFlow id="flow2" sourceRef="print" targetRef="end" />
 
         <endEvent id="end" />
