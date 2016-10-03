@@ -75,7 +75,11 @@ class RequestMessageController {
         Location location = fetchLocationByCoord.apply(req.getActualLocation());
         LocationGroupVO locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
         TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
-        ProgramResult result = executor.execute(matrix.findBy(Route.of(transportOrder.getRouteId()), location, locationGroup));
-        //return new ResponseMessage.Builder().withBarcode(result.getBarcode()).withActualLocation(result.getActualLocation()).withTargetLocation(result.getTargetLocation()).withTargetLocationGroup(result.getLocationGroupName()).build();
+        ProgramResult result = executor.execute(matrix.findBy("REQ_", Route.of(transportOrder.getRouteId()), location, locationGroup));
+        //return new ResponseMessage.Builder()
+        // .withBarcode(result.getBarcode())
+        // .withActualLocation(result.getActualLocation())
+        // .withTargetLocation(result.getTargetLocation())
+        // .withTargetLocationGroup(result.getLocationGroupName()).build();
     }
 }

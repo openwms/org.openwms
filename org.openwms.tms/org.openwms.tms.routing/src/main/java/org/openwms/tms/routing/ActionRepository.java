@@ -28,15 +28,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 /**
- * A ControlProgramRepository.
+ * A ActionRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-interface ControlProgramRepository extends JpaRepository<ControlProgram, Long> {
+interface ActionRepository extends JpaRepository<Action, Long> {
 
-    @Query("select cp from ControlProgram cp where cp.route = :route and cp.locationKey is not null and cp.locationKey = :locationKey")
-    Optional<ControlProgram> findByRouteAndLocationKey(@Param("route") Route route, @Param("locationKey") String locationKey);
+    @Query("select a from Action a where a.route = :route and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
+    Optional<Action> findByRouteAndLocationKey(@Param("route") Route route, @Param("locationKey") String locationKey);
 
-    @Query("select cp from ControlProgram cp where cp.route = :route and cp.locationGroupName is not null and cp.locationGroupName = :locationGroupName")
-    Optional<ControlProgram> findByRouteAndLocationGroupName(@Param("route") Route route, @Param("locationGroupName") String locationGroupName);
+    @Query("select a from Action a where a.route = :route and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
+    Optional<Action> findByRouteAndLocationGroupName(@Param("route") Route route, @Param("locationGroupName") String locationGroupName);
 }

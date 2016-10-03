@@ -21,9 +21,14 @@
  */
 package org.openwms.common;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,10 +42,30 @@ public class FetchLocationByCoord implements Function<String, Location> {
 
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private DiscoveryClient discoveryClient;
 
     @Override
     public Location apply(String coordinate) {
-        // todo: get the LocationGroup by name....
-        return new Location(coordinate);//restTemplate.getForObject("http://locations", Location.class, coordinate);
+
+        Map<String, Object> maps = new HashMap<>();
+        maps.put("locationPK", coordinate);
+        //Location loc = restTemplate.getForObject("http://common-service/"+CommonConstants.API_LOCATIONS, Location.class, maps);
+
+        try {
+
+            ResponseEntity<Location> exchange =
+                    restTemplate.exchange(
+                            "http://common-service" + CommonConstants.API_LOCATIONS+"?locationPK="+coordinate,
+                            HttpMethod.GET,
+                            null,
+                            Location.class,
+                            maps);
+            System.out.println(exchange);
+            return exchange.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

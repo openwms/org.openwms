@@ -40,21 +40,21 @@ import org.springframework.web.client.RestTemplate;
 class ActivitiMatrix implements Matrix {
 
     @Autowired
-    private ControlProgramRepository repository;
+    private ActionRepository repository;
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public ControlProgram findBy(Route route, Location location, LocationGroupVO locationGroup) throws NoRouteException {
-        Optional<ControlProgram> prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
+    public Action findBy(String actionType, Route route, Location location, LocationGroupVO locationGroup) {
+        Optional<Action> prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
         if (!prg.isPresent()) {
             prg = findByLocationGroup(route, locationGroup);
         }
-        return prg.orElseThrow(()->new NoRouteException(String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), locationGroup.getName())));
+        return prg.orElseThrow(() -> new NoRouteException(String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), locationGroup.getName())));
     }
 
-    private Optional<ControlProgram> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
-        Optional<ControlProgram> cp = repository.findByRouteAndLocationGroupName(route, locationGroup.getName());
+    private Optional<Action> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
+        Optional<Action> cp = repository.findByRouteAndLocationGroupName(route, locationGroup.getName());
         if (!cp.isPresent() && locationGroup.hasLink("parent")) {
             cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("parent")));
         }

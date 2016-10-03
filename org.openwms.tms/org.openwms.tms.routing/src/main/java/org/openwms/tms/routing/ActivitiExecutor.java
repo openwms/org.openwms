@@ -49,11 +49,11 @@ class ActivitiExecutor implements ProgramExecutor {
     RepositoryService repositoryService;
 
     @Override
-    public ProgramResult execute(ControlProgram program) {
+    public ProgramResult execute(Action program) {
         LOGGER.debug("Executing program : {}", program);
         Map<String, Object> variables = new HashMap<>();
         variables.put("barcode", "");
-        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getControlProgramId()).singleResult().getId();
+        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).singleResult().getId();
         runtimeService.startProcessInstanceById(id);
         return null;
     }

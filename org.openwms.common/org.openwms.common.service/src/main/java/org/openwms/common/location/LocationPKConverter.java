@@ -19,26 +19,37 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
+package org.openwms.common.location;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.dozer.DozerConverter;
 
 /**
- * A ModuleConfig.
+ * A LocationConverter.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class ModuleConfig {
+public class LocationPKConverter extends DozerConverter<String, LocationPK> {
 
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
+    /**
+     * {@inheritDoc}
+     */
+    public LocationPKConverter() {
+        super(String.class, LocationPK.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LocationPK convertTo(String source, LocationPK destination) {
+        return LocationPK.fromString(source);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String convertFrom(LocationPK source, String destination) {
+        return source.toString();
+    }
 }

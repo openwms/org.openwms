@@ -16,6 +16,10 @@
 				<class-a>java.lang.String</class-a>
 				<class-b>org.openwms.common.location.Location</class-b>
 			</converter>
+			<converter type="org.openwms.common.location.LocationPKConverter">
+				<class-a>java.lang.String</class-a>
+				<class-b>org.openwms.common.location.LocationPK</class-b>
+			</converter>
 			<converter type="org.openwms.common.transport.TransportUnitTypeConverter">
 				<class-a>java.lang.String</class-a>
 				<class-b>org.openwms.common.transport.TransportUnitType</class-b>
@@ -40,4 +44,12 @@
 		</field>
     </mapping>
 
+	<mapping>
+		<class-a>org.openwms.common.location.Location</class-a>
+		<class-b>org.openwms.common.location.LocationVO</class-b>
+		<field>
+			<a is-accessible="true">locationId</a>
+			<b is-accessible="true">locationId</b>
+		</field>
+	</mapping>
 </mappings>

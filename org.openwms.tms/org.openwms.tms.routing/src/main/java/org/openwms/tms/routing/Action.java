@@ -29,46 +29,47 @@ import java.io.Serializable;
 import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A ControlProgram.
+ * A Action.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Entity
-@Table(name = "RSRV_CONTROL_PROGRAM")
-public class ControlProgram extends BaseEntity implements Serializable {
+@Table(name = "RSRV_ACTION")
+public class Action extends BaseEntity implements Serializable {
 
-    public ControlProgram() {
+    public Action() {
     }
 
-    public ControlProgram(Route route, String name, String locationKey, String locationGroupName, String type, String controlProgramId, String description) {
+    public Action(Route route, String name, String locationKey, String locationGroupName, String actionType, String programKey, String description) {
         this.route = route;
         this.name = name;
         this.locationKey = locationKey;
         this.locationGroupName = locationGroupName;
-        this.type = type;
-        this.controlProgramId = controlProgramId;
+        this.actionType = actionType;
+        this.programKey = programKey;
         this.description = description;
     }
 
     @NotNull
     private Route route;
     @NotNull
-    private String controlProgramId;
+    private String programKey;
     @NotNull
     private String name;
     private String locationKey;
     private String locationGroupName;
     @NotNull
-    private String type;
+    private String actionType;
     @NotNull
     private String description;
+    private boolean enabled = true;
 
     public Route getRoute() {
         return route;
     }
 
-    public String getControlProgramId() {
-        return controlProgramId;
+    public String getProgramKey() {
+        return programKey;
     }
 
     public String getName() {
@@ -83,23 +84,31 @@ public class ControlProgram extends BaseEntity implements Serializable {
         return locationGroupName;
     }
 
-    public String getType() {
-        return type;
+    public String getActionType() {
+        return actionType;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
-        return "ControlProgram{" +
+        return "Action{" +
                 "route=" + route +
-                ", controlProgramId='" + controlProgramId + '\'' +
+                ", programKey='" + programKey + '\'' +
                 ", name='" + name + '\'' +
                 ", locationKey='" + locationKey + '\'' +
                 ", locationGroupName='" + locationGroupName + '\'' +
-                ", type='" + type + '\'' +
+                ", actionType='" + actionType + '\'' +
                 ", description='" + description + '\'' +
                 "} " + super.toString();
     }

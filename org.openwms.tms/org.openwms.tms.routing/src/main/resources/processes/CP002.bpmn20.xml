@@ -3,15 +3,15 @@
              xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
              xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema"
              expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
-  <process id="CP002" isExecutable="true">
+  <process id="CP002" name="CP002 - Location Update" isExecutable="true">
     <startEvent id="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0"></startEvent>
     <serviceTask id="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" name="Find Key" activiti:expression="#{transportUnitService.getByKey2()}"></serviceTask>
     <sequenceFlow id="sid-EE0CD301-8286-4243-B088-02DA3704E66C" sourceRef="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0" targetRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D"></sequenceFlow>
     <intermediateThrowEvent id="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></intermediateThrowEvent>
     <sequenceFlow id="sid-ECE9AEB1-73EA-4F95-807D-5ADEFB2214D4" sourceRef="sid-CB275BC5-9B82-4813-9BB3-B0882247327D" targetRef="sid-CA5B85A6-7D04-4C7E-A7A5-D09824FE6602"></sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_process">
-    <bpmndi:BPMNPlane bpmnElement="CP002" id="BPMNPlane_process">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_CP002">
+    <bpmndi:BPMNPlane bpmnElement="CP002" id="BPMNPlane_CP002">
       <bpmndi:BPMNShape bpmnElement="sid-B26E0B4C-1756-4701-A5D0-753667D34FF0" id="BPMNShape_sid-B26E0B4C-1756-4701-A5D0-753667D34FF0">
         <omgdc:Bounds height="30.0" width="30.0" x="300.0" y="300.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>

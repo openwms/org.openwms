@@ -21,6 +21,7 @@
  */
 package org.openwms.common.location;
 
+import org.ameba.mapping.BeanMapper;
 import org.openwms.common.CommonConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,9 +39,11 @@ class LocationController {
 
     @Autowired
     private LocationService<Location> locationService;
+    @Autowired
+    private BeanMapper mapper;
 
     @GetMapping(params = {"locationPK"})
-    public Location getLocation(@RequestParam("locationPK") String locationPk) {
-        return locationService.findByLocationId(LocationPK.fromString(locationPk));
+    public LocationVO getLocation(@RequestParam("locationPK") String locationPk) {
+        return mapper.map(locationService.findByLocationId(LocationPK.fromString(locationPk)), LocationVO.class);
     }
 }

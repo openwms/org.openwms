@@ -23,8 +23,10 @@ package org.openwms.tms.routing;
 
 import org.ameba.app.SolutionApp;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -33,6 +35,8 @@ import org.springframework.context.annotation.Bean;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @SpringBootApplication(scanBasePackageClasses = SolutionApp.class, scanBasePackages = "org.openwms")
+@EnableEurekaClient
+@EnableFeignClients
 public class RoutingServiceRunner {
 
     /**
@@ -41,22 +45,22 @@ public class RoutingServiceRunner {
      * @param args Some args
      */
     public static void main(String[] args) {
-        SpringApplication.run(RoutingServiceRunner.class, args);
+        new SpringApplicationBuilder(RoutingServiceRunner.class)
+                .web(true)
+                .run(args);
     }
 
     @Bean
-    public CommandLineRunner init(final ControlProgramRepository repo, final RouteRepository routeRepository){
+    public CommandLineRunner init(final ActionRepository repo, final RouteRepository routeRepository) {
 
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
                 Route route1 = routeRepository.save(new Route("R001"));
-                repo.save(new ControlProgram(route1,"ACT001","EXT_/0000/0000/0000/0000",null, "REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
-                repo.save(new ControlProgram(route1,"ACT001",null, "ERRORPLACE","REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));
-                repo.save(new ControlProgram(route1,"ACT001",null, "ROOT","REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new Action(route1, "ACT001", "EXT_/0000/0000/0000/0000", null, "REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new Action(route1, "ACT002", null, "ERRORPLACE", "REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));
+                repo.save(new Action(route1, "ACT003", null, "ROOT", "REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));
             }
         };
-
     }
-
 }

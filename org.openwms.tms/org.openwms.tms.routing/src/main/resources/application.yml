@@ -1,10 +1,8 @@
-spring:
-  application:
-    name: routing-service
 security:
   user:
     password: sa
   basic:
     enabled: false
-server:
-  port: 8081
+spring:
+  main:
+    banner-mode: "off"
