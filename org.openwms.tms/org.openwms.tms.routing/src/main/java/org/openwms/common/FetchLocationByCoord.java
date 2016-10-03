@@ -26,7 +26,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -42,16 +41,12 @@ public class FetchLocationByCoord implements Function<String, Location> {
 
     @Autowired
     private RestTemplate restTemplate;
-    @Autowired
-    private DiscoveryClient discoveryClient;
 
     @Override
     public Location apply(String coordinate) {
 
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
-        //Location loc = restTemplate.getForObject("http://common-service/"+CommonConstants.API_LOCATIONS, Location.class, maps);
-
         try {
 
             ResponseEntity<Location> exchange =

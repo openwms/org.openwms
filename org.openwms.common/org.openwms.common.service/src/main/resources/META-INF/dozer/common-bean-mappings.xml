@@ -51,5 +51,9 @@
 			<a is-accessible="true">locationId</a>
 			<b is-accessible="true">locationId</b>
 		</field>
+		<field>
+			<a is-accessible="true">locationGroup.name</a>
+			<b is-accessible="true">locationGroupName</b>
+		</field>
 	</mapping>
 </mappings>

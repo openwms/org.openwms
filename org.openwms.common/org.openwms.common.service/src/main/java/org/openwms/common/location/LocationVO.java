@@ -31,4 +31,21 @@ import java.io.Serializable;
 public class LocationVO implements Serializable {
 
     private String locationId;
+    private String locationGroupName;
+
+    public String getLocationGroupName() {
+        return locationGroupName;
+    }
+
+    public void setLocationGroupName(String locationGroupName) {
+        this.locationGroupName = locationGroupName;
+    }
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
 }
