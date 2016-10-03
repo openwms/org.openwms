@@ -19,13 +19,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
+package org.openwms.common;
+
+import org.springframework.hateoas.ResourceSupport;
 
 /**
- * A ControlProgram.
+ * A LocationGroup.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ControlProgram {
+public class LocationGroupVO extends ResourceSupport {
 
+    private String name;
+
+    public LocationGroupVO() {
+    }
+
+    public LocationGroupVO(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

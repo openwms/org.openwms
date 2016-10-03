@@ -21,17 +21,28 @@
  */
 package org.openwms.tms.routing;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
+import org.ameba.integration.jpa.BaseEntity;
+
 /**
  * A Route.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class Route {
+@Entity
+@Table(name = "RSRV_ROUTE")
+public class Route extends BaseEntity implements Serializable {
 
     private String routeId;
 
-    private Route(String routeId) {
-    this.routeId = routeId;
+    public Route() {
+    }
+
+    public Route(String routeId) {
+        this.routeId = routeId;
     }
 
     public String getRouteId() {

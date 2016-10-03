@@ -21,9 +21,13 @@
  */
 package org.openwms.common;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,14 +37,29 @@ import org.springframework.web.client.RestTemplate;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-public class FetchLocationGroupByName implements Function<String, LocationGroup> {
+public class FetchLocationGroupByName implements Function<String, LocationGroupVO> {
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public LocationGroup apply(String name) {
-        // todo: get the LocationGroup by name....
-        return null;
+    public LocationGroupVO apply(String name) {
+        Map<String, Object> maps = new HashMap<>();
+        maps.put("name", name);
+        try {
+
+            ResponseEntity<LocationGroupVO> exchange =
+                    restTemplate.exchange(
+                            "http://common-service" + CommonConstants.API_LOCATIONGROUPS+"?name="+name,
+                            HttpMethod.GET,
+                            null,
+                            LocationGroupVO.class,
+                            maps);
+            System.out.println(exchange);
+            return exchange.getBody();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

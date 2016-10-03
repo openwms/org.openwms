@@ -28,5 +28,5 @@ package org.openwms.tms.routing;
  */
 public interface ProgramExecutor {
 
-    ProgramResult execute(ControlProgram program);
+    ProgramResult execute(Action program);
 }

@@ -21,6 +21,15 @@
  */
 package org.openwms.tms.routing;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -31,8 +40,21 @@ import org.springframework.stereotype.Component;
 @Component
 class ActivitiExecutor implements ProgramExecutor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiExecutor.class);
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    TaskService taskService;
+    @Autowired
+    RepositoryService repositoryService;
+
     @Override
-    public ProgramResult execute(ControlProgram program) {
+    public ProgramResult execute(Action program) {
+        LOGGER.debug("Executing program : {}", program);
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("barcode", "");
+        String id = repositoryService.createProcessDefinitionQuery().processDefinitionKey(program.getProgramKey()).singleResult().getId();
+        runtimeService.startProcessInstanceById(id);
         return null;
     }
 }

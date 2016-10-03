@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Profile;
 
 /**
@@ -38,6 +39,7 @@ class LocationConfig {
 
     @Profile("default")
     @Bean
+    @DependsOn("locationGroupRunner")
     CommandLineRunner locationRunner(LocationRepository lr) {
         return args -> {
             lr.deleteAll();

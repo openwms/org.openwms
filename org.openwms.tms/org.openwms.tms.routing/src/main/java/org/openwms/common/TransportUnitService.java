@@ -30,4 +30,6 @@ package org.openwms.common;
 public interface TransportUnitService {
 
     TransportUnit getByKey(String barcode);
+    TransportUnit getByKey();
+    TransportUnit getByKey2();
 }

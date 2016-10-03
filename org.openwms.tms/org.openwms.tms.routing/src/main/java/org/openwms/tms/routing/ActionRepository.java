@@ -21,24 +21,22 @@
  */
 package org.openwms.tms.routing;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
- * A ModuleConfig.
+ * A ActionRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class ModuleConfig {
+interface ActionRepository extends JpaRepository<Action, Long> {
 
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+    @Query("select a from Action a where a.route = :route and a.locationKey is not null and a.locationKey = :locationKey and a.enabled = true")
+    Optional<Action> findByRouteAndLocationKey(@Param("route") Route route, @Param("locationKey") String locationKey);
 
+    @Query("select a from Action a where a.route = :route and a.locationGroupName is not null and a.locationGroupName = :locationGroupName and a.enabled = true")
+    Optional<Action> findByRouteAndLocationGroupName(@Param("route") Route route, @Param("locationGroupName") String locationGroupName);
 }

@@ -21,23 +21,13 @@
  */
 package org.openwms.common;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 /**
- * A LocationGroup.
+ * A LocationRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationGroup {
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    String name;
-
-    public LocationGroup() {
-    }
-
-    public LocationGroup(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

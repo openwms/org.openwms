@@ -21,13 +21,18 @@
  */
 package org.openwms.common;
 
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * A Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class Location {
+public class Location implements Serializable {
 
+    @JsonProperty("locationId")
     private String coordinate;
     private String locationGroupName;
 

@@ -34,6 +34,7 @@ import org.ameba.mapping.DozerMapperImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
@@ -52,6 +53,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableSpringConfigured
 @EnableJpaAuditing
 @EnableMultiTenancy
+@EnableEurekaClient
 public class CommonStarter {
 
     /**

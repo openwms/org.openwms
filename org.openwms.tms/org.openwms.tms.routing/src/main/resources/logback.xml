@@ -11,6 +11,7 @@
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
     <logger name="org.openwms" level="DEBUG"/>
+    <logger name="org.springframework.web.client.RestTemplate" level="DEBUG"/>
 
     <logger name="CORE_INTEGRATION_MESSAGING" level="DEBUG"/>
 

@@ -1,9 +1,21 @@
 spring:
   application:
-    name: COMMON-1
+    name: tms-service
   main:
     banner-mode: "off"
+
+server:
+  port: 8083
+security:
+  user:
+    password: sa
+basic:
+    enabled: false
 
 common:
   url: http://localhost:8080
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/

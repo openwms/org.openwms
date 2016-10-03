@@ -19,26 +19,38 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
-
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+package org.openwms.common.comm.api;
 
 /**
- * A ModuleConfig.
+ * A RequestVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class ModuleConfig {
+class RequestVO {
 
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
+    String actualLocation, locationGroupName, barcode;
+
+    public String getActualLocation() {
+        return actualLocation;
     }
 
+    public void setActualLocation(String actualLocation) {
+        this.actualLocation = actualLocation;
+    }
+
+    public String getLocationGroupName() {
+        return locationGroupName;
+    }
+
+    public void setLocationGroupName(String locationGroupName) {
+        this.locationGroupName = locationGroupName;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
+    }
 }

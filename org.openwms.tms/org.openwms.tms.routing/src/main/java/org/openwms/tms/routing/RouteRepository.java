@@ -21,24 +21,13 @@
  */
 package org.openwms.tms.routing;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
- * A ModuleConfig.
+ * A RouteRepository.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class ModuleConfig {
-
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+interface RouteRepository extends JpaRepository<Route, Long> {
 
 }

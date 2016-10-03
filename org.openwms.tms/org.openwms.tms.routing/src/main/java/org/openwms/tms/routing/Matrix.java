@@ -22,7 +22,7 @@
 package org.openwms.tms.routing;
 
 import org.openwms.common.Location;
-import org.openwms.common.LocationGroup;
+import org.openwms.common.LocationGroupVO;
 
 /**
  * A Matrix.
@@ -31,5 +31,15 @@ import org.openwms.common.LocationGroup;
  */
 public interface Matrix {
 
-    ControlProgram findBy(Route route, Location location, LocationGroup locationGroup) throws NoRouteException;
+    /**
+     * Find and return an {@code Action}.
+     *
+     * @param actionType The type of action is often the type of triggering event (REQ_, SYSU, etc.)
+     * @param route The {@code TransportOrder}s {@code Route}
+     * @param location The actual {@code Location}
+     * @param locationGroup The corresponding actual {@code LocationGroup}
+     * @return The Action
+     * @throws org.ameba.exception.NotFoundException in case no Action was found
+     */
+    Action findBy(String actionType, Route route, Location location, LocationGroupVO locationGroup);
 }
