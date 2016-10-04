@@ -22,6 +22,7 @@
 package org.openwms.tms;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A TransportationService offers some useful methods regarding the general handling of {@link TransportOrder}s.
@@ -31,6 +32,8 @@ import java.util.Collection;
  * @since 1.0
  */
 public interface TransportationService<T extends TransportOrder> {
+
+    List<T> findBy(String barcode, String... states);
 
     /**
      * Returns the number of {@code TransportOrder}s that have the {@code target} as target and are in one of the {@code states}.

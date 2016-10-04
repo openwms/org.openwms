@@ -21,9 +21,13 @@
  */
 package org.openwms.tms;
 
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -40,7 +44,18 @@ public class FetchTransportOrder implements Function<String, TransportOrder> {
 
     @Override
     public TransportOrder apply(String barcode) {
-        // todo: get the LocationGroup by name....
-        return new TransportOrder("1", "4711", "R001");
+        try {
+            ResponseEntity<List<TransportOrder>> exchange =
+                    restTemplate.exchange(
+                            "http://tms-service/v1/transportorders?barcode="+barcode+"&state=STARTED",
+                            HttpMethod.GET,
+                            null,
+                            new ParameterizedTypeReference<List<TransportOrder>>() {
+                            });
+            return exchange.getBody().get(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 }

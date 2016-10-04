@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.ameba.exception.NotFoundException;
 import org.ameba.i18n.Translator;
@@ -70,6 +72,11 @@ class TransportationServiceImpl implements TransportationService<TransportOrder>
     private List<UpdateFunction> updateFunctions;
     @Autowired
     private Translator translator;
+
+    @Override
+    public List<TransportOrder> findBy(String barcode, String... states) {
+        return repository.findByTransportUnitBKAndStates(barcode, Stream.of(states).map(TransportOrderState::valueOf).collect(Collectors.toList()).toArray(new TransportOrderState[states.length]));
+    }
 
     /**
      * {@inheritDoc}
