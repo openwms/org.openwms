@@ -24,6 +24,7 @@ package org.openwms.tms;
 import java.util.List;
 import java.util.function.Function;
 
+import org.ameba.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -44,18 +45,16 @@ public class FetchTransportOrder implements Function<String, TransportOrder> {
 
     @Override
     public TransportOrder apply(String barcode) {
-        try {
-            ResponseEntity<List<TransportOrder>> exchange =
-                    restTemplate.exchange(
-                            "http://tms-service/v1/transportorders?barcode="+barcode+"&state=STARTED",
-                            HttpMethod.GET,
-                            null,
-                            new ParameterizedTypeReference<List<TransportOrder>>() {
-                            });
-            return exchange.getBody().get(0);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+        ResponseEntity<List<TransportOrder>> exchange =
+                restTemplate.exchange(
+                        "http://tms-service/v1/transportorders?barcode=" + barcode + "&state=STARTED",
+                        HttpMethod.GET,
+                        null,
+                        new ParameterizedTypeReference<List<TransportOrder>>() {
+                        });
+        if (exchange.getBody().size() == 0) {
+            throw new NotFoundException(String.format("No started TransportOrders for TransportUnit [%s] found, no routing possible", barcode));
         }
+        return exchange.getBody().get(0);
     }
 }

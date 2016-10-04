@@ -26,6 +26,7 @@ import static java.util.Arrays.asList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ameba.exception.BehaviorAwareException;
@@ -68,7 +69,7 @@ class TransportationController {
 
     @GetMapping(value = TMSConstants.ROOT_ENTITIES, params = {"barcode", "state"})
     public List<TransportOrder> findBy(@RequestParam String barcode, @RequestParam String state) {
-        return service.findBy(barcode, state);
+        return new ArrayList<>(service.findBy(barcode, state));
     }
 
     @GetMapping(TMSConstants.ROOT_ENTITIES + "/{pKey}")
