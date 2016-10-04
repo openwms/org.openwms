@@ -33,12 +33,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 /**
- * A FetchLocationGroupByName.
+ * A FetchStartedTransportOrder.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-public class FetchTransportOrder implements Function<String, TransportOrder> {
+public class FetchStartedTransportOrder implements Function<String, TransportOrder> {
 
     @Autowired
     private RestTemplate restTemplate;

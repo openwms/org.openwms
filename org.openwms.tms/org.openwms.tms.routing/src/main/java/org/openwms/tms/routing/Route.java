@@ -36,6 +36,7 @@ import org.ameba.integration.jpa.BaseEntity;
 @Table(name = "RSRV_ROUTE")
 public class Route extends BaseEntity implements Serializable {
 
+    public static final Route DEF_ROUTE = new Route("_DEFAULT");
     private String routeId;
 
     public Route() {

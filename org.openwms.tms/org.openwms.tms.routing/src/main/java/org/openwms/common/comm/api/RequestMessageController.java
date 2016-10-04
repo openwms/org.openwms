@@ -21,11 +21,12 @@
  */
 package org.openwms.common.comm.api;
 
+import org.ameba.exception.NotFoundException;
 import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.FetchLocationGroupByName;
 import org.openwms.common.Location;
 import org.openwms.common.LocationGroupVO;
-import org.openwms.tms.FetchTransportOrder;
+import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.routing.Matrix;
 import org.openwms.tms.routing.ProgramExecutor;
@@ -49,7 +50,7 @@ class RequestMessageController {
     @Autowired
     private FetchLocationByCoord fetchLocationByCoord;
     @Autowired
-    private FetchTransportOrder fetchTransportOrder;
+    private FetchStartedTransportOrder fetchTransportOrder;
     @Autowired
     private Matrix matrix;
     @Autowired
@@ -74,8 +75,14 @@ class RequestMessageController {
          */
         Location location = fetchLocationByCoord.apply(req.getActualLocation());
         LocationGroupVO locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
+        Route route;
+        try {
         TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
-        ProgramResult result = executor.execute(matrix.findBy("REQ_", Route.of(transportOrder.getRouteId()), location, locationGroup));
+            route = Route.of(transportOrder.getRouteId());
+        } catch (NotFoundException nfe) {
+            route = Route.DEF_ROUTE;
+        }
+        ProgramResult result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup));
         //return new ResponseMessage.Builder()
         // .withBarcode(result.getBarcode())
         // .withActualLocation(result.getActualLocation())
