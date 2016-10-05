@@ -77,10 +77,10 @@ class RequestMessageController {
         LocationGroupVO locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
         Route route;
         try {
-        TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
+            TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());
             route = Route.of(transportOrder.getRouteId());
         } catch (NotFoundException nfe) {
-            route = Route.DEF_ROUTE;
+            route = Route.NO_ROUTE;
         }
         ProgramResult result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup));
         //return new ResponseMessage.Builder()

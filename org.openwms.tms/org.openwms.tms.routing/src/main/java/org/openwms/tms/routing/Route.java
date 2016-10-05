@@ -24,6 +24,7 @@ package org.openwms.tms.routing;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.ameba.integration.jpa.BaseEntity;
 
@@ -36,10 +37,13 @@ import org.ameba.integration.jpa.BaseEntity;
 @Table(name = "RSRV_ROUTE")
 public class Route extends BaseEntity implements Serializable {
 
+    /** For TransportUnits without active TransportOrder. */
+    public static final Route NO_ROUTE = new Route("_NO_ROUTE");
+    /** For all TransportOrders with no explicitly defined Route. */
     public static final Route DEF_ROUTE = new Route("_DEFAULT");
     private String routeId;
 
-    public Route() {
+    protected Route() {
     }
 
     public Route(String routeId) {
@@ -51,6 +55,25 @@ public class Route extends BaseEntity implements Serializable {
     }
 
     public static Route of(String routeId) {
+        if (routeId == null || routeId.isEmpty()) return DEF_ROUTE;
         return new Route(routeId);
+    }
+
+    @Override
+    public String toString() {
+        return routeId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Route route = (Route) o;
+        return Objects.equals(routeId, route.routeId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(routeId);
     }
 }
