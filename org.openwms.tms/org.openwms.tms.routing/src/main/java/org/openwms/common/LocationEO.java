@@ -21,13 +21,32 @@
  */
 package org.openwms.common;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
+
+import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A LocationRepository.
+ * A LocationEO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface LocationRepository extends JpaRepository<LocationVO, Long> {
+@Entity
+@Table(name="RSRV_LOCATION")
+public class LocationEO extends BaseEntity implements Serializable{
 
+    private String locationId;
+    private String locationGroupName;
+
+    public LocationEO() {
+    }
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public String getLocationGroupName() {
+        return locationGroupName;
+    }
 }

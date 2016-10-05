@@ -24,8 +24,8 @@ package org.openwms.common.comm.api;
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.FetchLocationByCoord;
 import org.openwms.common.FetchLocationGroupByName;
-import org.openwms.common.Location;
 import org.openwms.common.LocationGroupVO;
+import org.openwms.common.LocationVO;
 import org.openwms.tms.FetchStartedTransportOrder;
 import org.openwms.tms.TransportOrder;
 import org.openwms.tms.routing.Matrix;
@@ -73,7 +73,7 @@ class RequestMessageController {
          - type
 
          */
-        Location location = fetchLocationByCoord.apply(req.getActualLocation());
+        LocationVO location = fetchLocationByCoord.apply(req.getActualLocation());
         LocationGroupVO locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
         Route route;
         try {

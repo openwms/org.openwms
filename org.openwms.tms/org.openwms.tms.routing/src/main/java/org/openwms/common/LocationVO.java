@@ -26,20 +26,20 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * A Location.
+ * A LocationVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class Location implements Serializable {
+public class LocationVO implements Serializable {
 
     @JsonProperty("locationId")
     private String coordinate;
     private String locationGroupName;
 
-    public Location() {
+    public LocationVO() {
     }
 
-    public Location(String coordinate) {
+    public LocationVO(String coordinate) {
         this.coordinate = coordinate;
     }
 

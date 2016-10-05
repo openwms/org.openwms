@@ -21,8 +21,8 @@
  */
 package org.openwms.tms.routing;
 
-import org.openwms.common.Location;
 import org.openwms.common.LocationGroupVO;
+import org.openwms.common.LocationVO;
 
 /**
  * A Matrix.
@@ -41,5 +41,5 @@ public interface Matrix {
      * @return The Action
      * @throws org.ameba.exception.NotFoundException in case no Action was found
      */
-    Action findBy(String actionType, Route route, Location location, LocationGroupVO locationGroup);
+    Action findBy(String actionType, Route route, LocationVO location, LocationGroupVO locationGroup);
 }
