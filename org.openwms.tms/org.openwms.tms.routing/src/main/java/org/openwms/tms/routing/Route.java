@@ -27,6 +27,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.ameba.integration.jpa.BaseEntity;
+import org.openwms.common.Location;
 
 /**
  * A Route.
@@ -42,6 +43,12 @@ public class Route extends BaseEntity implements Serializable {
     /** For all TransportOrders with no explicitly defined Route. */
     public static final Route DEF_ROUTE = new Route("_DEFAULT");
     private String routeId;
+    private String description;
+    private Location sourceLocation:
+    private Location targetLocation;
+    private String sourceLocationGroupName;
+    private String targetLocationGroupName;
+    private boolean enabled = true;
 
     protected Route() {
     }
