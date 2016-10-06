@@ -56,6 +56,8 @@ public class RoutingServiceRunner {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
+                Route routeDEF = routeRepository.save(Route.DEF_ROUTE);
+                Route routeNO = routeRepository.save(Route.NO_ROUTE);
                 Route route1 = routeRepository.save(new Route("R001"));
                 repo.save(new Action(route1, "ACT001", "EXT_/0000/0000/0000/0000", null, "REQ_", "CP001", "Start process CP001 when REQ_ on EXT_ location"));
                 repo.save(new Action(route1, "ACT002", null, "ERRORPLACE", "REQ_", "CP002", "Start process CP001 when REQ_ on EXT_ location"));

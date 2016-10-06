@@ -44,7 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@RestController("/v1/req")
+@RestController
 class RequestMessageController {
 
     @Autowired
@@ -61,8 +61,8 @@ class RequestMessageController {
     /**
      * Takes the passed message, and hands over to the service.
      */
-    @PostMapping
-    public void apply(@RequestBody RequestVO req) {
+    @PostMapping("/v1/req")
+    public void handleREQ(@RequestBody RequestVO req) {
 
         /*
 

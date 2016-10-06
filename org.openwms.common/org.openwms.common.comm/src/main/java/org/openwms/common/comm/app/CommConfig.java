@@ -34,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 class CommConfig {
 
+    public
     @LoadBalanced
     @Bean
     RestTemplate restTemplate() {

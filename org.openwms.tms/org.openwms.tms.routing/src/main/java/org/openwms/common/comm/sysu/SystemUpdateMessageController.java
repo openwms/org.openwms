@@ -40,7 +40,7 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@RestController("/v1/sysu")
+@RestController
 class SystemUpdateMessageController {
 
     @Autowired
@@ -52,7 +52,7 @@ class SystemUpdateMessageController {
     @Autowired
     private ProgramExecutor executor;
 
-    @PostMapping
+    @PostMapping("/v1/sysu")
     public void handleSYSU(@RequestBody SystemUpdateVO sysu) {
 
         LocationGroupVO locationGroup = fetchLocationGroupByName.apply(sysu.locationGroupName);
@@ -62,7 +62,7 @@ class SystemUpdateMessageController {
         executor.execute(matrix.findBy("SYSU", Route.DEF_ROUTE, null, locationGroup), runtimeVariables);
     }
 
-    static class SystemUpdateVO {
+    private static class SystemUpdateVO {
 
         String locationGroupName, errorCode;
 

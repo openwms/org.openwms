@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: tcpip-driver
+  main:
+    banner-mode: "off"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/

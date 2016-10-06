@@ -53,11 +53,11 @@
                 <artifactId>org.openwms.common.shared</artifactId>
                 <version>${common.version}</version>
             </dependency>
-            <dependency>
+            <!--dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.comm</artifactId>
                 <version>${common.version}</version>
-            </dependency>
+            </dependency-->
             <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-explorer</artifactId>

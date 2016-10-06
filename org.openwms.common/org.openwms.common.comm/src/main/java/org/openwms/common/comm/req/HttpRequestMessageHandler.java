@@ -21,8 +21,10 @@
  */
 package org.openwms.common.comm.req;
 
+import java.io.Serializable;
 import java.util.function.Function;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.openwms.common.comm.CommConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -54,11 +56,12 @@ class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
         return null;
     }
 
-    static class RequestVO {
+    private static class RequestVO implements Serializable {
 
-        String actualLocation, locationGroupName, barcode;
+        @JsonProperty
+        String actualLocation, barcode;
 
-        public RequestVO(String actualLocation, String barcode) {
+        RequestVO(String actualLocation, String barcode) {
             this.actualLocation = actualLocation;
             this.barcode = barcode;
         }
