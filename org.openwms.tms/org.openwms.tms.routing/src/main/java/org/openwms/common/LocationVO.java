@@ -19,16 +19,39 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.tms.routing;
+package org.openwms.common;
 
-import org.springframework.context.annotation.Configuration;
+import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * A ActivitiConfiguration.
+ * A LocationVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class ActivitiConfig {
+public class LocationVO implements Serializable {
 
+    @JsonProperty("locationId")
+    private String coordinate;
+    private String locationGroupName;
+
+    public LocationVO() {
+    }
+
+    public LocationVO(String coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    public String getCoordinate() {
+        return coordinate;
+    }
+
+    public String getLocationGroupName() {
+        return locationGroupName;
+    }
+
+    public void setLocationGroupName(String locationGroupName) {
+        this.locationGroupName = locationGroupName;
+    }
 }

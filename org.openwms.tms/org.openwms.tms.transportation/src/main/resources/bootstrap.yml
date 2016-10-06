@@ -9,7 +9,7 @@ server:
 security:
   user:
     password: sa
-basic:
+  basic:
     enabled: false
 
 common:

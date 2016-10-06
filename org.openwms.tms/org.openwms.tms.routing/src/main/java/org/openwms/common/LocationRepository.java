@@ -28,6 +28,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface LocationRepository extends JpaRepository<Location, Long> {
+public interface LocationRepository extends JpaRepository<LocationVO, Long> {
 
 }

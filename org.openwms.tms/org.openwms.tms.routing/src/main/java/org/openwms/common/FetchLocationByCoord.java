@@ -37,24 +37,24 @@ import org.springframework.web.client.RestTemplate;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-public class FetchLocationByCoord implements Function<String, Location> {
+public class FetchLocationByCoord implements Function<String, LocationVO> {
 
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public Location apply(String coordinate) {
+    public LocationVO apply(String coordinate) {
 
         Map<String, Object> maps = new HashMap<>();
         maps.put("locationPK", coordinate);
         try {
 
-            ResponseEntity<Location> exchange =
+            ResponseEntity<LocationVO> exchange =
                     restTemplate.exchange(
                             "http://common-service" + CommonConstants.API_LOCATIONS+"?locationPK="+coordinate,
                             HttpMethod.GET,
                             null,
-                            Location.class,
+                            LocationVO.class,
                             maps);
             System.out.println(exchange);
             return exchange.getBody();

@@ -21,37 +21,32 @@
  */
 package org.openwms.common;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.ameba.integration.jpa.BaseEntity;
 
 /**
- * A Location.
+ * A LocationEO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class Location implements Serializable {
+@Entity
+@Table(name="RSRV_LOCATION")
+public class LocationEO extends BaseEntity implements Serializable{
 
-    @JsonProperty("locationId")
-    private String coordinate;
+    private String locationId;
     private String locationGroupName;
 
-    public Location() {
+    public LocationEO() {
     }
 
-    public Location(String coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public String getCoordinate() {
-        return coordinate;
+    public String getLocationId() {
+        return locationId;
     }
 
     public String getLocationGroupName() {
         return locationGroupName;
-    }
-
-    public void setLocationGroupName(String locationGroupName) {
-        this.locationGroupName = locationGroupName;
     }
 }

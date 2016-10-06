@@ -26,6 +26,8 @@ import static java.util.Arrays.asList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.ameba.exception.BehaviorAwareException;
 import org.ameba.exception.BusinessRuntimeException;
@@ -46,6 +48,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
@@ -63,6 +66,11 @@ class TransportationController {
     private BeanMapper m;
     @Autowired
     private TransportationService<TransportOrder> service;
+
+    @GetMapping(value = TMSConstants.ROOT_ENTITIES, params = {"barcode", "state"})
+    public List<TransportOrder> findBy(@RequestParam String barcode, @RequestParam String state) {
+        return new ArrayList<>(service.findBy(barcode, state));
+    }
 
     @GetMapping(TMSConstants.ROOT_ENTITIES + "/{pKey}")
     public TransportOrder findByPKey(@PathVariable String pKey) {

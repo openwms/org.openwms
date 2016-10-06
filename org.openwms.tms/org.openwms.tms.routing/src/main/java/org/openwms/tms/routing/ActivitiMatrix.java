@@ -24,8 +24,8 @@ package org.openwms.tms.routing;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
-import org.openwms.common.Location;
 import org.openwms.common.LocationGroupVO;
+import org.openwms.common.LocationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
@@ -45,7 +45,7 @@ class ActivitiMatrix implements Matrix {
     private RestTemplate restTemplate;
 
     @Override
-    public Action findBy(String actionType, Route route, Location location, LocationGroupVO locationGroup) {
+    public Action findBy(String actionType, Route route, LocationVO location, LocationGroupVO locationGroup) {
         Optional<Action> prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
         if (!prg.isPresent()) {
             prg = findByLocationGroup(route, locationGroup);
