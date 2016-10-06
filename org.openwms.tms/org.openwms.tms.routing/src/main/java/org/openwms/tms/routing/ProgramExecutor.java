@@ -21,6 +21,8 @@
  */
 package org.openwms.tms.routing;
 
+import java.util.Map;
+
 /**
  * A ProgramExecutor.
  *
@@ -28,5 +30,5 @@ package org.openwms.tms.routing;
  */
 public interface ProgramExecutor {
 
-    ProgramResult execute(Action program);
+    ProgramResult execute(Action program, Map<String, Object> runtimeVariables);
 }
