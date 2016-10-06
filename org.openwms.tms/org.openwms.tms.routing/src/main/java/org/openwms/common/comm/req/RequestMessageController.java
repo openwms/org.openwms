@@ -19,7 +19,9 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.api;
+package org.openwms.common.comm.req;
+
+import java.util.HashMap;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.FetchLocationByCoord;
@@ -82,7 +84,7 @@ class RequestMessageController {
         } catch (NotFoundException nfe) {
             route = Route.NO_ROUTE;
         }
-        ProgramResult result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup));
+        ProgramResult result = executor.execute(matrix.findBy("REQ_", route, location, locationGroup), new HashMap<>(0));
         //return new ResponseMessage.Builder()
         // .withBarcode(result.getBarcode())
         // .withActualLocation(result.getActualLocation())
