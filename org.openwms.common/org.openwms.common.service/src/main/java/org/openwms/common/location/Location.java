@@ -44,7 +44,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 import org.springframework.util.Assert;
 
 /**
@@ -59,7 +59,7 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COM_LOCATION", uniqueConstraints = @UniqueConstraint(columnNames = {"C_AREA", "C_AISLE", "C_X", "C_Y", "C_Z"}))
-public class Location extends BaseEntity implements Serializable {
+public class Location extends ApplicationEntity implements Serializable {
 
     /** Unique natural key. */
     @Embedded

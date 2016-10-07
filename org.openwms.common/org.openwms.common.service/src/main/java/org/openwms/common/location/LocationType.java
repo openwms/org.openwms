@@ -28,7 +28,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 import org.springframework.util.Assert;
 
 /**
@@ -42,7 +42,7 @@ import org.springframework.util.Assert;
  */
 @Entity
 @Table(name = "COM_LOCATION_TYPE")
-public class LocationType extends BaseEntity implements Serializable {
+public class LocationType extends ApplicationEntity implements Serializable {
     
     /** Type of the {@code LocationType} (unique). */
     @Column(name = "C_TYPE", unique = true, nullable = false)

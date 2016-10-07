@@ -46,8 +46,14 @@ class ActivitiMatrix implements Matrix {
 
     @Override
     public Action findBy(String actionType, Route route, LocationVO location, LocationGroupVO locationGroup) {
+        // search explicitly...
         Optional<Action> prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
+
+
         if (!prg.isPresent()) {
+            if (locationGroup == null) {
+                throw new NoRouteException("");
+            }
             prg = findByLocationGroup(route, locationGroup);
         }
         return prg.orElseThrow(() -> new NoRouteException(String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), locationGroup.getName())));

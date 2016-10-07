@@ -1,12 +1,14 @@
+spring:
+  application:
+    name: common-service
+  main:
+    banner-mode: "off"
+
 security:
   user:
     password: sa
   basic:
     enabled: false
-
-spring:
-  application:
-    name: common-service
 
 eureka:
   client:
@@ -14,5 +16,5 @@ eureka:
       defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
 
 server:
-  port: 8082
+  port: ${PORT:8082}
 

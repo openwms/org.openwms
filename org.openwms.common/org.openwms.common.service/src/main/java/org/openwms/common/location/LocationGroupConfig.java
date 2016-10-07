@@ -41,7 +41,7 @@ class LocationGroupConfig {
     CommandLineRunner locationGroupRunner(LocationGroupRepository lgr) {
         return args -> {
             lgr.deleteAll();
-            Stream.of("PICKING,SHIPPING_AREA".split(","))
+            Stream.of("PICKING,SHIPPING_AREA,ROOT".split(","))
                     .forEach(x -> lgr.save(new LocationGroup(x)));
         };
     }

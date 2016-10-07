@@ -1,8 +1,18 @@
 spring:
   application:
     name: routing-service
+  main:
+    banner-mode: "off"
+
 server:
   port: ${PORT:8081}
+
+security:
+  user:
+    password: sa
+  basic:
+    enabled: false
+
 eureka:
   client:
     serviceUrl:

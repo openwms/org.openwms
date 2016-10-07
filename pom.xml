@@ -207,6 +207,27 @@
     <profiles>
 
         <profile>
+            <!-- Use PostgreSQL as database -->
+            <id>postgres</id>
+            <activation>
+                <property>
+                    <name>db</name>
+                    <value>postgresql</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.commons</groupId>
+                    <artifactId>commons-dbcp2</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
             <id>public</id>
             <properties>
                 <!-- Web Site deployment -->
@@ -638,10 +659,10 @@
                     <version>${plugin.aspectj.version}</version>
                     <configuration>
                         <showWeaveInfo>false</showWeaveInfo>
+                        <complianceLevel>${java.version}</complianceLevel>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <Xlint>ignore</Xlint>
-                        <complianceLevel>${java.version}</complianceLevel>
                         <encoding>UTF-8</encoding>
                         <verbose>false</verbose>
                         <aspectLibraries>
