@@ -63,12 +63,14 @@ class ActivitiMatrix implements Matrix {
                 prg = findByLocationGroupByName(route, location.getLocationGroupName());
                 if (!prg.isPresent()) {
 
-                    // search the locgroup hierarchy the way up...
+                    // search the LocationGroup hierarchy the way up...
+                    prg = findByLocationGroup(route, new LocationGroupVO(location.getLocationGroupName()));
 
-
-                    String message = String.format("No Action found for Route [%s] on Location [%s] and LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
-                    LOGGER.info(message);
-                    throw new NoRouteException(message);
+                    if (!prg.isPresent()) {
+                        String message = String.format("No Action found for Route [%s] on Location [%s] and LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
+                        LOGGER.info(message);
+                        throw new NoRouteException(message);
+                    }
                 }
             }
         }
@@ -89,13 +91,16 @@ class ActivitiMatrix implements Matrix {
         });
     }
 
-
     private Optional<Action> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
         Optional<Action> cp = repository.findByRouteAndLocationGroupName(route, locationGroup.getName());
-        if (!cp.isPresent() && locationGroup.hasLink("parent")) {
-            cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("parent")));
+        if (!cp.isPresent()) {
+            return cp;
+        } else {
+            if (locationGroup.hasLink("parent")){
+                cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("parent")));
+            }
+            return cp;
         }
-        return cp;
     }
 
     private LocationGroupVO findLocationGroup(Link parent) {

@@ -19,40 +19,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common;
+package org.openwms.common.location;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
- * A LocationVO.
+ * A LocationGroupVO is the view object of a Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationVO extends ResourceSupport implements Serializable {
+public class LocationGroupVO extends ResourceSupport implements Serializable {
 
-    @JsonProperty("locationId")
-    private String coordinate;
-    private String locationGroupName;
-
-    public LocationVO() {
-    }
-
-    public LocationVO(String coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public String getCoordinate() {
-        return coordinate;
-    }
-
-    public String getLocationGroupName() {
-        return locationGroupName;
-    }
-
-    public void setLocationGroupName(String locationGroupName) {
-        this.locationGroupName = locationGroupName;
+    private String name;
+    private String parent;
+    protected LocationGroupVO() {
     }
 }
