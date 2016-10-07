@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    database: postgresql
+    generate-ddl: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: OPENWMS
+    password: OPENWMS
+    url: jdbc:postgresql:OPENWMSDB
