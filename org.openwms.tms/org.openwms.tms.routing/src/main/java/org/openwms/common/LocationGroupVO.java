@@ -21,6 +21,8 @@
  */
 package org.openwms.common;
 
+import java.io.Serializable;
+
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -28,9 +30,10 @@ import org.springframework.hateoas.ResourceSupport;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationGroupVO extends ResourceSupport {
+public class LocationGroupVO extends ResourceSupport implements Serializable {
 
     private String name;
+    private String parent;
 
     public LocationGroupVO() {
     }
@@ -39,7 +42,19 @@ public class LocationGroupVO extends ResourceSupport {
         this.name = name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
     }
 }

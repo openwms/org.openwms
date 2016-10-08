@@ -560,4 +560,12 @@ public class LocationGroup extends Target implements Serializable {
             setGroupStateOut(stateOut, this);
         }
     }
+
+    /**
+     *
+     * @return
+     */
+    public boolean hasParent() {
+        return parent != null;
+    }
 }

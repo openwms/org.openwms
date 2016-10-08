@@ -76,10 +76,7 @@ class RequestMessageController {
 
          */
         LocationVO location = fetchLocationByCoord.apply(req.getActualLocation());
-        LocationGroupVO locationGroup = null;
-        if (req.hasLocationGroupName()) {
-            locationGroup = fetchLocationGroupByName.apply(req.getLocationGroupName());
-        }
+        LocationGroupVO locationGroup = req.hasLocationGroupName() ? fetchLocationGroupByName.apply(req.getLocationGroupName()) : fetchLocationGroupByName.apply(location.getLocationGroupName());
         Route route;
         try {
             TransportOrder transportOrder = fetchTransportOrder.apply(req.getBarcode());

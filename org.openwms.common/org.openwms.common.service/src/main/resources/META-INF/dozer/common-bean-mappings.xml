@@ -66,7 +66,7 @@
 		</field>
 		<field>
 			<a is-accessible="true">parent.name</a>
-			<b is-accessible="true">name</b>
+			<b is-accessible="true">parent</b>
 		</field>
 	</mapping>
 </mappings>

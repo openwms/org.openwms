@@ -34,11 +34,11 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.openwms.common.CommonConstants;
 import org.openwms.common.CommonMessageCodes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriTemplate;
@@ -65,12 +65,14 @@ class LocationGroupController {
         res.addHeader(HttpHeaders.LOCATION, getLocationForCreatedResource(req, id));
     }
 
-    @GetMapping(params = {"name"})
+    @RequestMapping(value = CommonConstants.API_LOCATIONGROUPS, method = RequestMethod.GET, params = {"name"})
     public LocationGroupVO getLocationGroup(@RequestParam("name") String name) {
         Optional<LocationGroup> opt = locationGroupService.findByName(name);
         LocationGroup locationGroup = opt.orElseThrow(() -> new NotFoundException(translator, CommonMessageCodes.LOCATION_GROUP_NOT_FOUND, new String[]{name}, name));
         LocationGroupVO result = mapper.map(locationGroup, LocationGroupVO.class);
-        result.add((Iterable<Link>) linkTo(methodOn(LocationGroupController.class).getLocationGroup(name)));
+        if (locationGroup.hasParent()) {
+            result.add(linkTo(methodOn(LocationGroupController.class).getLocationGroup(locationGroup.getParent().getName())).withRel("_parent"));
+        }
         return result;
     }
 
