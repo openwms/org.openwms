@@ -36,7 +36,6 @@
 
     <properties>
         <moduleDir>../..</moduleDir>
-        <eventsourcing.version>0.3.1</eventsourcing.version>
         <commons-lang3.version>3.4</commons-lang3.version>
     </properties>
 
@@ -129,26 +128,10 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.eventsourcing</groupId>
-                <artifactId>eventsourcing-core</artifactId>
-                <version>${eventsourcing.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.eventsourcing</groupId>
-                <artifactId>eventsourcing-h2</artifactId>
-                <version>${eventsourcing.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.core.uaa</artifactId>
                 <version>${core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-    <repositories>
-        <repository>
-            <id>es4j</id>
-            <url>http://dl.bintray.com/eventsourcing/maven</url>
-        </repository>
-    </repositories>
 </project>
