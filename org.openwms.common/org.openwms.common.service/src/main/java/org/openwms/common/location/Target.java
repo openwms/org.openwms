@@ -25,7 +25,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
  * A Target is either a physical or a logical endpoint of any kind of warehouse order. A {@code TransportOrder} has a Target set,
@@ -38,5 +38,5 @@ import org.ameba.integration.jpa.BaseEntity;
  */
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract class Target extends BaseEntity {
+abstract class Target extends ApplicationEntity {
 }

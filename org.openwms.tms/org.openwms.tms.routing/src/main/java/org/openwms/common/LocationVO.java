@@ -24,13 +24,14 @@ package org.openwms.common;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.ResourceSupport;
 
 /**
  * A LocationVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationVO implements Serializable {
+public class LocationVO extends ResourceSupport implements Serializable {
 
     @JsonProperty("locationId")
     private String coordinate;

@@ -24,7 +24,7 @@ package org.openwms.common.comm.req;
 import java.util.function.Function;
 
 import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.api.RespondingServiceActivator;
+import org.openwms.common.comm.api.NotRespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.annotation.ServiceActivator;
@@ -38,7 +38,7 @@ import org.springframework.stereotype.Component;
  * @since 0.2
  */
 @Component
-class RequestMessageServiceActivator implements RespondingServiceActivator<RequestMessage, ResponseMessage> {
+class RequestMessageServiceActivator implements NotRespondingServiceActivator<RequestMessage> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
     public static final String INPUT_CHANNEL_NAME = RequestMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
@@ -46,15 +46,15 @@ class RequestMessageServiceActivator implements RespondingServiceActivator<Reque
     @Autowired
     private ApplicationContext ctx;
     @Autowired
-    private Function<RequestMessage, ResponseMessage> handler;
+    private Function<RequestMessage, Void> handler;
 
     /**
      * {@inheritDoc}
      */
     @Override
     @ServiceActivator(inputChannel = INPUT_CHANNEL_NAME, outputChannel = "outboundChannel")
-    public ResponseMessage wakeUp(RequestMessage message) {
-        return handler.apply(message);
+    public void wakeUp(RequestMessage message) {
+        handler.apply(message);
     }
 
     /**

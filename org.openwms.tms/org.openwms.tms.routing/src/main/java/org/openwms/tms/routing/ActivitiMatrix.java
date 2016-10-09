@@ -21,11 +21,14 @@
  */
 package org.openwms.tms.routing;
 
+import javax.validation.constraints.NotNull;
 import java.util.Optional;
 
 import org.ameba.exception.NotFoundException;
 import org.openwms.common.LocationGroupVO;
 import org.openwms.common.LocationVO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
@@ -39,24 +42,58 @@ import org.springframework.web.client.RestTemplate;
 @Component
 class ActivitiMatrix implements Matrix {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ActivitiMatrix.class);
+
     @Autowired
     private ActionRepository repository;
     @Autowired
     private RestTemplate restTemplate;
 
     @Override
-    public Action findBy(String actionType, Route route, LocationVO location, LocationGroupVO locationGroup) {
-        Optional<Action> prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
+    public Action findBy(@NotNull String actionType, @NotNull Route route, LocationVO location, LocationGroupVO locationGroup) {
+        // search explicitly...
+        Optional<Action> prg = Optional.empty();
+        if (null != location) {
+
+            // First explicitly search for the Location and Route
+            prg = repository.findByRouteAndLocationKey(route, location.getCoordinate());
+            if (!prg.isPresent()) {
+
+                // When Location is set but no Action exists, check by LocationGroup
+                prg = findByLocationGroupByName(route, location.getLocationGroupName());
+                if (!prg.isPresent()) {
+
+                    // search the LocationGroup hierarchy the way up...
+                    prg = findByLocationGroup(route, locationGroup);
+                    if (!prg.isPresent()) {
+                        String message = String.format("No Action found for Route [%s] on Location [%s] and LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), location.getLocationGroupName());
+                        LOGGER.info(message);
+                        throw new NoRouteException(message);
+                    }
+                }
+            }
+        }
+
+        // search for locgroup...
         if (!prg.isPresent()) {
+            if (null == locationGroup) {
+                String message = String.format("No Action found for Route [%s] and Location [%s] without LocationGroup", route.getRouteId(), location);
+                LOGGER.info(message);
+                throw new NoRouteException(message);
+            }
             prg = findByLocationGroup(route, locationGroup);
         }
-        return prg.orElseThrow(() -> new NoRouteException(String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location.getCoordinate(), locationGroup.getName())));
+        return prg.orElseThrow(() -> {
+            String message = String.format("No Action found for Route [%s], Location [%s], LocationGroup [%s]", route.getRouteId(), location, locationGroup);
+            LOGGER.info(message);
+            return new NoRouteException(message);
+        });
     }
 
     private Optional<Action> findByLocationGroup(Route route, LocationGroupVO locationGroup) {
         Optional<Action> cp = repository.findByRouteAndLocationGroupName(route, locationGroup.getName());
-        if (!cp.isPresent() && locationGroup.hasLink("parent")) {
-            cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("parent")));
+        if (!cp.isPresent() && locationGroup.hasLink("_parent")) {
+            cp = findByLocationGroup(route, findLocationGroup(locationGroup.getLink("_parent")));
         }
         return cp;
     }
@@ -64,8 +101,12 @@ class ActivitiMatrix implements Matrix {
     private LocationGroupVO findLocationGroup(Link parent) {
         LocationGroupVO lg = restTemplate.getForObject(parent.getHref(), LocationGroupVO.class);
         if (lg == null) {
-            throw new NotFoundException(String.format("No LocationGroup at %s found", parent.getHref()));
+            throw new NotFoundException(String.format("No LocationGroup found at [%s]", parent.getHref()));
         }
         return lg;
+    }
+
+    private Optional<Action> findByLocationGroupByName(Route route, String locationGroupName) {
+        return repository.findByRouteAndLocationGroupName(route, locationGroupName);
     }
 }

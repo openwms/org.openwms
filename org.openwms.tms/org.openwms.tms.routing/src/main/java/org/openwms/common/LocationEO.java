@@ -21,11 +21,13 @@
  */
 package org.openwms.common;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 
 /**
  * A LocationEO.
@@ -33,13 +35,16 @@ import org.ameba.integration.jpa.BaseEntity;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Entity
-@Table(name="RSRV_LOCATION")
-public class LocationEO extends BaseEntity implements Serializable{
+@Table(name = "RSRV_LOCATION")
+public class LocationEO extends ApplicationEntity implements Serializable {
 
+    @NotNull
+    @Column(name = "C_LOCATION_ID")
     private String locationId;
+    @Column(name = "C_LOCATION_GROUP_NAME")
     private String locationGroupName;
 
-    public LocationEO() {
+    protected LocationEO() {
     }
 
     public String getLocationId() {

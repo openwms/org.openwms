@@ -1,20 +1,13 @@
 spring:
   application:
-    name: common-service
+    name: tcpip-driver
   main:
     banner-mode: "off"
 
-security:
-  user:
-    password: sa
-  basic:
-    enabled: false
+server:
+  port: 8084
 
 eureka:
   client:
     serviceUrl:
       defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
-
-server:
-  port: ${PORT:8082}
-

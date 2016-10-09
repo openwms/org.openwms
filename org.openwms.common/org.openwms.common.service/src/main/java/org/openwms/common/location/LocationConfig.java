@@ -43,7 +43,7 @@ class LocationConfig {
     CommandLineRunner locationRunner(LocationRepository lr) {
         return args -> {
             lr.deleteAll();
-            Stream.of("INIT/0000/0000/0000/0000,ERR_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
+            Stream.of("INIT/0000/0000/0000/0000,ERR_/0000/0000/0000/0000,EXT_/0000/0000/0000/0000,AKL_/0001/0000/0000/0000".split(","))
                     .forEach(x -> lr.save(new Location(LocationPK.fromString(x))));
         };
     }

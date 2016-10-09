@@ -19,26 +19,38 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.app;
+package org.openwms.common.location;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import java.io.Serializable;
+
+import org.springframework.hateoas.ResourceSupport;
 
 /**
- * A CommConfig.
+ * A LocationGroupVO is the view object of a Location.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class CommConfig {
+public class LocationGroupVO extends ResourceSupport implements Serializable {
 
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
+    private String name;
+    private String parent;
+
+    protected LocationGroupVO() {
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParent() {
+        return parent;
+    }
+
+    public void setParent(String parent) {
+        this.parent = parent;
+    }
 }

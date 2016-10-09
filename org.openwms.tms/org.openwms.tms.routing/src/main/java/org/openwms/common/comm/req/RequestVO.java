@@ -53,4 +53,8 @@ class RequestVO {
     public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
+
+    public boolean hasLocationGroupName() {
+        return locationGroupName != null && !locationGroupName.isEmpty();
+    }
 }

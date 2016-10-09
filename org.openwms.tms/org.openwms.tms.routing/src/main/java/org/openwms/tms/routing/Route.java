@@ -21,12 +21,16 @@
  */
 package org.openwms.tms.routing;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Objects;
 
-import org.ameba.integration.jpa.BaseEntity;
+import org.ameba.integration.jpa.ApplicationEntity;
 import org.openwms.common.LocationEO;
 
 /**
@@ -36,20 +40,31 @@ import org.openwms.common.LocationEO;
  */
 @Entity
 @Table(name = "RSRV_ROUTE")
-public class Route extends BaseEntity implements Serializable {
+public class Route extends ApplicationEntity implements Serializable {
 
     /** For TransportUnits without active TransportOrder. */
     public static final Route NO_ROUTE = new Route("_NO_ROUTE");
     /** For all TransportOrders with no explicitly defined Route. */
     public static final Route DEF_ROUTE = new Route("_DEFAULT");
+    @NotNull
+    @Column(name = "C_NAME")
     private String routeId;
+    @Column(name = "C_DESCRIPTION")
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "C_SOURCE_LOCATION", referencedColumnName = "C_PK")
     private LocationEO sourceLocation;
+    @ManyToOne
+    @JoinColumn(name = "C_TARGET_LOCATION", referencedColumnName = "C_PK")
     private LocationEO targetLocation;
+    @Column(name = "C_SOURCE_LOC_GROUP_NAME")
     private String sourceLocationGroupName;
+    @Column(name = "C_TARGET_LOC_GROUP_NAME")
     private String targetLocationGroupName;
+    @Column(name = "C_ENABLED")
     private boolean enabled = true;
 
+    /** Dear JPA ... */
     protected Route() {
     }
 

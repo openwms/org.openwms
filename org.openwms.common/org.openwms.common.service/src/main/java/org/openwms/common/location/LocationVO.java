@@ -23,12 +23,14 @@ package org.openwms.common.location;
 
 import java.io.Serializable;
 
+import org.springframework.hateoas.ResourceSupport;
+
 /**
  * A LocationVO.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class LocationVO implements Serializable {
+public class LocationVO extends ResourceSupport implements Serializable {
 
     private String locationId;
     private String locationGroupName;
