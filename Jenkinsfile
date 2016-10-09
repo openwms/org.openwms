@@ -17,7 +17,7 @@ node {
           sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Djacoco.propertyName=jacocoArgLine -Dbuild.number=${BUILD_NUMBER} -Dbuild.date=${BUILD_ID}"
        }
      }
-   }
+   )
    stage('Results') {
       archive 'target/*.jar'
    }
