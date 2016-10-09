@@ -3,7 +3,7 @@
 node {
    def mvnHome
    stage('Preparation') {
-      git 'git@github.com:spring-labs/org.openwms.services.git'
+      git 'git@github.com:openwms/org.openwms.git'
       mvnHome = tool 'M3'
    }
    parallel (
