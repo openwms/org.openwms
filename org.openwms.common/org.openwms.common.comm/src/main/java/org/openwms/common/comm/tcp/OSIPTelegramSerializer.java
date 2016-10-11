@@ -21,54 +21,49 @@
  */
 package org.openwms.common.comm.tcp;
 
+import static org.openwms.common.comm.CommConstants.padLeft;
+import static org.openwms.common.comm.CommConstants.padRight;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.util.Map;
 
-import org.openwms.common.comm.CommonMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommHeader;
+import org.openwms.common.comm.Payload;
+import org.openwms.common.comm.exception.MessageMismatchException;
 import org.springframework.core.serializer.Serializer;
 
 /**
  * An OSIPTelegramSerializer is able to read OSIP telegram structures from an InputStream (deserialization) and can also serialize Object
  * structures into OSIP telegrams.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
+class OSIPTelegramSerializer implements Serializer<Map<?, ?>> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OSIPTelegramSerializer.class);
     private static final byte[] CRLF = "\r\n".getBytes();
-
-    /**
-     * FIXME [scherrer] Comment this
-     * 
-     * @param bite
-     * @throws IOException
-     */
-    protected void checkClosure(int bite) throws IOException {
-        if (bite < 0) {
-            LOGGER.debug("Socket closed during message assembly");
-            throw new IOException("Socket closed during message assembly");
-        }
-    }
 
     /**
      * Writes the source object to an output stream using Java Serialization. The source object must implement {@link Serializable}.
      */
     @Override
-    public void serialize(CommonMessage object, OutputStream outputStream) throws IOException {
-        if (!(object instanceof Serializable)) {
-            throw new IllegalArgumentException(getClass().getSimpleName() + " requires a Serializable payload "
-                    + "but received an object of type [" + object.getClass().getName() + "]");
-        }
+    public void serialize(Map<?, ?> map, OutputStream outputStream) throws IOException {
         BufferedOutputStream os = new BufferedOutputStream(outputStream);
-        os.write(object.toString().getBytes(Charset.defaultCharset()));
+        Map<String, String> headers = (Map<String, String>) map.get("headers");
+        String header = String.valueOf(headers.get(CommHeader.SYNC_FIELD_NAME)) +
+                padLeft(String.valueOf(CommConstants.TELEGRAM_LENGTH), CommHeader.LENGTH_MESSAGE_LENGTH_FIELD, "0") +
+                String.valueOf(headers.get(CommHeader.SENDER_FIELD_NAME)) +
+                String.valueOf(headers.get(CommHeader.RECEIVER_FIELD_NAME) +
+                        String.valueOf(headers.get(CommHeader.SEQUENCE_FIELD_NAME)));
+        String s = header + ((Payload) map.get("payload")).asString();
+        if (s.length() > CommConstants.TELEGRAM_LENGTH) {
+            throw new MessageMismatchException("Defined telegram length exceeded, size is" + s.length());
+        }
+        os.write(padRight(s, CommConstants.TELEGRAM_LENGTH, CommConstants.TELEGRAM_FILLER_CHARACTER).getBytes(Charset.defaultCharset()));
         os.write(CRLF);
         os.flush();
     }

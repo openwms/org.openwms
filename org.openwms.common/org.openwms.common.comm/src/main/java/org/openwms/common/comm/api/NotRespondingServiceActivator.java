@@ -21,25 +21,20 @@
  */
 package org.openwms.common.comm.api;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 
 /**
  * A NotRespondingServiceActivator.
- * 
- * @param <T>
- *            A type of incoming CommonMessage
+ *
+ * @param <T> A type of incoming CommonMessage
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public interface NotRespondingServiceActivator<T extends CommonMessage> extends CustomServiceActivator {
+public interface NotRespondingServiceActivator<T extends Payload> extends CustomServiceActivator {
 
     /**
      * Wake up a service, processor or bean an that accepts incoming messages of type <tt>T</tt>.
-     * 
-     * @param message
-     *            The message to forward
+     *
+     * @param message The message to forward
      */
     void wakeUp(T message);
-
 }

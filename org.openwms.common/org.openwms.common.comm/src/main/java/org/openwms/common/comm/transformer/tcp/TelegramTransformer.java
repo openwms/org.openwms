@@ -26,59 +26,63 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.MessageMapper;
-import org.openwms.common.comm.exception.MessageMissmatchException;
+import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.tcp.TCPCommConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.Transformer;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.stereotype.Component;
 
 /**
- * A CommonMessageTransformer transforms incoming OSIP telegram structures to {@link CommonMessage}s.
- * 
+ * A CommonMessageTransformer transforms incoming OSIP telegram structures to {@link Payload}s.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.2
  */
-@Component(value = "commonMessageTransformer")
-public class CommonMessageTransformer {
+@Component(value = "telegramTransformer")
+public class TelegramTransformer<T extends Payload> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommonMessageTransformer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TelegramTransformer.class);
     @Autowired
-    private List<MessageMapper<?>> mappers;
-    private final Map<String, MessageMapper<?>> mappersMap = new HashMap<>();
+    private List<MessageMapper<T>> mappers;
+    private final Map<String, MessageMapper<T>> mappersMap = new HashMap<>();
 
     /**
      * Do this once to query a Map not a List.
      */
     @PostConstruct
     void onPostConstruct() {
-        for (MessageMapper<?> mapper : mappers) {
+        for (MessageMapper<T> mapper : mappers) {
             mappersMap.put(mapper.forType(), mapper);
         }
     }
 
     /**
-     * Transformer method to transform a telegram String <tt>telegram</tt> into a {@link CommonMessage}.
-     * 
-     * @param telegram
-     *            The incoming telegram String
-     * @return The {@link CommonMessage} is transformable
-     * @throws MessageMissmatchException
-     *             if no appropriate type was found.
+     * Transformer method to transform a telegram String {@code telegram} into a {@link Payload}.
+     *
+     * @param telegram The incoming telegram String
+     * @return The {@link Payload} is transformable
+     * @throws MessageMismatchException if no appropriate type was found.
      */
     @Transformer
-    public CommonMessage transform(String telegram) {
-        MessageMapper<?> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
+    public Message<T> transform(String telegram, @Headers Map<String, Object> headers) {
+        if (telegram == null || telegram.isEmpty()) {
+            LOGGER.debug("Received telegram was null or of length == 0, just skip");
+            return null;
+        }
+        MessageMapper<T> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
         if (mapper == null) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Not mapper found for telegram type " + TCPCommConstants.getTelegramType(telegram));
             }
-            throw new MessageMissmatchException("Not mapper found for telegram type "
+            throw new MessageMismatchException("Not mapper found for telegram type "
                     + TCPCommConstants.getTelegramType(telegram));
         }
-        return mapper.mapTo(telegram);
+        return mapper.mapTo(telegram, headers);
     }
 }

@@ -21,27 +21,24 @@
  */
 package org.openwms.common.comm.api;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
+import org.springframework.messaging.Message;
 
 /**
  * A RespondingServiceActivator delegates incoming messages to an Application Service and response to the incoming message.
- * 
- * @param <T>
- *            Type of incoming message that is being processed
- * @param <U>
- *            Type of outgoing message that is returned
+ *
+ * @param <T> Type of incoming message that is being processed
+ * @param <U> Type of outgoing message that is returned
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-public interface RespondingServiceActivator<T extends CommonMessage, U extends CommonMessage> extends
+public interface RespondingServiceActivator<T extends Payload, U extends Payload> extends
         CustomServiceActivator {
 
     /**
-     * Wake up a service, processor or bean an that accepts incoming messages of type <tt>T</tt> and returns messages of type <tt>U</tt>.
-     * 
-     * @param message
-     *            The message to forward
+     * Wake up a service, processor or bean an that accepts incoming messages of type {@code T} and returns messages of type {@code U}.
+     *
+     * @param message The message to forward
      * @return The response returned from the service
      */
-    U wakeUp(T message);
+    Message<U> wakeUp(Message<T> message);
 }

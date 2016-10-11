@@ -24,15 +24,15 @@ package org.openwms.common.comm.req;
 import java.io.Serializable;
 
 import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.CommonHeader;
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.CommHeader;
+import org.openwms.common.comm.Payload;
 
 /**
  * A ResponseMessage on <tt>RequestMessage</tt>s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ResponseMessage extends CommonMessage implements Serializable {
+public class ResponseMessage extends Payload implements Serializable {
 
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "RES_";
@@ -42,17 +42,7 @@ public class ResponseMessage extends CommonMessage implements Serializable {
     private String targetLocation;
     private String targetLocationGroup;
 
-    /**
-     * Create a new ResponseMessage.
-     *
-     * @param header The message header
-     */
-    public ResponseMessage(CommonHeader header) {
-        super(header);
-    }
-
     private ResponseMessage(Builder builder) {
-        super(CommonHeader.empty());
         barcode = builder.barcode;
         actualLocation = builder.actualLocation;
         targetLocation = builder.targetLocation;
@@ -89,9 +79,7 @@ public class ResponseMessage extends CommonMessage implements Serializable {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(super.toString());
-        sb.append(IDENTIFIER).append(getErrorCode()).append(CommConstants.asString(super.getCreated()));
-        return CommConstants.padRight(sb.toString(), getHeader().getMessageLength());
+        return super.toString() + IDENTIFIER + getErrorCode() + CommConstants.asString(super.getCreated());
     }
 
     /**
@@ -100,6 +88,11 @@ public class ResponseMessage extends CommonMessage implements Serializable {
     @Override
     public boolean isWithoutReply() {
         return true;
+    }
+
+    @Override
+    public String asString() {
+        return IDENTIFIER + barcode + actualLocation + targetLocation + targetLocationGroup;
     }
 
     /**
@@ -111,7 +104,7 @@ public class ResponseMessage extends CommonMessage implements Serializable {
         private String actualLocation;
         private String targetLocation;
         private String targetLocationGroup;
-        private CommonHeader header;
+        private CommHeader header;
 
         public Builder() {
         }

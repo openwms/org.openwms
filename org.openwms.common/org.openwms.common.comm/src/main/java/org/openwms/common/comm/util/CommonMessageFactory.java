@@ -21,11 +21,15 @@
  */
 package org.openwms.common.comm.util;
 
-import org.openwms.common.comm.CommonHeader;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.openwms.common.comm.CommHeader;
+import org.springframework.messaging.MessageHeaders;
 
 /**
  * A CommonMessageFactory.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
@@ -35,33 +39,60 @@ public final class CommonMessageFactory {
     /**
      * Hide Constructor.
      */
-    private CommonMessageFactory() {}
+    private CommonMessageFactory() {
+    }
 
     /**
-     * Create a {@link CommonHeader} from a passed telegram structure.
-     * 
-     * @param telegram
-     *            The telegram
-     * @return A {@link CommonHeader} instance
+     * Create a {@link CommHeader} from a passed telegram structure.
+     *
+     * @param telegram The telegram
+     * @return A {@link CommHeader} instance
      */
-    public static CommonHeader createHeader(String telegram) {
-        String sync = telegram.substring(0, CommonHeader.LENGTH_SYNC_FIELD);
+    public static CommHeader createHeader(String telegram) {
+        String sync = telegram.substring(0, CommHeader.LENGTH_SYNC_FIELD);
 
         int start = sync.length();
-        int end = start + CommonHeader.LENGTH_MESSAGE_LENGTH_FIELD;
+        int end = start + CommHeader.LENGTH_MESSAGE_LENGTH_FIELD;
         short messageLength = Short.parseShort(telegram.substring(start, end));
 
         start = end;
-        end += CommonHeader.LENGTH_SENDER_FIELD;
+        end += CommHeader.LENGTH_SENDER_FIELD;
         String sender = telegram.substring(start, end);
 
         start = end;
-        end += CommonHeader.LENGTH_RECEIVER_FIELD;
+        end += CommHeader.LENGTH_RECEIVER_FIELD;
         String receiver = telegram.substring(start, end);
 
         start = end;
-        end += CommonHeader.LENGTH_SEQUENCE_NO_FIELD;
+        end += CommHeader.LENGTH_SEQUENCE_NO_FIELD;
         short sequenceNo = Short.parseShort(telegram.substring(start, end));
-        return new CommonHeader(sync, messageLength, sender, receiver, sequenceNo);
+        return new CommHeader(sync, messageLength, sender, receiver, sequenceNo);
+    }
+
+    public static MessageHeaders createHeaders(String telegram, Map<String, Object> headers) {
+        String sync = telegram.substring(0, CommHeader.LENGTH_SYNC_FIELD);
+
+        int start = sync.length();
+        int end = start + CommHeader.LENGTH_MESSAGE_LENGTH_FIELD;
+        short messageLength = Short.parseShort(telegram.substring(start, end));
+
+        start = end;
+        end += CommHeader.LENGTH_SENDER_FIELD;
+        String sender = telegram.substring(start, end);
+
+        start = end;
+        end += CommHeader.LENGTH_RECEIVER_FIELD;
+        String receiver = telegram.substring(start, end);
+
+        start = end;
+        end += CommHeader.LENGTH_SEQUENCE_NO_FIELD;
+        short sequenceNo = Short.parseShort(telegram.substring(start, end));
+        Map<String, Object> h = new HashMap<>(headers);
+        h.put(CommHeader.SYNC_FIELD_NAME, sync);
+        h.put(CommHeader.MSG_LENGTH_FIELD_NAME, messageLength);
+        h.put(CommHeader.SENDER_FIELD_NAME, sender);
+        h.put(CommHeader.RECEIVER_FIELD_NAME, receiver);
+        h.put(CommHeader.SEQUENCE_FIELD_NAME, sequenceNo);
+        return new MessageHeaders(h);
     }
 }

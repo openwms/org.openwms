@@ -33,50 +33,74 @@
     <int:annotation-config/>
 
     <int:converter>
-        <bean class="org.openwms.common.comm.impl.ByteArrayToStringConverter" />
+        <bean class="org.openwms.common.comm.impl.ByteArrayToStringConverter"/>
     </int:converter>
-    
-    <bean id="byteArraySerializer" class="org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer" />
-    <bean id="telegramSerializer" class="org.openwms.common.comm.tcp.OSIPTelegramSerializer" />
-    <bean id="deserializer" class="org.springframework.core.serializer.DefaultDeserializer" />
 
-    <task:executor id="taskExecutor" queue-capacity="25" />
+    <bean id="byteArraySerializer" class="org.springframework.integration.ip.tcp.serializer.ByteArrayCrLfSerializer"/>
+    <bean id="telegramSerializer" class="org.openwms.common.comm.tcp.OSIPTelegramSerializer"/>
+    <bean id="deserializer" class="org.springframework.core.serializer.DefaultDeserializer"/>
+
+    <task:executor id="taskExecutor" queue-capacity="25"/>
 
     <ip:tcp-connection-factory id="server" type="server" port="30000" so-timeout="300000" using-nio="false"
-        serializer="telegramSerializer" deserializer="byteArraySerializer" so-receive-buffer-size="140" so-send-buffer-size="140" />
+                               serializer="telegramSerializer" deserializer="byteArraySerializer" so-receive-buffer-size="160"
+                               so-send-buffer-size="160" mapper="mapper" />
+    <bean id="mapper"
+          class="org.openwms.common.comm.tcp.CustomTcpMessageMapper">
+        <constructor-arg name="outboundMessageConverter">
+            <bean class="org.springframework.integration.support.converter.MapMessageConverter">
+                <property name="headerNames">
+                    <list>
+                        <value>SYNC_FIELD</value>
+                        <value>SENDER</value>
+                        <value>MSG_LENGTH</value>
+                        <value>SEQUENCENO</value>
+                        <value>RECEIVER</value>
+                        <value>ip_connectionId</value>
+                    </list>
+                </property>
+            </bean>
+        </constructor-arg>
+        <constructor-arg name="inboundMessageConverter">
+            <bean class="org.springframework.messaging.converter.ByteArrayMessageConverter"/>
+        </constructor-arg>
+    </bean>
+
+
 
     <ip:tcp-inbound-channel-adapter id="inboundAdapter" channel="inboundChannel"
-        connection-factory="server" />
+                                    connection-factory="server"/>
 
-    <int:logging-channel-adapter id="logger" level="DEBUG" logger-name="CORE_INTEGRATION_MESSAGING">
-    </int:logging-channel-adapter>
+    <int:logging-channel-adapter id="logger" level="DEBUG" logger-name="CORE_INTEGRATION_MESSAGING"/>
 
     <int:channel id="inboundChannel" datatype="java.lang.String">
-        <!--int:queue capacity="25"/-->
+        <!--int:queue capacity="25"/>
         <int:interceptors>
             <int:wire-tap channel="logger"/>
-        </int:interceptors>
+        </int:interceptors-->
     </int:channel>
 
-    <int:transformer input-channel="inboundChannel" output-channel="transformerOutput" ref="commonMessageTransformer" />
-    <int:channel id="transformerOutput" />
+    <int:transformer input-channel="inboundChannel" output-channel="transformerOutput" ref="telegramTransformer"/>
+    <int:channel id="transformerOutput"/>
 
-    <int:channel id="outboundChannel">
-        <!--int:queue capacity="25"/-->
-        <int:interceptors>
-            <int:wire-tap channel="logger"/>
-        </int:interceptors>
-    </int:channel>
-    <ip:tcp-outbound-channel-adapter id="outboundAdapter" channel="outboundChannel"
-        connection-factory="server" />
-        
+    <!-- ROUTER -->
+
+    <!-- SERVICE ACTIVATOR -->
+
+    <int:channel id="outboundChannel"/>
+    <int:transformer input-channel="outboundChannel" output-channel="enrichedOutboundChannel" ref="headerAppendingTransformer"/>
+
+    <int:channel id="enrichedOutboundChannel" />
+    <ip:tcp-outbound-channel-adapter id="outboundAdapter" channel="enrichedOutboundChannel"
+                                     connection-factory="server" />
+
     <!--Error handling >
     <int:exception-type-router input-channel="inboundChannel" default-output-channel="commonExceptionChannel">
         <int:mapping exception-type="org.openwms.common.comm.exception.MessageMissmatchException" channel="errExceptionChannel" />
         <int:mapping exception-type="java.lang.Exception" channel="commonExceptionChannel" />
     </int:exception-type-router-->
 
-    <int:channel id="commonExceptionChannel" />
-    <int:channel id="errExceptionChannel" />
+    <int:channel id="commonExceptionChannel"/>
+    <int:channel id="errExceptionChannel"/>
 
 </beans>

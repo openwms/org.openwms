@@ -27,27 +27,32 @@ import java.util.Date;
 
 /**
  * A final CommConstants class aggregates common used data and formatting types and provides useful conversation methods.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
  */
 public final class CommConstants {
+
     /** The date format used in messages. */
     public static final String DATE_FORMAT_PATTERN = "yyyyMMddHHmmss";
+    /** Defined telegram length. Validated in Serializer! */
+    public static final int TELEGRAM_LENGTH = 160;
     /** Used as suffix to create channels dynamically. */
     public static final String CHANNEL_SUFFIX = "MessageInputChannel";
-    public static final char FILLER_CHARACTER = '_';
     public static final String DEFAULT_HTTP_SERVICE_ACCESS = "DEFAULT_HTTP_SERVICE_ACCESS";
+
+    /** The character String used to pad LocationGroup fields till the defined length. */
+    public static final char LOCGROUP_FILLER_CHARACTER = '_';
+    /** The character String used to pad till the defined telegram length. */
+    public static final String TELEGRAM_FILLER_CHARACTER = "*";
 
     /**
      * Parses a String representation of a Date into a Date using the pre-defined format.
-     * 
-     * @param dateString
-     *            The date String to convert
+     *
+     * @param dateString The date String to convert
      * @return The converted date String
-     * @throws ParseException
-     *             in case the dateString hasn't the expected format pattern
+     * @throws ParseException in case the dateString hasn't the expected format pattern
      */
     public static Date asDate(String dateString) throws ParseException {
         return new SimpleDateFormat(DATE_FORMAT_PATTERN).parse(dateString);
@@ -55,9 +60,8 @@ public final class CommConstants {
 
     /**
      * Returns a Date object as formatted String.
-     * 
-     * @param date
-     *            The date to format
+     *
+     * @param date The date to format
      * @return The formatted String
      */
     public static String asString(Date date) {
@@ -65,20 +69,30 @@ public final class CommConstants {
     }
 
     /**
-     * Pad a String <tt>s</tt> with a number <tt>n</tt> of '*' characters.
-     * 
-     * @param s
-     *            The String to pad
-     * @param n
-     *            Number of digits in sum
+     * Pad a String {@code s} with a number {@code n} of characters {@code chr}.
+     *
+     * @param s The String to pad
+     * @param n Number of digits in sum
      * @return The padded String
      */
-    public static String padRight(String s, int n) {
-        return String.format("%1$-" + n + "s", s).replace(" ", "*");
+    public static String padRight(String s, int n, String chr) {
+        return String.format("%1$-" + n + "s", s).replace(" ", chr);
+    }
+
+    /**
+     * Pad a String {@code s} with a number {@code n} of characters {@code chr}.
+     *
+     * @param s The String to pad
+     * @param n Number of digits in sum
+     * @return The padded String
+     */
+    public static String padLeft(String s, int n, String chr) {
+        return String.format("%1$" + n + "s", s).replace(" ", chr);
     }
 
     /**
      * Create a new CommConstants.
      */
-    private CommConstants() {}
+    private CommConstants() {
+    }
 }

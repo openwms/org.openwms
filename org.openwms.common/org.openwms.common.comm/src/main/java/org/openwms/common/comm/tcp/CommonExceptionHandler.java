@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm.tcp;
 
-import org.openwms.common.comm.CommonHeader;
+import org.openwms.common.comm.CommHeader;
 import org.openwms.common.comm.err.ErrorCodes;
 import org.openwms.common.comm.err.ErrorMessage;
 import org.openwms.common.comm.util.CommonMessageFactory;
@@ -54,10 +54,10 @@ public class CommonExceptionHandler {
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Common error: " + telegram);
         }
-        CommonHeader header = CommonMessageFactory.createHeader(telegram);
+        CommHeader header = CommonMessageFactory.createHeader(telegram);
         String sender = header.getSender();
         header.setSender(header.getReceiver());
         header.setReceiver(sender);
-        return new ErrorMessage.Builder(header).withErrorCode(ErrorCodes.UNKNOWN_MESSAGE_TYPE).withCreateDate().build();
+        return new ErrorMessage.Builder().withErrorCode(ErrorCodes.UNKNOWN_MESSAGE_TYPE).withCreateDate().build();
     }
 }

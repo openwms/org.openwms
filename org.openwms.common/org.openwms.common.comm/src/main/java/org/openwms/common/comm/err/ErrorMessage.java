@@ -23,43 +23,29 @@ package org.openwms.common.comm.err;
 
 import static org.openwms.common.comm.CommConstants.asDate;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 
 import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.CommonHeader;
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 
 /**
  * An ErrorMessage signals any error or failure situation from an external system and to external systems.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public class ErrorMessage extends CommonMessage {
+public class ErrorMessage extends Payload implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private final String messageIdentifier = IDENTIFIER;
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "ERR_";
-
-    /**
-     * Create a new ErrorMessage.
-     * 
-     * @param header
-     *            The message header
-     */
-    public ErrorMessage(CommonHeader header) {
-        super(header);
-    }
 
     /**
      * {@inheritDoc}
      */
     @Override
     public String getMessageIdentifier() {
-        return messageIdentifier;
+        return IDENTIFIER;
     }
 
     /**
@@ -75,12 +61,9 @@ public class ErrorMessage extends CommonMessage {
 
         /**
          * Create a new Builder.
-         * 
-         * @param header
-         *            The message header
          */
-        public Builder(CommonHeader header) {
-            this.message = new ErrorMessage(header);
+        public Builder() {
+            this.message = new ErrorMessage();
         }
 
         /**
@@ -139,9 +122,8 @@ public class ErrorMessage extends CommonMessage {
      * {@inheritDoc}
      */
     @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(super.toString()).append(IDENTIFIER).append(getErrorCode())
-                .append(CommConstants.asString(super.getCreated()));
-        return CommConstants.padRight(sb.toString(), getHeader().getMessageLength());
+    public String asString() {
+        return IDENTIFIER + getErrorCode() +
+                CommConstants.asString(super.getCreated());
     }
 }

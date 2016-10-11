@@ -26,11 +26,9 @@ import static org.openwms.common.comm.CommConstants.asDate;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Objects;
 
 import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.CommonHeader;
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 import org.springframework.util.StringUtils;
 
 /**
@@ -38,25 +36,13 @@ import org.springframework.util.StringUtils;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class SystemUpdateMessage extends CommonMessage implements Serializable {
+public class SystemUpdateMessage extends Payload implements Serializable {
 
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "SYSU";
-    private final String identifier = IDENTIFIER;
-
     private String locationGroupName;
 
-    /**
-     * Create a new SystemUpdateMessage.
-     *
-     * @param header The message header
-     */
-    public SystemUpdateMessage(CommonHeader header) {
-        super(header);
-    }
-
-    private SystemUpdateMessage(CommonHeader header, Builder builder) {
-        super(header);
+    private SystemUpdateMessage(Builder builder) {
         locationGroupName = builder.locationGroupName;
     }
 
@@ -65,7 +51,7 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
      *
      * @return The name
      */
-    public String getLocationGroupName() {
+    String getLocationGroupName() {
         return locationGroupName;
     }
 
@@ -76,7 +62,7 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
      */
     @Override
     public String getMessageIdentifier() {
-        return identifier;
+        return IDENTIFIER;
     }
 
     /**
@@ -98,16 +84,6 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
         private String locationGroupName;
         private String errorCode;
         private Date created;
-        private CommonHeader header;
-
-        /**
-         * Create a Builder.
-         *
-         * @param header With header
-         */
-        public Builder(CommonHeader header) {
-            this.header = header;
-        }
 
         /**
          * Sets the {@code locationGroupName} and returns a reference to this Builder so that the methods can be chained together.
@@ -116,7 +92,7 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
          * @return a reference to this Builder
          */
         public Builder withLocationGroupName(String locationGroupName) {
-            this.locationGroupName = StringUtils.trimTrailingCharacter(locationGroupName, CommConstants.FILLER_CHARACTER);
+            this.locationGroupName = StringUtils.trimTrailingCharacter(locationGroupName, CommConstants.LOCGROUP_FILLER_CHARACTER);
             return this;
         }
 
@@ -151,42 +127,22 @@ public class SystemUpdateMessage extends CommonMessage implements Serializable {
          * @return a {@code SystemUpdateMessage} built with parameters of this {@code SystemUpdateMessage.Builder}
          */
         public SystemUpdateMessage build() {
-            SystemUpdateMessage res = new SystemUpdateMessage(this.header, this);
+            SystemUpdateMessage res = new SystemUpdateMessage(this);
             res.setErrorCode(this.errorCode);
             res.setCreated(this.created);
             return res;
         }
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * Use all fields.
-     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        SystemUpdateMessage that = (SystemUpdateMessage) o;
-        return Objects.equals(identifier, that.identifier) &&
-                Objects.equals(locationGroupName, that.locationGroupName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Use all fields.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), identifier, locationGroupName);
+    public String asString() {
+        return IDENTIFIER + locationGroupName;
     }
 
     @Override
     public String toString() {
         return "SystemUpdateMessage{" +
-                "identifier='" + identifier + '\'' +
+                "identifier='" + IDENTIFIER + '\'' +
                 ", locationGroup=" + locationGroupName +
                 "} with " + super.toString();
     }

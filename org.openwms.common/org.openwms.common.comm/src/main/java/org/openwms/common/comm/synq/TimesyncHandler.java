@@ -19,28 +19,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.req.api;
+package org.openwms.common.comm.synq;
 
 import java.util.function.Function;
 
-import org.openwms.common.comm.CommonHeader;
-import org.openwms.common.comm.req.RequestMessage;
-import org.openwms.common.comm.req.ResponseMessage;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 /**
- * A TestRequestMessageHandler.
+ * A TimesyncHandler.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @Component
-class TestRequestMessageHandler implements Function<RequestMessage, ResponseMessage> {
+class TimesyncHandler implements Function<Message<TimesyncRequest>, Message<TimesyncResponse>> {
 
+    /**
+     * Builds response message with the current time and the same request header to preserve header information (seq. number etc.) in post
+     * transformation steps.
+     *
+     * @param timesyncRequest the request
+     * @return the response
+     */
     @Override
-    public ResponseMessage apply(RequestMessage message) {
-        CommonHeader header = new CommonHeader(message.getHeader());
-        header.setSender(message.getHeader().getReceiver());
-        header.setReceiver(message.getHeader().getSender());
-        return new ResponseMessage(header);
+    public Message<TimesyncResponse> apply(Message<TimesyncRequest> timesyncRequest) {
+        return MessageBuilder.createMessage(new TimesyncResponse(), timesyncRequest.getHeaders());
     }
 }

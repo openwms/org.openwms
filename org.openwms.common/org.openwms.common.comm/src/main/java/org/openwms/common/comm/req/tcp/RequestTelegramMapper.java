@@ -21,17 +21,20 @@
  */
 package org.openwms.common.comm.req.tcp;
 
-import static org.openwms.common.comm.CommonHeader.LENGTH_HEADER;
+import static org.openwms.common.comm.CommHeader.LENGTH_HEADER;
 
 import java.text.ParseException;
+import java.util.Map;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.MessageMapper;
-import org.openwms.common.comm.exception.MessageMissmatchException;
+import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.req.RequestMessage;
 import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
 import org.openwms.common.comm.util.CommonMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
 /**
@@ -49,7 +52,7 @@ class RequestTelegramMapper implements MessageMapper<RequestMessage> {
      * {@inheritDoc}
      */
     @Override
-    public RequestMessage mapTo(String telegram) {
+    public Message<RequestMessage> mapTo(String telegram, Map<String, Object> headers) {
         if (provider == null) {
             throw new RuntimeException("Telegram handling "+ RequestMessage.IDENTIFIER+" not supported");
         }
@@ -57,19 +60,19 @@ class RequestTelegramMapper implements MessageMapper<RequestMessage> {
         int startActualLocation = startPayload + provider.barcodeLength();
         int startTargetLocation = startActualLocation + provider.locationIdLength();
         int startErrorCode = startTargetLocation + provider.locationIdLength();
-        int startCreateDate = startErrorCode + CommonMessage.ERROR_CODE_LENGTH;
+        int startCreateDate = startErrorCode + Payload.ERROR_CODE_LENGTH;
 
         RequestMessage message;
         try {
-            message = new RequestMessage.Builder(provider, CommonMessageFactory.createHeader(telegram))
+            message = new RequestMessage.Builder(provider)
                     .withBarcode(telegram.substring(startPayload, startActualLocation))
                     .withActualLocation(telegram.substring(startActualLocation, startTargetLocation))
                     .withTargetLocation(telegram.substring(startTargetLocation, startErrorCode))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
-                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + CommonMessage.DATE_LENGTH)).build();
-            return message;
+                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + Payload.DATE_LENGTH)).build();
+            return new GenericMessage<>(message, CommonMessageFactory.createHeaders(telegram, headers));
         } catch (ParseException e) {
-            throw new MessageMissmatchException(e.getMessage());
+            throw new MessageMismatchException(e.getMessage());
         }
     }
 

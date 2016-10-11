@@ -21,15 +21,17 @@
  */
 package org.openwms.common.comm;
 
+import static org.openwms.common.comm.CommConstants.padLeft;
+
 import java.io.Serializable;
 
 /**
- * A CommonHeader represents the header part of a CommonMessage.
+ * A CommHeader represents the header part of a CommMessage.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.2
  */
-public class CommonHeader implements Serializable {
+public class CommHeader implements Serializable {
 
     private String sync;
     private short messageLength;
@@ -37,15 +39,20 @@ public class CommonHeader implements Serializable {
     private String receiver;
     private int sequenceNo;
 
+    public static final String SYNC_FIELD_NAME = "SYNC_FIELD";
     public static final short LENGTH_SYNC_FIELD = 3;
+    public static final String MSG_LENGTH_FIELD_NAME = "MSG_LENGTH";
     public static final short LENGTH_MESSAGE_LENGTH_FIELD = 5;
+    public static final String SENDER_FIELD_NAME = "SENDER";
     public static final short LENGTH_SENDER_FIELD = 5;
+    public static final String RECEIVER_FIELD_NAME = "RECEIVER";
     public static final short LENGTH_RECEIVER_FIELD = 5;
+    public static final String SEQUENCE_FIELD_NAME = "SEQUENCENO";
     public static final short LENGTH_SEQUENCE_NO_FIELD = 5;
     public static final short LENGTH_HEADER = LENGTH_SYNC_FIELD + LENGTH_MESSAGE_LENGTH_FIELD + LENGTH_RECEIVER_FIELD + LENGTH_SENDER_FIELD + LENGTH_SEQUENCE_NO_FIELD;
 
     /**
-     * Create a new CommonHeader.
+     * Create a new CommHeader.
      *
      * @param sync The sync field
      * @param messageLength The length of the message
@@ -53,7 +60,7 @@ public class CommonHeader implements Serializable {
      * @param receiver The receiver identifier
      * @param sequenceNo An incremental sequence number
      */
-    public CommonHeader(String sync, short messageLength, String sender, String receiver, int sequenceNo) {
+    public CommHeader(String sync, short messageLength, String sender, String receiver, int sequenceNo) {
         super();
         this.sync = sync;
         this.messageLength = messageLength;
@@ -63,19 +70,25 @@ public class CommonHeader implements Serializable {
     }
 
     /**
-     * Create a new CommonHeader.
+     * Create a new CommHeader.
      *
-     * @param commonHeader The header to get the values from.
+     * @param commHeader The header to get the values from.
      */
-    public CommonHeader(CommonHeader commonHeader) {
-        this(commonHeader.getSync(), commonHeader.getMessageLength(), commonHeader.getSender(), commonHeader.getReceiver(), commonHeader.getSequenceNo());
+    public CommHeader(CommHeader commHeader) {
+        this(commHeader.getSync(), commHeader.getMessageLength(), commHeader.getSender(), commHeader.getReceiver(), commHeader.getSequenceNo());
     }
 
-    private CommonHeader(){}
-
-    public static CommonHeader empty() {
-        return new CommonHeader();
+    private CommHeader() {
     }
+
+    public static CommHeader empty() {
+        return new CommHeader();
+    }
+
+    public static CommHeader ofRequestHeader(CommHeader requestHeader) {
+        return new CommHeader(requestHeader.getSync(), LENGTH_HEADER, requestHeader.getReceiver(), requestHeader.getSender(), requestHeader.getSequenceNo() + 1);
+    }
+
     /**
      * Get the sync.
      *
@@ -168,7 +181,7 @@ public class CommonHeader implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        CommonHeader other = (CommonHeader) obj;
+        CommHeader other = (CommHeader) obj;
         if (receiver == null) {
             if (other.receiver != null) {
                 return false;
@@ -198,6 +211,10 @@ public class CommonHeader implements Serializable {
 
     @Override
     public String toString() {
+        return sync + messageLength + sender + receiver + padLeft(String.valueOf(sequenceNo), LENGTH_SEQUENCE_NO_FIELD, "0");
+    }
+
+    public String asStruct() {
         return "CommonHeader{" +
                 "sync='" + sync + '\'' +
                 ", messageLength=" + messageLength +
