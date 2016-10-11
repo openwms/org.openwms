@@ -29,7 +29,7 @@ import org.springframework.messaging.MessageHeaders;
 
 /**
  * A CommonMessageFactory.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
@@ -39,13 +39,13 @@ public final class CommonMessageFactory {
     /**
      * Hide Constructor.
      */
-    private CommonMessageFactory() {}
+    private CommonMessageFactory() {
+    }
 
     /**
      * Create a {@link CommHeader} from a passed telegram structure.
-     * 
-     * @param telegram
-     *            The telegram
+     *
+     * @param telegram The telegram
      * @return A {@link CommHeader} instance
      */
     public static CommHeader createHeader(String telegram) {
@@ -87,8 +87,12 @@ public final class CommonMessageFactory {
         start = end;
         end += CommHeader.LENGTH_SEQUENCE_NO_FIELD;
         short sequenceNo = Short.parseShort(telegram.substring(start, end));
-        Map<String, Object> headers = new HashMap<>(1);
-        headers.put("header", new CommHeader(sync, messageLength, sender, receiver, sequenceNo));
+        Map<String, Object> headers = new HashMap<>(5);
+        headers.put(CommHeader.SYNC_FIELD_NAME, sync);
+        headers.put(CommHeader.MSG_LENGTH_FIELD_NAME, messageLength);
+        headers.put(CommHeader.SENDER_FIELD_NAME, sender);
+        headers.put(CommHeader.RECEIVER_FIELD_NAME, receiver);
+        headers.put(CommHeader.SEQUENCE_FIELD_NAME, sequenceNo);
         return new MessageHeaders(headers);
     }
 }

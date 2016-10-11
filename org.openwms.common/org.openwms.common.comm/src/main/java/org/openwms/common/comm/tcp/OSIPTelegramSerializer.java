@@ -30,6 +30,7 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.CommHeader;
 import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.exception.MessageMismatchException;
 import org.slf4j.Logger;
@@ -67,7 +68,12 @@ public class OSIPTelegramSerializer implements Serializer<Message<Payload>> {
     @Override
     public void serialize(Message<Payload> object, OutputStream outputStream) throws IOException {
         BufferedOutputStream os = new BufferedOutputStream(outputStream);
-        String s = object.getPayload().asString();
+        String header = String.valueOf(object.getHeaders().get(CommHeader.SYNC_FIELD_NAME))+
+                String.valueOf(object.getHeaders().get(CommHeader.MSG_LENGTH_FIELD_NAME))+
+                String.valueOf(object.getHeaders().get(CommHeader.SENDER_FIELD_NAME))+
+                String.valueOf(object.getHeaders().get(CommHeader.RECEIVER_FIELD_NAME)+
+                        String.valueOf(object.getHeaders().get(CommHeader.SEQUENCE_FIELD_NAME)));
+        String s = header + object.getPayload().asString();
         if (s.length() > CommConstants.TELEGRAM_LENGTH) {
             throw new MessageMismatchException("Defined telegram length exceeded, size is"+s.length());
         }

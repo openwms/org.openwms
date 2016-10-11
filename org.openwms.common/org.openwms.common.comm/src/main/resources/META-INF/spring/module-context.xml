@@ -64,7 +64,7 @@
     <int:channel id="outboundChannel"/>
     <int:transformer input-channel="outboundChannel" output-channel="enrichedOutboundChannel" ref="headerAppendingTransformer"/>
 
-    <int:channel id="enrichedOutboundChannel">
+    <int:channel id="enrichedOutboundChannel" datatype="java.lang.String">
         <!--int:queue capacity="25"/-->
         <int:interceptors>
             <int:wire-tap channel="logger"/>
