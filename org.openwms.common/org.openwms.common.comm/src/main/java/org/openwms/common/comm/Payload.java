@@ -26,33 +26,21 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * A CommonMessage is the abstract superclass of all messages sent to subsystems like PLC or ERP. A CommonMessage has always a message
+ * A Payload is the abstract superclass of all messages sent to subsystems like PLC or ERP. A CommonMessage has always a message
  * header and a body.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @version $Revision: $
  * @since 0.2
  */
-public abstract class CommonMessage implements Serializable {
+public abstract class Payload implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private final CommonHeader header;
     private String errorCode;
     private Date created;
 
     public static final short ERROR_CODE_LENGTH = 8;
     public static final short DATE_LENGTH = 14;
     public static final int MESSAGE_IDENTIFIER_LENGTH = 4;
-
-    /**
-     * Create a new CommonMessage.
-     * 
-     * @param header
-     *            The message header
-     */
-    public CommonMessage(CommonHeader header) {
-        this.header = header;
-    }
 
     /**
      * Subclasses have to return an unique, case-sensitive message identifier.
@@ -67,15 +55,6 @@ public abstract class CommonMessage implements Serializable {
      * @return {@literal true} no reply needed, otherwise {@literal false}
      */
     public abstract boolean isWithoutReply();
-
-    /**
-     * Get the header.
-     * 
-     * @return header
-     */
-    public CommonHeader getHeader() {
-        return header;
-    }
 
     /**
      * Get the errorCode.
@@ -141,22 +120,19 @@ public abstract class CommonMessage implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CommonMessage that = (CommonMessage) o;
-        return Objects.equals(header, that.header) &&
-                Objects.equals(errorCode, that.errorCode) &&
-                Objects.equals(created, that.created);
+        Payload payload = (Payload) o;
+        return Objects.equals(errorCode, payload.errorCode) &&
+                Objects.equals(created, payload.created);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(header, errorCode, created);
+        return Objects.hash(errorCode, created);
     }
 
-    @Override
-    public String toString() {
-        return "CommonMessage{" +
-                "errorCode='" + errorCode + '\'' +
-                ", created=" + created +
-                "} with " + header;
-    }
+    /**
+     * todo: This needs to be extracted from the business object to an 'transformer'.
+     * @return
+     */
+    public abstract String asString();
 }

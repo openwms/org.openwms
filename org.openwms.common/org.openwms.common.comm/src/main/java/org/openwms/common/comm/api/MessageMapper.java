@@ -21,31 +21,29 @@
  */
 package org.openwms.common.comm.api;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
+import org.springframework.messaging.Message;
 
 /**
- * A MessageMapper is able to map from a String telegram to a {@link CommonMessage}.
- * 
- * @param <T>
- *            A type of incoming CommonMessage
+ * A MessageMapper is able to map from a String telegram to a {@link Payload}.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-public interface MessageMapper<T extends CommonMessage> {
+public interface MessageMapper<T> {
 
     /**
-     * Investigate the telegram String <tt>telegram</tt> and retrieve from the telegram type a subtype of {@link CommonMessage}.
-     * Implementations probably throw some kind of RuntimeExceptions if no telegram type was found.
-     * 
-     * @param telegram
-     *            The telegram String to investigate
-     * @return The {@link CommonMessage}
+     * Investigate the telegram String {@code telegram} and retrieve from the telegram type a subtype of {@link
+     * Payload CommonMessage}. Implementations probably throw some kind of RuntimeExceptions if no telegram
+     * type was found. An implementation can expect that the caller has checked the telegram length.
+     *
+     * @param telegram The telegram String to investigate
+     * @return The mapped CommonMessage
      */
-    T mapTo(String telegram);
+    Message<T> mapTo(String telegram);
 
     /**
      * Return the telegram type, this mapper is responsible for.
-     * 
+     *
      * @return the telegram type as String
      */
     String forType();

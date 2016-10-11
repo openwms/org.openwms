@@ -27,10 +27,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.CustomServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.Router;
+import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.stereotype.Component;
 
@@ -60,14 +61,14 @@ public class CommonMessageRouter {
     }
 
     /**
-     * Routing method, tries to map an incoming {@link CommonMessage} to a MessageChannel.
+     * Routing method, tries to map an incoming {@link Payload} to a MessageChannel.
      * 
      * @param message
      *            The message to process
      * @return The MessageChannel where to put the message
      */
     @Router(inputChannel = "transformerOutput", defaultOutputChannel = "commonExceptionChannel")
-    public MessageChannel resolve(CommonMessage message) {
-        return processorMap.get(message.getMessageIdentifier() + CommConstants.CHANNEL_SUFFIX).getChannel();
+    public MessageChannel resolve(Message<Payload> message) {
+        return processorMap.get(message.getPayload().getMessageIdentifier() + CommConstants.CHANNEL_SUFFIX).getChannel();
     }
 }

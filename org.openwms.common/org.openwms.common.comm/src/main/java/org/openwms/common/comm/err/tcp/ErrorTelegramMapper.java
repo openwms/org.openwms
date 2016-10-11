@@ -21,26 +21,26 @@
  */
 package org.openwms.common.comm.err.tcp;
 
-import static org.openwms.common.comm.CommonHeader.LENGTH_HEADER;
-import static org.openwms.common.comm.CommonMessage.DATE_LENGTH;
-import static org.openwms.common.comm.CommonMessage.ERROR_CODE_LENGTH;
+import static org.openwms.common.comm.CommHeader.LENGTH_HEADER;
+import static org.openwms.common.comm.Payload.DATE_LENGTH;
+import static org.openwms.common.comm.Payload.ERROR_CODE_LENGTH;
 
 import java.text.ParseException;
 
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.err.ErrorMessage;
-import org.openwms.common.comm.exception.MessageMissmatchException;
+import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.util.CommonMessageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
 
 /**
  * An ErrorTelegramMapper transforms an incoming OSIP telegram string, that is expected to be an error telegram, into an ErrorMessage.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 @Component
 public class ErrorTelegramMapper implements MessageMapper<ErrorMessage> {
@@ -51,15 +51,15 @@ public class ErrorTelegramMapper implements MessageMapper<ErrorMessage> {
      * {@inheritDoc}
      */
     @Override
-    public ErrorMessage mapTo(String telegram) {
+    public Message<ErrorMessage> mapTo(String telegram) {
         int startPayload = LENGTH_HEADER + forType().length();
         int startCreateDate = startPayload + ERROR_CODE_LENGTH;
         try {
-            return new ErrorMessage.Builder(CommonMessageFactory.createHeader(telegram))
+            return new GenericMessage<>(new ErrorMessage.Builder()
                     .withErrorCode(telegram.substring(startPayload, startCreateDate))
-                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + DATE_LENGTH)).build();
+                    .withCreateDate(telegram.substring(startCreateDate, startCreateDate + DATE_LENGTH)).build(), CommonMessageFactory.createHeaders(telegram));
         } catch (ParseException e) {
-            throw new MessageMissmatchException(e.getMessage());
+            throw new MessageMismatchException(e.getMessage());
         }
     }
 

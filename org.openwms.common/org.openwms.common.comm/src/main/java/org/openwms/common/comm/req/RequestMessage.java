@@ -26,41 +26,29 @@ import static org.openwms.common.comm.CommConstants.asDate;
 import java.text.ParseException;
 
 import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.CommonHeader;
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
 
 /**
  * A RequestMessage requests an order for a TransportUnit with id <tt>Barcode</tt> on a particular location <tt>actualLocation</tt>.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-public class RequestMessage extends CommonMessage {
+public class RequestMessage extends Payload {
 
     /** Message identifier {@value} . */
     public static final String IDENTIFIER = "REQ_";
-    private final String identifier = IDENTIFIER;
 
     private String barcode;
     private String actualLocation;
     private String targetLocation;
 
     /**
-     * Create a new RequestMessage.
-     *
-     * @param header The message header
-     */
-    public RequestMessage(CommonHeader header) {
-        super(header);
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
     public String getMessageIdentifier() {
-        return identifier;
+        return IDENTIFIER;
     }
 
     public String getBarcode() {
@@ -69,19 +57,6 @@ public class RequestMessage extends CommonMessage {
 
     public String getActualLocation() {
         return actualLocation;
-    }
-
-    public String getTargetLocation() {
-        return targetLocation;
-    }
-
-    /**
-     * Checks wether the {@code targetLocation} is not {@literal null}.
-     *
-     * @return {@literal true} if targetLocation is set, otherwise {@literal false}
-     */
-    public boolean hasTargetLocation() {
-        return targetLocation != null;
     }
 
     /**
@@ -98,12 +73,10 @@ public class RequestMessage extends CommonMessage {
 
         /**
          * Create a new RequestMessage.Builder.
-         *
-         * @param header The message header
          */
-        public Builder(RequestFieldLengthProvider provider, CommonHeader header) {
+        public Builder(RequestFieldLengthProvider provider) {
             this.provider = provider;
-            this.requestMessage = new RequestMessage(header);
+            this.requestMessage = new RequestMessage();
         }
 
         /**
@@ -186,10 +159,8 @@ public class RequestMessage extends CommonMessage {
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(super.toString());
-        sb.append(IDENTIFIER).append(this.barcode).append(this.actualLocation).append(this.targetLocation)
-                .append(getErrorCode()).append(CommConstants.asString(super.getCreated()));
-        return sb.toString();
+        return super.toString() + IDENTIFIER + this.barcode + this.actualLocation + this.targetLocation +
+                getErrorCode() + CommConstants.asString(super.getCreated());
     }
 
     /**
@@ -198,5 +169,15 @@ public class RequestMessage extends CommonMessage {
     @Override
     public boolean isWithoutReply() {
         return false;
+    }
+
+    /**
+     * todo: This needs to be extracted from the business object to an 'transformer'.
+     *
+     * @return
+     */
+    @Override
+    public String asString() {
+        return IDENTIFIER + actualLocation + targetLocation;
     }
 }

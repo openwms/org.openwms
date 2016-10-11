@@ -22,52 +22,41 @@
 package org.openwms.common.comm.exception;
 
 /**
- * A MessageMissmatchException indicates that an incoming message is not in expected format.
- * 
+ * A MessageMismatchException indicates that an incoming message is not in expected format.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public class MessageMissmatchException extends MessageProcessingException {
+public class MessageMismatchException extends MessageProcessingException {
 
-    private static final long serialVersionUID = -2992101871707320349L;
-
-    /**
-     * Create a new MessageMissmatchException.
-     */
-    public MessageMissmatchException() {
-
+    /** Create a new MessageMismatchException. */
+    public MessageMismatchException() {
     }
 
     /**
-     * Create a new MessageMissmatchException.
-     * 
-     * @param message
-     *            Detail message
+     * Create a new MessageMismatchException.
+     *
+     * @param message Detail message
      */
-    public MessageMissmatchException(String message) {
+    public MessageMismatchException(String message) {
         super(message);
     }
 
     /**
-     * Create a new MessageMissmatchException.
-     * 
-     * @param cause
-     *            Root cause
+     * Create a new MessageMismatchException.
+     *
+     * @param cause Root cause
      */
-    public MessageMissmatchException(Throwable cause) {
+    public MessageMismatchException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new MessageMissmatchException.
-     * 
-     * @param message
-     *            Detail message
-     * @param cause
-     *            Root cause
+     * Create a new MessageMismatchException.
+     *
+     * @param message Detail message
+     * @param cause Root cause
      */
-    public MessageMissmatchException(String message, Throwable cause) {
+    public MessageMismatchException(String message, Throwable cause) {
         super(message, cause);
     }
 }

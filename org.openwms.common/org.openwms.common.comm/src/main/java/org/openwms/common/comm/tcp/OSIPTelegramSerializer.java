@@ -21,26 +21,29 @@
  */
 package org.openwms.common.comm.tcp;
 
+import static org.openwms.common.comm.CommConstants.padRight;
+
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 
-import org.openwms.common.comm.CommonMessage;
+import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.Payload;
+import org.openwms.common.comm.exception.MessageMismatchException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.serializer.Serializer;
+import org.springframework.messaging.Message;
 
 /**
  * An OSIPTelegramSerializer is able to read OSIP telegram structures from an InputStream (deserialization) and can also serialize Object
  * structures into OSIP telegrams.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
+public class OSIPTelegramSerializer implements Serializer<Message<Payload>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OSIPTelegramSerializer.class);
     private static final byte[] CRLF = "\r\n".getBytes();
@@ -62,13 +65,13 @@ public class OSIPTelegramSerializer implements Serializer<CommonMessage> {
      * Writes the source object to an output stream using Java Serialization. The source object must implement {@link Serializable}.
      */
     @Override
-    public void serialize(CommonMessage object, OutputStream outputStream) throws IOException {
-        if (!(object instanceof Serializable)) {
-            throw new IllegalArgumentException(getClass().getSimpleName() + " requires a Serializable payload "
-                    + "but received an object of type [" + object.getClass().getName() + "]");
-        }
+    public void serialize(Message<Payload> object, OutputStream outputStream) throws IOException {
         BufferedOutputStream os = new BufferedOutputStream(outputStream);
-        os.write(object.toString().getBytes(Charset.defaultCharset()));
+        String s = object.getPayload().asString();
+        if (s.length() > CommConstants.TELEGRAM_LENGTH) {
+            throw new MessageMismatchException("Defined telegram length exceeded, size is"+s.length());
+        }
+        os.write(padRight(s, CommConstants.TELEGRAM_LENGTH, CommConstants.TELEGRAM_FILLER_CHARACTER).getBytes(Charset.defaultCharset()));
         os.write(CRLF);
         os.flush();
     }
