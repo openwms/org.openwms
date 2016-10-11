@@ -21,7 +21,6 @@
  */
 package org.openwms.common.comm.transformer.tcp;
 
-import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommHeader;
 import org.openwms.common.comm.Payload;
 import org.springframework.integration.annotation.Transformer;
@@ -41,8 +40,9 @@ class HeaderAppendingTransformer {
     @Transformer
     public Message<Payload> transform(Message<Payload> msg) {
         MessageHeaderAccessor mha = new MessageHeaderAccessor();
+        mha.copyHeaders(msg.getHeaders());
         mha.setHeader(CommHeader.SYNC_FIELD_NAME, msg.getHeaders().get(CommHeader.SYNC_FIELD_NAME));
-        mha.setHeader(CommHeader.MSG_LENGTH_FIELD_NAME, headerLength(msg.getHeaders()) + CommConstants.TELEGRAM_LENGTH);
+        mha.setHeader(CommHeader.MSG_LENGTH_FIELD_NAME, headerLength(msg.getHeaders()) + msg.getPayload().asString().length());
         mha.setHeader(CommHeader.SENDER_FIELD_NAME, msg.getHeaders().get(CommHeader.RECEIVER_FIELD_NAME));
         mha.setHeader(CommHeader.RECEIVER_FIELD_NAME, msg.getHeaders().get(CommHeader.SENDER_FIELD_NAME));
         mha.setHeader(CommHeader.SEQUENCE_FIELD_NAME, Integer.parseInt(String.valueOf(msg.getHeaders().get(CommHeader.SEQUENCE_FIELD_NAME))) + 1);

@@ -24,6 +24,7 @@ package org.openwms.common.comm.req.tcp;
 import static org.openwms.common.comm.CommHeader.LENGTH_HEADER;
 
 import java.text.ParseException;
+import java.util.Map;
 
 import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.MessageMapper;
@@ -51,7 +52,7 @@ class RequestTelegramMapper implements MessageMapper<RequestMessage> {
      * {@inheritDoc}
      */
     @Override
-    public Message<RequestMessage> mapTo(String telegram) {
+    public Message<RequestMessage> mapTo(String telegram, Map<String, Object> headers) {
         if (provider == null) {
             throw new RuntimeException("Telegram handling "+ RequestMessage.IDENTIFIER+" not supported");
         }
@@ -69,7 +70,7 @@ class RequestTelegramMapper implements MessageMapper<RequestMessage> {
                     .withTargetLocation(telegram.substring(startTargetLocation, startErrorCode))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
                     .withCreateDate(telegram.substring(startCreateDate, startCreateDate + Payload.DATE_LENGTH)).build();
-            return new GenericMessage<>(message, CommonMessageFactory.createHeaders(telegram));
+            return new GenericMessage<>(message, CommonMessageFactory.createHeaders(telegram, headers));
         } catch (ParseException e) {
             throw new MessageMismatchException(e.getMessage());
         }

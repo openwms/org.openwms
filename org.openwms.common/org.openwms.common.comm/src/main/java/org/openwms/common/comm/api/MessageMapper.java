@@ -21,6 +21,8 @@
  */
 package org.openwms.common.comm.api;
 
+import java.util.Map;
+
 import org.openwms.common.comm.Payload;
 import org.springframework.messaging.Message;
 
@@ -37,9 +39,10 @@ public interface MessageMapper<T> {
      * type was found. An implementation can expect that the caller has checked the telegram length.
      *
      * @param telegram The telegram String to investigate
+     * @param headers A map of the underlying protocol headers
      * @return The mapped CommonMessage
      */
-    Message<T> mapTo(String telegram);
+    Message<T> mapTo(String telegram, Map<String, Object> headers);
 
     /**
      * Return the telegram type, this mapper is responsible for.

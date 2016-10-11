@@ -69,7 +69,7 @@ public final class CommonMessageFactory {
         return new CommHeader(sync, messageLength, sender, receiver, sequenceNo);
     }
 
-    public static MessageHeaders createHeaders(String telegram) {
+    public static MessageHeaders createHeaders(String telegram, Map<String, Object> headers) {
         String sync = telegram.substring(0, CommHeader.LENGTH_SYNC_FIELD);
 
         int start = sync.length();
@@ -87,12 +87,12 @@ public final class CommonMessageFactory {
         start = end;
         end += CommHeader.LENGTH_SEQUENCE_NO_FIELD;
         short sequenceNo = Short.parseShort(telegram.substring(start, end));
-        Map<String, Object> headers = new HashMap<>(5);
-        headers.put(CommHeader.SYNC_FIELD_NAME, sync);
-        headers.put(CommHeader.MSG_LENGTH_FIELD_NAME, messageLength);
-        headers.put(CommHeader.SENDER_FIELD_NAME, sender);
-        headers.put(CommHeader.RECEIVER_FIELD_NAME, receiver);
-        headers.put(CommHeader.SEQUENCE_FIELD_NAME, sequenceNo);
-        return new MessageHeaders(headers);
+        Map<String, Object> h = new HashMap<>(headers);
+        h.put(CommHeader.SYNC_FIELD_NAME, sync);
+        h.put(CommHeader.MSG_LENGTH_FIELD_NAME, messageLength);
+        h.put(CommHeader.SENDER_FIELD_NAME, sender);
+        h.put(CommHeader.RECEIVER_FIELD_NAME, receiver);
+        h.put(CommHeader.SEQUENCE_FIELD_NAME, sequenceNo);
+        return new MessageHeaders(h);
     }
 }

@@ -26,6 +26,7 @@ import static org.openwms.common.comm.CommHeader.LENGTH_HEADER;
 import static org.openwms.common.comm.Payload.DATE_LENGTH;
 
 import java.text.ParseException;
+import java.util.Map;
 
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMismatchException;
@@ -51,14 +52,17 @@ class TimesyncTelegramMapper implements MessageMapper<TimesyncRequest> {
      * {@inheritDoc}
      */
     @Override
-    public Message<TimesyncRequest> mapTo(String telegram) {
+    public Message<TimesyncRequest> mapTo(String telegram, Map<String, Object> headers) {
         LOGGER.debug("Telegram to transform: [{}]", telegram);
 
         int startSendertime = LENGTH_HEADER + forType().length();
         TimesyncRequest request = new TimesyncRequest();
         try {
             request.setSenderTimer(asDate(telegram.substring(startSendertime, startSendertime + DATE_LENGTH)));
-            return new GenericMessage<>(request, CommonMessageFactory.createHeaders(telegram));
+            GenericMessage<TimesyncRequest> result =
+                    new GenericMessage<>(request, CommonMessageFactory.createHeaders(telegram, headers));
+            LOGGER.debug("Transformed telegram into TimesyncRequest message:" + result);
+            return result;
         } catch (ParseException e) {
             throw new MessageMismatchException(e.getMessage());
         }

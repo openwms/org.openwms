@@ -26,6 +26,7 @@ import static org.openwms.common.comm.Payload.DATE_LENGTH;
 import static org.openwms.common.comm.Payload.ERROR_CODE_LENGTH;
 
 import java.text.ParseException;
+import java.util.Map;
 
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.exception.MessageMismatchException;
@@ -55,7 +56,7 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
      * {@inheritDoc}
      */
     @Override
-    public Message<SystemUpdateMessage> mapTo(String telegram) {
+    public Message<SystemUpdateMessage> mapTo(String telegram, Map<String, Object> headers) {
         LOGGER.debug("Telegram to transform: [{}]", telegram);
         if (provider == null) {
             throw new RuntimeException("Telegram handling " + SystemUpdateMessage.IDENTIFIER + " not supported");
@@ -70,7 +71,7 @@ class SYSUTelegramMapper implements MessageMapper<SystemUpdateMessage> {
                     .withLocationGroupName(telegram.substring(startLocationGroup, startErrorCode))
                     .withErrorCode(telegram.substring(startErrorCode, startCreateDate))
                     .withCreateDate(telegram.substring(startCreateDate, startCreateDate + DATE_LENGTH)).build();
-            return new GenericMessage<>(message, CommonMessageFactory.createHeaders(telegram));
+            return new GenericMessage<>(message, CommonMessageFactory.createHeaders(telegram, headers));
         } catch (ParseException e) {
             throw new MessageMismatchException(e.getMessage());
         }

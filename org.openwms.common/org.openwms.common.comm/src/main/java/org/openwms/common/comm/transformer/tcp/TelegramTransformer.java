@@ -35,11 +35,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.messaging.Message;
+import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.stereotype.Component;
 
 /**
  * A CommonMessageTransformer transforms incoming OSIP telegram structures to {@link Payload}s.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  * @since 0.2
  */
@@ -63,20 +64,18 @@ public class TelegramTransformer<T extends Payload> {
 
     /**
      * Transformer method to transform a telegram String {@code telegram} into a {@link Payload}.
-     * 
-     * @param telegram
-     *            The incoming telegram String
+     *
+     * @param telegram The incoming telegram String
      * @return The {@link Payload} is transformable
-     * @throws MessageMismatchException
-     *             if no appropriate type was found.
+     * @throws MessageMismatchException if no appropriate type was found.
      */
     @Transformer
-    public Message<T> transform(String telegram) {
+    public Message<T> transform(String telegram, @Headers Map<String, Object> headers) {
         if (telegram == null || telegram.isEmpty()) {
             LOGGER.debug("Received telegram was null or of length == 0, just skip");
             return null;
         }
-        MessageMapper mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
+        MessageMapper<T> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
         if (mapper == null) {
             if (LOGGER.isErrorEnabled()) {
                 LOGGER.error("Not mapper found for telegram type " + TCPCommConstants.getTelegramType(telegram));
@@ -84,6 +83,6 @@ public class TelegramTransformer<T extends Payload> {
             throw new MessageMismatchException("Not mapper found for telegram type "
                     + TCPCommConstants.getTelegramType(telegram));
         }
-        return mapper.mapTo(telegram);
+        return mapper.mapTo(telegram, headers);
     }
 }
