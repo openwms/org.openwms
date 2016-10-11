@@ -19,7 +19,7 @@ node {
      }
    )
    stage('Results') {
-      archive 'target/*.jar'
+      archive '**/target/*.jar'
    }
 }
 
