@@ -58,7 +58,7 @@ class OSIPTelegramSerializer implements Serializer<Map<?, ?>> {
                 padLeft(String.valueOf(CommConstants.TELEGRAM_LENGTH), CommHeader.LENGTH_MESSAGE_LENGTH_FIELD, "0") +
                 String.valueOf(headers.get(CommHeader.SENDER_FIELD_NAME)) +
                 String.valueOf(headers.get(CommHeader.RECEIVER_FIELD_NAME) +
-                        String.valueOf(headers.get(CommHeader.SEQUENCE_FIELD_NAME)));
+                        padLeft(String.valueOf(headers.get(CommHeader.SEQUENCE_FIELD_NAME)),CommHeader.LENGTH_SEQUENCE_NO_FIELD, "0"));
         String s = header + ((Payload) map.get("payload")).asString();
         if (s.length() > CommConstants.TELEGRAM_LENGTH) {
             throw new MessageMismatchException("Defined telegram length exceeded, size is" + s.length());

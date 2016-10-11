@@ -41,4 +41,9 @@ class ModuleConfig {
         return new RestTemplate();
     }
 
+    public
+    @Bean
+    RestTemplate simpleRestTemplate() {
+        return new RestTemplate();
+    }
 }

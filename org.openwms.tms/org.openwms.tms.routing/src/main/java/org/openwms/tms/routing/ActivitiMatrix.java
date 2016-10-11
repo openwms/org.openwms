@@ -30,6 +30,7 @@ import org.openwms.common.LocationVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.Link;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -47,6 +48,7 @@ class ActivitiMatrix implements Matrix {
     @Autowired
     private ActionRepository repository;
     @Autowired
+    @Qualifier("simpleRestTemplate")
     private RestTemplate restTemplate;
 
     @Override

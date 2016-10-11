@@ -9,12 +9,12 @@ node {
    parallel (
      "default-build": {
        stage('Build') {
-          sh "'${mvnHome}/bin/mvn' clean install -Psordocs,sonatype -U"
+          sh "'${mvnHome}/bin/mvn' clean install -Ddocumentation.dir=${WORKSPACE} -Psordocs,sonatype -U"
        }
      },
      "sonar-build": {
        stage('Sonar') {
-          sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Djacoco.propertyName=jacocoArgLine -Dbuild.number=${BUILD_NUMBER} -Dbuild.date=${BUILD_TIMESTAMP} -Pjenkins"
+          sh "'${mvnHome}/bin/mvn' clean org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Djacoco.propertyName=jacocoArgLine -Dbuild.number=${BUILD_NUMBER} -Dbuild.date=${BUILD_TIMESTAMP} -Ddocumentation.dir=${WORKSPACE} -Pjenkins"
        }
      }
    )
