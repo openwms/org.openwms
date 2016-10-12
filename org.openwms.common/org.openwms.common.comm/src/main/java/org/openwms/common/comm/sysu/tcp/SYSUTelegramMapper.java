@@ -28,11 +28,11 @@ import static org.openwms.common.comm.Payload.ERROR_CODE_LENGTH;
 import java.text.ParseException;
 import java.util.Map;
 
+import org.openwms.common.comm.CommonMessageFactory;
+import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.api.MessageMapper;
-import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.sysu.SystemUpdateMessage;
 import org.openwms.common.comm.sysu.spi.SystemUpdateFieldLengthProvider;
-import org.openwms.common.comm.util.CommonMessageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

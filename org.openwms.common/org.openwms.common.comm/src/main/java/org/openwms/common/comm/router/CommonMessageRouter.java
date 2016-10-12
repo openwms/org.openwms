@@ -30,10 +30,10 @@ import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.CustomServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Router;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.stereotype.Component;
 
 /**
  * A CommonMessageRouter collects all {@link CustomServiceActivator}s from the ApplicationContext and tries to find a suitable
@@ -41,9 +41,8 @@ import org.springframework.stereotype.Component;
  * default exception channel.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-@Component
+@MessageEndpoint("messageRouter")
 public class CommonMessageRouter {
 
     @Autowired
@@ -67,7 +66,7 @@ public class CommonMessageRouter {
      *            The message to process
      * @return The MessageChannel where to put the message
      */
-    @Router(inputChannel = "transformerOutput", defaultOutputChannel = "commonExceptionChannel")
+    @Router(inputChannel = "transformerOutputChannel", defaultOutputChannel = "commonExceptionChannel")
     public MessageChannel resolve(Message<Payload> message) {
         return processorMap.get(message.getPayload().getMessageIdentifier() + CommConstants.CHANNEL_SUFFIX).getChannel();
     }

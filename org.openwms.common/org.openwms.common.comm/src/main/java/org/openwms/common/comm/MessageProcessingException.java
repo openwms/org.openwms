@@ -19,44 +19,55 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.exception;
+package org.openwms.common.comm;
 
 /**
- * A MessageMismatchException indicates that an incoming message is not in expected format.
- *
+ * A MessageProcessingException is a general exception that indicates a fault situation during message processing.
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @version $Revision: $
+ * @since 0.2
  */
-public class MessageMismatchException extends MessageProcessingException {
+public class MessageProcessingException extends RuntimeException {
 
-    /** Create a new MessageMismatchException. */
-    public MessageMismatchException() {
+    private static final long serialVersionUID = 4672945459737321505L;
+
+    /**
+     * Create a new MessageProcessingException.
+     */
+    public MessageProcessingException() {
+
     }
 
     /**
-     * Create a new MessageMismatchException.
-     *
-     * @param message Detail message
+     * Create a new MessageProcessingException.
+     * 
+     * @param message
+     *            Detail message
      */
-    public MessageMismatchException(String message) {
+    public MessageProcessingException(String message) {
         super(message);
     }
 
     /**
-     * Create a new MessageMismatchException.
-     *
-     * @param cause Root cause
+     * Create a new MessageProcessingException.
+     * 
+     * @param cause
+     *            Root cause
      */
-    public MessageMismatchException(Throwable cause) {
+    public MessageProcessingException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Create a new MessageMismatchException.
-     *
-     * @param message Detail message
-     * @param cause Root cause
+     * Create a new MessageProcessingException.
+     * 
+     * @param message
+     *            Detail message
+     * @param cause
+     *            Root cause
      */
-    public MessageMismatchException(String message, Throwable cause) {
+    public MessageProcessingException(String message, Throwable cause) {
         super(message, cause);
     }
 }

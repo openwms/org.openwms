@@ -26,12 +26,9 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * A Payload is the abstract superclass of all messages sent to subsystems like PLC or ERP. A CommonMessage has always a message
- * header and a body.
- * 
+ * A Payload is the abstract superclass of all messages sent to subsystems like PLC or ERP.
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 public abstract class Payload implements Serializable {
 

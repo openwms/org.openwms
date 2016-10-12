@@ -23,19 +23,19 @@ package org.openwms.common.comm.transformer.tcp;
 
 import org.openwms.common.comm.CommHeader;
 import org.openwms.common.comm.Payload;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.support.MessageHeaderAccessor;
-import org.springframework.stereotype.Component;
 
 /**
  * A HeaderAppendingTransformer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component(value = "headerAppendingTransformer")
-class HeaderAppendingTransformer {
+@MessageEndpoint
+public class HeaderAppendingTransformer {
 
     @Transformer
     public Message<Payload> transform(Message<Payload> msg) {

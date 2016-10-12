@@ -21,11 +21,12 @@
  */
 package org.openwms.common.comm.req;
 
-import static org.openwms.common.comm.CommConstants.asDate;
+import static org.openwms.common.comm.ParserUtils.asDate;
 
 import java.text.ParseException;
 
 import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.ParserUtils;
 import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
 
@@ -160,7 +161,7 @@ public class RequestMessage extends Payload {
     @Override
     public String toString() {
         return super.toString() + IDENTIFIER + this.barcode + this.actualLocation + this.targetLocation +
-                getErrorCode() + CommConstants.asString(super.getCreated());
+                getErrorCode() + ParserUtils.asString(super.getCreated());
     }
 
     /**

@@ -26,25 +26,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.MessageMapper;
-import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.tcp.TCPCommConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.Transformer;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Headers;
-import org.springframework.stereotype.Component;
 
 /**
  * A CommonMessageTransformer transforms incoming OSIP telegram structures to {@link Payload}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @since 0.2
  */
-@Component(value = "telegramTransformer")
+@MessageEndpoint("telegramTransformer")
 public class TelegramTransformer<T extends Payload> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TelegramTransformer.class);
