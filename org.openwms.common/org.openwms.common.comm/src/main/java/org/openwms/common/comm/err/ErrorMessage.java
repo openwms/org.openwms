@@ -21,13 +21,14 @@
  */
 package org.openwms.common.comm.err;
 
-import static org.openwms.common.comm.CommConstants.asDate;
+import static org.openwms.common.comm.ParserUtils.asDate;
 
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Date;
 
 import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.ParserUtils;
 import org.openwms.common.comm.Payload;
 
 /**
@@ -124,6 +125,6 @@ public class ErrorMessage extends Payload implements Serializable {
     @Override
     public String asString() {
         return IDENTIFIER + getErrorCode() +
-                CommConstants.asString(super.getCreated());
+                ParserUtils.asString(super.getCreated());
     }
 }

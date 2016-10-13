@@ -19,26 +19,44 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.app;
-
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+package org.openwms.common.comm;
 
 /**
- * A CommConfig.
+ * A MessageMismatchException indicates that an incoming message is not in expected format.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Configuration
-class CommConfig {
+public class MessageMismatchException extends MessageProcessingException {
 
-    public
-    @LoadBalanced
-    @Bean
-    RestTemplate restTemplate() {
-        return new RestTemplate();
+    /** Create a new MessageMismatchException. */
+    public MessageMismatchException() {
     }
 
+    /**
+     * Create a new MessageMismatchException.
+     *
+     * @param message Detail message
+     */
+    public MessageMismatchException(String message) {
+        super(message);
+    }
+
+    /**
+     * Create a new MessageMismatchException.
+     *
+     * @param cause Root cause
+     */
+    public MessageMismatchException(Throwable cause) {
+        super(cause);
+    }
+
+    /**
+     * Create a new MessageMismatchException.
+     *
+     * @param message Detail message
+     * @param cause Root cause
+     */
+    public MessageMismatchException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

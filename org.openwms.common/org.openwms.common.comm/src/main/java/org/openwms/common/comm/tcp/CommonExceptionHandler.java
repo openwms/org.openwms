@@ -22,9 +22,9 @@
 package org.openwms.common.comm.tcp;
 
 import org.openwms.common.comm.CommHeader;
+import org.openwms.common.comm.CommonMessageFactory;
 import org.openwms.common.comm.err.ErrorCodes;
 import org.openwms.common.comm.err.ErrorMessage;
-import org.openwms.common.comm.util.CommonMessageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.integration.annotation.ServiceActivator;

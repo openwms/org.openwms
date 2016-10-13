@@ -26,12 +26,12 @@ import static org.openwms.common.comm.CommHeader.LENGTH_HEADER;
 import java.text.ParseException;
 import java.util.Map;
 
+import org.openwms.common.comm.CommonMessageFactory;
+import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.Payload;
 import org.openwms.common.comm.api.MessageMapper;
-import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.req.RequestMessage;
 import org.openwms.common.comm.req.spi.RequestFieldLengthProvider;
-import org.openwms.common.comm.util.CommonMessageFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;

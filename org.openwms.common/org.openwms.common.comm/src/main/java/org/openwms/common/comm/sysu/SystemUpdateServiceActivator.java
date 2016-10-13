@@ -27,16 +27,16 @@ import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.NotRespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.stereotype.Component;
 
 /**
  * A SystemUpdateServiceActivator.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
+@MessageEndpoint("systemupdateServiceActivator")
 class SystemUpdateServiceActivator implements NotRespondingServiceActivator<SystemUpdateMessage> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */

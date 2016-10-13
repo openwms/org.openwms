@@ -24,15 +24,17 @@ package org.openwms.common.comm.impl;
 import java.io.UnsupportedEncodingException;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.integration.config.IntegrationConverter;
+import org.springframework.stereotype.Component;
 
 /**
  * A ByteArrayToStringConverter is a simple byte array to String converter; allowing the character set to be specified.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-public class ByteArrayToStringConverter implements Converter<byte[], String> {
+@IntegrationConverter
+@Component
+class ByteArrayToStringConverter implements Converter<byte[], String> {
 
     private String charSet = "UTF-8";
 

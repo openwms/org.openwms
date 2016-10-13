@@ -21,17 +21,17 @@
  */
 package org.openwms.common.comm.synq.tcp;
 
-import static org.openwms.common.comm.CommConstants.asDate;
 import static org.openwms.common.comm.CommHeader.LENGTH_HEADER;
+import static org.openwms.common.comm.ParserUtils.asDate;
 import static org.openwms.common.comm.Payload.DATE_LENGTH;
 
 import java.text.ParseException;
 import java.util.Map;
 
+import org.openwms.common.comm.CommonMessageFactory;
+import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.api.MessageMapper;
-import org.openwms.common.comm.exception.MessageMismatchException;
 import org.openwms.common.comm.synq.TimesyncRequest;
-import org.openwms.common.comm.util.CommonMessageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.Message;

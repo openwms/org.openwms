@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm.sysu;
 
-import static org.openwms.common.comm.CommConstants.asDate;
+import static org.openwms.common.comm.ParserUtils.asDate;
 
 import java.io.Serializable;
 import java.text.ParseException;
