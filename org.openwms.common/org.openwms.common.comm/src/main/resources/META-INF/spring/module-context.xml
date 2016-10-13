@@ -59,8 +59,8 @@
 
 
 
-    <ip:tcp-inbound-channel-adapter id="inboundAdapter" channel="inboundChannel"
-                                    connection-factory="tcpConnectionFactory"/>
+    <!--ip:tcp-inbound-channel-adapter id="inboundAdapter" channel="inboundChannel"
+                                    connection-factory="tcpConnectionFactory"/-->
 
     <!--int:channel id="enrichedOutboundChannel" /-->
     <ip:tcp-outbound-channel-adapter id="outboundAdapter" channel="enrichedOutboundChannel"

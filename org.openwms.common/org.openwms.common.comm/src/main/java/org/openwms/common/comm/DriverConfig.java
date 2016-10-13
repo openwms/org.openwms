@@ -96,6 +96,14 @@ class DriverConfig {
         return gate;
     }
 
+    @Bean
+    TcpInboundGateway outboundAdapter(AbstractConnectionFactory tcpConnectionFactory) {
+        TcpInboundGateway gate = new TcpInboundGateway();
+        gate.setConnectionFactory(tcpConnectionFactory);
+        gate.setRequestChannel(enrichedOutboundChannel());
+        return gate;
+    }
+
     /*~ --------------- MessageChannels ------------ */
     @Bean
     MessageChannel commonExceptionChannel() {
@@ -112,6 +120,10 @@ class DriverConfig {
         return MessageChannels.executor(Executors.newCachedThreadPool()).get();
     }
 
+    @Bean
+    MessageChannel enrichedOutboundChannel() {
+        return MessageChannels.executor(Executors.newCachedThreadPool()).get();
+    }
     /*~ --------- Serializer / Deserializer -------- */
     @Bean
     ByteArrayCrLfSerializer byteArraySerializer() {
