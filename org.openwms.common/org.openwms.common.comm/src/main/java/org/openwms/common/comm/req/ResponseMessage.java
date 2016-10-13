@@ -23,8 +23,7 @@ package org.openwms.common.comm.req;
 
 import java.io.Serializable;
 
-import org.openwms.common.comm.CommConstants;
-import org.openwms.common.comm.CommHeader;
+import org.openwms.common.comm.ParserUtils;
 import org.openwms.common.comm.Payload;
 
 /**
@@ -79,7 +78,7 @@ public class ResponseMessage extends Payload implements Serializable {
      */
     @Override
     public String toString() {
-        return super.toString() + IDENTIFIER + getErrorCode() + CommConstants.asString(super.getCreated());
+        return super.toString() + IDENTIFIER + getErrorCode() + ParserUtils.asString(super.getCreated());
     }
 
     /**
@@ -104,7 +103,6 @@ public class ResponseMessage extends Payload implements Serializable {
         private String actualLocation;
         private String targetLocation;
         private String targetLocationGroup;
-        private CommHeader header;
 
         public Builder() {
         }

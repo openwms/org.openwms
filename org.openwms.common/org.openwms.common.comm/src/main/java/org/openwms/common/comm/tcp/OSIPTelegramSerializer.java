@@ -21,8 +21,8 @@
  */
 package org.openwms.common.comm.tcp;
 
-import static org.openwms.common.comm.CommConstants.padLeft;
-import static org.openwms.common.comm.CommConstants.padRight;
+import static org.openwms.common.comm.ParserUtils.padLeft;
+import static org.openwms.common.comm.ParserUtils.padRight;
 
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -33,8 +33,8 @@ import java.util.Map;
 
 import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.CommHeader;
+import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.Payload;
-import org.openwms.common.comm.exception.MessageMismatchException;
 import org.springframework.core.serializer.Serializer;
 
 /**
@@ -43,7 +43,7 @@ import org.springframework.core.serializer.Serializer;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class OSIPTelegramSerializer implements Serializer<Map<?, ?>> {
+public class OSIPTelegramSerializer implements Serializer<Map<?, ?>> {
 
     private static final byte[] CRLF = "\r\n".getBytes();
 

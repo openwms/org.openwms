@@ -24,7 +24,7 @@ package org.openwms.common.comm.synq;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.openwms.common.comm.CommConstants;
+import org.openwms.common.comm.ParserUtils;
 import org.openwms.common.comm.Payload;
 
 /**
@@ -67,11 +67,11 @@ class TimesyncResponse extends Payload implements Serializable {
 
     @Override
     public String asString() {
-        return IDENTIFIER + CommConstants.asString(senderTimer);
+        return IDENTIFIER + ParserUtils.asString(senderTimer);
     }
 
     @Override
     public String toString() {
-        return IDENTIFIER + CommConstants.asString(senderTimer);
+        return IDENTIFIER + ParserUtils.asString(senderTimer);
     }
 }

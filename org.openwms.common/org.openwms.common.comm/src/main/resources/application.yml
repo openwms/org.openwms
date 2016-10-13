@@ -1,0 +1,7 @@
+driver:
+  server:
+    port: 30000
+    so-timeout: 300000
+    so-receive-buffer-size: 160
+    so-send-buffer-size: 160
+

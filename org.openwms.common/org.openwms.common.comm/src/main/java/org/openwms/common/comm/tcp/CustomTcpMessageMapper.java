@@ -35,7 +35,7 @@ import org.springframework.util.Assert;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-class CustomTcpMessageMapper extends TcpMessageMapper {
+public class CustomTcpMessageMapper extends TcpMessageMapper {
 
     private final MessageConverter inboundMessageConverter;
     private final MessageConverter outboundMessageConverter;

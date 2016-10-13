@@ -21,7 +21,7 @@
  */
 package org.openwms.common.comm;
 
-import static org.openwms.common.comm.CommConstants.padLeft;
+import static org.openwms.common.comm.ParserUtils.padLeft;
 
 import java.io.Serializable;
 

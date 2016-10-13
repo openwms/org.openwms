@@ -19,12 +19,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.util;
+package org.openwms.common.comm;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.openwms.common.comm.CommHeader;
 import org.springframework.messaging.MessageHeaders;
 
 /**

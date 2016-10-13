@@ -29,7 +29,11 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ImportResource;
 
 /**
- * A DriverStarter.
+ * A DriverStarter is the starter class of the SpringBoot application that
+ * <ul>
+ *     <li>acts as Eureka client for service discovery</li>
+ *     <li>can handle failing communication partners with Hystrix</li>
+ * </ul>
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

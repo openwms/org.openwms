@@ -27,23 +27,21 @@ import org.openwms.common.comm.CommConstants;
 import org.openwms.common.comm.api.RespondingServiceActivator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.stereotype.Component;
 
 /**
- * A TimesyncServiceActivator.
+ * A TimesyncServiceActivator is activated on SYNC telegrams and delegates
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 1.0
- * @since 1.0
  */
-@Component
+@MessageEndpoint("timesyncServiceActivator")
 class TimesyncServiceActivator implements RespondingServiceActivator<TimesyncRequest, TimesyncResponse> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
-    static final String INPUT_CHANNEL_NAME = TimesyncRequest.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    public static final String INPUT_CHANNEL_NAME = TimesyncRequest.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
 
     @Autowired
     private ApplicationContext ctx;

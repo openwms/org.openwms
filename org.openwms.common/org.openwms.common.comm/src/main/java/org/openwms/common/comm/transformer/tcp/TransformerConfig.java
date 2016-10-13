@@ -19,7 +19,18 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.openwms.common.comm.transformer.tcp;
+
+import org.springframework.context.annotation.Configuration;
+
 /**
- * Utility package referenced by types from the tcp/ip layer.
+ * A TransformerConfig.
+ *
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-package org.openwms.common.comm.util;
+@Configuration
+public class TransformerConfig {
+
+
+
+}
