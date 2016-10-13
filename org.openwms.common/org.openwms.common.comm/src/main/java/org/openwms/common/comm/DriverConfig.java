@@ -62,12 +62,13 @@ class DriverConfig {
     @Bean
     MapMessageConverter mapMessageConverter() {
         MapMessageConverter result = new MapMessageConverter();
+        result.setHeaderNames("SYNC_FIELD", "SENDER", "MSG_LENGTH", "SEQUENCENO", "RECEIVER", "ip_connectionId");
         return result;
     }
 
     @Bean
     TcpMessageMapper customTcpMessageMapper(ByteArrayMessageConverter byteArrayMessageConverter, MapMessageConverter mapMessageConverter) {
-        return new CustomTcpMessageMapper(mapMessageConverter, byteArrayMessageConverter);
+        return new CustomTcpMessageMapper(byteArrayMessageConverter, mapMessageConverter);
     }
 
     /*~ ---------------- TCP/IP stuff ------------- */
