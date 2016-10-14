@@ -93,17 +93,10 @@ class DriverConfig {
         TcpInboundGateway gate = new TcpInboundGateway();
         gate.setConnectionFactory(tcpConnectionFactory);
         gate.setRequestChannel(inboundChannel());
-        return gate;
-    }
-/*
-    @Bean
-    TcpOutboundGateway outboundAdapter(AbstractConnectionFactory tcpConnectionFactory) {
-        TcpOutboundGateway gate = new TcpOutboundGateway();
-        gate.setConnectionFactory(tcpConnectionFactory);
         gate.setReplyChannel(enrichedOutboundChannel());
         return gate;
     }
-*/
+
     /*~ --------------- MessageChannels ------------ */
     @Bean
     MessageChannel commonExceptionChannel() {
