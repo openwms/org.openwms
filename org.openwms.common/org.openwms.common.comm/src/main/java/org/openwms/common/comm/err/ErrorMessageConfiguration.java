@@ -27,11 +27,9 @@ import org.springframework.integration.channel.DirectChannel;
 import org.springframework.messaging.MessageChannel;
 
 /**
- * A ErrorMessageConfiguration creates beans dynamically without the use of XML.
+ * A ErrorMessageConfiguration is the JavaConfig for the {@link ErrorMessage} handling part.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 @Configuration
 public class ErrorMessageConfiguration {

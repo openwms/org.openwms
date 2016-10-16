@@ -30,8 +30,6 @@ import org.springframework.messaging.MessageHeaders;
  * A CommonMessageFactory.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 public final class CommonMessageFactory {
 

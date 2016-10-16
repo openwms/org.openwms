@@ -21,14 +21,16 @@
  */
 package org.openwms.common.comm.req.spi;
 
+import org.ameba.app.SpringProfiles;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
- * A RequestFieldLengthProvider.
+ * A RequestFieldLengthProviderImpl.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-//x@Profile({SpringProfiles.DEVELOPMENT_PROFILE, SpringProfiles.IT_PROFILE})
+@Profile({SpringProfiles.DEVELOPMENT_PROFILE, SpringProfiles.IT_PROFILE})
 @Component
 class RequestFieldLengthProviderImpl implements RequestFieldLengthProvider{
 

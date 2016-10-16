@@ -26,7 +26,7 @@ import org.openwms.common.comm.Payload;
 /**
  * A NotRespondingServiceActivator.
  *
- * @param <T> A type of incoming CommonMessage
+ * @param <T> A type of incoming Payload
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public interface NotRespondingServiceActivator<T extends Payload> extends CustomServiceActivator {

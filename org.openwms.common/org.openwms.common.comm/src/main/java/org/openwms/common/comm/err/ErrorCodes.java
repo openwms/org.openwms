@@ -22,19 +22,14 @@
 package org.openwms.common.comm.err;
 
 /**
- * A final ErrorCodes class aggregates all error constants used as error code within <tt>ErrorMessage</tt>s.
+ * A ErrorCodes class defines all error constants used as error code within {@link ErrorMessage}s.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 public final class ErrorCodes {
 
     /** Indicates an unknown, not transformable message type {@value} . */
     public static final String UNKNOWN_MESSAGE_TYPE = "00000010";
 
-    /**
-     * Hide constructor.
-     */
     private ErrorCodes() {}
 }

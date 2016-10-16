@@ -32,8 +32,6 @@ import org.openwms.common.comm.CommonMessageFactory;
 import org.openwms.common.comm.MessageMismatchException;
 import org.openwms.common.comm.api.MessageMapper;
 import org.openwms.common.comm.err.ErrorMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Component;
@@ -45,8 +43,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 class ErrorTelegramMapper implements MessageMapper<ErrorMessage> {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorTelegramMapper.class);
 
     /**
      * {@inheritDoc}

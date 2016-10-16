@@ -26,7 +26,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.context.annotation.ImportResource;
 
 /**
  * A DriverStarter is the starter class of the SpringBoot application that
@@ -38,7 +37,6 @@ import org.springframework.context.annotation.ImportResource;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @SpringBootApplication(scanBasePackageClasses = {DriverStarter.class, SolutionApp.class})
-@ImportResource("META-INF/spring/*-context.xml")
 @EnableEurekaClient
 @EnableCircuitBreaker
 public class DriverStarter {

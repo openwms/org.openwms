@@ -25,8 +25,6 @@ package org.openwms.common.comm;
  * A final CommConstants class aggregates common used data and formatting types and provides useful conversation methods.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 public final class CommConstants {
 
@@ -43,9 +41,6 @@ public final class CommConstants {
     /** The character String used to pad till the defined telegram length. */
     public static final String TELEGRAM_FILLER_CHARACTER = "*";
 
-    /**
-     * Create a new CommConstants.
-     */
     private CommConstants() {
     }
 }

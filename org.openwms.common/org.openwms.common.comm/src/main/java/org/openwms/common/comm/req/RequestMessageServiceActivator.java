@@ -40,7 +40,7 @@ import org.springframework.messaging.MessageChannel;
 class RequestMessageServiceActivator implements NotRespondingServiceActivator<RequestMessage> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
-    public static final String INPUT_CHANNEL_NAME = RequestMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    static final String INPUT_CHANNEL_NAME = RequestMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
 
     @Autowired
     private ApplicationContext ctx;

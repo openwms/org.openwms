@@ -53,8 +53,6 @@ public class ErrorMessage extends Payload implements Serializable {
      * A Builder.
      * 
      * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
-     * @version $Revision: $
-     * @since 0.1
      */
     public static class Builder {
 

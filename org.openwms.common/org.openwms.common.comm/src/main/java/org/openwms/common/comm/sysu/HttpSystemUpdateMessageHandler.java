@@ -54,11 +54,11 @@ class HttpSystemUpdateMessageHandler implements Function<SystemUpdateMessage, Vo
         return null;
     }
 
-    static class RequestVO {
+    private static class RequestVO {
 
         String locationGroupName, errorCode;
 
-        public RequestVO(String locationGroupName, String errorCode) {
+        RequestVO(String locationGroupName, String errorCode) {
             this.locationGroupName = locationGroupName;
             this.errorCode = errorCode;
         }

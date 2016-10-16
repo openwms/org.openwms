@@ -33,14 +33,14 @@ import org.springframework.messaging.MessageChannel;
 
 /**
  * A ErrorMessageServiceActivator delegates incoming {@link ErrorMessage}s to the appropriate Application Service.
- * 
+ *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @MessageEndpoint("errormessageServiceActivator")
 public class ErrorMessageServiceActivator implements NotRespondingServiceActivator<ErrorMessage> {
 
     /** The name of the MessageChannel used as input-channel of this message processor. */
-    public static final String INPUT_CHANNEL_NAME = ErrorMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
+    static final String INPUT_CHANNEL_NAME = ErrorMessage.IDENTIFIER + CommConstants.CHANNEL_SUFFIX;
     @Autowired
     private Function<ErrorMessage, Void> handler;
 
@@ -71,5 +71,4 @@ public class ErrorMessageServiceActivator implements NotRespondingServiceActivat
     public void wakeUp(ErrorMessage message) {
         handler.apply(message);
     }
-
 }

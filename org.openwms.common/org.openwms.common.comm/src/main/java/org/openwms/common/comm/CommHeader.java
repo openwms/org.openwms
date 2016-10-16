@@ -70,26 +70,6 @@ public class CommHeader implements Serializable {
     }
 
     /**
-     * Create a new CommHeader.
-     *
-     * @param commHeader The header to get the values from.
-     */
-    public CommHeader(CommHeader commHeader) {
-        this(commHeader.getSync(), commHeader.getMessageLength(), commHeader.getSender(), commHeader.getReceiver(), commHeader.getSequenceNo());
-    }
-
-    private CommHeader() {
-    }
-
-    public static CommHeader empty() {
-        return new CommHeader();
-    }
-
-    public static CommHeader ofRequestHeader(CommHeader requestHeader) {
-        return new CommHeader(requestHeader.getSync(), LENGTH_HEADER, requestHeader.getReceiver(), requestHeader.getSender(), requestHeader.getSequenceNo() + 1);
-    }
-
-    /**
      * Get the sync.
      *
      * @return the sync.
