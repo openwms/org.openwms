@@ -28,10 +28,6 @@ package org.openwms.common.comm;
  */
 public class MessageMismatchException extends MessageProcessingException {
 
-    /** Create a new MessageMismatchException. */
-    public MessageMismatchException() {
-    }
-
     /**
      * Create a new MessageMismatchException.
      *
@@ -39,24 +35,5 @@ public class MessageMismatchException extends MessageProcessingException {
      */
     public MessageMismatchException(String message) {
         super(message);
-    }
-
-    /**
-     * Create a new MessageMismatchException.
-     *
-     * @param cause Root cause
-     */
-    public MessageMismatchException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Create a new MessageMismatchException.
-     *
-     * @param message Detail message
-     * @param cause Root cause
-     */
-    public MessageMismatchException(String message, Throwable cause) {
-        super(message, cause);
     }
 }

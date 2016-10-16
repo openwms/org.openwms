@@ -19,30 +19,34 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.openwms.common.comm.err.api;
+package org.openwms.common.comm.tcp;
 
-import java.util.function.Function;
-
-import org.openwms.common.comm.err.ErrorMessage;
-import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.integration.annotation.MessageEndpoint;
+import org.springframework.integration.annotation.ServiceActivator;
 
 /**
- * A ErrorMessageHandler is the default implementation to handle {@link ErrorMessage}s but does not do anything, it's just to satisfy the
- * dependency. The error handling functionality must be implemented in the actual project, because the OSIP specification does not make
- * any requirements nor assumptions to error handling.
- *
+ * A MessageMismatchHandler cares about incoming error telegrams on a defined error channel with name {@value MessageMismatchHandler#ERROR_CHANNEL_ID}.
+ * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-@Component
-class ErrorMessageHandler implements Function<ErrorMessage, Void> {
+@MessageEndpoint("mismatchServiceActivator")
+public class MessageMismatchHandler {
+
+    private static final String ERROR_CHANNEL_ID = "errExceptionChannel";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageMismatchHandler.class);
 
     /**
-     * Does not do anything.
+     * Current implementation just logs error messages.
+     * 
+     * @param telegram
+     *            The error telegram
      */
-    @Override
-    public Void apply(ErrorMessage errorMessage) {
-
-        // Currently no error handling happens in the base.
-        return null;
+    @ServiceActivator(inputChannel = ERROR_CHANNEL_ID)
+    public void handle(String telegram) {
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Invalid telegram : " + telegram);
+        }
     }
 }

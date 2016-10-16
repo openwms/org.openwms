@@ -27,7 +27,7 @@ import org.openwms.common.comm.ParserUtils;
 import org.openwms.common.comm.Payload;
 
 /**
- * A ResponseMessage on <tt>RequestMessage</tt>s.
+ * A ResponseMessage on {@link RequestMessage}s.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

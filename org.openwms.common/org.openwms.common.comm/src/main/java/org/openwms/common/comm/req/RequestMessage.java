@@ -52,11 +52,11 @@ public class RequestMessage extends Payload {
         return IDENTIFIER;
     }
 
-    public String getBarcode() {
+    String getBarcode() {
         return barcode;
     }
 
-    public String getActualLocation() {
+    String getActualLocation() {
         return actualLocation;
     }
 

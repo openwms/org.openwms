@@ -27,17 +27,15 @@ import org.openwms.common.comm.err.ErrorCodes;
 import org.openwms.common.comm.err.ErrorMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
-import org.springframework.stereotype.Component;
 
 /**
  * A CommonExceptionHandler.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
-@Component
+@MessageEndpoint("errorServiceActivator")
 public class CommonExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommonExceptionHandler.class);
