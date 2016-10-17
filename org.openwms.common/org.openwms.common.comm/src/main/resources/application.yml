@@ -5,3 +5,10 @@ driver:
     so-receive-buffer-size: 160
     so-send-buffer-size: 160
 
+logging:
+  level:
+    root: INFO
+    com.netflix.discovery: 'WARN'
+    org.openwms: 'DEBUG'
+    org.dozer: 'ERROR'
+    CORE_INTEGRATION_MESSAGING: 'DEBUG'

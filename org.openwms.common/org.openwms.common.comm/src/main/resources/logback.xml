@@ -7,14 +7,6 @@
     <include resource="logback-appenders.xml" />
     <include resource="logback-loggers.xml" />
 
-    <logger name="org.dozer" level="ERROR"/>
-    <logger name="org.hibernate.SQL" level="OFF"/>
-    <logger name="org.hibernate.type" level="OFF"/>
-    <logger name="org.openwms" level="DEBUG"/>
-    <logger name="com.netflix.discovery" level="OFF"/>
-
-    <logger name="CORE_INTEGRATION_MESSAGING" level="DEBUG"/>
-
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="LOGFILE"/>

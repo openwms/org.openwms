@@ -8,6 +8,7 @@ server:
   port: 8084
 
 eureka:
+  password: sa
   client:
     serviceUrl:
-      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
+      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:${eureka.password:}@${PREFIX:}127.0.0.1:8761}/eureka/
