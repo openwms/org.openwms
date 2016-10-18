@@ -1,8 +1,24 @@
+driver:
+  server:
+    port: 50000
+    so-timeout: 500000
+    so-receive-buffer-size: 160
+    so-send-buffer-size: 160
+
 spring:
+  main:
+    banner-mode: off
   application:
     name: tcpip-driver
-  main:
-    banner-mode: "off"
+  cloud:
+    config:
+      discovery:
+# Enable configserver over eureka
+        enabled: true
+# Not the default name
+        serviceId: openwms-config
+# Set the project name (Github branch) to get the config from
+      label: ZILE
 
 server:
   port: 8084
@@ -11,4 +27,9 @@ eureka:
   password: sa
   client:
     serviceUrl:
+# Where to lookup the configserver
       defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:${eureka.password:}@${PREFIX:}127.0.0.1:8761}/eureka/
+  instance:
+    metadataMap:
+      username: user
+      password: sa
