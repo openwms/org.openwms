@@ -20,7 +20,7 @@ ID | Group | Priority | Description
 --- | --- | --- | ---
 NR001 | Performance | HIGH | All expected responses to OSIP requests must be sent within **150 milliseconds** from message arrival.
 NR002 | Scalability | MEDIUM | The component must be capable to **scale out horizontally** within a projects scope (same tenant).
-NR003 | Extendability | MEDIUM | New telegram types (OSIP versions) must be integrated in an very encapsulated way. At best a new library can be dropped onto the classpath, at minimum  all artifacts of the new telegram implementation must be located in the same Java package without the need to touch existing other packages.
+NR003 | Extendability | MEDIUM | New telegram types (OSIP versions) must be integrated in a very encapsulated fashion. At best a new library can be dropped onto the classpath, at minimum  all artifacts of the new telegram implementation must be located in the same Java package without the need to touch existing other packages.
 
 # Architecture
 
