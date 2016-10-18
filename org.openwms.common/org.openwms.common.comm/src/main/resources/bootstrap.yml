@@ -1,9 +1,13 @@
-driver:
-  server:
-    port: 50000
-    so-timeout: 500000
-    so-receive-buffer-size: 160
-    so-send-buffer-size: 160
+owms:
+  tenant: ZILE
+  eureka:
+    password: sa
+  driver:
+    server:
+      port: 50000
+      so-timeout: 500000
+      so-receive-buffer-size: 160
+      so-send-buffer-size: 160
 
 spring:
   main:
@@ -15,21 +19,22 @@ spring:
       discovery:
 # Enable configserver over eureka
         enabled: true
-# Not the default name
+# Name of configserver is customized
         serviceId: openwms-config
 # Set the project name (Github branch) to get the config from
-      label: ZILE
+      label: ${owms.tenant:master}
+      fail-fast: true
 
 server:
   port: 8084
 
 eureka:
-  password: sa
   client:
     serviceUrl:
 # Where to lookup the configserver
-      defaultZone: ${vcap.services.${PREFIX:}eureka.credentials.uri:http://user:${eureka.password:}@${PREFIX:}127.0.0.1:8761}/eureka/
+      defaultZone: ${vcap.services.eureka.credentials.uri:http://${owms.eureka.username:user}:${owms.eureka.password:}@${owms.eureka.host:127.0.0.1}:${owms.eureka.port:8761}}/eureka/
   instance:
     metadataMap:
-      username: user
-      password: sa
+# Username and password passthrough to configserver
+      username: ${owms.eureka.username:user}
+      password: ${owms.eureka.password:}
