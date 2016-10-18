@@ -24,7 +24,7 @@ NR003 | Extendability | MEDIUM | New telegram types (OSIP versions) must be inte
 
 # Architecture
 
-![arch]
+![Architecture][arch]
 
 
 # Glossary
