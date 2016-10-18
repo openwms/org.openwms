@@ -16,12 +16,11 @@ FR001 | Support OSIP 1.0 | HIGH | All by OSIP defined functionality must be impl
 
 ## Non-functional Requirements
 
-ID | Name | Priority | Description
+ID | Group | Priority | Description
 --- | --- | --- | ---
-NR001 | Performance | HIGH | All expected responses to OSIP requests must be sent within 150 milliseconds from message arrival.
-NR002 | Scalability | MEDIUM | The component must be capable to scale out horizontally within a projects scope (same tenant).
-NR003 | Extendability | MEDIUM | New telegram types (OSIP versions) must be integrated in an very encapsulated way. At best a new library can be dropped onto the classpath, at minimum 
- all artifacts of the new telegram implementation must be located in the same Java package without the need to touch existing other packages.
+NR001 | Performance | HIGH | All expected responses to OSIP requests must be sent within **150 milliseconds** from message arrival.
+NR002 | Scalability | MEDIUM | The component must be capable to **scale out horizontally** within a projects scope (same tenant).
+NR003 | Extendability | MEDIUM | New telegram types (OSIP versions) must be integrated in an very encapsulated way. At best a new library can be dropped onto the classpath, at minimum  all artifacts of the new telegram implementation must be located in the same Java package without the need to touch existing other packages.
 
 # Architecture
 
