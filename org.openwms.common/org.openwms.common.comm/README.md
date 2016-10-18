@@ -24,5 +24,9 @@ NR003 | Extendability | MEDIUM | New telegram types (OSIP versions) must be inte
 
 # Architecture
 
+![arch]
+
+
 # Glossary
 
+[arch]: https://github.com/openwms/org.openwms/tree/%23141/org.openwms.common/org.openwms.common.comm/src/main/docs/res/integration_patterns.png
