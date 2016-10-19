@@ -21,8 +21,8 @@ Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWM
 
 # Current state of development
 
-All components are currently under development. From an technical point of view they were moved from OSGi bundles towards a
-more business oriented architecture with Spring Boot and Netflix OSS components.
+All components are currently under development. From a technical point of view they are moved from OSGi bundles towards a
+more business oriented architecture with Spring Boot and Netflix OSS components. Documentation of previous released versions can be found on [SourceForge.net](http://openwms2005.sourceforge.net/).
 
 # Current Architecture
 
@@ -32,8 +32,8 @@ currently existing as well as planned components of the OpenWMS.org system toget
 
 ![Architecture][1]
 
-Beside an user interface (not shown here) several other systems interact with the OpenWMS.org system (in the middle of the sketch). On top, we have ERP systems.
-Those systems send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by OpenWMS.org (Inventory Service). 
+Beside an user interface several other systems interact with the OpenWMS.org system. On top, we have ERP systems.
+Those systems send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
 OpenWMS.org fulfills these tasks by orchestrating the underlying subsystem. The communication
 between OpenWMS.org and an ERP system may not be unidirectional only, OpenWMS.org can although send status messages to the ERP or may request product catalog updates, this depends on the project needs.
 On the bottom we have devices that are close to actors and sensors in an automated warehouse project. Those devices are almost all limited in hardware resources and protocol stacks. Typically [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller) (Programmable Logic
