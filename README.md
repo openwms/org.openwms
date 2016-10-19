@@ -39,7 +39,7 @@ between OpenWMS.org and an ERP system may not be unidirectional only, OpenWMS.or
 On the bottom we have devices that are close to actors and sensors in automated warehouse projecty. Those devices are almost all limited in hardware resources and protocol stacks. Typically [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller) (Programmable Logic
 Controllers) are used to interact with field sensors and to control actors. OpenWMS.org is open source software and therefore promotes the usage of open source hardware components over commercial PLC products.
 The first choice of supported devices are boards, like [Arduino](https://www.arduino.cc) or [Raspberry Pi](https://www.raspberrypi.org/), with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are close
-to the hardware and expect to get responses from the server in no time to control motors and gates to the right direction. They although have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in that
+to the hardware and expect to get responses from the server in no time to control motors and switch gates to the right direction. They although have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in that
 the infrastructure takes care of DoS attacks and the application server pools incoming traffic for us.
 
 Read more about the architecture and design of each component on the components Github page.
