@@ -21,8 +21,16 @@ Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWM
 
 # Current state of development
 
-All components are currently under development. From an technical point of view they are moved from OSGi towards a
-microservice architecture with Spring Boot and Netflix OSS components.
+All components are currently under development. From an technical point of view they were moved from OSGi bundles towards a
+more business oriented architecture with Spring Boot and Netflix OSS components.
+
+# Current Architecture
+
+Instead of applying a technical layered architecture the current architecture focus on business components. Functionality with a high degree of cohesion is kept together within
+a deployable software component. Each component has it's own development lifecycle with a coordinated API evolution and an isolated data store. The following sketch shows all
+currently existing as well as planned components of the OpenWMS.org system together with all potential surrounding systems.
+
+![Architecture][1]
 
 # What kind of service architecture did we already have in the past?
 
@@ -33,8 +41,4 @@ A POC was implemented with EJB2.1, but the project started with EJB3.0. Since ab
 OSGi seemed to be the right choice to build a modular and extensible base project. Unfortunately Spring stopped there efforts on OSGi, in particular on Spring dmServer and Spring Dynamic
 Modules. 
 
-# Current Architecture
-
-Instead of applying a technical layered architecture the current architecture 
-
-
+[1]: src/docs/res/microservice_architecture.jpeg
