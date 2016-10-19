@@ -76,9 +76,7 @@ public class TelegramTransformer<T extends Payload> {
         }
         MessageMapper<T> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
         if (mapper == null) {
-            if (LOGGER.isErrorEnabled()) {
-                LOGGER.error("Not mapper found for telegram type " + TCPCommConstants.getTelegramType(telegram));
-            }
+            LOGGER.error("No mapper found for telegram type ", TCPCommConstants.getTelegramType(telegram));
             throw new MessageMismatchException("Not mapper found for telegram type "
                     + TCPCommConstants.getTelegramType(telegram));
         }
