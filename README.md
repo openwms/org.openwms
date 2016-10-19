@@ -26,14 +26,14 @@ more business oriented architecture with Spring Boot and Netflix OSS components.
 
 # Current Architecture
 
-Instead of applying a technical layered architecture (like we had with OSGi) the current architecture focus on business components. Business functions with a high degree of cohesion are kept together within
+Instead of applying a technical layered architecture (like we did with OSGi and before with J2EE1.4) the current architecture focuses on business components. Business functions with a high degree of cohesion are kept together within
 a deployable software component. Each component has it's own development lifecycle with an API evolution roadmap and an isolated data store. The following sketch shows all
 currently existing as well as planned components of the OpenWMS.org system together with all potential surrounding systems.
 
 ![Architecture][1]
 
-Beside an user interface several other systems interact with the OpenWMS.org system. On top, we have ERP systems.
-Those systems send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
+Beside the user interface, several other systems interact with the OpenWMS.org system. On top, we have ERP systems.
+ Those systems send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
 OpenWMS.org fulfills these tasks by orchestrating the underlying subsystem. The communication
 between OpenWMS.org and an ERP system may not be unidirectional only, OpenWMS.org can although send status messages to the ERP or may request product catalog updates, this depends on the project needs.
 On the bottom we have devices that are close to actors and sensors in an automated warehouse project. Those devices are almost all limited in hardware resources and protocol stacks. Typically [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller) (Programmable Logic
@@ -52,5 +52,10 @@ In more than 10 years we've seen a bunch of technologies to solve the same probl
 A POC was implemented with EJB2.1, but the project started with EJB3.0. Since about 2007 OpenWMS.org is on the Spring Framework and this is fine. Spring in combination with
 OSGi seemed to be the right choice to build a modular and extensible base project. Unfortunately Spring stopped there efforts on OSGi, in particular on Spring dmServer and Spring Dynamic
 Modules. 
+
+# Technologies
+
+In addition to the bunch of Spring Framework components, OpenWMS.org used [Activiti](http://activiti.org) as embedded workflow engine to take routing decisions. RDBMS access is shielded with the Java Persistence API.
+Some components may use NoSQL databases, like MongoDB, solely. 
 
 [1]: src/docs/res/microservice_architecture.jpeg
