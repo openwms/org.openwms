@@ -1,7 +1,11 @@
 org.openwms
 =====================
 
-Open Warehouse Management System
+Is a free to use and extend software Warehouse Management System to control 
+
+# Resources
+
+Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWMS)
 
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
@@ -15,10 +19,6 @@ Open Warehouse Management System
 [codacy-image]: https://img.shields.io/codacy/1081cebbe27b40a8be16b6524f246b6b.svg?style=flat-square
 [codacy-url]: https://www.codacy.com/app/openwms/org.openwms
 
-# Resources
-
-Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWMS)
-
 # Current state of development
 
 All components are currently under development. From an technical point of view they were moved from OSGi bundles towards a
@@ -26,11 +26,22 @@ more business oriented architecture with Spring Boot and Netflix OSS components.
 
 # Current Architecture
 
-Instead of applying a technical layered architecture the current architecture focus on business components. Functionality with a high degree of cohesion is kept together within
-a deployable software component. Each component has it's own development lifecycle with a coordinated API evolution and an isolated data store. The following sketch shows all
+Instead of applying a technical layered architecture (like we had with OSGi) the current architecture focus on business components. Business functions with a high degree of cohesion is kept together within
+a deployable software component. Each component has it's own development lifecycle with a API evolution roadmap and an isolated data store. The following sketch shows all
 currently existing as well as planned components of the OpenWMS.org system together with all potential surrounding systems.
 
 ![Architecture][1]
+
+Beside an user interface (not shown here) several other systems interact with the OpenWMS.org system - in the middle of the sketch. On top, we have ERP systems.
+Those systems send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by OpenWMS.org (Inventory Service). The communication
+between OpenWMS.org and an ERP system may not be unidirectional only. OpenWMS.org can although send status messages to the ERP or may request product catalog updates, this depends on the project needs.
+On the bottom we have devices that are close to actors and sensors within an automated warehouse. Those devices are almost limited in hardware resources and protocol stacks. Typically PLC (Programmable Logic
+Controllers) are used to interact with field sensors and to control actors. OpenWMS.org is open source software and therefore promotes the usage of open source hardware components over of commercial PLC products.
+Therefor first supported devices are boards, like Arduino or Raspberry Pi, with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are close
+to the hardware and expect to get responses from the server in no time. They have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in that
+the infrastructure takes care of DoS attacks or the application server handles the incoming traffic for us.
+
+Read more about the architecture and design of each component on the components Github page.
 
 # What kind of service architecture did we already have in the past?
 
