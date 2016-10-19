@@ -1,7 +1,7 @@
-org.openwms
+OpenWMS.org
 =====================
 
-Is a free to use and extend software Warehouse Management System to control 
+Is a free to use and extendible Warehouse Management System to control the material flow within automated and manual warehouses. 
 
 # Resources
 
@@ -22,23 +22,23 @@ Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWM
 # Current state of development
 
 All components are currently under development. From a technical point of view they are moved from OSGi bundles towards a
-more business oriented architecture with Spring Boot and Netflix OSS components. Documentation of previous released versions can be found on [SourceForge.net](http://openwms2005.sourceforge.net/).
+more business oriented architecture using Spring Boot and Netflix OSS components. Documentation of previous released versions can be found on [SourceForge.net](http://openwms2005.sourceforge.net/).
 
 # Current Architecture
 
-Instead of applying a technical layered architecture (like we did with OSGi and before with J2EE1.4) the current architecture focuses on business components. Business functions with a high degree of cohesion are kept together within
+Instead of applying a technical layered architecture (like we did with OSGi and before that with J2EE1.4) the current architecture focuses on business components. Business functions with a high degree of cohesion are kept together within
 a deployable software component. Each component has it's own development lifecycle with an API evolution roadmap and an isolated data store. The following sketch shows all
 currently existing as well as planned components of the OpenWMS.org system together with all potential surrounding systems.
 
 ![Architecture][1]
 
 Beside the user interface, several other systems interact with the OpenWMS.org system. On top, we have ERP systems.
- Those systems send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
+ They send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
 OpenWMS.org fulfills these tasks by orchestrating the underlying subsystem. The communication
-between OpenWMS.org and an ERP system may not be unidirectional only, OpenWMS.org can although send status messages to the ERP or may request product catalog updates, this depends on the project needs.
-On the bottom we have devices that are close to actors and sensors in an automated warehouse project. Those devices are almost all limited in hardware resources and protocol stacks. Typically [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller) (Programmable Logic
+between OpenWMS.org and an ERP system may not be unidirectional only, OpenWMS.org can although send status messages to the ERP or may request product catalog updates, this depends on project needs.
+On the bottom we have devices that are close to actors and sensors in automated warehouse projecty. Those devices are almost all limited in hardware resources and protocol stacks. Typically [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller) (Programmable Logic
 Controllers) are used to interact with field sensors and to control actors. OpenWMS.org is open source software and therefore promotes the usage of open source hardware components over commercial PLC products.
-Therefor the first choice of supported devices are boards, like Arduino or Raspberry Pi, with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are close
+The first choice of supported devices are boards, like [Arduino](https://www.arduino.cc) or [Raspberry Pi](https://www.raspberrypi.org/), with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are close
 to the hardware and expect to get responses from the server in no time to control motors and gates to the right direction. They although have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in that
 the infrastructure takes care of DoS attacks and the application server pools incoming traffic for us.
 
