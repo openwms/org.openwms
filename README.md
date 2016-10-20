@@ -1,7 +1,7 @@
 OpenWMS.org
 =====================
 
-Is a free to use and extendible Warehouse Management System to control the material flow within automated and manual warehouses. 
+Is a free to use and extensible Warehouse Management System to control the material flow within automated and manual warehouses. 
 
 # Resources
 
@@ -33,7 +33,7 @@ currently existing as well as planned components of the OpenWMS.org system toget
 ![Architecture][1]
 
 Beside the user interface, several other systems interact with the OpenWMS.org system. On top, we have ERP systems.
- They send high-level tasks to OpenWMS.org, e.g. a customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
+ They send high-level tasks to OpenWMS.org, e.g. a   customer order with order positions where each position refers to a product that is known by the `Inventory Service`. 
 OpenWMS.org fulfills these tasks by orchestrating the underlying subsystem. The communication
 between OpenWMS.org and an ERP system may not be unidirectional only, OpenWMS.org can although send status messages to the ERP or may request product catalog updates, this depends on project needs.
 On the bottom we have devices that are close to actors and sensors in automated warehouse projecty. Those devices are almost all limited in hardware resources and protocol stacks. Typically [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller) (Programmable Logic
@@ -42,20 +42,21 @@ The first choice of supported devices are boards, like [Arduino](https://www.ard
 to the hardware and expect to get responses from the server in no time to control motors and switch gates to the right direction. They although have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in that
 the infrastructure takes care of DoS attacks and the application server pools incoming traffic for us.
 
-Read more about the architecture and design of each component on the components Github page.
+Read more about each components architecture and design on the components Github page.
 
-# What kind of service architecture did we already have in the past?
+# Previous Architectures
 
-The project started in 2005 with an J2EE server approach based on EJB2.1 with XDoclets, Hibernate and JavaServer Faces (JSF).
-In more than 10 years we've seen a bunch of technologies to solve the same problems.
+The project started in 2005 with an J2EE server approach based on EJB2.1 with XDoclets, Hibernate and JavaServer Faces (JSF). In more than 10 years we've seen a bunch of technologies that all address the same problems.
  
-A POC was implemented with EJB2.1, but the project started with EJB3.0. Since about 2007 OpenWMS.org is on the Spring Framework and this is fine. Spring in combination with
-OSGi seemed to be the right choice to build a modular and extensible base project. Unfortunately Spring stopped there efforts on OSGi, in particular on Spring dmServer and Spring Dynamic
-Modules. 
+A POC has been implemented with EJB2.1, but the project actually started with EJB3.0. Since about 2007 OpenWMS.org is on the Spring Framework and this is fine. Spring in combination with
+OSGi seemed to be the right choice to build a modular and extensible project base. Unfortunately Spring stopped there efforts on OSGi, in particular on Spring dmServer and Spring Dynamic
+Modules. In a transition to the current microservice architecture, we started to put all the OSGi bundles into a fat JavaEE WAR deployment unit to run the application on a servlet container
+like Apache Tomcat.
 
 # Technologies
 
-In addition to the bunch of Spring Framework components, OpenWMS.org used [Activiti](http://activiti.org) as embedded workflow engine to take routing decisions. RDBMS access is shielded with the Java Persistence API.
-Some components may use NoSQL databases, like MongoDB, solely. 
+In addition to a bunch of Spring Framework projects, OpenWMS.org uses [Activiti](http://activiti.org) as embedded workflow engine to take routing decisions in the TMS layer. RDBMS access is shielded with the Java Persistence API.
+Some components might use NoSQL databases, like MongoDB, solely. RabbitMQ is used in combination with Spring Integration as notification and event broker. All hexagon components are Spring Boot applications designed to
+run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 
 [1]: src/docs/res/microservice_architecture.jpeg
