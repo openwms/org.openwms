@@ -75,10 +75,10 @@ class DriverConfig {
 
     /*~ ---------------- TCP/IP stuff ------------- */
     @Bean
-    AbstractConnectionFactory tcpConnectionFactory(@Value("${driver.server.port}") int port,
-                                                   @Value("${driver.server.so-timeout}") int soTimeout,
-                                                   @Value("${driver.server.so-receive-buffer-size}") int soReceiveBufferSize,
-                                                   @Value("${driver.server.so-send-buffer-size}") int soSendBufferSize,
+    AbstractConnectionFactory tcpConnectionFactory(@Value("${owms.driver.server.port}") int port,
+                                                   @Value("${owms.driver.server.so-timeout}") int soTimeout,
+                                                   @Value("${owms.driver.server.so-receive-buffer-size}") int soReceiveBufferSize,
+                                                   @Value("${owms.driver.server.so-send-buffer-size}") int soSendBufferSize,
                                                    TcpMessageMapper customTcpMessageMapper) {
         TcpNetServerConnectionFactory connectionFactory = new TcpNetServerConnectionFactory(port);
         connectionFactory.setSoTimeout(soTimeout);
