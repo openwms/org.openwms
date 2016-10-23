@@ -1,14 +1,3 @@
-owms:
-  tenant: ZILE
-  eureka:
-    password: sa
-  driver:
-    server:
-      port: 50000
-      so-timeout: 500000
-      so-receive-buffer-size: 160
-      so-send-buffer-size: 160
-
 spring:
   main:
     banner-mode: off
@@ -26,7 +15,7 @@ spring:
       fail-fast: true
 
 server:
-  port: 8084
+  port: ${PORT:8084}
 
 eureka:
   client:
