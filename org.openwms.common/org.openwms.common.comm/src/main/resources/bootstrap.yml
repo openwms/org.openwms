@@ -21,7 +21,7 @@ spring:
 #      uri: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
 
 server:
-  port: 8084
+  port: ${PORT:8084}
 
 eureka:
   client:
