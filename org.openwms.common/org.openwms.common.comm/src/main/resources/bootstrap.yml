@@ -1,10 +1,7 @@
 owms:
   eureka:
     username: user
-    password: '{cipher}AQA+J+dwqrQzK67I3vjzq5Yo/JHXWehADc8HW27kMfMSYuD+OBRMBhtaYHzW7el9ZcvCIZf4ogMbTXwPmajgbrL2jK4WIoxugUu/dGAf9SLIHZtVMLuND1F8hacjaJdzUCUtHltCaa+FRgkpgRLNtI93xy1/8yQhqCfjMmBVj+mqobTQz3ze+pLhzf2EJ3kRJFbNR22c/XPJpFxR/Vu5EgMA2eXvlx0g5EFnPz6qO1fD+gaD2CgpffI8qme6zHj3TV9V1giRCqt8khFOGEqz5SrgjrRBgbuJ86/eEA95otbp/Ftpr22V7NRaXmYxl0tUSRf45hm5Hfzcy0A0pTtFNpQFF7s5Iqbif+SiWHBjkp/IayG2kNw8s72MwATO78TUcr8='
-  config:
-    username: user
-    password: '{cipher}AQA+J+dwqrQzK67I3vjzq5Yo/JHXWehADc8HW27kMfMSYuD+OBRMBhtaYHzW7el9ZcvCIZf4ogMbTXwPmajgbrL2jK4WIoxugUu/dGAf9SLIHZtVMLuND1F8hacjaJdzUCUtHltCaa+FRgkpgRLNtI93xy1/8yQhqCfjMmBVj+mqobTQz3ze+pLhzf2EJ3kRJFbNR22c/XPJpFxR/Vu5EgMA2eXvlx0g5EFnPz6qO1fD+gaD2CgpffI8qme6zHj3TV9V1giRCqt8khFOGEqz5SrgjrRBgbuJ86/eEA95otbp/Ftpr22V7NRaXmYxl0tUSRf45hm5Hfzcy0A0pTtFNpQFF7s5Iqbif+SiWHBjkp/IayG2kNw8s72MwATO78TUcr8='
+    password: sa
 
 spring:
   main:
@@ -21,8 +18,7 @@ spring:
 # Set the project name (Github branch) to get the config from
       label: ${owms.tenant:master}
       fail-fast: true
-      username: ${owms.config.username}
-      password: ${owms.config.password}
+#      uri: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
 
 server:
   port: 8084
@@ -31,7 +27,7 @@ eureka:
   client:
     serviceUrl:
 # Where to lookup the configserver
-      defaultZone: ${vcap.services.eureka.credentials.uri:http://${owms.eureka.username:user}:${owms.eureka.password:}@${owms.eureka.host:127.0.0.1}:${owms.eureka.port:8761}}/eureka/
+      defaultZone: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
   instance:
     metadataMap:
 # Username and password passthrough to configserver
