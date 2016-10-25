@@ -1,13 +1,7 @@
 owms:
-  tenant: ZILE
   eureka:
+    username: user
     password: sa
-  driver:
-    server:
-      port: 50000
-      so-timeout: 500000
-      so-receive-buffer-size: 160
-      so-send-buffer-size: 160
 
 spring:
   main:
@@ -24,6 +18,7 @@ spring:
 # Set the project name (Github branch) to get the config from
       label: ${owms.tenant:master}
       fail-fast: true
+#      uri: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
 
 server:
   port: 8084
@@ -32,9 +27,9 @@ eureka:
   client:
     serviceUrl:
 # Where to lookup the configserver
-      defaultZone: ${vcap.services.eureka.credentials.uri:http://${owms.eureka.username:user}:${owms.eureka.password:}@${owms.eureka.host:127.0.0.1}:${owms.eureka.port:8761}}/eureka/
+      defaultZone: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
   instance:
     metadataMap:
 # Username and password passthrough to configserver
-      username: ${owms.eureka.username:user}
-      password: ${owms.eureka.password:}
+      username: ${owms.eureka.username}
+      password: ${owms.eureka.password}
