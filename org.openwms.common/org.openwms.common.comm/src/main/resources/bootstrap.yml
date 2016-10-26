@@ -11,25 +11,33 @@ spring:
   cloud:
     config:
       discovery:
-# Enable configserver over eureka
         enabled: true
-# Name of configserver is customized
         serviceId: openwms-config
-# Set the project name (Github branch) to get the config from
       label: ${owms.tenant:master}
       fail-fast: true
-#      uri: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
+#      uri: https://openwms-configuration.herokuapp.com
 
 server:
   port: ${PORT:8084}
 
+logging:
+  level:
+    root: INFO
+    org.springframework.web.client: 'DEBUG'
+
 eureka:
   client:
     serviceUrl:
-# Where to lookup the configserver
-      defaultZone: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
+      defaultZone: ${owms.eureka.url:http://user:sa@127.0.0.1}:${owms.eureka.port:8761}/eureka/
   instance:
+#    hostname: localhost
+    secure-port-enabled: true
+#    non-secure-port-enabled: false
+#    statusPageUrl: https://${eureka.instance.hostName}/info
+#    healthCheckUrl: https://${eureka.instance.hostName}/health
+#    homePageUrl: https://${eureka.instance.hostName}/
     metadataMap:
 # Username and password passthrough to configserver
       username: ${owms.eureka.username}
       password: ${owms.eureka.password}
+
