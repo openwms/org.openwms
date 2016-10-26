@@ -21,6 +21,8 @@
  */
 package org.openwms.common.comm.app;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
 import org.openwms.common.comm.tcp.CustomTcpMessageMapper;
@@ -29,8 +31,10 @@ import org.openwms.common.comm.transformer.tcp.HeaderAppendingTransformer;
 import org.openwms.common.comm.transformer.tcp.TelegramTransformer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.channel.MessageChannels;
@@ -71,19 +75,31 @@ class DriverConfig {
         return new CustomTcpMessageMapper(byteArrayMessageConverter, mapMessageConverter);
     }
 
+    @Bean
+    @RefreshScope
+    Map<String, Integer> propertyHolder(@Value("${owms.driver.server.port}") int port,
+                                             @Value("${owms.driver.server.so-timeout}") int soTimeout,
+                                             @Value("${owms.driver.server.so-receive-buffer-size}") int soReceiveBufferSize,
+                                             @Value("${owms.driver.server.so-send-buffer-size}") int soSendBufferSize) {
+        Map<String, Integer> res = new HashMap<>();
+        res.put("owms.driver.server.port", port);
+        res.put("owms.driver.server.so-timeout", soTimeout);
+        res.put("owms.driver.server.so-receive-buffer-size", soReceiveBufferSize);
+        res.put("owms.driver.server.so-send-buffer-size", soSendBufferSize);
+        return res;
+    }
+
     /*~ ---------------- TCP/IP stuff ------------- */
     @Bean
-    AbstractConnectionFactory tcpConnectionFactory(@Value("${owms.driver.server.port}") int port,
-                                                   @Value("${owms.driver.server.so-timeout}") int soTimeout,
-                                                   @Value("${owms.driver.server.so-receive-buffer-size}") int soReceiveBufferSize,
-                                                   @Value("${owms.driver.server.so-send-buffer-size}") int soSendBufferSize,
+    @DependsOn("propertyHolder")
+    AbstractConnectionFactory tcpConnectionFactory(Map<String, Integer> propertyHolder,
                                                    TcpMessageMapper customTcpMessageMapper) {
-        TcpNetServerConnectionFactory connectionFactory = new TcpNetServerConnectionFactory(port);
-        connectionFactory.setSoTimeout(soTimeout);
+        TcpNetServerConnectionFactory connectionFactory = new TcpNetServerConnectionFactory(propertyHolder.get("owms.driver.server.port"));
+        connectionFactory.setSoTimeout(propertyHolder.get("owms.driver.server.so-timeout"));
         connectionFactory.setSerializer(telegramSerializer());
         connectionFactory.setDeserializer(byteArraySerializer());
-        connectionFactory.setSoReceiveBufferSize(soReceiveBufferSize);
-        connectionFactory.setSoSendBufferSize(soSendBufferSize);
+        connectionFactory.setSoReceiveBufferSize(propertyHolder.get("owms.driver.server.so-receive-buffer-size"));
+        connectionFactory.setSoSendBufferSize(propertyHolder.get("owms.driver.server.so-send-buffer-size"));
         connectionFactory.setMapper(customTcpMessageMapper);
         return connectionFactory;
     }
