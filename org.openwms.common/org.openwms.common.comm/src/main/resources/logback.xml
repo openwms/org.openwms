@@ -7,6 +7,8 @@
     <include resource="logback-appenders.xml" />
     <include resource="logback-loggers.xml" />
 
+    <logger name="com.netflix.discovery" level="OFF"/>
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="LOGFILE"/>
