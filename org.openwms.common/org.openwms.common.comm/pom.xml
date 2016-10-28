@@ -36,6 +36,10 @@
         <moduleDir>../..</moduleDir>
     </properties>
 
+    <build>
+        <finalName>tcpip-driver</finalName>
+    </build>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
