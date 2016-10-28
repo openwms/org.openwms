@@ -25,7 +25,7 @@ import org.ameba.app.SolutionApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * A DriverStarter is the starter class of the SpringBoot application that
@@ -37,7 +37,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @SpringBootApplication(scanBasePackageClasses = {DriverStarter.class, SolutionApp.class})
-@EnableEurekaClient
+@EnableDiscoveryClient
 @EnableCircuitBreaker
 public class DriverStarter {
 

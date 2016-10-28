@@ -3,6 +3,7 @@ owms:
     username: user
     password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
   config:
+    username: user
     password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
 
 spring:
@@ -14,15 +15,14 @@ spring:
     config:
       label: ${owms.tenant:master}
       fail-fast: true
-      uri: https://user:sa@openwms-configuration.herokuapp.com:443
+      discovery:
+        enabled: true
+        service-id: openwms-config
+      username: ${owms.config.username}
+      password: ${owms.config.password}
 
 server:
   port: ${PORT:8084}
-
-logging:
-  level:
-    root: INFO
-    org.springframework.web.client: INFO
 
 encrypt:
   keyStore:
@@ -34,16 +34,25 @@ encrypt:
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://user:sa@openwms-services.herokuapp.com/eureka/
+# need to be overridden in the cloud environment props!
+      defaultZone: ${owms.eureka.url}/eureka
   instance:
-    hostname: openwms-services.herokuapp.com
+    hostname: localhost
+# need to be overridden in the cloud environment props!
     secure-port-enabled: true
     non-secure-port-enabled: false
-    statusPageUrl: https://${eureka.instance.hostName}:80/info
-    healthCheckUrl: https://${eureka.instance.hostName}:80/health
-    homePageUrl: https://${eureka.instance.hostName}:80/
-    metadataMap:
-# Username and password passthrough to configserver
-      username: ${owms.eureka.username}
-      password: ${owms.eureka.password}
+    statusPageUrl: https://${eureka.instance.hostName}/info
+    healthCheckUrl: https://${eureka.instance.hostName}/health
+    homePageUrl: https://${eureka.instance.hostName}/
 
+---
+spring:
+  profiles: DEV
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    secure-port-enabled: false
+    non-secure-port-enabled: true
