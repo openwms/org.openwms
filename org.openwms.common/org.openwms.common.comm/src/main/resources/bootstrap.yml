@@ -1,7 +1,10 @@
 owms:
   eureka:
     username: user
-    password: sa
+    password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
+  config:
+    username: user
+    password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
 
 spring:
   main:
@@ -10,26 +13,46 @@ spring:
     name: tcpip-driver
   cloud:
     config:
-      discovery:
-# Enable configserver over eureka
-        enabled: true
-# Name of configserver is customized
-        serviceId: openwms-config
-# Set the project name (Github branch) to get the config from
       label: ${owms.tenant:master}
       fail-fast: true
-#      uri: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
+      discovery:
+        enabled: true
+        service-id: openwms-config
+      username: ${owms.config.username}
+      password: ${owms.config.password}
 
 server:
-  port: 8084
+  port: ${PORT:8084}
+
+encrypt:
+  keyStore:
+    location: classpath:/server.jks
+    password: openwms
+    alias: livekey
+# set encrypt.key-store.secret as command line parameter or in the cloud environment props!
 
 eureka:
   client:
     serviceUrl:
-# Where to lookup the configserver
-      defaultZone: ${cloud.services.eureka.uri:http://user:sa@127.0.0.1:8761}/eureka/
+# need to be overridden in the cloud environment props!
+      defaultZone: ${owms.eureka.url}/eureka
   instance:
-    metadataMap:
-# Username and password passthrough to configserver
-      username: ${owms.eureka.username}
-      password: ${owms.eureka.password}
+    hostname: localhost
+# need to be overridden in the cloud environment props!
+    secure-port-enabled: true
+    non-secure-port-enabled: false
+    statusPageUrl: https://${eureka.instance.hostName}/info
+    healthCheckUrl: https://${eureka.instance.hostName}/health
+    homePageUrl: https://${eureka.instance.hostName}/
+
+---
+spring:
+  profiles: DEV
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    secure-port-enabled: false
+    non-secure-port-enabled: true

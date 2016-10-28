@@ -1,19 +1,47 @@
+owms:
+  eureka:
+    username: user
+    password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
+  config:
+    username: user
+    password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
+
 spring:
+  main:
+    banner-mode: off
   application:
     name: routing-service
-  main:
-    banner-mode: "off"
+  cloud:
+    config:
+      label: ${owms.tenant:master}
+      fail-fast: true
+      discovery:
+        enabled: true
+        service-id: openwms-config
+      username: ${owms.config.username}
+      password: ${owms.config.password}
 
 server:
   port: ${PORT:8081}
 
-security:
-  user:
-    password: sa
-  basic:
-    enabled: false
+encrypt:
+  keyStore:
+    location: classpath:/server.jks
+    password: openwms
+    alias: livekey
+# set encrypt.key-store.secret as command line parameter or in the cloud environment props!
 
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${vcap.services.eureka-service.credentials.uri:http://127.0.0.1:8761}/eureka/
+# need to be overridden in the cloud environment props!
+      defaultZone: ${owms.eureka.url}/eureka
+  instance:
+    hostname: localhost
+# need to be overridden in the cloud environment props!
+    secure-port-enabled: true
+    non-secure-port-enabled: false
+    statusPageUrl: https://${eureka.instance.hostName}/info
+    healthCheckUrl: https://${eureka.instance.hostName}/health
+    homePageUrl: https://${eureka.instance.hostName}/
+    non-secure-port: ${PORT:8081}
