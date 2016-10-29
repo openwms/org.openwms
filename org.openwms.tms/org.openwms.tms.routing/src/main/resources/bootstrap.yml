@@ -26,7 +26,7 @@ server:
 
 encrypt:
   keyStore:
-    location: classpath:/server.jks
+    location: classpath:server.jks
     password: openwms
     alias: livekey
 # set encrypt.key-store.secret as command line parameter or in the cloud environment props!
