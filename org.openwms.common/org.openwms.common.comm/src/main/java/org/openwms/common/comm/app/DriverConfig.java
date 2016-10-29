@@ -75,6 +75,9 @@ class DriverConfig {
         return new CustomTcpMessageMapper(byteArrayMessageConverter, mapMessageConverter);
     }
 
+    /** We need to put this property resolving bean in between, because CGLIB is used to build a proxy around refreshscope beans. Doing
+     * this for the tcpip factory does not work
+     */
     @Bean
     @RefreshScope
     Map<String, Integer> propertyHolder(@Value("${owms.driver.server.port}") int port,
