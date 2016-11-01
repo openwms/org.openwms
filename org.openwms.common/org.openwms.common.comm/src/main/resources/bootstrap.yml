@@ -1,10 +1,8 @@
 owms:
-  eureka:
-    username: user
-    password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
   config:
+    # need to be overridden in the cloud environment props!
     username: user
-    password: '{cipher}AQCD3aCh+t7K3em7TGocVO1pDWlpJm5DoY79a6/sU6Hit31IzaD0SOFspzfRgmPevsDLl754DP4leo+Xx2LHQ+m00dTkYwYzYQeJkHNPK+yE4Q2yamCtbYH1oalYxSpqTiCsfXZ6WjM1tdF6YLrCeCCCTnp9utECT13fY3+3db4UGd5ssibKTaQmR1ilUbhwkNbL1rERSS5Bk6fs7p/YXmboScgJk1sPN3uUyZDKgjalcQkORcfHzoMIvCCCFZ3OjuVwHYDJ8Z8GXx7d8razs9qFjiY1HwfrKxPNeIftyo2KnbKhDqIuG1txj1vZ5tDD4jNSj0Jd+eFlktnBvyrQLLubGKVk73KakKBiQYzOlcZjTuDG4IiKFXlbGKh0IWia46g='
+    password: sa
 
 spring:
   main:
@@ -24,21 +22,14 @@ spring:
 server:
   port: ${PORT:8084}
 
-encrypt:
-  keyStore:
-    location: classpath:/server.jks
-    password: openwms
-    alias: livekey
-# set encrypt.key-store.secret as command line parameter or in the cloud environment props!
-
 eureka:
   client:
     serviceUrl:
-# need to be overridden in the cloud environment props!
+      # need to be overridden in the cloud environment props!
       defaultZone: ${owms.eureka.url}/eureka
   instance:
-    hostname: localhost
-# need to be overridden in the cloud environment props!
+    hostname: openwms-tcpip-driver.herokuapp.com
+    # need to be overridden in the cloud environment props!
     secure-port-enabled: true
     non-secure-port-enabled: false
     statusPageUrl: https://${eureka.instance.hostName}/info
@@ -47,12 +38,23 @@ eureka:
 
 ---
 spring:
+  profiles: CLOUD
+
+owms:
+  eureka:
+    port: 80
+---
+spring:
   profiles: DEV
 
+owms:
+  eureka:
+    url: :http://user:sa@localhost:8761
 eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
   instance:
+    hostname: localhost
     secure-port-enabled: false
     non-secure-port-enabled: true
+    statusPageUrl: http://${eureka.instance.hostName}/info
+    healthCheckUrl: http://${eureka.instance.hostName}/health
+    homePageUrl: http://${eureka.instance.hostName}/
