@@ -64,14 +64,12 @@
             </activation>
             <modules>
                 <module>org.openwms.tms.transportation</module>
-                <module>org.openwms.tms.routing</module>
             </modules>
         </profile>
         <profile>
             <id>tms</id>
             <modules>
                 <module>org.openwms.tms.transportation</module>
-                <module>org.openwms.tms.routing</module>
             </modules>
         </profile>
     </profiles>
