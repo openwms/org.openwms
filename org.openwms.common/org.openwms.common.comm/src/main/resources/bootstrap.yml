@@ -49,7 +49,7 @@ spring:
 
 owms:
   eureka:
-    url: :http://user:sa@localhost:8761
+    url: http://user:sa@localhost:8761
 eureka:
   instance:
     hostname: localhost
