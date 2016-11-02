@@ -63,8 +63,8 @@ class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
     @Override
     public Void apply(RequestMessage msg) {
         restTemplate.exchange(
-                //endpoint+"/v1/req",
-                "https://routing-service/v1/req",
+                endpoint+"/v1/req",
+                //"https://routing-service/v1/req",
                 HttpMethod.POST,
                 new HttpEntity<>(new RequestVO(msg.getActualLocation(), msg.getBarcode())),
                 Void.class
