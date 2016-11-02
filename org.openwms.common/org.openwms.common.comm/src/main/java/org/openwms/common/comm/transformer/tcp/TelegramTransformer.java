@@ -71,7 +71,7 @@ public class TelegramTransformer<T extends Payload> {
     @Transformer
     public Message<T> transform(String telegram, @Headers Map<String, Object> headers) {
         if (telegram == null || telegram.isEmpty()) {
-            LOGGER.debug("Received telegram was null or of length == 0, just skip");
+            LOGGER.info("Received telegram was null or of length == 0, just skip");
             return null;
         }
         MessageMapper<T> mapper = mappersMap.get(TCPCommConstants.getTelegramType(telegram));
