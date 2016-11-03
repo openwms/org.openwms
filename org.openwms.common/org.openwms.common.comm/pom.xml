@@ -41,6 +41,11 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>org.openwms.common.shared</artifactId>
+        </dependency>
+
         <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -22,18 +22,17 @@
 package org.openwms.common.comm.req;
 
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.nio.charset.Charset;
+import java.util.List;
 import java.util.function.Function;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.tomcat.util.codec.binary.Base64;
+import org.openwms.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -43,33 +42,27 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-//@Profile("!" + CommConstants.DEFAULT_HTTP_SERVICE_ACCESS)
 @Component
 @RefreshScope
 class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
 
     @Autowired
-    private RestTemplate restTemplate;
-    @Value("${owms.routingService.protocol}")
-    private String protocol;
-    @Value("${owms.routingService.username}")
-    private String username;
-    @Value("${owms.routingService.password}")
-    private String password;
-    private String endpoint;
-
-    @PostConstruct
-    void onPostConstruct() {
-        endpoint = protocol+"://routing-service";
-    }
+    private RestTemplate aLoadBalanced;
+    @Autowired
+    private DiscoveryClient dc;
 
     @Override
     public Void apply(RequestMessage msg) {
-        restTemplate.exchange(
-                endpoint+"/v1/req",
-                //"https://routing-service/v1/req",
+        List<ServiceInstance> list = dc.getInstances("routing-service");
+        if (list == null || list.size() == 0) {
+            throw new RuntimeException("No deployed service with name routing-service found");
+        }
+        ServiceInstance si = list.get(0);
+        String endpoint = si.getMetadata().get("protocol") + "://" + si.getServiceId() + "/v1/req";
+        aLoadBalanced.exchange(
+                endpoint,
                 HttpMethod.POST,
-                new HttpEntity<>(new RequestVO(msg.getActualLocation(), msg.getBarcode()), createHeaders(username, password)),
+                new HttpEntity<>(new RequestVO(msg.getActualLocation(), msg.getBarcode()), SecurityUtils.createHeaders(si.getMetadata().get("username"), si.getMetadata().get("password"))),
                 Void.class
         );
         return null;
@@ -85,17 +78,4 @@ class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
             this.barcode = barcode;
         }
     }
-
-    HttpHeaders createHeaders(String username, String password) {
-        return new HttpHeaders() {
-            {
-                String auth = username + ":" + password;
-                byte[] encodedAuth = Base64.encodeBase64(
-                        auth.getBytes(Charset.forName("UTF-8")));
-                String authHeader = "Basic " + new String(encodedAuth);
-                set("Authorization", authHeader);
-            }
-        };
-    }
-
 }
