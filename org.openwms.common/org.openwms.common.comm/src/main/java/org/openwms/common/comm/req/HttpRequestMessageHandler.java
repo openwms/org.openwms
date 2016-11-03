@@ -24,13 +24,16 @@ package org.openwms.common.comm.req;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 import java.util.function.Function;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -57,7 +60,7 @@ class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
 
     @PostConstruct
     void onPostConstruct() {
-        endpoint = protocol+"://"+username+":"+password+"@"+"routing-service";
+        endpoint = protocol+"://routing-service";
     }
 
     @Override
@@ -66,7 +69,7 @@ class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
                 endpoint+"/v1/req",
                 //"https://routing-service/v1/req",
                 HttpMethod.POST,
-                new HttpEntity<>(new RequestVO(msg.getActualLocation(), msg.getBarcode())),
+                new HttpEntity<>(new RequestVO(msg.getActualLocation(), msg.getBarcode()), createHeaders(username, password)),
                 Void.class
         );
         return null;
@@ -82,4 +85,17 @@ class HttpRequestMessageHandler implements Function<RequestMessage, Void> {
             this.barcode = barcode;
         }
     }
+
+    HttpHeaders createHeaders(String username, String password) {
+        return new HttpHeaders() {
+            {
+                String auth = username + ":" + password;
+                byte[] encodedAuth = Base64.encodeBase64(
+                        auth.getBytes(Charset.forName("UTF-8")));
+                String authHeader = "Basic " + new String(encodedAuth);
+                set("Authorization", authHeader);
+            }
+        };
+    }
+
 }
