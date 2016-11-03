@@ -95,11 +95,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>org.openwms.common.service</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>org.openwms.common.shared</artifactId>
                 <version>${project.version}</version>
             </dependency>
