@@ -193,7 +193,7 @@
 
     <ciManagement>
         <system>Jenkins</system>
-        <url>https://openwms.mooo.com:81/jenkins</url>
+        <url>http://openwms.mooo.com/jenkins</url>
         <notifiers>
             <notifier>
                 <type>mail</type>
@@ -524,7 +524,6 @@
         <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
         <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
         <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
-        <enforcer.skip>true</enforcer.skip>
         <github.global.server>github</github.global.server>
         <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
         <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
@@ -553,10 +552,10 @@
         <ms.group>NULL</ms.group>
         <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
         <!--spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version-->
-        <spring-boot.version>1.4.0.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring-cloud-dependencies.version>Brixton.SR5</spring-cloud-dependencies.version>
-        <spring-restdocs-mockmvc.version>1.1.1.RELEASE</spring-restdocs-mockmvc.version>
-        <spring.version>4.3.2.RELEASE</spring.version> <!-- Keep in sync with boot -->
+        <spring-boot.version>1.4.2.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
+        <spring-cloud-dependencies.version>Camden.SR2</spring-cloud-dependencies.version>
+        <spring-restdocs-mockmvc.version>1.1.2.RELEASE</spring-restdocs-mockmvc.version>
+        <spring.version>4.3.4.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
         <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- =================== -->
@@ -569,7 +568,7 @@
         <plugin.checkstyle.version>2.11</plugin.checkstyle.version>
         <plugin.clean.version>2.5</plugin.clean.version>
         <plugin.cobertura.version>2.3</plugin.cobertura.version>
-        <plugin.compiler.version>3.1</plugin.compiler.version>
+        <plugin.compiler.version>3.1</plugin.compiler.version
         <plugin.dashboard.version>1.0.0-beta-1</plugin.dashboard.version>
         <plugin.deploy.version>2.8.1</plugin.deploy.version>
         <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
