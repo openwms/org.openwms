@@ -9,7 +9,7 @@ node {
    parallel (
      "default-build": {
        stage('\u27A1 Build') {
-          sh "'${mvnHome}/bin/mvn' clean install -Ddocumentation.dir=${WORKSPACE} -Psordocs,sonatype -U"
+          sh "'${mvnHome}/bin/mvn' clean deploy -Ddocumentation.dir=${WORKSPACE} -Psordocs,sonatype -U"
        }
      },
      "sonar-build": {
