@@ -539,7 +539,7 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.8-SNAPSHOT</ameba-lib.version>
+        <ameba-lib.version>1.8</ameba-lib.version>
         <aspectj.version>1.8.9</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
