@@ -10,7 +10,7 @@ node {
      "default-build": {
        stage('\u27A1 Build') {
           configFileProvider(
-              [configFile(fileId: 'ce8d48c4-a834-4e52-8644-aefdf59fb947', variable: 'MAVEN_SETTINGS')]) {
+              [configFile(fileId: 'sonatype-settings', variable: 'MAVEN_SETTINGS')]) {
               sh "'${mvnHome}/bin/mvn' -s $MAVEN_SETTINGS clean deploy -Ddocumentation.dir=${WORKSPACE} -Psordocs,sonatype -U"
           }
        }
