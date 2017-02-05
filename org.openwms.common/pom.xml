@@ -67,13 +67,6 @@
                 <module>org.openwms.common.shared</module>
             </modules>
         </profile>
-        <profile>
-            <id>common</id>
-            <modules>
-                <module>org.openwms.common.comm</module>
-                <module>org.openwms.common.shared</module>
-            </modules>
-        </profile>
     </profiles>
 
     <dependencyManagement>
@@ -89,14 +82,14 @@
 
             <!-- Project dependencies -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.common.comm</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.common.shared</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

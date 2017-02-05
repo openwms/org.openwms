@@ -29,6 +29,7 @@
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
         <version>1.1.0-SNAPSHOT</version>
+        <relativePath />
     </parent>
     <artifactId>org.openwms.core</artifactId>
     <version>1.1.0-SNAPSHOT</version>
@@ -61,18 +62,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>org.openwms.core.bom</module>
-                <module>org.openwms.core.configuration</module>
-                <module>org.openwms.core.lang</module>
-                <module>org.openwms.core.test</module>
-                <module>org.openwms.core.uaa</module>
-                <module>org.openwms.core.util</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>core</id>
-            <modules>
-                <module>org.openwms.core.bom</module>
                 <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.lang</module>
                 <module>org.openwms.core.test</module>
@@ -92,33 +81,32 @@
                 <scope>import</scope>
             </dependency>
 
-	        <!-- Project dependencies -->
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.configuration</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.lang</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.test</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.uaa</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>${project.groupId}</groupId>
+                <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.util</artifactId>
-                <version>${project.version}</version>
+                <version>1.1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
