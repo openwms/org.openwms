@@ -1,0 +1,31 @@
+{
+  "name": "angular-pdf-viewer",
+  "version": "0.2.7",
+  "description": "An AngularJS directive to display PDFs",
+  "main": "./dist/angular-pdf-viewer.min.js",
+  "license": "MIT",
+  "homepage": "http://github.com/winkerVSbecks/angular-pdf-viewer",
+  "dependencies": {
+    "angular": "1.3.0",
+    "pdfjs-dist": "~1.0.925"
+  },
+  "ignore": [
+    "src",
+    ".bowerrc",
+    ".gitignore",
+    "bower.json",
+    "gulpfile.js",
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "node_modules"
+  ],
+  "_release": "0.2.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.7",
+    "commit": "bcc8db50e11dc75575db36a5142e75ea5a3b8744"
+  },
+  "_source": "git://github.com/winkerVSbecks/angular-pdf-viewer.git",
+  "_target": "~0.2.6"
+}

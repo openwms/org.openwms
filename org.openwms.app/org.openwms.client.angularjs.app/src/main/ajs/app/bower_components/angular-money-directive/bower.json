@@ -1,0 +1,14 @@
+{
+  "name": "angular-money-directive",
+  "version": "1.0.2",
+  "main": "angular-money-directive.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "devDependencies": {
+    "angular": "~1.2.16",
+    "angular-mocks": "~1.2.16"
+  }
+}

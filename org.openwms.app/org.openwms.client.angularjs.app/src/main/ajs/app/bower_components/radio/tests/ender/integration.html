@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+  <title>Ender Integration Tests</title>
+  <script src="ender.js"></script>
+  <style type="text/css">
+    body { font-family: 'helvetica neue', helvetica, arial; font-size: 11pt; }
+    p { margin: 5px; }
+    .fail { color: red; }
+    .pass { color: green; }
+  </style>
+</head>
+<body>
+
+<script type="text/javascript">
+  var res, fn, ctx;
+
+  function result (success, msg) {
+    var r = document.createElement('p'),
+      s = success ? 'Pass' : 'Fail';
+    r.innerHTML = '<b>' + s + '</b>: ' + msg;
+    r.className = s.toLowerCase();
+    document.body.appendChild(r);
+  }
+
+  res = false;
+  $.radio('test1').subscribe(function() { res = true; });
+  $.radio('test1').broadcast();
+  result(res, 'simple subscribe &amp; broadcast');
+
+  res = false;
+  $.radio('test2').subscribe(function(data) { res = data === 101; });
+  $.radio('test2').broadcast(101);
+  result(res, 'single argument subscribe &amp; broadcast');
+
+  res = false;
+  $.radio('test3').subscribe(function() { res = arguments[0] === 101 && arguments[1] === 202 && arguments[2] === 303; });
+  $.radio('test3').broadcast(101, 202, 303);
+  result(res, 'multi argument subscribe &amp; broadcast');
+
+  res = 0;
+  fn = function() { res++; };
+  $.radio('test4').subscribe(fn)
+  $.radio('test4').broadcast();
+  $.radio('test4').broadcast();
+  $.radio('test4').unsubscribe(fn)
+  $.radio('test4').broadcast();
+  result(res === 2, 'subscribe, multi-broadcast &amp; unsubscribe');
+
+  res = false;
+  ctx = {};
+  $.radio('test5').subscribe([ function() { res = this === ctx; }, ctx ]);
+  $.radio('test5').broadcast();
+  result(res, 'subscribe &amp; broadcast with context');
+
+  res = 0;
+  $.radio('test6').subscribe(function() { res++ });
+  $.radio('test6').subscribe(function() { res++ });
+  $.radio('test6').broadcast();
+  result(res === 2, 'multiple subscribers');
+
+  res = 0;
+  $.radio('test7').subscribe(function() { res++ }, function() { res++ });
+  $.radio('test7').broadcast();
+  result(res === 2, 'multi-argument subscribe');
+
+  res = 0;
+  fn = function() { res++; };
+  $.radio('test8').subscribe(fn).broadcast().broadcast().unsubscribe(fn).broadcast();
+  result(res === 2, 'chained subscribe, multi-broadcast &amp; unsubscribe');
+
+</script>
+</body>
+</html>

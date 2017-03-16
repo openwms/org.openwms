@@ -1,0 +1,13 @@
+{
+  "name": "radio",
+  "homepage": "https://github.com/uxder/Radio",
+  "version": "0.2.0",
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.0",
+    "commit": "94a858631c22e04d51e6b56aeadb0c6ffcb1dd59"
+  },
+  "_source": "git://github.com/uxder/Radio.git",
+  "_target": "0.2.0"
+}
