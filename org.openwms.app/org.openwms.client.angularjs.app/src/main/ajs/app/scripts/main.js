@@ -61,7 +61,7 @@ require.config({
         material: '../bower_components/bootstrap-material-design/dist/js/material.min',
         ripples: '../bower_components/bootstrap-material-design/dist/js/ripples.min',
 
-        cpicker: '../bower_components/jquery-minicolors/jquery.minicolors.min',
+        cpicker: '../bower_components/jquery-minicolors/jquery.minicolors',
 
         projectModels: 'models/projectModels',
         routeResolver: 'routeResolver',
