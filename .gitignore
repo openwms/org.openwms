@@ -10,6 +10,7 @@ libs/
 **/node_modules/
 **/typings/
 **/*.js.map
+**/*.log
 
 # OS Files #
 .DS_Store
