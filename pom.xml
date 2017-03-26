@@ -574,6 +574,7 @@
         <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
         <plugin.findbugs.version>2.3.1</plugin.findbugs.version>
         <plugin.frontend-maven.version>0.0.23</plugin.frontend-maven.version>
+        <git-commit-id-plugin.version>2.2.1</git-commit-id-plugin.version>
         <plugin.gpg.version>1.6</plugin.gpg.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.3.2</plugin.jar.version>
@@ -697,6 +698,7 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+
                 <plugin>
                     <groupId>org.asciidoctor</groupId>
                     <artifactId>asciidoctor-maven-plugin</artifactId>
@@ -785,6 +787,12 @@
                             </configuration>
                         </execution>
                     </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>${git-commit-id-plugin.version}</version>
                 </plugin>
 
                 <plugin>
