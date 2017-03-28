@@ -344,6 +344,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${plugin.javadoc.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>
@@ -386,6 +387,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
+                        <version>${plugin.source.version}</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -601,6 +603,7 @@
         <plugin.surefire.version>2.16</plugin.surefire.version>
         <plugin.surefire-report.version>2.5</plugin.surefire-report.version>
         <plugin.taglist.version>2.4</plugin.taglist.version>
+        <plugin.wagon-ftp.version>2.12</plugin.wagon-ftp.version>
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
         <plugin.github-site.version>0.13.1</plugin.github-site.version>
@@ -612,6 +615,11 @@
                 <groupId>org.apache.maven.wagon</groupId>
                 <artifactId>wagon-ssh</artifactId>
                 <version>${plugin.wagon-ssh.version}</version>
+            </extension>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ftp</artifactId>
+                <version>${plugin.wagon-ftp.version}</version>
             </extension>
         </extensions>
         <pluginManagement>
