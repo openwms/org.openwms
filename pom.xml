@@ -375,6 +375,7 @@
                             <overview>${basedir}/overview.html</overview>
                             <source>${project.build.sourceEncoding}</source>
                             <verbose>true</verbose>
+                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                     </plugin>
                     <plugin>
