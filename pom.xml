@@ -609,6 +609,96 @@
         <plugin.github-site.version>0.13.1</plugin.github-site.version>
     </properties>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${plugin.javadoc.version}</version>
+                <reportSets>
+                    <reportSet>
+                        <inherited>true</inherited>
+                        <reports>
+                            <report>aggregate</report>
+                        </reports>
+                        <configuration>
+                            <failOnError>false</failOnError>
+                            <linksource>false</linksource>
+                            <keywords>true</keywords>
+                            <source>${project.build.sourceEncoding}</source>
+                            <verbose>false</verbose>
+                            <aggregate>true</aggregate>
+                            <additionalparam>
+                                -Xdoclint:none
+                                -inferrel -inferdep -quiet -hide java.* -collpackages java.util.*
+                                -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7
+                                -outputencoding UTF-8
+                                -link
+                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api
+                            </additionalparam>
+                            <tags>
+                                <tag>
+                                    <name>GlossaryTerm</name>
+                                    <placement>a</placement>
+                                </tag>
+                            </tags>
+                            <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
+                            <docletArtifact>
+                                <groupId>gr.spinellis</groupId>
+                                <artifactId>UmlGraph</artifactId>
+                                <version>4.6</version>
+                            </docletArtifact>
+                            <show>private</show>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.1.2</version>
+                <reportSets>
+                    <reportSet>
+                        <inherited>true</inherited>
+                        <reports>
+                            <report>index</report>
+                            <report>scm</report>
+                            <report>plugin-management</report>
+                            <report>plugins</report>
+                            <report>summary</report>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
+                            <report>dependency-management</report>
+                        </reports>
+                    </reportSet>
+                    <reportSet>
+                        <inherited>false</inherited>
+                        <reports>
+                            <report>project-team</report>
+                            <report>issue-tracking</report>
+                            <report>license</report>
+                            <report>mailing-list</report>
+                            <report>cim</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>2.1</version>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
         <extensions>
             <extension>
