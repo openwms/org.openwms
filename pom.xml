@@ -376,6 +376,12 @@
                             <source>${project.build.sourceEncoding}</source>
                             <verbose>true</verbose>
                             <additionalparam>-Xdoclint:none</additionalparam>
+                            <tags>
+                                <tag>
+                                    <name>GlossaryTerm</name>
+                                    <placement>a</placement>
+                                </tag>
+                            </tags>
                         </configuration>
                     </plugin>
                     <plugin>
