@@ -360,23 +360,16 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <outputDirectory>${project.basedir}/${moduleDir}/docs/pages/${ms.group}/javadocs</outputDirectory>
-                            <links>
-                                <link>http://docs.spring.io/spring/docs/4.1.x/javadoc-api/</link>
-                                <link>http://docs.spring.io/spring-security/site/docs/4.0.x/apidocs/</link>
-                                <link>http://docs.oracle.com/javaee/5/api</link>
-                                <link>http://docs.mockito.googlecode.com/hg/latest</link>
-                                <link>http://dozer.sourceforge.net/apidocs</link>
-                                <link>http://jackson.codehaus.org/${jackson.version}/javadoc</link>
-                            </links>
                             <failOnError>false</failOnError>
                             <detectLinks>false</detectLinks>
                             <keywords>true</keywords>
-                            <linksource>true</linksource>
-                            <overview>${basedir}/overview.html</overview>
+                            <linksource>false</linksource>
                             <source>${project.build.sourceEncoding}</source>
                             <verbose>true</verbose>
-                            <additionalparam>-Xdoclint:none</additionalparam>
+                            <additionalparam>
+                                -Xdoclint:none
+                                -quiet
+                            </additionalparam>
                             <tags>
                                 <tag>
                                     <name>GlossaryTerm</name>
@@ -590,7 +583,7 @@
         <plugin.gpg.version>1.6</plugin.gpg.version>
         <plugin.install.version>2.4</plugin.install.version>
         <plugin.jar.version>2.3.2</plugin.jar.version>
-        <plugin.javadoc.version>2.9.1</plugin.javadoc.version>
+        <plugin.javadoc.version>2.10.4</plugin.javadoc.version>
         <plugin.jdepend.version>2.0-beta-2</plugin.jdepend.version>
         <plugin.jrebel.version>1.1.5</plugin.jrebel.version>
         <plugin.jxr.version>2.3</plugin.jxr.version>
@@ -607,12 +600,14 @@
         <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
         <plugin.war.version>2.4</plugin.war.version>
         <plugin.github-site.version>0.13.1</plugin.github-site.version>
+        <plugin.maven-surefire-report-plugin.version>2.19.1</plugin.maven-surefire-report-plugin.version>
+        <plugin.maven-project-info-reports-plugin.version>2.9</plugin.maven-project-info-reports-plugin.version>
+        <plugin.maven-site-plugin.version>3.6</plugin.maven-site-plugin.version>
     </properties>
 
     <reporting>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${plugin.javadoc.version}</version>
                 <reportSets>
@@ -623,18 +618,15 @@
                         </reports>
                         <configuration>
                             <failOnError>false</failOnError>
-                            <linksource>false</linksource>
+                            <detectLinks>false</detectLinks>
                             <keywords>true</keywords>
+                            <linksource>false</linksource>
                             <source>${project.build.sourceEncoding}</source>
                             <verbose>false</verbose>
                             <aggregate>true</aggregate>
                             <additionalparam>
                                 -Xdoclint:none
-                                -inferrel -inferdep -quiet -hide java.* -collpackages java.util.*
-                                -postfixpackage -nodefontname Tahoma -nodefontsize 9 -nodefontpackagesize 7
-                                -outputencoding UTF-8
-                                -link
-                                http://static.springsource.org/spring/docs/${spring.version}/javadoc-api
+                                -quiet
                             </additionalparam>
                             <tags>
                                 <tag>
@@ -642,29 +634,14 @@
                                     <placement>a</placement>
                                 </tag>
                             </tags>
-                            <doclet>gr.spinellis.umlgraph.doclet.UmlGraphDoc</doclet>
-                            <docletArtifact>
-                                <groupId>gr.spinellis</groupId>
-                                <artifactId>UmlGraph</artifactId>
-                                <version>4.6</version>
-                            </docletArtifact>
                             <show>private</show>
                         </configuration>
                     </reportSet>
                 </reportSets>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>${plugin.maven-project-info-reports-plugin.version}</version>
                 <reportSets>
                     <reportSet>
                         <inherited>true</inherited>
@@ -692,9 +669,8 @@
                 </reportSets>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>2.1</version>
+                <version>${plugin.maven-site-plugin.version}</version>
             </plugin>
         </plugins>
     </reporting>
