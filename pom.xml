@@ -526,6 +526,7 @@
         <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
+        <ci.buildDate>NOW</ci.buildDate>
         <debug.info>true</debug.info>
         <documentation.dir>./target</documentation.dir>
         <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
