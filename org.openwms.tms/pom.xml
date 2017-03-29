@@ -38,23 +38,7 @@
         <moduleDir>..</moduleDir>
         <ms.group>tms</ms.group>
         <core.version>${project.version}</core.version>
-        <common.version>${project.version}</common.version>
-        <module.version>${project.version}</module.version>
     </properties>
-
-    <distributionManagement>
-        <site>
-            <id>${distribution.serverId}</id>
-            <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}/org.openwms.tms</url>
-        </site>
-    </distributionManagement>
-
-    <scm>
-        <url>https://github.com/openwms/org.openwms</url>
-        <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
-        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git</developerConnection>
-    </scm>
 
     <dependencyManagement>
         <dependencies>
