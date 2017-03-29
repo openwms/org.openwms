@@ -21,13 +21,14 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>7</version>
+        <version>8</version>
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
@@ -60,29 +61,35 @@
         <repository>
             <id>${distribution.repo.serverId}</id>
             <name>OpenWMS.org Release Repository</name>
-            <url>${distribution.repo.serverProtocol}://${distribution.repo.serverUrl.rootPath}</url>
+            <url>
+                ${distribution.repo.serverProtocol}://${distribution.repo.serverUrl.rootPath}
+            </url>
         </repository>
         <snapshotRepository>
             <id>${distribution.repo.serverId}</id>
             <name>OpenWMS.org Snapshot Repository</name>
-            <url>${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}</url>
+            <url>
+                ${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}
+            </url>
         </snapshotRepository>
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}</url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}
+            </url>
         </site>
     </distributionManagement>
 
     <scm>
         <url>https://github.com/openwms/org.openwms</url>
         <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
-        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git
+        </developerConnection>
     </scm>
 
     <organization>
-        <name>openwms.org</name>
-        <url>www.openwms.org</url>
+        <name>Interface21.io</name>
+        <url>https://www.interface21.io</url>
     </organization>
 
     <developers>
@@ -90,9 +97,9 @@
             <id>scherrer</id>
             <name>Heiko Scherrer</name>
             <email>scherrer@openwms.org</email>
-            <url>https://sourceforge.net/users/scherrer</url>
-            <organization>openwms.org</organization>
-            <organizationUrl>http://www.openwms.org</organizationUrl>
+            <url>https://openwms.github.io/</url>
+            <organization>Interface21.io</organization>
+            <organizationUrl>https://www.interface21.io</organizationUrl>
             <timezone>+2</timezone>
             <roles>
                 <role>Project Lead</role>
@@ -177,16 +184,26 @@
     <mailingLists>
         <mailingList>
             <name>OpenWMS.org Public Mailing list</name>
-            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public</subscribe>
-            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public</unsubscribe>
-            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public</archive>
+            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+            </subscribe>
+            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+            </unsubscribe>
+            <archive>
+                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
+            </archive>
             <post>openwms2005-public@lists.sourceforge.net</post>
         </mailingList>
         <mailingList>
             <name>OpenWMS.org Development Mailing list</name>
-            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-development</subscribe>
-            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-development</unsubscribe>
-            <archive>http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development</archive>
+            <subscribe>
+                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+            </subscribe>
+            <unsubscribe>
+                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+            </unsubscribe>
+            <archive>
+                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
+            </archive>
             <post>openwms2005-development@lists.sourceforge.net</post>
         </mailingList>
     </mailingLists>
@@ -233,16 +250,23 @@
                 <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}
+                <distribution.serverUrl.rootPath>
+                    shell.sourceforge.net/home/project-web/openwms2005/htdocs
+                </distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>
+                    ${distribution.serverUrl.rootPath}/development/reference/${project.version}
                 </distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs
+                </distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>shell.sourceforge.net</distribution.repo.serverId>
+                <distribution.repo.serverId>shell.sourceforge.net
+                </distribution.repo.serverId>
                 <distribution.repo.serverProtocol>scp</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/releases
+                <distribution.repo.serverUrl.rootPath>
+                    shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/releases
                 </distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots
+                <distribution.repo.snapshot.serverUrl.rootPath>
+                    shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots
                 </distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
@@ -253,16 +277,22 @@
                 <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}
+                <distribution.serverUrl.rootPath>
+                    shell.sourceforge.net/home/project-web/openwms2005/htdocs
+                </distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>
+                    ${distribution.serverUrl.rootPath}/development/reference/${project.version}
                 </distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs
+                </distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
                 <distribution.repo.serverId>openwms.mooo.com</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>http</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots
+                <distribution.repo.serverUrl.rootPath>
+                    localhost:8081/nexus/content/repositories/openwms-snapshots
                 </distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>localhost:8081/nexus/content/repositories/openwms-snapshots
+                <distribution.repo.snapshot.serverUrl.rootPath>
+                    localhost:8081/nexus/content/repositories/openwms-snapshots
                 </distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
@@ -273,16 +303,23 @@
                 <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}
+                <distribution.serverUrl.rootPath>
+                    shell.sourceforge.net/home/project-web/openwms2005/htdocs
+                </distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>
+                    ${distribution.serverUrl.rootPath}/development/reference/${project.version}
                 </distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs
+                </distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
+                <distribution.repo.serverId>sonatype-nexus-staging
+                </distribution.repo.serverId>
                 <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2
+                <distribution.repo.serverUrl.rootPath>
+                    oss.sonatype.org/service/local/staging/deploy/maven2
                 </distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots
+                <distribution.repo.snapshot.serverUrl.rootPath>
+                    oss.sonatype.org/content/repositories/snapshots
                 </distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
@@ -298,43 +335,6 @@
                 <module>org.openwms.core</module>
                 <module>org.openwms.common</module>
                 <module>org.openwms.tms</module>
-                <!--module>org.openwms.wms</module-->
-                <!--module>org.openwms.app</module-->
-            </modules>
-        </profile>
-
-        <profile>
-            <id>app</id>
-            <modules>
-                <module>org.openwms.app</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>core</id>
-            <modules>
-                <module>org.openwms.core</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>common</id>
-            <modules>
-                <module>org.openwms.common</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>tms</id>
-            <modules>
-                <module>org.openwms.tms</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>wms</id>
-            <modules>
-                <module>org.openwms.wms</module>
             </modules>
         </profile>
 
@@ -490,7 +490,9 @@
                 </pluginRepository-->
                 <pluginRepository>
                     <id>typescript-maven-plugin</id>
-                    <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
+                    <url>
+                        https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo
+                    </url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
@@ -521,12 +523,14 @@
         <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
         <maven.min.version>3.0.4</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
-        <ci.buildDate>NOW</ci.buildDate>
         <debug.info>true</debug.info>
-        <documentation.dir>./target</documentation.dir>
-        <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
-        <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
-        <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
+        <documentation.dir>target</documentation.dir>
+        <documentation.snippet.dir>${documentation.dir}/generated-snippets
+        </documentation.snippet.dir>
+        <documentation.input.dir>${documentation.dir}/generated-docs
+        </documentation.input.dir>
+        <documentation.output.dir>${documentation.dir}/site/rest
+        </documentation.output.dir>
         <github.global.server>github</github.global.server>
         <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
         <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
@@ -603,6 +607,7 @@
         <plugin.maven-surefire-report-plugin.version>2.19.1</plugin.maven-surefire-report-plugin.version>
         <plugin.maven-project-info-reports-plugin.version>2.9</plugin.maven-project-info-reports-plugin.version>
         <plugin.maven-site-plugin.version>3.6</plugin.maven-site-plugin.version>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
     </properties>
 
     <reporting>
@@ -640,7 +645,6 @@
                 </reportSets>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
                 <version>${plugin.maven-surefire-report-plugin.version}</version>
                 <configuration>
@@ -652,7 +656,7 @@
                 <version>${plugin.maven-project-info-reports-plugin.version}</version>
                 <reportSets>
                     <reportSet>
-                        <inherited>true</inherited>
+                        <inherited>false</inherited>
                         <reports>
                             <report>index</report>
                             <report>scm</report>
@@ -733,11 +737,15 @@
                     <configuration>
                         <rules>
                             <requireMavenVersion>
-                                <message>At least Maven in version ${maven.min.version} is required.</message>
+                                <message>At least Maven in version ${maven.min.version} is
+                                    required.
+                                </message>
                                 <version>${maven.min.version}</version>
                             </requireMavenVersion>
                             <requireJavaVersion>
-                                <message>At least a JDK in version ${java.version} is required.</message>
+                                <message>At least a JDK in version ${java.version} is
+                                    required.
+                                </message>
                                 <version>${java.version}</version>
                             </requireJavaVersion>
                             <DependencyConvergence/>
@@ -831,6 +839,7 @@
 
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>copy-resources</id>
@@ -856,7 +865,8 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${documentation.output.dir}</outputDirectory>
+                                <outputDirectory>${documentation.output.dir}
+                                </outputDirectory>
                                 <resources>
                                     <resource>
                                         <directory>${documentation.input.dir}</directory>
@@ -929,7 +939,8 @@
                     <version>${plugin.github-site.version}</version>
                     <configuration>
                         <message>Creating site for ${project.version}</message>
-                        <outputDirectory>${project.basedir}/${moduleDir}/docs</outputDirectory>
+                        <outputDirectory>${project.basedir}/${moduleDir}/docs
+                        </outputDirectory>
                     </configuration>
                     <executions>
                         <execution>
