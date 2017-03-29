@@ -30,7 +30,6 @@ import org.openwms.core.AbstractEntity;
  *
  * @param <T> Any kind of {@link AbstractEntity}
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @version $Revision$
  * @since 0.1
  */
 public interface OnRemovalListener<T extends BaseEntity> {
