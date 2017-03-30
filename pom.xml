@@ -524,7 +524,7 @@
         <maven.min.version>3.0.4</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
         <debug.info>true</debug.info>
-        <documentation.dir>${project.build.outputDirectory}</documentation.dir>
+        <documentation.dir>${project.build.directory}</documentation.dir>
         <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
         <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
         <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
