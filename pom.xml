@@ -210,7 +210,7 @@
 
     <ciManagement>
         <system>Jenkins</system>
-        <url>http://openwms.mooo.com/jenkins</url>
+        <url>https://openwms.mooo.com/jenkins</url>
         <notifiers>
             <notifier>
                 <type>mail</type>
