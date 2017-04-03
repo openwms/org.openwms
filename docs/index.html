@@ -48,7 +48,7 @@
 							<!-- Section -->
 								<section>
 									<header class="major">
-										<h2 id="features">Technical Features</h2>
+										<h2 id="technology">Technical Features</h2>
 									</header>
 									<div class="features">
 										<article>
@@ -86,12 +86,21 @@
 
 								<h2 id="sreq">System Requirements</h2>
 								<p>A typical customer project built with OpenWMS.org is usually a composition of microservices to fulfill the functional requirements. Whereas a service may run
-								   in the cloud or on customer side on premise. This mainly depends on the quality requirements on the microservice. For example, a service like the tcp/ip
-								   driver must obviously run with low latency and all UI services can easily run off-side.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula. Interdum et malesuada fames ac ante ipsum primis in faucibus. Pellentesque venenatis dolor imperdiet dolor mattis sagittis. Praesent rutrum sem diam, vitae egestas enim auctor sit amet. Pellentesque leo mauris, consectetur id ipsum sit amet, fersapien risus, commodo eget turpis at, elementum convallis elit. Pellentesque enim turpis, hendrerit tristique lorem ipsum dolor.</p>
+								   in the cloud or on premise customer side. This mainly depends on the quality requirements of the project. For example, a service like the tcp/ip
+								   driver must obviously run with low latency close to the automation systems layer whereas and UI services may easily run off-side.</p>
+							    <p>OpenWMS.org is designed to run in four deployment models</p>
+							    <ul>
+									<li><strong>Cloud</strong><p>All microservices run off-side in the cloud and may shared with other customers. Service access is secured but no QoS are defined.</p></li>
+									<li><strong>Fog</strong><p>All microservices run on-side in the private cloud and are solely dedicated to the customer project.</p></li>
+									<li><strong>Hybrid</strong><p>In a combination of Cloud and Fog deployment, some common shared services may reside on the public cloud where other mission critical of time critical
+									services run locally in the private cloud</p></li>
+									<li><strong>Monolith</strong><p>All microservices are packaged into a single monolithic deployment unit that is deployed on traditional application services. Notice that in this
+										scenario elasticity is only available on infrastructure level (IaaS)</p></li>
+								</ul>
+
 
 							<!-- Section -->
-								<section>
+								<!--section>
 									<header class="major">
 										<h2>Product Features</h2>
 									</header>
@@ -145,7 +154,7 @@
 											</ul>
 										</article>
 									</div>
-								</section>
+								</section-->
 
 						</div>
 					</div>
@@ -167,16 +176,16 @@
 										<h2>Product</h2>
 									</header>
 									<ul>
-										<li><a href="#features">Features</a></li>
+										<li><a href="#technology">Technology</a></li>
 										<li><a href="#sreq">System Requirements</a></li>
 										<li>
 											<span class="opener">Microservices</span>
 											<ul>
-												<li><a href="https://www.interface21.io/docs/core/base/index.html" target="_blank">CORE - Base Services</a></li>
-												<li><a href="https://www.interface21.io/docs/core/uaa/index.html" target="_blank">CORE - UAA</a></li>
-												<li><a href="https://www.interface21.io/docs/common/base/index.html" target="_blank">COMMON - Base Services</a>
-												<li><a href="https://www.interface21.io/docs/tms/transportation/index.html" target="_blank">TMS - Transportation Services</a></li>
-												<li><a href="https://www.interface21.io/docs/tms/routing/index.html" target="_blank">TMS - Routing Services</a></li>
+												<li><a href="https://www.interface21.io/docs/core/base/index.html" target="_blank"><color class="core">CORE</color> - Base Services</a></li>
+												<li><a href="https://www.interface21.io/docs/core/uaa/index.html" target="_blank"><color class="core">CORE</color> - UAA</a></li>
+												<li><a href="https://www.interface21.io/docs/common/base/index.html" target="_blank"><color class="common">COMMON</color> - Base Services</a>
+												<li><a href="https://www.interface21.io/docs/tms/transportation/index.html" target="_blank"><color class="tms">TMS</color> - Transportation Services</a></li>
+												<li><a href="https://www.interface21.io/docs/tms/routing/index.html" target="_blank"><color class="tms">TMS</color> - Routing Services</a></li>
 											</ul>
 										</li>
 										<li><a href="#install">Download &amp; Installation</a></li>
@@ -210,21 +219,16 @@
 									</header>
 									<div class="mini-posts">
 										<article>
-											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
-										</article>
-										<article>
-											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>
-											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>
+											<header class="minor">
+												<h2>Zile</h2>
+											</header>
+											<a href="#" class="image"><img src="images/zile-layout.png" alt="zile" /></a>
+											<p>Automated warehouse with pallet and flat goods.</p>
 										</article>
 									</div>
-									<ul class="actions">
+									<!--ul class="actions">
 										<li><a href="#" class="button">More</a></li>
-									</ul>
+									</ul-->
 								</section>
 
 							<!-- Section -->
