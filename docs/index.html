@@ -82,22 +82,24 @@
 									</div>
 								</section>
 
+							<section>
 								<hr class="major" />
 
 								<h2 id="sreq">Deployment Scenarios</h2>
 								<p>A typical customer project built with OpenWMS.org is usually a composition of microservices to fulfill the functional requirements. Whereas a service may run
-								   in the cloud or on premise customer side. This mainly depends on the quality requirements of the project. For example, a service like the tcp/ip
-								   driver must obviously run with low latency close to the automation systems layer whereas and UI services may easily run off-side.</p>
-							    <p>OpenWMS.org is designed to run in four deployment models</p>
-							    <ul>
+									in the cloud or on premise customer side. This mainly depends on the quality requirements of the project. For example, a service like the tcp/ip
+									driver must obviously run with low latency close to the automation systems layer whereas and UI services may easily run off-side.</p>
+								<p>OpenWMS.org is designed to run in four deployment models</p>
+								<ul>
 									<li><strong>Cloud</strong><p>All microservices run off-side in the cloud and may shared with other customers. Service access is secured but no QoS are defined.</p></li>
 									<li><strong>Fog</strong><p>All microservices run on-side in the private cloud and are solely dedicated to the customer project.</p></li>
 									<li><strong>Hybrid</strong><p>In a combination of Cloud and Fog deployment, some common shared services may reside on the public cloud where other mission critical of time critical
-									services run locally in the private cloud</p></li>
+										services run locally in the private cloud</p></li>
 									<li><strong>Monolith</strong><p>All microservices are packaged into a single monolithic deployment unit that runs on traditional application services. Notice that in this
 										scenario elasticity is only available on infrastructure level (IaaS) not on service level.</p></li>
 								</ul>
-
+								</header>
+							</section>
 
 							<!-- Section -->
 								<!--section>
