@@ -63,7 +63,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>org.openwms.common.comm</module>
                 <module>org.openwms.common.shared</module>
             </modules>
         </profile>
@@ -81,11 +80,6 @@
             </dependency>
 
             <!-- Project dependencies -->
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.common.comm</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
-            </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.common.shared</artifactId>
