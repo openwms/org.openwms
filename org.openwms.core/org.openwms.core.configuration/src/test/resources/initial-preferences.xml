@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<p:preferences xmlns:p="http://www.openwms.org/schema/preferences" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.openwms.org/schema/preferences http://www.openwms.org/schema/preferences.xsd">
-    <application key="defaultLanguage" val="en_US" minimum="10" maximum="100" floatValue="22.1">description</application>
-</p:preferences>

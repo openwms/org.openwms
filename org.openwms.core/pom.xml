@@ -62,7 +62,6 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
-                <module>org.openwms.core.configuration</module>
                 <module>org.openwms.core.lang</module>
                 <module>org.openwms.core.test</module>
                 <module>org.openwms.core.util</module>
@@ -80,11 +79,6 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.core.configuration</artifactId>
-                <version>1.1.0-SNAPSHOT</version>
-            </dependency>
             <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.lang</artifactId>
