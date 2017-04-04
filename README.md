@@ -26,24 +26,20 @@ more business oriented architecture using Spring Boot and Netflix OSS components
 
 # Microservices
 
-|                |              |   
-| :------------- |:-------------|
-| [![11]][2g] [![12]][2w] <br/> User Administration and Authorization | [![11]][3g] [![12]][3w] <br/> Preferences Services | |
+| [![11]][2g] [![12]][2w]  | [![11]][3g] [![12]][3w] |
+| :------------- |:------------- |
 | ![2]      | ![3]      | |
 
-|                |              |   
+| [![11]][4g] [![12]][4w] | [![11]][5g] [![12]][5w] |
 | :------------- |:-------------|
-| [![11]][4g] [![12]][4w] <br/> Location Services | [![11]][5g] [![12]][5w] <br/> OSIP TCP/IP Driver | |
 | ![4]      | ![5]      | |
 
-|                |              |   
+| [![11]][6g] [![12]][6w] | [![11]][7g] [![12]][7w] |
 | :------------- |:-------------|
-| [![11]][6g] [![12]][6w] <br/> TMS Transportation Services | [![11]][7g] [![12]][7w] <br/> TMS Routing Services | |
 | ![6]      | ![7]      | |
 
-|                |              |     | 
+| [![11]][8g] [![12]][8w] | [![11]][9g] [![12]][9w] | [![11]][10g] [![12]][10w] |
 | :------------- |:-------------| --- |
-| [![11]][8g] [![12]][8w] <br/> WMS Inventory Services | [![11]][9g] [![12]][9w] <br/> WMS Shipping | [![11]][10g] [![12]][10w] <br/> WMS Receiving |
 | ![8]      | ![9]      | ![10]      | 
  
 
