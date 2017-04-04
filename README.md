@@ -28,18 +28,14 @@ more business oriented architecture using Spring Boot and Netflix OSS components
 
 |                |            | | 
 | :------------- |:-------------| --- |
-| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | |
+| [![11]][2g] [![12]][2w] <br/> User Administration and Authorization | [![11]][3g] [![12]][3w] <br/> Preferences Services | |
 | ![2]      | ![3]      | |
-| User Administration and Authorization | Prefencences Services |
-| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | |
+| [![11]][4g] [![12]][4w] <br/> Location Services | [![11]][5g] [![12]][5w] <br/> OSIP TCP/IP Driver | |
 | ![4]      | ![5]      | |
-| Location Services| OSIP TCP/IP Driver|
-| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | |
+| [![11]][6g] [![12]][6w] <br/> TMS Transportation Services | [![11]][7g] [![12]][7w] <br/> TMS Routing Services | |
 | ![6]      | ![7]      | |
-| TMS Transportation Services| TMS Routing Services |
-| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | [![11]][3g] [![12]][3w] |
+| [![11]][8g] [![12]][8w] <br/> WMS Inventory Services | [![11]][9g] [![12]][9w] <br/> WMS Shipping | [![11]][10g] [![12]][10w] <br/> WMS Receiving |
 | ![8]      | ![9]      | ![10]      | 
-| WMS Inventory Services | WMS Shipping | WMS Receiving |
  
 
 # Current Architecture
