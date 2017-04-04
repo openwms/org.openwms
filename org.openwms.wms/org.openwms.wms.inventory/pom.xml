@@ -31,20 +31,53 @@
 	</parent>
 	<artifactId>org.openwms.wms.inventory</artifactId>
 	<name>${project.artifactId}</name>
+
 	<properties>
-		<moduleDir>../../..</moduleDir>
+        <core.version>1.1.0-SNAPSHOT</core.version>
+		<common.version>1.1.0-SNAPSHOT</common.version>
 	</properties>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.openwms</groupId>
+				<artifactId>org.openwms.core.test</artifactId>
+				<version>${core.version}</version>
+				<type>test-jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.openwms</groupId>
+				<artifactId>org.openwms.common.service</artifactId>
+				<version>${common.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
-        <!-- WMS Project dependencies -->
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>org.openwms.wms.service</artifactId>
-        </dependency>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.tms.rest</artifactId>
-			<version>${tms.version}</version>
+			<groupId>org.openwms</groupId>
+			<artifactId>org.openwms.common.service</artifactId>
 		</dependency>
-	</dependencies>
+
+		<!-- Spring Framework -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>org.openwms.core.test</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

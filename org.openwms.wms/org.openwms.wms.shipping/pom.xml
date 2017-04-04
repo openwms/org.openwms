@@ -21,30 +21,51 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */  
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.openwms</groupId>
-		<artifactId>org.openwms.wms</artifactId>
-		<version>0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>org.openwms.wms.shipping</artifactId>
-	<name>${project.artifactId}</name>
-	<properties>
-		<moduleDir>../../..</moduleDir>
-	</properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.openwms</groupId>
+        <artifactId>org.openwms.wms</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>org.openwms.wms.shipping</artifactId>
+    <name>${project.artifactId}</name>
 
-	<dependencies>
+    <properties>
+        <core.version>1.1.0-SNAPSHOT</core.version>
+        <common.version>1.1.0-SNAPSHOT</common.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.core.test</artifactId>
+                <version>${core.version}</version>
+                <type>test-jar</type>
+            </dependency>
+            <dependency>
+                <groupId>org.openwms</groupId>
+                <artifactId>org.openwms.common.service</artifactId>
+                <version>${common.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
         <!-- WMS Project dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>org.openwms.wms.service</artifactId>
         </dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>org.openwms.tms.rest</artifactId>
-			<version>${tms.version}</version>
-		</dependency>
-	</dependencies>
+
+        <dependency>
+            <groupId>org.openwms</groupId>
+            <artifactId>org.openwms.core.test</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
