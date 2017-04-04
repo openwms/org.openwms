@@ -24,6 +24,24 @@ Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWM
 All components are currently under development. From a technical point of view they are moved from OSGi bundles towards a
 more business oriented architecture using Spring Boot and Netflix OSS components. Documentation of previous released versions can be found on [SourceForge.net](http://openwms2005.sourceforge.net/).
 
+# Microservices
+
+|                |            | | 
+| :------------- |:-------------| --- |
+| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | |
+| ![2]      | ![3]      | |
+| User Administration and Authorization | Prefencences Services |
+| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | |
+| ![4]      | ![5]      | |
+| Location Services| OSIP TCP/IP Driver|
+| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | |
+| ![6]      | ![7]      | |
+| TMS Transportation Services| TMS Routing Services |
+| [![11]][2g] [![12]][2w] | [![11]][3g] [![12]][3w]  | [![11]][3g] [![12]][3w] |
+| ![8]      | ![9]      | ![10]      | 
+| WMS Inventory Services | WMS Shipping | WMS Receiving |
+ 
+
 # Current Architecture
 
 Instead of applying a technical layered architecture (like we did with OSGi and before that with J2EE1.4) the current architecture focuses on business components. Business functions with a high degree of cohesion are kept together within
@@ -60,3 +78,32 @@ Some components might use NoSQL databases, like MongoDB, solely. RabbitMQ is use
 run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 
 [1]: src/docs/res/microservice_architecture.jpeg
+[2]: src/docs/res/srv-uaa.png
+[2g]: https://github.com/openwms/org.openwms.core.uaa
+[2w]: https://www.interface21.io/docs/core/uaa/index.html
+[3]: src/docs/res/srv-prefs.png
+[3g]: https://github.com/openwms/org.openwms.core.preferences
+[3w]: https://www.interface21.io/docs/core/preferences/index.html
+[4]: src/docs/res/srv-location.png
+[4g]: https://github.com/openwms/org.openwms.common.service
+[4w]: https://www.interface21.io/docs/common/base/index.html
+[5]: src/docs/res/srv-tcp.png
+[5g]: https://github.com/openwms/org.openwms.common.comm
+[5w]: https://www.interface21.io/docs/common/comm/index.html
+[6]: src/docs/res/srv-transportation.png
+[6g]: https://github.com/openwms/org.openwms.tms.transportation
+[6w]: https://www.interface21.io/docs/tms/transportation/index.html
+[7]: src/docs/res/srv-routing.png
+[7g]: https://github.com/openwms/org.openwms.tms.routing
+[7w]: https://www.interface21.io/docs/tms/routing/index.html
+[8]: src/docs/res/srv-inventory.png
+[8g]: https://github.com/openwms/org.openwms.wms.inventory
+[8w]: https://www.interface21.io/docs/wms/inventory/index.html
+[9]: src/docs/res/srv-shipping.png
+[9g]: https://github.com/openwms/org.openwms.wms.shipping
+[9w]: https://www.interface21.io/docs/wms/shipping/index.html
+[10]: src/docs/res/srv-receiving.png
+[10g]: https://github.com/openwms/org.openwms.wms.receiving
+[10w]: https://www.interface21.io/docs/wms/receiving/index.html
+[11]: src/docs/res/github.png
+[12]: src/docs/res/www.png
