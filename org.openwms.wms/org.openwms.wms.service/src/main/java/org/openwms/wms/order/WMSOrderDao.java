@@ -25,8 +25,6 @@ package org.openwms.wms.order;
  * A WMSOrderDao.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 public interface WMSOrderDao<T extends AbstractOrder<T, U>, U extends OrderPosition<T, U>> {
 

@@ -21,6 +21,13 @@
  */
 package org.openwms.wms.order;
 
+import org.openwms.common.values.Problem;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
+import org.openwms.core.values.CoreTypeDefinitions;
+import org.openwms.core.values.UnitType;
+import org.springframework.util.Assert;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
@@ -37,20 +44,10 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.io.Serializable;
 
-import org.openwms.common.values.Problem;
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
-import org.openwms.core.values.CoreTypeDefinitions;
-import org.openwms.core.values.UnitType;
-import org.openwms.wms.inventory.Product;
-import org.springframework.util.Assert;
-
 /**
  * An OrderPositionSplit.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -85,10 +82,9 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
             @Column(name = "C_QTY", length = CoreTypeDefinitions.QUANTITY_LENGTH, nullable = false) })
     private UnitType qty;
 
-    /** The ordered {@link Product}. */
-    @ManyToOne
-    @JoinColumn(name = "C_PRODUCT", referencedColumnName = "C_SKU")
-    private Product product;
+    /** The ordered {@code Product}. */
+    @Column(name = "C_PRODUCT")
+    private String productId;
 
     /** Latest problem that is occurred on this OrderPositionSplit. */
     @Embedded
@@ -206,8 +202,8 @@ public class OrderPositionSplit<T extends AbstractOrder<T, U>, U extends OrderPo
      * 
      * @return the product.
      */
-    public Product getProduct() {
-        return product;
+    public String getProductId() {
+        return productId;
     }
 
     /**

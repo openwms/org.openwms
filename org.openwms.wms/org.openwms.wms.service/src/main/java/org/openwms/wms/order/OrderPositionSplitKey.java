@@ -21,18 +21,16 @@
  */
 package org.openwms.wms.order;
 
+import org.openwms.wms.WMSTypes;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-
-import org.openwms.wms.WMSTypes;
 
 /**
  * An OrderPositionSplitKey.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 @Embeddable
 public class OrderPositionSplitKey implements Serializable {

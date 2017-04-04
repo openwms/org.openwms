@@ -21,6 +21,9 @@
  */
 package org.openwms.common.values;
 
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,17 +33,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Version;
 
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
-
 /**
  * A Target is either a physical or a logical endpoint of any kind of order in a warehouse. A <code>TransportOrder</code> has a Target set,
  * to where a <code>TransportUnit</code> has to be moved to.
  * 
  * @GlossaryTerm
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

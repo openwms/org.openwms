@@ -25,8 +25,6 @@ package org.openwms.wms.order;
  * An OrderState.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 public enum OrderState {
 

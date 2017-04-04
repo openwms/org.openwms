@@ -21,6 +21,11 @@
  */
 package org.openwms.wms.order;
 
+import org.openwms.common.values.Problem;
+import org.openwms.core.AbstractEntity;
+import org.openwms.core.DomainObject;
+import org.springframework.util.Assert;
+
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -42,17 +47,10 @@ import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 import java.util.Date;
 
-import org.openwms.common.values.Problem;
-import org.openwms.core.AbstractEntity;
-import org.openwms.core.DomainObject;
-import org.springframework.util.Assert;
-
 /**
  * An OrderPosition.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

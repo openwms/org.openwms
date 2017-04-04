@@ -21,6 +21,11 @@
  */
 package org.openwms.wms.order;
 
+import org.ameba.integration.jpa.BaseEntity;
+import org.openwms.common.values.Problem;
+import org.openwms.wms.WMSTypes;
+import org.springframework.util.Assert;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -43,17 +48,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.ameba.integration.jpa.BaseEntity;
-import org.openwms.common.values.Problem;
-import org.openwms.wms.WMSTypes;
-import org.springframework.util.Assert;
-
 /**
  * A AbstractOrder.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

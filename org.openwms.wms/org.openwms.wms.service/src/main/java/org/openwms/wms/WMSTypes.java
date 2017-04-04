@@ -27,8 +27,6 @@ import java.io.Serializable;
  * A WMSTypes.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version 0.1
- * @since 0.1
  */
 public final class WMSTypes implements Serializable {
 

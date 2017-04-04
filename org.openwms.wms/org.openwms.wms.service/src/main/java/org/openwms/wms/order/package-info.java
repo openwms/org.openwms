@@ -1,4 +1,4 @@
 /**
- * This package contains types to model general order handling.
+ * Contains types to model general order handling.
  */
 package org.openwms.wms.order;

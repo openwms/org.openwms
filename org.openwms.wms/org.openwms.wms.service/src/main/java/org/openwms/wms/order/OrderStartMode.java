@@ -25,8 +25,6 @@ package org.openwms.wms.order;
  * An OrderStartMode.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 public enum OrderStartMode {
 

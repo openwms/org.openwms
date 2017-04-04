@@ -21,19 +21,17 @@
  */
 package org.openwms.wms.order;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * A WMSOrderDaoImpl.
  * 
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.1
  */
 @Transactional(propagation = Propagation.MANDATORY)
 @Repository(WMSOrderDaoImpl.COMPONENT_NAME)
