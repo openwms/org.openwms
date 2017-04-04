@@ -55,19 +55,13 @@
                 </property>
             </activation>
             <modules>
-                <module>org.openwms.wms.inventory</module>
-                <module>org.openwms.wms.receiving</module>
                 <module>org.openwms.wms.service</module>
-                <module>org.openwms.wms.shipping</module>
             </modules>
         </profile>
         <profile>
             <id>wms</id>
             <modules>
-                <module>org.openwms.wms.inventory</module>
-                <module>org.openwms.wms.receiving</module>
                 <module>org.openwms.wms.service</module>
-                <module>org.openwms.wms.shipping</module>
             </modules>
         </profile>
     </profiles>
