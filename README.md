@@ -98,5 +98,5 @@ run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 [10]: src/docs/res/srv-receiving.png
 [10g]: https://github.com/openwms/org.openwms.wms.receiving
 [10w]: https://www.interface21.io/docs/wms/receiving/index.html
-[11]: src/docs/res/github.png
+[11]: src/docs/res/github-b.png
 [12]: src/docs/res/www.png
