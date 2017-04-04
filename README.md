@@ -24,22 +24,6 @@ Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWM
 All components are currently under development. From a technical point of view they are moved from OSGi bundles towards a
 more business oriented architecture using Spring Boot and Netflix OSS components. Documentation of previous released versions can be found on [SourceForge.net](http://openwms2005.sourceforge.net/).
 
-# Microservices
-
-| [![11]][2g] [![12]][2w]  | [![11]][3g] [![12]][3w] | [![11]][4g] [![12]][4w] | [![11]][5g] [![12]][5w] |
-| :------------- | :------------- | :------------- | :------------- |
-| ![2]      | ![3]      | ![4]      | ![5]      | 
-
-
-| [![11]][6g] [![12]][6w] | [![11]][7g] [![12]][7w] | [![11]][8g] [![12]][8w] | [![11]][9g] [![12]][9w] | 
-| :------------- | :------------- | :------------- | :------------- |
-| ![6]      | ![7]      | ![8]      | ![9]      |
-
-| [![11]][10g] [![12]][10w] | | | |
-| :------------- | :------------- | :------------- | :------------- | 
-|  ![10]         | | | |
- 
-
 # Current Architecture
 
 Instead of applying a technical layered architecture (like we did with OSGi and before that with J2EE1.4) the current architecture focuses on business components. Business functions with a high degree of cohesion are kept together within
@@ -75,6 +59,21 @@ In addition to a bunch of Spring Framework projects, OpenWMS.org uses [Activiti]
 Some components might use NoSQL databases, like MongoDB, solely. RabbitMQ is used in combination with Spring Integration as notification and event broker. All hexagon components are Spring Boot applications designed to
 run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 
+# Microservices
+
+| [![11]][2g] [![12]][2w]  | [![11]][3g] [![12]][3w] | [![11]][4g] [![12]][4w] | [![11]][5g] [![12]][5w] |
+| :------------- | :------------- | :------------- | :------------- |
+| ![2]      | ![3]      | ![4]      | ![5]      | 
+
+
+| [![11]][6g] [![12]][6w] | [![11]][7g] [![12]][7w] | [![11]][8g] [![12]][8w] | [![11]][9g] [![12]][9w] | 
+| :------------- | :------------- | :------------- | :------------- |
+| ![6]      | ![7]      | ![8]      | ![9]      |
+
+| [![11]][10g] [![12]][10w] |
+| :------------- | 
+|  ![10]         | 
+ 
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: src/docs/res/srv-uaa.png
 [2g]: https://github.com/openwms/org.openwms.core.uaa
