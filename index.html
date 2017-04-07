@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>OpenWMS.org</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="https://www.interface21.io" class="logo"><strong>OpenWMS.org</strong> by <img src="images/interface21.io.png" /></a>
+									<ul class="icons">
+										<li><a href="https://twitter.com/interface21_io" class="icon fa-twitter"><span class="label">https://twitter.com/interface21_io</span></a></li>
+										<li><a href="https://github.com/openwms/org.openwms" class="icon fa-github"><span class="label">https://github.com/openwms/org.openwms</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1><br />
+											Open Warehouse Management System</h1>
+											<p>An open source software for intralogistics projects.</p>
+										</header>
+										<p>OpenWMS.org is a software project that targets the needs of modern warehouse management software systems in relation to customers and software suppliers.
+											It is essential to operate with, and link to, a varying kind of enterprise systems to build the entire warehouse management system. The WMS part of the
+											project can be connected to ERP systems whereas the Transport Management System (TMS) controls field controllers, like Raspberry Pis or PLCs.
+											Non-functional requirements like the systems availability, performance and also extendability are considered as well.</p>
+										<!--ul class="actions">
+											<li><a href="#" class="button big">Learn More</a></li>
+										</ul-->
+									</div>
+									<span class="image object">
+										<img src="images/microservice_architecture.jpeg" alt="" style="height: auto"/>
+									</span>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2 id="technology">Technology</h2>
+									</header>
+									<div class="features">
+										<article>
+											<span class="icon fa-cogs"></span>
+											<div class="content">
+												<h3>Microservices</h3>
+												<p>The Microservice architecture drives the design of the software towards small and well defined modules of <strong>business functions</strong> with high cohesion.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon fa-cloud"></span>
+											<div class="content">
+												<h3>Cloud Native</h3>
+												<p>Strictly following the <strong><a href="https://12factor.net/" target="_blank">Twelve-Factor</a></strong> manifesto all services are cloud enabled but do not have to run in the cloud.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon fa-database"></span>
+											<div class="content">
+												<h3>Polyglot</h3>
+												<p>OpenWMS.org does not depend on a particular database product nor on storage technology. Different services use different types of datastores. From <strong>relational</strong> to <strong>NoSQL</strong> databases.</p>
+											</div>
+										</article>
+										<article>
+											<span class="icon fa-puzzle-piece"></span>
+											<div class="content">
+												<h3>Workflow</h3>
+												<p>A workflow engine is used to control and change the <strong>material flow handling</strong> dynamically without interrupts and downtimes. </p>
+											</div>
+										</article>
+									</div>
+								</section>
+
+							<section>
+								<hr class="major" />
+
+								<h2 id="sreq">Deployment Scenarios</h2>
+								<p>A typical customer project built with OpenWMS.org is usually a composition of microservices to fulfill the functional requirements. Whereas a service may run
+									in the cloud or on premise customer side. This mainly depends on the quality requirements of the project. For example, a service like the tcp/ip
+									driver must obviously run with low latency close to the automation systems layer whereas and UI services may easily run off-side.</p>
+								<p>OpenWMS.org is designed to run in four deployment models</p>
+								<ul>
+									<li><strong>Cloud</strong><p>All microservices run off-side in the cloud and may shared with other customers. Service access is secured but no QoS are defined.</p></li>
+									<li><strong>Fog</strong><p>All microservices run on-side in the private cloud and are solely dedicated to the customer project.</p></li>
+									<li><strong>Hybrid</strong><p>In a combination of Cloud and Fog deployment, some common shared services may reside on the public cloud where other mission critical of time critical
+										services run locally in the private cloud</p></li>
+									<li><strong>Monolith</strong><p>All microservices are packaged into a single monolithic deployment unit that runs on traditional application services. Notice that in this
+										scenario elasticity is only available on infrastructure level (IaaS) not on service level.</p></li>
+								</ul>
+								</header>
+							</section>
+
+							<!-- Section -->
+								<!--section>
+									<header class="major">
+										<h2>Product Features</h2>
+									</header>
+									<div class="posts">
+										<article>
+											<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>
+											<h3>Interdum aenean</h3>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">More</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>
+											<h3>Nulla amet dolore</h3>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">More</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>
+											<h3>Tempus ullamcorper</h3>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">More</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
+											<h3>Sed etiam facilis</h3>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">More</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
+											<h3>Feugiat lorem aenean</h3>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">More</a></li>
+											</ul>
+										</article>
+										<article>
+											<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>
+											<h3>Amet varius aliquam</h3>
+											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
+											<ul class="actions">
+												<li><a href="#" class="button">More</a></li>
+											</ul>
+										</article>
+									</div>
+								</section-->
+
+							<!-- Team -->
+							<section>
+                                <header class="major">
+                                    <h2 id="team">Team</h2>
+                                </header>
+                                <div class="posts">
+                                    <article>
+                                        <h3>Heiko Scherrer</h3>
+                                        <p>Project founder and actively developing since 2005.</p>
+                                    </article>
+                                    <article>
+                                        <h3>Frank Lauer</h3>
+										<p>One of the first projects contributors when OpenWMS.org was built on <a href="https://en.wikipedia.org/wiki/Enterprise_JavaBeans" target="_blank">EJB</a> technology.</p>
+                                    </article>
+                                    <article>
+                                        <h3>Michael Schmut</h3>
+                                        <p>Innovation driver. Michael put in ideas and laid out the set of technologies already before the project was initiated.</p>
+                                    </article>
+                                    <article>
+                                        <h3>Tina Russell</h3>
+										<p>In times of <a href="https://en.wikipedia.org/wiki/Apache_Flex" target="_blank">Adobe Flex</a> was used for the UI part, Tina implemented the UI application almost on her own.</p>
+                                    </article>
+                                    <article>
+                                        <h3>Florian Gyger</h3>
+                                        <p>Thinktank</p>
+                                    </article>
+                                    <article>
+                                        <h3>Mischa Farbstein</h3>
+                                        <p>In business analysis and requirements engineering Michael does a great job and has lots of project experience.</p>
+                                    </article>
+                                </div>
+                            </section>
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+								<!--section id="search" class="alt">
+									<form method="post" action="#">
+										<input type="text" name="query" id="query" placeholder="Search" />
+									</form>
+								</section-->
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Product</h2>
+									</header>
+									<ul>
+										<li><a href="#technology">Technology</a></li>
+										<li><a href="#sreq">Deployment Scenarios</a></li>
+										<li>
+											<span class="opener">Microservices</span>
+											<ul>
+												<li><a href="https://www.interface21.io/docs/core/preferences/index.html" target="_blank"><color class="core">CORE</color> - Preferences</a></li>
+												<li><a href="https://www.interface21.io/docs/core/uaa/index.html" target="_blank"><color class="core">CORE</color> - UAA</a></li>
+												<li><a href="https://www.interface21.io/docs/common/base/index.html" target="_blank"><color class="common">COMMON</color> - Base Services</a></li>
+												<li><a href="https://www.interface21.io/docs/common/comm/index.html" target="_blank"><color class="common">COMMON</color> - OSIP TCP/IP Driver</a></li>
+												<li><a href="https://www.interface21.io/docs/tms/transportation/index.html" target="_blank"><color class="tms">TMS</color> - Transportation</a></li>
+												<li><a href="https://www.interface21.io/docs/tms/routing/index.html" target="_blank"><color class="tms">TMS</color> - Routing Services</a></li>
+												<li><a href="https://www.interface21.io/docs/wms/inventory/index.html" target="_blank"><color class="wms">WMS</color> - Inventory</a></li>
+												<li><a href="https://www.interface21.io/docs/wms/receiving/index.html" target="_blank"><color class="wms">WMS</color> - Receiving</a></li>
+												<li><a href="https://www.interface21.io/docs/wms/shipping/index.html" target="_blank"><color class="wms">WMS</color> - Shipping</a></li>
+											</ul>
+										</li>
+										<li><a href="#install">Installation</a></li>
+										<!--li><a href="#support">Support</a></li-->
+										<!--li><a href="#">Screenshots</a></li-->
+										<li>
+											<span class="opener">Developers Section</span>
+											<ul>
+												<li><a href="https://openwms.mooo.com/sonar" target="_blank">SonarQube Quality Center</a></li>
+												<li><a href="https://openwms.atlassian.net" target="_blank">Issue Tracker</a></li>
+												<li><a href="https://openwms.atlassian.net/wiki" target="_blank">Wiki</a></li>
+												<li><a href="https://openwms.mooo.com/jenkins" target="_blank">Mr. Jenkins CI/CD</a></li>
+											</ul>
+										</li>
+										<li><a href="https://openwms.mooo.com/app/kibana" target="_blank">Live Tracing</a></li>
+										<li>
+											<span class="opener">Project Infos</span>
+											<ul>
+												<li><a href="https://github.com/openwms/org.openwms" target="_blank">on GitHub.com</a></li>
+												<li><a href="#team">Project Team</a></li>
+											</ul>
+										</li>
+									</ul>
+								</nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Show Cases</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<header class="minor">
+												<h2>Zile</h2>
+											</header>
+											<a href="#" class="image"><img src="images/zile-layout.png" alt="zile" /></a>
+											<p>Automated warehouse with pallet and flat goods.</p>
+										</article>
+									</div>
+									<!--ul class="actions">
+										<li><a href="#" class="button">More</a></li>
+									</ul-->
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<p>You want to use <strong>OpenWMS.org</strong> in your own project and need support? Or you want to hire use to do a end-customer project together? Contact us!</p>
+									<ul class="contact">
+										<li class="fa-envelope-o">product at openwms.org</li>
+										<li class="fa-skype">openwms</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Interface21.io. All rights reserved.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
