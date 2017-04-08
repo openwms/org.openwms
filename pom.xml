@@ -845,9 +845,7 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>
-                                    ${project.build.outputDirectory}/META-INF/resources/public/static/docs
-                                </outputDirectory>
+                                <outputDirectory>${documentation.output.dir}</outputDirectory>
                                 <resources>
                                     <resource>
                                         <directory>${documentation.input.dir}</directory>
