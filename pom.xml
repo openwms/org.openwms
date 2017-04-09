@@ -591,7 +591,6 @@
         <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
         <plugin.pmd.version>2.4</plugin.pmd.version>
         <plugin.project-info.version>2.4</plugin.project-info.version>
-        <plugin.resources.version>2.6</plugin.resources.version>
         <plugin.site.version>3.3</plugin.site.version>
         <plugin.source.version>2.2.1</plugin.source.version>
         <plugin.surefire.version>2.16</plugin.surefire.version>
@@ -827,6 +826,8 @@
                                 <backend>html</backend>
                                 <doctype>book</doctype>
                                 <attributes>
+                                    <bversion>${project.version}</bversion>
+                                    <bnumber>${ci.buildNumber}</bnumber>
                                     <generated>${documentation.snippet.dir}</generated>
                                 </attributes>
                             </configuration>
@@ -860,8 +861,7 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${documentation.output.dir}
-                                </outputDirectory>
+                                <outputDirectory>${documentation.output.dir}</outputDirectory>
                                 <resources>
                                     <resource>
                                         <directory>${documentation.input.dir}</directory>
