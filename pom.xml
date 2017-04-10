@@ -801,11 +801,27 @@
                     <version>${plugin.asciidoctor-maven.version}</version>
                     <executions>
                         <execution>
+                            <id>generate-docs</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>process-asciidoc</goal>
+                            </goals>
+                            <configuration>
+                                <backend>html</backend>
+                                <doctype>book</doctype>
+                                <attributes>
+                                    <bversion>${project.version}</bversion>
+                                    <bnumber>${ci.buildNumber}</bnumber>
+                                    <generated>${documentation.snippet.dir}</generated>
+                                </attributes>
+                            </configuration>
+                        </execution>
+                        <execution>
                             <id>generate-docs-site</id>
                             <phase>site</phase>
                             <goals>
                                 <goal>process-asciidoc</goal>
-                            </goals>
+                                </goals>
                             <configuration>
                                 <backend>html</backend>
                                 <doctype>book</doctype>
@@ -823,6 +839,21 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
                     <executions>
+                        <execution>
+                            <id>copy-resources</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>copy-resources</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${documentation.output.dir}</outputDirectory>
+                                <resources>
+                                    <resource>
+                                        <directory>${documentation.input.dir}</directory>
+                                    </resource>
+                                </resources>
+                            </configuration>
+                        </execution>
                         <execution>
                             <id>copy-asciidoc</id>
                             <phase>pre-site</phase>
