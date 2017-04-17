@@ -14,7 +14,7 @@ node {
       }
    }
    stage('\u27A1 Sonar') {
-      sh "'${mvnHome}/bin/mvn' org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dci.buildNumber=${BUILD_NUMBER} -Ddocumentation.dir=${WORKSPACE}/target -Pjenkins"
+      sh "'${mvnHome}/bin/mvn' -s $MAVEN_SETTINGS org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dci.buildNumber=${BUILD_NUMBER} -Ddocumentation.dir=${WORKSPACE}/target -Pjenkins"
    }
    stage('\u27A1 Results') {
       archive '**/target/*.jar'
