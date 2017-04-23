@@ -61,22 +61,17 @@
         <repository>
             <id>${distribution.repo.serverId}</id>
             <name>OpenWMS.org Release Repository</name>
-            <url>
-                ${distribution.repo.serverProtocol}://${distribution.repo.serverUrl.rootPath}
-            </url>
+            <url>${distribution.repo.serverProtocol}://${distribution.repo.serverUrl.rootPath}</url>
         </repository>
         <snapshotRepository>
             <id>${distribution.repo.serverId}</id>
             <name>OpenWMS.org Snapshot Repository</name>
-            <url>
-                ${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}
-            </url>
+            <url>${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}</url>
         </snapshotRepository>
         <site>
             <id>${distribution.serverId}</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}
-            </url>
+            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}</url>
         </site>
     </distributionManagement>
 
@@ -275,25 +270,16 @@
             <id>internal</id>
             <properties>
                 <!-- Web Site deployment -->
-                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
-                <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>
-                    shell.sourceforge.net/home/project-web/openwms2005/htdocs
-                </distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>
-                    ${distribution.serverUrl.rootPath}/development/reference/${project.version}
-                </distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs
-                </distribution.serverUrl.docsPath>
+                <distribution.serverId>ftp-io</distribution.serverId>
+                <distribution.serverProtocol>ftps</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>openwms.mooo.com</distribution.repo.serverId>
+                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>http</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>
-                    localhost:8081/nexus/content/repositories/openwms-snapshots
-                </distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>
-                    localhost:8081/nexus/content/repositories/openwms-snapshots
-                </distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>http://oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
 
@@ -303,24 +289,14 @@
                 <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>
-                    shell.sourceforge.net/home/project-web/openwms2005/htdocs
-                </distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>
-                    ${distribution.serverUrl.rootPath}/development/reference/${project.version}
-                </distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs
-                </distribution.serverUrl.docsPath>
+                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
                 <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>sonatype-nexus-staging
-                </distribution.repo.serverId>
+                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>
-                    oss.sonatype.org/service/local/staging/deploy/maven2
-                </distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>
-                    oss.sonatype.org/content/repositories/snapshots
-                </distribution.repo.snapshot.serverUrl.rootPath>
+                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
+                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
             </properties>
         </profile>
 
