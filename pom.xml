@@ -479,6 +479,10 @@
         <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
         <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
         <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+        <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
+        <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
+        <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
+        <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
 
         <!-- =================== -->
         <!-- Dependency versions -->
