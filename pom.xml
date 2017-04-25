@@ -240,51 +240,7 @@
         </profile>
 
         <profile>
-            <id>public</id>
-            <properties>
-                <!-- Web Site deployment -->
-                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
-                <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>
-                    shell.sourceforge.net/home/project-web/openwms2005/htdocs
-                </distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>
-                    ${distribution.serverUrl.rootPath}/development/reference/${project.version}
-                </distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs
-                </distribution.serverUrl.docsPath>
-                <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>shell.sourceforge.net
-                </distribution.repo.serverId>
-                <distribution.repo.serverProtocol>scp</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>
-                    shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/releases
-                </distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>
-                    shell.sourceforge.net/home/project-web/openwms2005/htdocs/repo/snapshots
-                </distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>internal</id>
-            <properties>
-                <!-- Web Site deployment -->
-                <distribution.serverId>ftp-io</distribution.serverId>
-                <distribution.serverProtocol>ftps</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-                <!-- Maven Repo Artifact deployment -->
-                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>http</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>http://oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>sonatype</id>
+            <id>ws-sourceforge</id>
             <properties>
                 <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
@@ -292,7 +248,24 @@
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
                 <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-                <!-- Maven Repo Artifact deployment -->
+            </properties>
+        </profile>
+
+        <profile>
+            <id>ws-internal</id>
+            <properties>
+                <!-- Web Site deployment -->
+                <distribution.serverId>ftp-io</distribution.serverId>
+                <distribution.serverProtocol>ftps</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>sonatype</id>
+            <properties>
                 <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
                 <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
                 <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
@@ -301,21 +274,10 @@
         </profile>
 
         <profile>
-            <id>all</id>
-            <activation>
-                <property>
-                    <name>!top</name>
-                </property>
-            </activation>
-            <modules>
-                <module>org.openwms.core</module>
-                <module>org.openwms.common</module>
-                <module>org.openwms.wms</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>sordocs</id>
+            <id>release</id>
+            <properties>
+                <debug.info>false</debug.info>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -367,13 +329,6 @@
                     </plugin>
                 </plugins>
             </build>
-        </profile>
-
-        <profile>
-            <id>release</id>
-            <properties>
-                <debug.info>false</debug.info>
-            </properties>
         </profile>
 
         <profile>
@@ -1098,5 +1053,11 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <modules>
+        <module>org.openwms.core</module>
+        <module>org.openwms.common</module>
+        <module>org.openwms.wms</module>
+    </modules>
 
 </project>
