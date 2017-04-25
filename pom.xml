@@ -242,7 +242,6 @@
         <profile>
             <id>ws-sourceforge</id>
             <properties>
-                <!-- Web Site deployment -->
                 <distribution.serverId>shell.sourceforge.net</distribution.serverId>
                 <distribution.serverProtocol>scp</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
@@ -254,7 +253,6 @@
         <profile>
             <id>ws-internal</id>
             <properties>
-                <!-- Web Site deployment -->
                 <distribution.serverId>ftp-io</distribution.serverId>
                 <distribution.serverProtocol>ftps</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
