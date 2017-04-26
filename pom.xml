@@ -251,11 +251,22 @@
         </profile>
 
         <profile>
-            <id>ws-internal</id>
+            <id>ws-interface21</id>
             <properties>
                 <distribution.serverId>ftp-io</distribution.serverId>
                 <distribution.serverProtocol>ftps</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
+                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
+                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>ws-openwms</id>
+            <properties>
+                <distribution.serverId>openwms-mooo</distribution.serverId>
+                <distribution.serverProtocol>scp</distribution.serverProtocol>
+                <distribution.serverUrl.rootPath>openwms.mooo.com</distribution.serverUrl.rootPath>
                 <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
             </properties>
@@ -472,11 +483,12 @@
         <angularjs.client.version>1.1.0-SNAPSHOT</angularjs.client.version>
 
         <!-- May overridden with profiles -->
-        <distribution.serverId>shell.sourceforge.net</distribution.serverId>
+        <distribution.serverId>openwms-mooo</distribution.serverId>
         <distribution.serverProtocol>scp</distribution.serverProtocol>
-        <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-        <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
+        <distribution.serverUrl.rootPath>openwms.mooo.com</distribution.serverUrl.rootPath>
+        <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
         <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
+        <!-- Deploy to Maven central OSS snapshots repo -->
         <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
         <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
         <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
