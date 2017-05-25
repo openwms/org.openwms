@@ -63,14 +63,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- JavaEE dependencies -->
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- Spring Framework -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
