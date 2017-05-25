@@ -497,25 +497,23 @@
         <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.8</ameba-lib.version>
-        <aspectj.version>1.8.9</aspectj.version> <!-- Keep in sync with boot -->
+        <ameba-lib.version>1.10-SNAPSHOT</ameba-lib.version>
+        <aspectj.version>1.8.10</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
         <el-impl.version>2.2</el-impl.version>
 
-        <hibernate-entitymanager.version>5.0.9.Final</hibernate-entitymanager.version> <!-- Keep in sync with Spring Data JPA -->
+        <hibernate-entitymanager.version>5.0.11.Final</hibernate-entitymanager.version> <!-- Keep in sync with Spring Data JPA -->
         <hibernate-core.version>5.0.9.Final</hibernate-core.version> <!-- Keep in sync with hibernate-entitymanager.version -->
-        <jackson.version>2.6.6</jackson.version> <!-- Keep in sync with boot -->
+        <jackson.version>2.8.8</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
+        <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
         <ms.group>NULL</ms.group>
-        <!-- Spring Integration 2.2.4 uses Spring Core 3.1.3 -->
-        <!--spring.io.version>2.1.0.BUILD-SNAPSHOT</spring.io.version-->
-        <spring-boot.version>1.4.2.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring-cloud-dependencies.version>Camden.SR2</spring-cloud-dependencies.version>
+        <spring-boot.version>1.5.3.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
+        <spring-cloud-dependencies.version>Dalston.RELEASE</spring-cloud-dependencies.version>
         <spring-restdocs-mockmvc.version>1.1.2.RELEASE</spring-restdocs-mockmvc.version>
-        <spring.version>4.3.4.RELEASE</spring.version> <!-- Keep in sync with boot -->
+        <spring.version>4.3.8.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
-        <validation-api.version>1.1.0.Final</validation-api.version>
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
@@ -917,34 +915,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.interface21</groupId>
-                <artifactId>ameba-lib</artifactId>
-                <version>${ameba-lib.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.interface21</groupId>
-                <artifactId>ameba-lib</artifactId>
-                <version>${ameba-lib.version}</version>
-                <type>test-jar</type>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.javax.persistence</groupId>
-                <artifactId>hibernate-jpa-2.1-api</artifactId>
-                <version>${jpa-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.validation</groupId>
-                <artifactId>validation-api</artifactId>
-                <version>${validation-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>el-impl</artifactId>
-                <version>${el-impl.version}</version>
-            </dependency>
-
-            <!-- Spring Framework Libraries -->
-            <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
@@ -958,10 +928,28 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <dependency>
-                <groupId>org.springframework.restdocs</groupId>
-                <artifactId>spring-restdocs-mockmvc</artifactId>
-                <version>${spring-restdocs-mockmvc.version}</version>
+                <groupId>io.interface21</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>${ameba-lib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.interface21</groupId>
+                <artifactId>ameba-lib</artifactId>
+                <version>${ameba-lib.version}</version>
+                <type>test-jar</type>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate-entitymanager.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.javax.persistence</groupId>
+                <artifactId>hibernate-jpa-2.1-api</artifactId>
+                <version>${jpa-api.version}</version>
             </dependency>
 
             <dependency>
@@ -974,34 +962,7 @@
                 <artifactId>spring-messaging</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            <!-- Unfortunately Spring integration depends on spring-retry that comes with an old Spring version 3.0.x -->
-            <!--dependency>
-                <groupId>org.springframework.retry</groupId>
-                <artifactId>spring-retry</artifactId>
-                <version>${spring-retry.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.springframework</groupId>
-                        <artifactId>spring-context</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency-->
 
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate-entitymanager.version}</version>
-            </dependency>
-
-            <!-- Database libraries -->
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>oracle.jdbc.driver</artifactId>
-                <version>${jdbc.oracle.version}</version>
-                <optional>true</optional>
-            </dependency>
-
-            <!-- Fix version here -->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjrt</artifactId>
@@ -1018,7 +979,11 @@
                 <version>${aspectj.version}</version>
             </dependency>
 
-            <!-- REST dependencies -->
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>el-impl</artifactId>
+                <version>${el-impl.version}</version>
+            </dependency>
             <dependency>
                 <groupId>net.sf.dozer</groupId>
                 <artifactId>dozer</artifactId>
@@ -1037,6 +1002,11 @@
                         <artifactId>jcl-over-slf4j</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
