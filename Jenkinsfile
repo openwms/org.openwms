@@ -10,7 +10,7 @@ node {
    stage('\u27A1 Build & Deploy') {
       configFileProvider(
           [configFile(fileId: 'maven-local-settings', variable: 'MAVEN_SETTINGS')]) {
-          sh "'${mvnHome}/bin/mvn' -s $MAVEN_SETTINGS clean deploy -Dci.buildNumber=${BUILD_NUMBER} -Ddocumentation.dir=${WORKSPACE}/target -Psordocs,sonatype -U"
+          sh "'${mvnHome}/bin/mvn' -s $MAVEN_SETTINGS clean deploy -Dci.buildNumber=${BUILD_NUMBER} -Ddocumentation.dir=${WORKSPACE}/target -Psonatype -U"
       }
    }
    stage('\u27A1 Sonar') {
