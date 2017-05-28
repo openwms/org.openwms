@@ -254,7 +254,7 @@
             <id>ws-interface21</id>
             <properties>
                 <distribution.serverId>ftp-io</distribution.serverId>
-                <distribution.serverProtocol>ftps</distribution.serverProtocol>
+                <distribution.serverProtocol>ftp</distribution.serverProtocol>
                 <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
                 <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
                 <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
