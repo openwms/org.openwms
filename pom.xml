@@ -507,7 +507,8 @@
         <jackson.version>2.8.8</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <jpa-api.version>1.0.0.Final</jpa-api.version>
-        <logstash-logback-encoder.version>4.6</logstash-logback-encoder.version>
+        <logback.version>1.2.1</logback.version> <!-- Keep in sync with boot -->
+        <logstash-logback-encoder.version>4.9</logstash-logback-encoder.version>
         <ms.group>NULL</ms.group>
         <spring-boot.version>1.5.3.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
         <spring-cloud-dependencies.version>Dalston.RELEASE</spring-cloud-dependencies.version>
