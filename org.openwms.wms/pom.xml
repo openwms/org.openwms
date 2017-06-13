@@ -28,7 +28,6 @@
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
         <version>2</version>
-        <relativePath />
     </parent>
     <artifactId>org.openwms.wms</artifactId>
     <version>0.1-SNAPSHOT</version>
