@@ -31,10 +31,10 @@
         <version>2</version>
     </parent>
     <artifactId>org.openwms.core.test</artifactId>
+    <version>1.1.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>A project that contains classes to support proper testing. Additionally some Spring configuration is provided that starts a Spring managed test environment.</description>
     <properties>
-        <moduleDir>../..</moduleDir>
         <assertj-core.version>3.4.1</assertj-core.version>
     </properties>
     <build>
@@ -78,14 +78,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
