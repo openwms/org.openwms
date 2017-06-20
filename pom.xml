@@ -1047,9 +1047,9 @@
     </dependencies>
 
     <modules>
-        <module>org.openwms.core</module>
-        <module>org.openwms.common</module>
-        <module>org.openwms.wms</module>
+        <module>org.openwms.core.lang</module>
+        <module>org.openwms.core.test</module>
+        <module>org.openwms.core.util</module>
     </modules>
 
 </project>
