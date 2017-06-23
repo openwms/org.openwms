@@ -32,7 +32,7 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
-    <version>2</version>
+    <version>3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
