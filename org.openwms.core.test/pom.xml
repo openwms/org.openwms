@@ -29,9 +29,10 @@
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
         <version>2</version>
+        <relativePath />
     </parent>
     <artifactId>org.openwms.core.test</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>${project.artifactId}</name>
     <description>A project that contains classes to support proper testing. Additionally some Spring configuration is provided that starts a Spring managed test environment.</description>
     <properties>

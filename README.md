@@ -69,7 +69,13 @@ run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 | [![11]][10g] [![12]][10w] |
 | :------------- | 
 |  ![10]         | 
- 
+
+# Release
+
+```
+$ mvn clean deploy -Prelease,gpg
+```
+
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: src/docs/res/srv-uaa.png
 [2g]: https://github.com/openwms/org.openwms.core.uaa
