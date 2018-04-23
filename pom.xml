@@ -26,18 +26,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>8</version>
+        <groupId>org.openwms</groupId>
+        <artifactId>org.openwms.parent</artifactId>
+        <version>3-SNAPSHOT</version>
+        <relativePath>./org.openwms.parent</relativePath>
     </parent>
-    <groupId>org.openwms</groupId>
     <artifactId>org.openwms</artifactId>
-    <version>3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
-    <description>OpenWMS.org is an open source warehouse management software</description>
-    <url>http://www.openwms.org</url>
-    <inceptionYear>2005</inceptionYear>
 
     <prerequisites>
         <maven>${maven.min.version}</maven>
@@ -57,167 +53,7 @@
         </license>
     </licenses>
 
-    <distributionManagement>
-        <repository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Release Repository</name>
-            <url>${distribution.repo.serverProtocol}://${distribution.repo.serverUrl.rootPath}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${distribution.repo.serverId}</id>
-            <name>OpenWMS.org Snapshot Repository</name>
-            <url>${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}</url>
-        </snapshotRepository>
-        <site>
-            <id>${distribution.serverId}</id>
-            <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}</url>
-        </site>
-    </distributionManagement>
-
-    <scm>
-        <url>https://github.com/openwms/org.openwms</url>
-        <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
-        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git
-        </developerConnection>
-    </scm>
-
-    <organization>
-        <name>Interface21.io</name>
-        <url>https://www.interface21.io</url>
-    </organization>
-
-    <developers>
-        <developer>
-            <id>scherrer</id>
-            <name>Heiko Scherrer</name>
-            <email>scherrer@openwms.org</email>
-            <url>https://openwms.github.io/</url>
-            <organization>Interface21.io</organization>
-            <organizationUrl>https://www.interface21.io</organizationUrl>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Project Lead</role>
-                <role>Architect</role>
-                <role>Developer</role>
-                <role>Deployer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>flauer99</id>
-            <name>Frank Lauer</name>
-            <email>flauer99@users.sourceforge.net</email>
-            <url>https://sourceforge.net/users/flauer99</url>
-            <organization>Aberle GmbH</organization>
-            <organizationUrl>http://www.a-s.de</organizationUrl>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Java Developer</role>
-                <role>Site Master</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>smudo99</id>
-            <name>Michael Schmut</name>
-            <email>smudo99@users.sourceforge.net</email>
-            <url>https://sourceforge.net/users/smudo99</url>
-            <organization>IBM</organization>
-            <organizationUrl>http://www.ibm.com</organizationUrl>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Java Developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>russelltina</id>
-            <name>Tina Russell</name>
-            <email>russelltina@users.sourceforge.net</email>
-            <url>https://sourceforge.net/users/russelltina</url>
-            <organization>University of Oregon</organization>
-            <organizationUrl>http://www.uoregon.edu</organizationUrl>
-            <timezone>-7</timezone>
-            <roles>
-                <role>Flex Developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>flogy</id>
-            <name>Florian Gyger</name>
-            <email>fgyger@openwms.org</email>
-            <url>https://sourceforge.net/users/flogy</url>
-            <organization>Swisslog AG</organization>
-            <organizationUrl>http://www.swisslog.com</organizationUrl>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Developer</role>
-                <role>Supporter</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>mischazurich</id>
-            <name>Mischa Farbstein</name>
-            <email>mischazurich@users.sourceforge.net</email>
-            <url>https://sourceforge.net/users/mischazurich</url>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Developer</role>
-                <role>Moderator</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>jarhell</id>
-            <name>Michael Rudiger</name>
-            <email>rudiger@openwms.org</email>
-            <url>https://sourceforge.net/users/jarhell</url>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Developer</role>
-            </roles>
-        </developer>
-    </developers>
-
-    <mailingLists>
-        <mailingList>
-            <name>OpenWMS.org Public Mailing list</name>
-            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public
-            </subscribe>
-            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public
-            </unsubscribe>
-            <archive>
-                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
-            </archive>
-            <post>openwms2005-public@lists.sourceforge.net</post>
-        </mailingList>
-        <mailingList>
-            <name>OpenWMS.org Development Mailing list</name>
-            <subscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
-            </subscribe>
-            <unsubscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
-            </unsubscribe>
-            <archive>
-                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
-            </archive>
-            <post>openwms2005-development@lists.sourceforge.net</post>
-        </mailingList>
-    </mailingLists>
-
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>https://openwms.mooo.com/jenkins</url>
-        <notifiers>
-            <notifier>
-                <type>mail</type>
-                <configuration>
-                    <address>product@openwms.org</address>
-                </configuration>
-            </notifier>
-        </notifiers>
-    </ciManagement>
-
     <profiles>
-
         <profile>
             <!-- Use PostgreSQL as database -->
             <id>postgres</id>
@@ -240,138 +76,6 @@
         </profile>
 
         <profile>
-            <id>ws-sourceforge</id>
-            <properties>
-                <distribution.serverId>shell.sourceforge.net</distribution.serverId>
-                <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>shell.sourceforge.net/home/project-web/openwms2005/htdocs</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}/development/reference/${project.version}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>ws-interface21</id>
-            <properties>
-                <distribution.serverId>ftp-io</distribution.serverId>
-                <distribution.serverProtocol>ftp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>ws-openwms</id>
-            <properties>
-                <distribution.serverId>openwms-mooo</distribution.serverId>
-                <distribution.serverProtocol>scp</distribution.serverProtocol>
-                <distribution.serverUrl.rootPath>openwms.mooo.com</distribution.serverUrl.rootPath>
-                <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
-                <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>sonatype</id>
-            <properties>
-                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
-        </profile>
-
-        <profile>
-            <id>release</id>
-            <properties>
-                <debug.info>false</debug.info>
-            </properties>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${plugin.javadoc.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>build-javadocs</id>
-                                <goals>
-                                    <goal>javadoc</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                            <detectLinks>false</detectLinks>
-                            <keywords>true</keywords>
-                            <linksource>false</linksource>
-                            <source>${project.build.sourceEncoding}</source>
-                            <verbose>true</verbose>
-                            <additionalparam>
-                                -Xdoclint:none
-                                -quiet
-                            </additionalparam>
-                            <tags>
-                                <tag>
-                                    <name>GlossaryTerm</name>
-                                    <placement>a</placement>
-                                </tag>
-                            </tags>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${plugin.source.version}</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>gpg</id>
-            <properties>
-                <debug.info>false</debug.info>
-            </properties>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <artifactId>maven-gpg-plugin</artifactId>
-                            <version>${plugin.gpg.version}</version>
-                            <executions>
-                                <execution>
-                                    <id>sign-artifacts</id>
-                                    <phase>verify</phase>
-                                    <goals>
-                                        <goal>sign</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
             <id>generate_glossary</id>
             <!-- Call this profile together with all to generate the DocBook Glossary file -->
             <!-- Note: The used doclet plugin is available on the private Nexus repository only -->
@@ -379,7 +83,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${plugin.javadoc.version}</version>
+                        <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
                             <source>${project.build.sourceEncoding}</source>
                             <doclet>org.openwms.doclet.GlossaryGeneratorDoclet</doclet>
@@ -421,56 +125,17 @@
                     </snapshots>
                 </repository>
             </repositories>
-
-            <pluginRepositories>
-                <!--pluginRepository>
-                    <id>central</id>
-                    <name>Maven Plugin Repository</name>
-                    <url>http://repo.maven.apache.org/maven2</url>
-                </pluginRepository-->
-                <pluginRepository>
-                    <id>typescript-maven-plugin</id>
-                    <url>
-                        https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo
-                    </url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
         </profile>
-
     </profiles>
 
     <properties>
         <moduleDir>.</moduleDir>
-        <!-- used by surefire plugin in combination with jacoco -->
-        <argLine><![CDATA[-Dcatalina.base=${project.build.directory}
-        -Dorg.springframework.restdocs.outputDir=./target/generated-snippets
-        -Ddocumentation.dir=./target
-        -Dorg.jboss.logging.provider=slf4j
-        -Dfile.encoding=${project.build.sourceEncoding}]]>
-        </argLine>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-
         <env.all>true</env.all>
 
-        <maven.compile.targetLevel>${java.version}</maven.compile.targetLevel>
-        <maven.compile.sourceLevel>${java.version}</maven.compile.sourceLevel>
-        <maven.min.version>3.0.4</maven.min.version>
+        <maven.min.version>3.3.3</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
-        <debug.info>true</debug.info>
-        <documentation.dir>${project.build.directory}</documentation.dir>
-        <documentation.snippet.dir>${documentation.dir}/generated-snippets</documentation.snippet.dir>
-        <documentation.input.dir>${documentation.dir}/generated-docs</documentation.input.dir>
-        <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
         <github.global.server>github</github.global.server>
         <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
-        <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
         <!-- Disable lookup of dependency locations in the maven-project-info-reports-plugin -->
         <dependency.locations.enabled>false</dependency.locations.enabled>
 
@@ -478,209 +143,24 @@
         <project.description>${project.description}</project.description>
 
         <!-- =================== -->
-        <!-- Submodule versions  -->
-        <!-- =================== -->
-        <angularjs.client.version>1.1.0-SNAPSHOT</angularjs.client.version>
-
-        <!-- May overridden with profiles -->
-        <distribution.serverId>openwms-mooo</distribution.serverId>
-        <distribution.serverProtocol>scp</distribution.serverProtocol>
-        <distribution.serverUrl.rootPath>openwms.mooo.com</distribution.serverUrl.rootPath>
-        <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
-        <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
-        <!-- Deploy to Maven central OSS snapshots repo -->
-        <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
-        <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-        <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-        <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-
-        <!-- =================== -->
         <!-- Dependency versions -->
         <!-- =================== -->
-        <ameba-lib.version>1.10</ameba-lib.version>
-        <aspectj.version>1.8.10</aspectj.version> <!-- Keep in sync with boot -->
-        <dozer.version>5.5.1</dozer.version>
-        <el-impl.version>2.2</el-impl.version>
-
-        <hibernate-entitymanager.version>5.0.11.Final</hibernate-entitymanager.version> <!-- Keep in sync with Spring Data JPA -->
-        <hibernate-core.version>5.0.9.Final</hibernate-core.version> <!-- Keep in sync with hibernate-entitymanager.version -->
-        <jackson.version>2.8.8</jackson.version> <!-- Keep in sync with boot -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
-        <jpa-api.version>1.0.0.Final</jpa-api.version>
-        <logback.version>1.2.1</logback.version> <!-- Keep in sync with boot -->
-        <logstash-logback-encoder.version>4.9</logstash-logback-encoder.version>
         <ms.group>NULL</ms.group>
-        <spring-boot.version>1.5.3.RELEASE</spring-boot.version> <!-- Keep in sync with platform -->
-        <spring-cloud-dependencies.version>Dalston.RELEASE</spring-cloud-dependencies.version>
-        <spring-restdocs-mockmvc.version>1.1.2.RELEASE</spring-restdocs-mockmvc.version>
-        <spring.version>4.3.8.RELEASE</spring.version> <!-- Keep in sync with boot -->
-        <start-class></start-class> <!-- keep it empty, set by actual boot module -->
+
         <!-- =================== -->
         <!--   Plugin versions   -->
         <!-- =================== -->
-        <plugin.archiver.version>2.3.2</plugin.archiver.version>
-        <plugin.asciidoctor-maven.version>1.5.3</plugin.asciidoctor-maven.version>
-        <plugin.aspectj.version>1.8</plugin.aspectj.version>
-        <plugin.assembly.version>2.4</plugin.assembly.version>
-        <plugin.checkstyle.version>2.11</plugin.checkstyle.version>
-        <plugin.clean.version>2.5</plugin.clean.version>
-        <plugin.cobertura.version>2.3</plugin.cobertura.version>
-        <plugin.compiler.version>3.1</plugin.compiler.version>
-        <plugin.dashboard.version>1.0.0-beta-1</plugin.dashboard.version>
-        <plugin.deploy.version>2.8.1</plugin.deploy.version>
-        <plugin.enforcer.version>1.3.1</plugin.enforcer.version>
-        <plugin.findbugs.version>2.3.1</plugin.findbugs.version>
-        <plugin.frontend-maven.version>0.0.23</plugin.frontend-maven.version>
-        <git-commit-id-plugin.version>2.2.1</git-commit-id-plugin.version>
-        <plugin.gpg.version>1.6</plugin.gpg.version>
-        <plugin.install.version>2.4</plugin.install.version>
-        <plugin.jar.version>2.3.2</plugin.jar.version>
-        <plugin.javadoc.version>2.10.4</plugin.javadoc.version>
-        <plugin.jdepend.version>2.0-beta-2</plugin.jdepend.version>
-        <plugin.jrebel.version>1.1.5</plugin.jrebel.version>
-        <plugin.jxr.version>2.3</plugin.jxr.version>
-        <plugin.par.version>1.0.0.RELEASE</plugin.par.version>
-        <plugin.pmd.version>2.4</plugin.pmd.version>
-        <plugin.project-info.version>2.4</plugin.project-info.version>
-        <plugin.site.version>3.3</plugin.site.version>
-        <plugin.source.version>2.2.1</plugin.source.version>
-        <plugin.surefire.version>2.16</plugin.surefire.version>
-        <plugin.surefire-report.version>2.5</plugin.surefire-report.version>
-        <plugin.taglist.version>2.4</plugin.taglist.version>
-        <plugin.wagon-ftp.version>2.12</plugin.wagon-ftp.version>
-        <plugin.wagon-ssh.version>2.1</plugin.wagon-ssh.version>
-        <plugin.war.version>2.4</plugin.war.version>
-        <plugin.github-site.version>0.13.1</plugin.github-site.version>
-        <plugin.maven-surefire-report-plugin.version>2.19.1</plugin.maven-surefire-report-plugin.version>
-        <plugin.maven-project-info-reports-plugin.version>2.9</plugin.maven-project-info-reports-plugin.version>
-        <plugin.maven-site-plugin.version>3.6</plugin.maven-site-plugin.version>
-        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+        <maven-war-plugin.version>2.4</maven-war-plugin.version>
+        <site-maven-plugin.version>0.13.1</site-maven-plugin.version>
     </properties>
 
-    <reporting>
-        <plugins>
-            <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${plugin.javadoc.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <inherited>true</inherited>
-                        <reports>
-                            <report>aggregate</report>
-                        </reports>
-                        <configuration>
-                            <failOnError>false</failOnError>
-                            <detectLinks>false</detectLinks>
-                            <keywords>true</keywords>
-                            <linksource>false</linksource>
-                            <source>${project.build.sourceEncoding}</source>
-                            <verbose>false</verbose>
-                            <aggregate>true</aggregate>
-                            <additionalparam>
-                                -Xdoclint:none
-                                -quiet
-                            </additionalparam>
-                            <tags>
-                                <tag>
-                                    <name>GlossaryTerm</name>
-                                    <placement>a</placement>
-                                </tag>
-                            </tags>
-                            <show>private</show>
-                        </configuration>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>${plugin.maven-surefire-report-plugin.version}</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>${plugin.maven-project-info-reports-plugin.version}</version>
-                <reportSets>
-                    <reportSet>
-                        <inherited>false</inherited>
-                        <reports>
-                            <report>index</report>
-                            <report>scm</report>
-                            <report>plugin-management</report>
-                            <report>plugins</report>
-                            <report>summary</report>
-                            <report>dependencies</report>
-                            <report>dependency-convergence</report>
-                            <report>dependency-management</report>
-                        </reports>
-                    </reportSet>
-                    <reportSet>
-                        <inherited>false</inherited>
-                        <reports>
-                            <report>project-team</report>
-                            <report>issue-tracking</report>
-                            <report>license</report>
-                            <report>mailing-list</report>
-                            <report>cim</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
-            <plugin>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>${plugin.maven-site-plugin.version}</version>
-            </plugin>
-        </plugins>
-    </reporting>
-
     <build>
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh</artifactId>
-                <version>${plugin.wagon-ssh.version}</version>
-            </extension>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ftp</artifactId>
-                <version>${plugin.wagon-ftp.version}</version>
-            </extension>
-        </extensions>
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${plugin.compiler.version}</version>
-                    <configuration>
-                        <debug>${debug.info}</debug>
-                        <optimize>true</optimize>
-                        <fork>true</fork>
-                        <source>${maven.compile.sourceLevel}</source>
-                        <target>${maven.compile.targetLevel}</target>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                    </configuration>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${spring-boot.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>repackage</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <configuration>
-                        <mainClass>${start-class}</mainClass>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${plugin.enforcer.version}</version>
+                    <version>${maven-enforcer-plugin.version}</version>
                     <configuration>
                         <rules>
                             <requireMavenVersion>
@@ -701,179 +181,8 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>aspectj-maven-plugin</artifactId>
-                    <version>${plugin.aspectj.version}</version>
-                    <configuration>
-                        <showWeaveInfo>false</showWeaveInfo>
-                        <complianceLevel>${java.version}</complianceLevel>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                        <Xlint>ignore</Xlint>
-                        <encoding>UTF-8</encoding>
-                        <verbose>false</verbose>
-                        <aspectLibraries>
-                            <aspectLibrary>
-                                <groupId>org.springframework</groupId>
-                                <artifactId>spring-aspects</artifactId>
-                            </aspectLibrary>
-                        </aspectLibraries>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>compile</goal>
-                                <goal>test-compile</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.aspectj</groupId>
-                            <artifactId>aspectjrt</artifactId>
-                            <version>${aspectj.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.aspectj</groupId>
-                            <artifactId>aspectjweaver</artifactId>
-                            <version>${aspectj.version}</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.aspectj</groupId>
-                            <artifactId>aspectjtools</artifactId>
-                            <version>${aspectj.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>${plugin.asciidoctor-maven.version}</version>
-                    <executions>
-                        <execution>
-                            <id>generate-docs</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                            </goals>
-                            <configuration>
-                                <backend>html</backend>
-                                <doctype>book</doctype>
-                                <attributes>
-                                    <bversion>${project.version}</bversion>
-                                    <bnumber>${ci.buildNumber}</bnumber>
-                                    <generated>${documentation.snippet.dir}</generated>
-                                </attributes>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>generate-docs-site</id>
-                            <phase>site</phase>
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                                </goals>
-                            <configuration>
-                                <backend>html</backend>
-                                <doctype>book</doctype>
-                                <attributes>
-                                    <bversion>${project.version}</bversion>
-                                    <bnumber>${ci.buildNumber}</bnumber>
-                                    <generated>${documentation.snippet.dir}</generated>
-                                </attributes>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <id>copy-resources</id>
-                            <phase>prepare-package</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${documentation.output.dir}</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>${documentation.input.dir}</directory>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                        <execution>
-                            <id>copy-asciidoc</id>
-                            <phase>pre-site</phase>
-                            <goals>
-                                <goal>copy-resources</goal>
-                            </goals>
-                            <configuration>
-                                <outputDirectory>${documentation.output.dir}</outputDirectory>
-                                <resources>
-                                    <resource>
-                                        <directory>${documentation.input.dir}</directory>
-                                    </resource>
-                                </resources>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>install</goal>
-                            </goals>
-                            <configuration>
-                                <createChecksum>true</createChecksum>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
-                    <groupId>pl.project13.maven</groupId>
-                    <artifactId>git-commit-id-plugin</artifactId>
-                    <version>${git-commit-id-plugin.version}</version>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${plugin.surefire.version}</version>
-                    <configuration>
-                        <forkCount>0</forkCount>
-                        <threadCount>1</threadCount>
-                        <useSystemClassLoader>true</useSystemClassLoader>
-                        <skipTests>false</skipTests>
-                        <trimStackTrace>true</trimStackTrace>
-                        <includes>
-                            <include>**/*Test.java</include>
-                            <include>**/*IT.java</include>
-                            <include>**/*Documentation.java</include>
-                        </includes>
-                        <excludes>
-                            <exclude>**/Abstract*.java</exclude>
-                            <exclude>**/*Tests.java</exclude>
-                        </excludes>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.apache.maven.surefire</groupId>
-                            <artifactId>surefire-junit47</artifactId>
-                            <version>${plugin.surefire.version}</version>
-                        </dependency>
-                    </dependencies>
-                </plugin>
-
-                <plugin>
                     <artifactId>maven-war-plugin</artifactId>
-                    <version>${plugin.war.version}</version>
+                    <version>${maven-war-plugin.version}</version>
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
@@ -882,7 +191,7 @@
                 <plugin>
                     <groupId>com.github.github</groupId>
                     <artifactId>site-maven-plugin</artifactId>
-                    <version>${plugin.github-site.version}</version>
+                    <version>${site-maven-plugin.version}</version>
                     <configuration>
                         <message>Creating site for ${project.version}</message>
                         <outputDirectory>${project.basedir}/${moduleDir}/docs
@@ -897,159 +206,24 @@
                         </execution>
                     </executions>
                 </plugin>
-
-                <plugin>
-                    <groupId>org.zeroturnaround</groupId>
-                    <artifactId>jrebel-maven-plugin</artifactId>
-                    <version>${plugin.jrebel.version}</version>
-                </plugin>
             </plugins>
         </pluginManagement>
-
-        <plugins>
-            <plugin>
-                <artifactId>maven-enforcer-plugin</artifactId>
-            </plugin>
-        </plugins>
     </build>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud-dependencies.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.interface21</groupId>
-                <artifactId>ameba-lib</artifactId>
-                <version>${ameba-lib.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.interface21</groupId>
-                <artifactId>ameba-lib</artifactId>
-                <version>${ameba-lib.version}</version>
-                <type>test-jar</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>${hibernate-entitymanager.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.hibernate.javax.persistence</groupId>
-                <artifactId>hibernate-jpa-2.1-api</artifactId>
-                <version>${jpa-api.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aspects</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-messaging</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjtools</artifactId>
-                <version>${aspectj.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.glassfish.web</groupId>
-                <artifactId>el-impl</artifactId>
-                <version>${el-impl.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.sf.dozer</groupId>
-                <artifactId>dozer</artifactId>
-                <version>${dozer.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-api</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>slf4j-log4j12</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.slf4j</groupId>
-                        <artifactId>jcl-over-slf4j</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-            <dependency>
-                <groupId>net.logstash.logback</groupId>
-                <artifactId>logstash-logback-encoder</artifactId>
-                <version>${logstash-logback-encoder.version}</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.interface21</groupId>
-            <artifactId>ameba-lib</artifactId>
-        </dependency>
-
-        <!-- Test dependencies -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.interface21</groupId>
-            <artifactId>ameba-lib</artifactId>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>el-impl</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <modules>
+        <module>org.openwms.parent</module>
         <module>org.openwms.core.lang</module>
         <module>org.openwms.core.test</module>
         <module>org.openwms.core.util</module>
     </modules>
-
 </project>
