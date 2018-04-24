@@ -34,7 +34,7 @@
     <name>${project.artifactId}</name>
     <description>A project that contains classes to support proper testing. Additionally some Spring configuration is provided that starts a Spring managed test environment.</description>
     <properties>
-        <assertj-core.version>3.4.1</assertj-core.version>
+        <assertj-core.version>3.9.1</assertj-core.version>
     </properties>
     <build>
         <plugins>
