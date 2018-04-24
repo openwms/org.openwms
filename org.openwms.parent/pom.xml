@@ -360,7 +360,7 @@
         <dozer.version>5.5.1</dozer.version>
 
         <spring-boot.version>2.0.1.RELEASE</spring-boot.version>
-        <spring-cloud-dependencies.version>Edgware.SR3</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>Finchley.M9</spring-cloud-dependencies.version>
         <spring-restdocs-mockmvc.version>2.0.1.RELEASE</spring-restdocs-mockmvc.version>
         <spring.version>5.0.5.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
@@ -770,4 +770,16 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
 </project>
