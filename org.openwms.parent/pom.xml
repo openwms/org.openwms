@@ -33,7 +33,7 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms.parent</artifactId>
-    <version>3</version>
+    <version>4</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Parent Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
@@ -298,26 +298,6 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <id>not-travis</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Staging Repository</name>
-                    <url>https://oss.sonatype.org/content/groups/staging</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
     </profiles>
 
     <properties>
@@ -360,7 +340,6 @@
         <dozer.version>5.5.1</dozer.version>
 
         <spring-boot.version>2.0.1.RELEASE</spring-boot.version>
-        <spring-cloud-dependencies.version>Finchley.M9</spring-cloud-dependencies.version>
         <spring-restdocs-mockmvc.version>2.0.1.RELEASE</spring-restdocs-mockmvc.version>
         <spring.version>5.0.5.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
@@ -708,13 +687,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

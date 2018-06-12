@@ -28,11 +28,11 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>3</version>
+        <version>4</version>
         <relativePath>./org.openwms.parent</relativePath>
     </parent>
     <artifactId>org.openwms</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
 

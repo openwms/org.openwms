@@ -28,10 +28,9 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.util</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
     <name>${project.artifactId}</name>
     <description>A project that contains utility classes, exception types, common event types that are used by all other projects.</description>
 
@@ -85,7 +84,7 @@
             <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.test</artifactId>
-                <version>1.2.0-SNAPSHOT</version>
+                <version>1.3.0-SNAPSHOT</version>
                 <type>test-jar</type>
                 <scope>test</scope>
             </dependency>
