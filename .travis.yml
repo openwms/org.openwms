@@ -1,17 +1,17 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 node_js:
-  - '0.8'
-  - '0.10'
+- '0.8'
+- '0.10'
 
 install: true
 
 before_script:
-  - npm install -g bower
+- npm install -g bower
 
 script:
-  - mvn clean install --settings=./etc/ci/settings.xml -Prelease,travis -U -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR
+- mvn clean install --settings=./etc/ci/settings.xml -Prelease,travis -U -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR
 
 env:
   global:

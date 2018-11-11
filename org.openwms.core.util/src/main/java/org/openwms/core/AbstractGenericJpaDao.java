@@ -1,23 +1,17 @@
 /*
- * openwms.org, the Open Warehouse Management System.
- * Copyright (C) 2014 Heiko Scherrer
+ * Copyright 2018 Heiko Scherrer
  *
- * This file is part of openwms.org.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * openwms.org is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this software. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.openwms.core;
 
@@ -45,20 +39,15 @@ import java.util.Map;
  * <p>
  * Furthermore an {@link AbstractGenericJpaDao} has transactional behavior expressed with Springs {@link Transactional} annotation.
  * </p>
- * 
- * @param <T>
- *            Any serializable type, mostly an Entity class type.
- * @param <ID>
- *            The type of the Entity class' unique id
+ *
+ * @param <T> Any serializable type, mostly an Entity class type.
+ * @param <ID> The type of the Entity class' unique id
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision$
- * @since 0.1
  * @see org.springframework.stereotype.Repository
  * @see org.springframework.transaction.annotation.Transactional
  */
 @Transactional(propagation = Propagation.MANDATORY)
-public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID extends Serializable> implements
-        GenericDao<T, ID> {
+public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID extends Serializable> implements GenericDao<T, ID> {
 
     @PersistenceContext
     private EntityManager em;
@@ -69,13 +58,12 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID ext
      * Create a new AbstractGenericJpaDao.
      */
     protected AbstractGenericJpaDao() {
-
     }
 
     /**
      * Returns the entity class to deals with.<br>
      * The Java Reflection API is used to find the type.
-     * 
+     *
      * @return Entity class type.
      */
     protected abstract Class<T> getPersistentClass();
@@ -90,14 +78,14 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID ext
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * This implementation never return <code>null</code>. In case of no Entities were found an empty List is returned.
      */
     @SuppressWarnings("unchecked")
     @Override
     public List<T> findAll() {
         List<T> all = em.createNamedQuery(getFindAllQuery()).getResultList();
-        return all == null ? Collections.<T> emptyList() : all;
+        return all == null ? Collections.<T>emptyList() : all;
     }
 
     /**
@@ -132,20 +120,18 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID ext
 
     /**
      * {@inheritDoc}
-     * 
+     * <p>
      * A {@link NoUniqueResultException} is thrown when more than one Entity were found. In case of no result, <code>null</code> is
      * returned.
-     * 
-     * @throws NoUniqueResultException
-     *             when more than one Entity were found
+     *
+     * @throws NoUniqueResultException when more than one Entity were found
      */
     @Override
     @SuppressWarnings("unchecked")
     public T findByUniqueId(Serializable id) {
         List<T> result = em.createNamedQuery(getFindByUniqueIdQuery()).setParameter(1, id).getResultList();
         if (result.size() > 1) {
-            throw new NoUniqueResultException(messageSource.getMessage(ExceptionCodes.MULIPLE_ENTITIES_FOUND,
-                    new Serializable[] { id }, null));
+            throw new NoUniqueResultException(messageSource.getMessage(ExceptionCodes.MULIPLE_ENTITIES_FOUND, new Serializable[]{id}, null));
         }
         return result.size() == 0 ? null : result.get(0);
     }
@@ -178,23 +164,22 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID ext
 
     /**
      * Returns the name of the <code>NamedQuery</code> to find all Entity classes.
-     * 
+     *
      * @return Name of the query
      */
     protected abstract String getFindAllQuery();
 
     /**
      * Returns the name of the <code>NamedQuery</code> to find an Entity by the business key.
-     * 
+     *
      * @return Name of the query
      */
     protected abstract String getFindByUniqueIdQuery();
 
     /**
      * This method is considered as a hook to do something before an update is performed.
-     * 
-     * @param entity
-     *            The Entity that is updated
+     *
+     * @param entity The Entity that is updated
      */
     protected void beforeUpdate(T entity) {
 
@@ -202,7 +187,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID ext
 
     /**
      * Subclasses can call this method to retrieve an shared {@link EntityManager} instance.
-     * 
+     *
      * @return The {@link EntityManager}
      */
     protected final EntityManager getEm() {

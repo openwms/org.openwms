@@ -1,23 +1,17 @@
 /*
- * openwms.org, the Open Warehouse Management System.
- * Copyright (C) 2014 Heiko Scherrer
+ * Copyright 2018 Heiko Scherrer
  *
- * This file is part of openwms.org.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * openwms.org is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as 
- * published by the Free Software Foundation; either version 2 of the
- * License, or (at your option) any later version.
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * openwms.org is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this software. If not, write to the Free Software
- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.openwms.core;
 
@@ -45,13 +39,10 @@ import java.util.List;
  * @param <ID> The type of technical key
  * @param <T> The type of Entity
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @version $Revision: $
- * @since 0.2
  */
 @Transactional
 @Service
-public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>, ID extends Serializable, BK extends Serializable>
-        implements GenericEntityService<T, ID, BK> {
+public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>, ID extends Serializable, BK extends Serializable> implements GenericEntityService<T, ID, BK> {
 
     @Autowired
     private MessageSource messageSource;
@@ -87,14 +78,12 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     public T create(T entity) {
         checkForNull(entity, ExceptionCodes.ENTITY_NOT_BE_NULL);
         if (!entity.isNew()) {
-            String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[]{entity},
-                    null);
+            String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[]{entity}, null);
             throw new ServiceLayerException(msg);
         }
         T persistedEntity = resolveByBK(entity);
         if (persistedEntity != null) {
-            String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[]{entity},
-                    null);
+            String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[]{entity}, null);
             throw new ServiceLayerException(msg);
         }
         getRepository().persist(entity);
@@ -110,8 +99,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     public T findById(ID id) {
         T entity = getRepository().findById(id);
         if (entity == null) {
-            throw new NotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                    new Object[]{id}, null), ExceptionCodes.ENTITY_NOT_EXIST);
+            throw new NotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST, new Object[]{id}, null), ExceptionCodes.ENTITY_NOT_EXIST);
         }
         return entity;
     }
@@ -139,8 +127,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     public T findByBK(BK key) {
         T role = getRepository().findByUniqueId(key);
         if (role == null) {
-            throw new NotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                    new Object[]{key}, null), ExceptionCodes.ENTITY_NOT_EXIST);
+            throw new NotFoundException(getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST, new Object[]{key}, null), ExceptionCodes.ENTITY_NOT_EXIST);
         }
         return role;
     }
@@ -171,8 +158,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
             if (key != null) {
                 T entity = getRepository().findByUniqueId(key);
                 if (entity == null) {
-                    String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                            new Object[]{key}, null);
+                    String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST, new Object[]{key}, null);
                     throw new NotFoundException(msg, ExceptionCodes.ENTITY_NOT_EXIST);
                 }
                 getRepository().remove(entity);
@@ -191,8 +177,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
             if (key != null) {
                 T entity = getRepository().findById(key);
                 if (entity == null) {
-                    String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST,
-                            new Object[]{key}, null);
+                    String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_NOT_EXIST, new Object[]{key}, null);
                     throw new NotFoundException(msg, ExceptionCodes.ENTITY_NOT_EXIST);
                 }
                 getRepository().remove(entity);
@@ -209,8 +194,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
             try {
                 getRepository().persist(entity);
             } catch (PersistenceException | IntegrationLayerException ex) {
-                String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS,
-                        new Object[]{entity}, null);
+                String msg = getMessageSource().getMessage(ExceptionCodes.ENTITY_ALREADY_EXISTS, new Object[]{entity}, null);
                 throw new ServiceLayerException(msg);
             }
         }
@@ -224,7 +208,7 @@ public abstract class AbstractGenericEntityService<T extends AbstractEntity<ID>,
     public Collection<T> saveAll(Collection<T> entities) {
         Assert.notEmpty(entities, translate(ExceptionCodes.ENTITY_NOT_BE_NULL));
         List<T> result = new ArrayList<>(entities.size());
-        entities.forEach(f ->  result.add(f.isNew() ? create(f) : getRepository().save(f)));
+        entities.forEach(f -> result.add(f.isNew() ? create(f) : getRepository().save(f)));
         return result;
     }
 

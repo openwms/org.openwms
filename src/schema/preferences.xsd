@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns="http://www.openwms.org/schema/preferences" 
-  xmlns:user="http://www.openwms.org/schema/usermanagement"
-  targetNamespace="http://www.openwms.org/schema/preferences" elementFormDefault="unqualified">
+           xmlns="http://www.openwms.org/schema/preferences"
+           xmlns:user="http://www.openwms.org/schema/usermanagement"
+           targetNamespace="http://www.openwms.org/schema/preferences"
+           elementFormDefault="unqualified">
 
-    <xs:import namespace="http://www.openwms.org/schema/usermanagement" schemaLocation="usermanagement.xsd"/>
+    <xs:import namespace="http://www.openwms.org/schema/usermanagement"
+               schemaLocation="usermanagement.xsd"/>
 
     <xs:element name="preferences">
         <xs:complexType>
             <xs:choice minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="application" type="applicationPreference" />
-                <xs:element name="module" type="modulePreference" />
-                <xs:element name="user" type="user:userPreference" />
-                <xs:element name="role" type="user:rolePreference" />
+                <xs:element name="application" type="applicationPreference"/>
+                <xs:element name="module" type="modulePreference"/>
+                <xs:element name="user" type="user:userPreference"/>
+                <xs:element name="role" type="user:rolePreference"/>
             </xs:choice>
         </xs:complexType>
     </xs:element>
@@ -20,10 +22,10 @@
     <xs:complexType name="abstractPreference" abstract="true">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="val" type="xs:string" />
-                <xs:attribute name="floatValue" type="xs:float" />
-                <xs:attribute name="minimum" type="xs:int" default="0" />
-                <xs:attribute name="maximum" type="xs:int" default="0" />
+                <xs:attribute name="val" type="xs:string"/>
+                <xs:attribute name="floatValue" type="xs:float"/>
+                <xs:attribute name="minimum" type="xs:int" default="0"/>
+                <xs:attribute name="maximum" type="xs:int" default="0"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
@@ -31,7 +33,7 @@
     <xs:complexType name="applicationPreference">
         <xs:complexContent>
             <xs:extension base="abstractPreference">
-                <xs:attribute name="key" use="required" />
+                <xs:attribute name="key" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -39,8 +41,8 @@
     <xs:complexType name="modulePreference">
         <xs:complexContent>
             <xs:extension base="abstractPreference">
-                <xs:attribute name="key" use="required" />
-                <xs:attribute name="owner" use="required" />
+                <xs:attribute name="key" use="required"/>
+                <xs:attribute name="owner" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
