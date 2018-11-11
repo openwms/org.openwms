@@ -1,19 +1,25 @@
 language: java
+
 jdk:
-- oraclejdk8
+  - openjdk8
+
 node_js:
-- '0.8'
-- '0.10'
+  - '0.8'
+  - '0.10'
 
 install: true
 
 before_script:
-- npm install -g bower
+  - npm install -g bower
+
+addons:
+  sonarcloud:
+    organization: "openwms-github"
 
 script:
-- mvn clean install --settings=./etc/ci/settings.xml -Prelease,travis -U -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar --settings=./etc/ci/settings.xml -Prelease,travis -U -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR
+  - sonar-scanner
 
 env:
   global:
     secure: FcpmWXdR7VgNoG6Q8Oga+HvteAc55EPz8VjTBNF9EruGqq2/Uk23Hftva8RaWl4EVB//05TUVjLvmKosmZG1qnijZTbU9MZYnIqk/C6aNC0iHamBEaoDNdow3fHBbWhEr2KpBsD30r+ZrhK33uq1rg+eA+GVAlQlunG/oAzwEEs=
-    secure: h87tNLci8T2va06GnAJb2tH+qZtPql1zsn0ufW6uWv9vgKRp8ZNRGmIpq8tq/EssuYf6grb6udJVpIKY5T4Jfu5D45PbEPVltP5eoc4J/PECX4LOVFF/KW34OazgSkKoCvd8cbyAuDj0O6G/xJm06opAHCywmEYFGziDcC7DCJI=
