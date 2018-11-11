@@ -200,6 +200,7 @@
     </dependencyManagement>
 
     <modules>
+        <module>org.openwms.parent</module>
         <module>org.openwms.core.lang</module>
         <module>org.openwms.core.test</module>
         <module>org.openwms.core.util</module>
