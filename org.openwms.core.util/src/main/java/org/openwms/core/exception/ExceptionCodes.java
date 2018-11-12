@@ -16,13 +16,16 @@
 package org.openwms.core.exception;
 
 /**
- * A ExceptionCodes.
+ * An ExceptionCodes class defines some, not all, of exception codes used in OpenWMS.org
+ * CORE. The code is not an integer code, like it is in legacy systems, but a descriptive
+ * message code, that can be used for translation.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public final class ExceptionCodes {
 
-    private ExceptionCodes() {}
+    private ExceptionCodes() {
+    }
 
     /** Thrown if multiple entities were found but only one was expected. */
     public static final String MULIPLE_ENTITIES_FOUND = "integration.multiple.entities.found";
@@ -56,12 +59,12 @@ public final class ExceptionCodes {
      * Thrown if changing a User's password was requested with <code>null</code>
      * argument.
      */
-    public static final String USER_PASSWORD_SAVE_NOT_BE_NULL = "user.password.save.null.argument";
+    public static final String USER_PW_SAVE_NOT_BE_NULL = "user.password.save.null.argument";
     /**
      * Thrown if changing a User's password was requested, but the new password
      * does not match the defined password rules.
      */
-    public static final String USER_PASSWORD_INVALID = "user.passwort.invalid";
+    public static final String USER_PW_INVALID = "user.passwort.invalid";
 
     /** Thrown if a Role to persist already exists. */
     public static final String ROLE_ALREADY_EXISTS = "role.already.exists";
@@ -99,5 +102,4 @@ public final class ExceptionCodes {
     public static final String USER_HAS_CHANGED = "user.has.changed";
 
     public static final String ROLE_IS_TRANSIENT = "role.is.transient";
-
 }
