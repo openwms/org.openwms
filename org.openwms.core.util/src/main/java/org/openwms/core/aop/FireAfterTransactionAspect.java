@@ -20,7 +20,6 @@ import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.event.RootApplicationEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.scheduling.annotation.Async;
@@ -54,11 +53,14 @@ import java.util.EventObject;
 @Component(FireAfterTransactionAspect.COMPONENT_NAME)
 public class FireAfterTransactionAspect {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(FireAfterTransactionAspect.class);
-    @Autowired
-    private ApplicationContext ctx;
     /** Springs component name. */
     public static final String COMPONENT_NAME = "fireAfterTransactionAspect";
+    private static final Logger LOGGER = LoggerFactory.getLogger(FireAfterTransactionAspect.class);
+    private final ApplicationContext ctx;
+
+    public FireAfterTransactionAspect(ApplicationContext ctx) {
+        this.ctx = ctx;
+    }
 
     /**
      * Only {@link ApplicationEvent}s are created and published over Springs
@@ -66,14 +68,18 @@ public class FireAfterTransactionAspect {
      *
      * @param publisher The instance that is publishing the event
      * @param events A list of event classes to fire
-     * @throws Exception Any exception is re-thrown
+     * @throws RuntimeException Any exception is re-thrown
      */
-    public void fireEvent(Object publisher, FireAfterTransaction events) throws Exception {
-        for (int i = 0; i < events.events().length; i++) {
-            Class<? extends EventObject> event = events.events()[i];
-            if (ApplicationEvent.class.isAssignableFrom(event)) {
-                ctx.publishEvent((ApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
+    public void fireEvent(Object publisher, FireAfterTransaction events) throws RuntimeException {
+        try {
+            for (int i = 0; i < events.events().length; i++) {
+                Class<? extends EventObject> event = events.events()[i];
+                if (ApplicationEvent.class.isAssignableFrom(event)) {
+                    ctx.publishEvent((ApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
+                }
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -90,7 +96,7 @@ public class FireAfterTransactionAspect {
         for (int i = 0; i < events.events().length; i++) {
             Class<? extends EventObject> event = events.events()[i];
             if (RootApplicationEvent.class.isAssignableFrom(event)) {
-                LOGGER.debug("Sending event:" + event);
+                LOGGER.debug("Sending event: [{}]", event);
                 ctx.publishEvent((RootApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
             }
         }

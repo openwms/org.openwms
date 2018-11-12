@@ -133,7 +133,7 @@ public abstract class AbstractGenericJpaDao<T extends AbstractEntity<ID>, ID ext
         if (result.size() > 1) {
             throw new NoUniqueResultException(messageSource.getMessage(ExceptionCodes.MULIPLE_ENTITIES_FOUND, new Serializable[]{id}, null));
         }
-        return result.size() == 0 ? null : result.get(0);
+        return result.isEmpty() ? null : result.get(0);
     }
 
     /**

@@ -25,7 +25,9 @@ import java.util.Base64;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class SecurityUtils {
+public final class SecurityUtils {
+
+    private SecurityUtils() {}
 
     public static HttpHeaders createHeaders(String username, String password) {
         if (username == null || username.isEmpty()) {

@@ -67,7 +67,7 @@ public abstract class AbstractWebController {
         }
         if (ex instanceof BusinessRuntimeException) {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
-            return new ResponseEntity<>(new Response<>(ex.getMessage(), bre.getMsgKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{bre.getMsgKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new Response<>(ex.getMessage(), bre.getMessageKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{bre.getMessageKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         if (ex instanceof HttpBusinessException) {
             HttpBusinessException e = (HttpBusinessException) ex;
@@ -77,7 +77,6 @@ public abstract class AbstractWebController {
             return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.BAD_REQUEST.toString()), HttpStatus.BAD_REQUEST);
         }
         if (ex instanceof TechnicalRuntimeException) {
-            TechnicalRuntimeException be = (TechnicalRuntimeException) ex;
             return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.BAD_GATEWAY.toString()), HttpStatus.BAD_GATEWAY);
         }
         return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -117,7 +116,6 @@ public abstract class AbstractWebController {
      */
     protected <T extends AbstractBase> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, T... params) {
         Response result = new Response(msg, msgKey, code.toString(), params);
-        //result.add(linkTo(this.getClass()).withSelfRel());
         return new ResponseEntity<>(result, code);
     }
 

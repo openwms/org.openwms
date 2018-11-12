@@ -20,11 +20,9 @@ package org.openwms.core.values;
  * kind of measures. For example <code>42 grams</code> is a <code>AbstractMeasure</code> (in particular a <code>Weight</code>), whereas 42
  * is the magnitude and grams is the <code>BaseUnit</code>. This class is merely used to erase the type declaration.
  *
- * @param <V> Type of magnitude, any subtype of java.lang.Number
- * @param <T> Type of unit - an extension of <code>BaseUnit</code>
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @SuppressWarnings("rawtypes")
-public abstract class AbstractMeasure implements Measurable {
+public interface AbstractMeasure extends Measurable {
 
 }

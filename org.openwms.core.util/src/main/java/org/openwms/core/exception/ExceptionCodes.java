@@ -20,7 +20,9 @@ package org.openwms.core.exception;
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ExceptionCodes {
+public final class ExceptionCodes {
+
+    private ExceptionCodes() {}
 
     /** Thrown if multiple entities were found but only one was expected. */
     public static final String MULIPLE_ENTITIES_FOUND = "integration.multiple.entities.found";

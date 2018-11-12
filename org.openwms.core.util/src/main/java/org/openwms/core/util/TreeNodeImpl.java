@@ -30,7 +30,7 @@ public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
 
     private T data;
     private TreeNode<T> parent;
-    private Map<Object, TreeNode<T>> childrenMap = new LinkedHashMap<Object, TreeNode<T>>();
+    private Map<Object, TreeNode<T>> childrenMap = new LinkedHashMap<>();
 
     /**
      * {@inheritDoc}
@@ -45,7 +45,7 @@ public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
      */
     @Override
     public TreeNode<T> getChild(Object identifier) {
-        return (TreeNode<T>) childrenMap.get(identifier);
+        return childrenMap.get(identifier);
     }
 
     /**

@@ -15,6 +15,7 @@
  */
 package org.openwms.core.util;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  * @param <T> The type of node.
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public interface TreeNode<T> {
+public interface TreeNode<T> extends Serializable {
 
     /**
      * Get the data of the node.

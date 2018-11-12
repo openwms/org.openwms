@@ -51,7 +51,7 @@ public final class ServiceHelper {
         if (detachedEntities == null || detachedEntities.isEmpty()) {
             return Collections.emptyList();
         }
-        List<T> managed = new ArrayList<T>(detachedEntities.size());
+        List<T> managed = new ArrayList<>(detachedEntities.size());
         for (T detachedEntity : detachedEntities) {
             T managedTu = dao.findById(detachedEntity.getId());
             if (managedTu != null) {

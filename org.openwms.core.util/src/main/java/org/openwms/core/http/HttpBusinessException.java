@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatus;
  */
 public class HttpBusinessException extends RuntimeException {
 
-    private HttpStatus httpStatus;
+    private final HttpStatus httpStatus;
 
     /**
      * Create a new HttpBusinessException.

@@ -46,6 +46,7 @@ import java.util.UUID;
  *
  * @param <ID> The type of technical key
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @deprecated Use Spring Data JpaRepository insteadN
  */
 @Deprecated
 @XmlTransient
