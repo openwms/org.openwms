@@ -17,7 +17,7 @@ package org.openwms.core;
 
 import org.springframework.http.HttpHeaders;
 
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
@@ -31,13 +31,12 @@ public class SecurityUtils {
         if (username == null || username.isEmpty()) {
             return new HttpHeaders();
         }
-        return new HttpHeaders() {
-            {
-                String auth = username + ":" + password;
-                byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(Charset.forName("UTF-8")));
-                String authHeader = "Basic " + new String(encodedAuth);
-                set("Authorization", authHeader);
-            }
-        };
+        String auth = username + ":" + password;
+        byte[] encodedAuth = Base64.getEncoder().encode(auth.getBytes(StandardCharsets.UTF_8));
+        String authHeader = "Basic " + new String(encodedAuth);
+
+        HttpHeaders result =  new HttpHeaders();
+        result.add(HttpHeaders.AUTHORIZATION, authHeader);
+        return result;
     }
 }
