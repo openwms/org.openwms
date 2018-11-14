@@ -24,9 +24,6 @@ package org.openwms.core.exception;
  */
 public final class ExceptionCodes {
 
-    private ExceptionCodes() {
-    }
-
     /** Thrown if multiple entities were found but only one was expected. */
     public static final String MULIPLE_ENTITIES_FOUND = "integration.multiple.entities.found";
 
@@ -102,4 +99,7 @@ public final class ExceptionCodes {
     public static final String USER_HAS_CHANGED = "user.has.changed";
 
     public static final String ROLE_IS_TRANSIENT = "role.is.transient";
+
+    private ExceptionCodes() {
+    }
 }
