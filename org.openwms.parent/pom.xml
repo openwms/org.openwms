@@ -11,12 +11,26 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms.parent</artifactId>
-    <version>4</version>
+    <version>5</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Parent Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
-    <url>http://www.openwms.org</url>
+    <url>https://www.openwms.org</url>
     <inceptionYear>2005</inceptionYear>
+
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://openwms.atlassian.net/browse</url>
+    </issueManagement>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+            <comments>OpenWMS.org is distributed as open-source</comments>
+        </license>
+    </licenses>
 
     <distributionManagement>
         <repository>
@@ -39,8 +53,7 @@
     <scm>
         <url>https://github.com/openwms/org.openwms</url>
         <connection>scm:git:git://github.com/openwms/org.openwms.git</connection>
-        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git
-        </developerConnection>
+        <developerConnection>scm:git:git@github.com:openwms/org.openwms.git</developerConnection>
     </scm>
 
     <organization>
@@ -50,7 +63,7 @@
 
     <developers>
         <developer>
-            <id>scherrer</id>
+            <id>openwms</id>
             <name>Heiko Scherrer</name>
             <email>scherrer@openwms.org</email>
             <url>https://openwms.github.io/</url>
@@ -95,7 +108,7 @@
             <email>russelltina@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/russelltina</url>
             <organization>University of Oregon</organization>
-            <organizationUrl>http://www.uoregon.edu</organizationUrl>
+            <organizationUrl>https://www.uoregon.edu</organizationUrl>
             <timezone>-7</timezone>
             <roles>
                 <role>Flex Developer</role>
@@ -107,7 +120,7 @@
             <email>fgyger@openwms.org</email>
             <url>https://sourceforge.net/users/flogy</url>
             <organization>Swisslog AG</organization>
-            <organizationUrl>http://www.swisslog.com</organizationUrl>
+            <organizationUrl>https://www.swisslog.com</organizationUrl>
             <timezone>+2</timezone>
             <roles>
                 <role>Developer</role>
@@ -140,33 +153,35 @@
     <mailingLists>
         <mailingList>
             <name>OpenWMS.org Public Mailing list</name>
-            <subscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+            <subscribe>
+                https://lists.sourceforge.net/lists/listinfo/openwms2005-public
             </subscribe>
-            <unsubscribe>http://lists.sourceforge.net/lists/listinfo/openwms2005-public
+            <unsubscribe>
+                https://lists.sourceforge.net/lists/listinfo/openwms2005-public
             </unsubscribe>
             <archive>
-                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
+                https://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-public
             </archive>
             <post>openwms2005-public@lists.sourceforge.net</post>
         </mailingList>
         <mailingList>
             <name>OpenWMS.org Development Mailing list</name>
             <subscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+                https://lists.sourceforge.net/lists/listinfo/openwms2005-development
             </subscribe>
             <unsubscribe>
-                http://lists.sourceforge.net/lists/listinfo/openwms2005-development
+                https://lists.sourceforge.net/lists/listinfo/openwms2005-development
             </unsubscribe>
             <archive>
-                http://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
+                https://sourceforge.net/mailarchive/forum.php?forum_name=openwms2005-development
             </archive>
             <post>openwms2005-development@lists.sourceforge.net</post>
         </mailingList>
     </mailingLists>
 
     <ciManagement>
-        <system>Jenkins</system>
-        <url>https://openwms.mooo.com/jenkins</url>
+        <system>travis</system>
+        <url>https://travis-ci.org/openwms/org.openwms</url>
         <notifiers>
             <notifier>
                 <type>mail</type>
@@ -310,36 +325,35 @@
         <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
         <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
 
-        <!-- =================== -->
         <!-- Dependency versions -->
-        <!-- =================== -->
         <ameba-lib.version>1.11.1</ameba-lib.version>
         <aspectj.version>1.8.13</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
 
-        <spring-boot.version>2.0.1.RELEASE</spring-boot.version>
-        <spring-restdocs-mockmvc.version>2.0.1.RELEASE</spring-restdocs-mockmvc.version>
-        <spring.version>5.0.5.RELEASE</spring.version> <!-- Keep in sync with boot -->
+        <spring-boot.version>2.0.6.RELEASE</spring-boot.version>
+        <spring-cloud-dependencies.version>Finchley.SR2</spring-cloud-dependencies.version>
+        <spring-restdocs-mockmvc.version>2.0.2.RELEASE</spring-restdocs-mockmvc.version>
+        <spring.version>5.0.10.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
 
-        <!-- =================== -->
         <!--   Plugin versions   -->
-        <!-- =================== -->
         <asciidoctor-maven-plugin.version>1.5.3</asciidoctor-maven-plugin.version>
-        <aspectj-maven-plugin.version>1.8</aspectj-maven-plugin.version>
-        <git-commit-id-plugin.version>2.2.4</git-commit-id-plugin.version>
-        <maven-compiler-plugin.version>3.1</maven-compiler-plugin.version>
-        <maven-enforcer-plugin.version>1.3.1</maven-enforcer-plugin.version>
+        <aspectj-maven-plugin.version>1.11</aspectj-maven-plugin.version>
+        <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
-        <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
+        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <maven-site-plugin.version>3.3</maven-site-plugin.version>
-        <maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
-        <maven-surefire-report-plugin.version>2.19.1</maven-surefire-report-plugin.version>
-        <wagon-ssh.version>2.1</wagon-ssh.version>
-        <wagon-ftp.version>2.4</wagon-ftp.version>
+        <maven-site-plugin.version>3.6</maven-site-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+        <maven-surefire-report-plugin.version>2.21.0</maven-surefire-report-plugin.version>
+        <wagon-ssh.version>3.2.0</wagon-ssh.version>
+        <wagon-ftp.version>3.2.0</wagon-ftp.version>
     </properties>
 
     <reporting>
@@ -469,14 +483,19 @@
                     <configuration>
                         <rules>
                             <requireJavaVersion>
-                                <message>At least a JDK in version ${java.version} is
-                                    required.
+                                <message>
+                                    At least a JDK in version ${java.version} is required.
                                 </message>
                                 <version>${java.version}</version>
                             </requireJavaVersion>
                             <DependencyConvergence/>
                         </rules>
                     </configuration>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
                 </plugin>
 
                 <plugin>
@@ -604,6 +623,7 @@
 
                 <plugin>
                     <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
                     <executions>
                         <execution>
                             <goals>

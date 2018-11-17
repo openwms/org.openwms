@@ -23,15 +23,6 @@
         <url>https://openwms.atlassian.net/browse</url>
     </issueManagement>
 
-    <licenses>
-        <license>
-            <name>Apache License 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-            <distribution>repo</distribution>
-            <comments>OpenWMS.org is distributed as open-source</comments>
-        </license>
-    </licenses>
-
     <profiles>
         <profile>
             <!-- Use PostgreSQL as database -->
@@ -111,7 +102,7 @@
         <moduleDir>.</moduleDir>
         <env.all>true</env.all>
 
-        <maven.min.version>3.3.3</maven.min.version>
+        <maven.min.version>3.5.0</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
         <github.global.server>github</github.global.server>
         <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
@@ -121,16 +112,12 @@
         <!-- Used to make the Maven description property available from Bundlor -->
         <project.description>${project.description}</project.description>
 
-        <!-- =================== -->
         <!-- Dependency versions -->
-        <!-- =================== -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <ms.group>NULL</ms.group>
 
-        <!-- =================== -->
         <!--   Plugin versions   -->
-        <!-- =================== -->
-        <maven-war-plugin.version>2.4</maven-war-plugin.version>
+        <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
         <site-maven-plugin.version>0.13.1</site-maven-plugin.version>
     </properties>
 
@@ -173,7 +160,8 @@
                     <version>${site-maven-plugin.version}</version>
                     <configuration>
                         <message>Creating site for ${project.version}</message>
-                        <outputDirectory>${project.basedir}/${moduleDir}/docs
+                        <outputDirectory>
+                            ${project.basedir}/${moduleDir}/docs
                         </outputDirectory>
                     </configuration>
                     <executions>
@@ -200,7 +188,6 @@
     </dependencyManagement>
 
     <modules>
-        <module>org.openwms.parent</module>
         <module>org.openwms.core.lang</module>
         <module>org.openwms.core.test</module>
         <module>org.openwms.core.util</module>
