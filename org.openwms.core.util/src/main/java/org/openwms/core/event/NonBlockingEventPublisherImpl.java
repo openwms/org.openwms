@@ -15,7 +15,6 @@
  */
 package org.openwms.core.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -30,8 +29,11 @@ public class NonBlockingEventPublisherImpl<T extends RootApplicationEvent> imple
     /** Springs service name. */
     public static final String COMPONENT_NAME = "nonBlockingEventPublisherImpl";
 
-    @Autowired
-    private EventDispatcher dispatcher;
+    private final EventDispatcher dispatcher;
+
+    public NonBlockingEventPublisherImpl(EventDispatcher dispatcher) {
+        this.dispatcher = dispatcher;
+    }
 
     /**
      * {@inheritDoc}

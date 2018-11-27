@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.core.event;
+package org.openwms.core.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * An EventPublisher publishes any type of {@link RootApplicationEvent}s to registered
- * {@code EventListener}s.
+ * A Workflow annotated type is meant to be used in the BPMN workflow as bean.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @see EventListener
  */
-public interface EventPublisher<T extends RootApplicationEvent> {
-
-    /**
-     * Publish an event of type T to event listeners.
-     *
-     * @param event The event to publish
-     */
-    void publish(T event);
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface Workflow {
 }

@@ -13,21 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.core.event;
+package org.openwms.core;
 
 /**
- * An EventPublisher publishes any type of {@link RootApplicationEvent}s to registered
- * {@code EventListener}s.
+ * A CorePackage.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
- * @see EventListener
  */
-public interface EventPublisher<T extends RootApplicationEvent> {
+public final class CorePackage {
 
-    /**
-     * Publish an event of type T to event listeners.
-     *
-     * @param event The event to publish
-     */
-    void publish(T event);
+    private CorePackage() {
+    }
 }
