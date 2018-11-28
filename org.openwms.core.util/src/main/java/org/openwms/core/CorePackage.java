@@ -15,13 +15,18 @@
  */
 package org.openwms.core;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
- * A CorePackage.
+ * A CorePackage is a marker annotation to link to the current Java package. This is
+ * useful for component scanning.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public final class CorePackage {
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface CorePackage {
 
-    private CorePackage() {
-    }
 }
