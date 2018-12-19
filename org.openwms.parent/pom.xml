@@ -11,7 +11,7 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms.parent</artifactId>
-    <version>5</version>
+    <version>6</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Parent Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
@@ -78,31 +78,6 @@
             </roles>
         </developer>
         <developer>
-            <id>flauer99</id>
-            <name>Frank Lauer</name>
-            <email>flauer99@users.sourceforge.net</email>
-            <url>https://sourceforge.net/users/flauer99</url>
-            <organization>Aberle GmbH</organization>
-            <organizationUrl>http://www.a-s.de</organizationUrl>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Java Developer</role>
-                <role>Site Master</role>
-            </roles>
-        </developer>
-        <developer>
-            <id>smudo99</id>
-            <name>Michael Schmut</name>
-            <email>smudo99@users.sourceforge.net</email>
-            <url>https://sourceforge.net/users/smudo99</url>
-            <organization>IBM</organization>
-            <organizationUrl>http://www.ibm.com</organizationUrl>
-            <timezone>+2</timezone>
-            <roles>
-                <role>Java Developer</role>
-            </roles>
-        </developer>
-        <developer>
             <id>russelltina</id>
             <name>Tina Russell</name>
             <email>russelltina@users.sourceforge.net</email>
@@ -114,8 +89,33 @@
                 <role>Flex Developer</role>
             </roles>
         </developer>
-        <developer>
-            <id>flogy</id>
+    </developers>
+
+    <contributors>
+        <contributor>
+            <name>Frank Lauer</name>
+            <email>flauer99@users.sourceforge.net</email>
+            <url>https://sourceforge.net/users/flauer99</url>
+            <organization>Aberle GmbH</organization>
+            <organizationUrl>http://www.a-s.de</organizationUrl>
+            <timezone>+2</timezone>
+            <roles>
+                <role>Java Developer</role>
+                <role>Site Master</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <name>Michael Schmut</name>
+            <email>smudo99@users.sourceforge.net</email>
+            <url>https://sourceforge.net/users/smudo99</url>
+            <organization>IBM</organization>
+            <organizationUrl>http://www.ibm.com</organizationUrl>
+            <timezone>+2</timezone>
+            <roles>
+                <role>Java Developer</role>
+            </roles>
+        </contributor>
+        <contributor>
             <name>Florian Gyger</name>
             <email>fgyger@openwms.org</email>
             <url>https://sourceforge.net/users/flogy</url>
@@ -126,9 +126,8 @@
                 <role>Developer</role>
                 <role>Supporter</role>
             </roles>
-        </developer>
-        <developer>
-            <id>mischazurich</id>
+        </contributor>
+        <contributor>
             <name>Mischa Farbstein</name>
             <email>mischazurich@users.sourceforge.net</email>
             <url>https://sourceforge.net/users/mischazurich</url>
@@ -137,9 +136,8 @@
                 <role>Developer</role>
                 <role>Moderator</role>
             </roles>
-        </developer>
-        <developer>
-            <id>jarhell</id>
+        </contributor>
+        <contributor>
             <name>Michael Rudiger</name>
             <email>rudiger@openwms.org</email>
             <url>https://sourceforge.net/users/jarhell</url>
@@ -147,8 +145,8 @@
             <roles>
                 <role>Developer</role>
             </roles>
-        </developer>
-    </developers>
+        </contributor>
+    </contributors>
 
     <mailingLists>
         <mailingList>
@@ -314,11 +312,10 @@
         <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
 
         <!-- May overridden with profiles -->
-        <distribution.serverId>openwms-mooo</distribution.serverId>
-        <distribution.serverProtocol>scp</distribution.serverProtocol>
-        <distribution.serverUrl.rootPath>openwms.mooo.com</distribution.serverUrl.rootPath>
+        <distribution.serverId>site-server</distribution.serverId>
+        <distribution.serverProtocol>ftp</distribution.serverProtocol>
+        <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
         <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
-        <distribution.serverUrl.docsPath>${distribution.serverUrl.rootPath}/docs</distribution.serverUrl.docsPath>
         <!-- Deploy to Maven central OSS snapshots repo -->
         <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
         <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
@@ -326,7 +323,7 @@
         <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
 
         <!-- Dependency versions -->
-        <ameba-lib.version>1.11.1</ameba-lib.version>
+        <ameba-lib.version>2.0</ameba-lib.version>
         <aspectj.version>1.8.13</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
 
