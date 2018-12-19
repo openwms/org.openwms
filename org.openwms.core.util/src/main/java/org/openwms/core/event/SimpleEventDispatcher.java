@@ -24,8 +24,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import static java.lang.String.format;
+
 /**
- * A SimpleEventDispatcher.
+ * A SimpleEventDispatcher is a Spring managed component that stores all subscribers in an
+ * in-memory key-value store implementation and calls all subscribers sequentially and
+ * synchronously.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -37,6 +41,11 @@ public class SimpleEventDispatcher implements EventDispatcher {
     private final Map<Class<? extends RootApplicationEvent>, Set<EventListener>> subscriptions = new HashMap<>();
     private final ApplicationContext ctx;
 
+    /**
+     * Autowiring constructor.
+     *
+     * @param ctx ApplicationContext
+     */
     public SimpleEventDispatcher(ApplicationContext ctx) {
         this.ctx = ctx;
     }
@@ -46,13 +55,12 @@ public class SimpleEventDispatcher implements EventDispatcher {
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, EventListener listener) {
-        Set<EventListener> listeners;
         synchronized (subscriptions) {
-            if (subscriptions.containsKey(event)) {
-                listeners = subscriptions.computeIfAbsent(event, k -> new HashSet<>(1));
+            Set<EventListener> listeners = subscriptions.get(event);
+            if (listeners == null) {
+                listeners = new HashSet<>(1);
                 listeners.add(listener);
             } else {
-                listeners = new HashSet<>(1);
                 listeners.add(listener);
                 subscriptions.put(event, listeners);
             }
@@ -60,7 +68,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     }
 
     /**
-     * @see org.openwms.core.event.EventBroker#subscribe(java.lang.Class, java.lang.String)
+     * {@inheritDoc}
      */
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {
@@ -68,7 +76,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
         if (instance instanceof EventListener) {
             subscribe(event, (EventListener) instance);
         } else {
-            throw new ServiceLayerException("The bean with name " + listenerBeanName + " is not of type EventListener and cannot subscribe to events");
+            throw new ServiceLayerException(format("The bean with name [%s] is not of type EventListener and cannot subscribe to events", listenerBeanName));
         }
     }
 
@@ -93,7 +101,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
         if (instance instanceof EventListener) {
             unsubscribe(event, (EventListener) instance);
         } else {
-            throw new ServiceLayerException("The bean with name " + listenerBeanName + " is not of type EventListener and cannot unsubscribe from events");
+            throw new ServiceLayerException(format("The bean with name [%s] is not of type EventListener and cannot unsubscribe to events", listenerBeanName));
         }
     }
 
@@ -107,9 +115,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
         }
         synchronized (subscriptions.get(event.getClass())) {
             Set<EventListener> listeners = subscriptions.get(event.getClass());
-            for (EventListener eventListener : listeners) {
-                eventListener.onEvent(event);
-            }
+            listeners.forEach(l -> l.onEvent(event));
         }
     }
 }

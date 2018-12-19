@@ -16,14 +16,20 @@
 package org.openwms.core;
 
 /**
- * A SpringProfiles.
+ * A SpringProfiles is a collection of wellknown Spring Profiles used in OpenWMS.org.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 public final class SpringProfiles {
 
+    /** Used to define that asynchronous message handling is used. */
     public static final String ASYNCHRONOUS_PROFILE = "ASYNCHRONOUS";
+    /** Used to define that synchronous message handling is used. */
     public static final String SYNCHRONOUS_PROFILE = "SYNCHRONOUS";
+    /** Used to define that running within an OSGi container. */
+    public static final String OSGI = "OSGI";
+    /** Used to define that not running in an OSGi container. */
+    public static final String NON_OSGI = "noOSGI";
 
     private SpringProfiles() {
     }

@@ -18,14 +18,14 @@ package org.openwms.core.startup;
 import org.openwms.core.event.MergePropertiesEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
- * A LocalServiceInitializer fires {@link MergePropertiesEvent}s whenever the bundle is started or restarted.
+ * A LocalServiceInitializer raises {@link MergePropertiesEvent}s whenever the OpenWMS
+ * OSGi bundle is started or restarted.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -33,8 +33,11 @@ import org.springframework.stereotype.Component;
 public class LocalServiceInitializer implements ApplicationListener<ContextRefreshedEvent> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalServiceInitializer.class);
-    @Autowired
-    private ApplicationContext ctx;
+    private final ApplicationContext ctx;
+
+    LocalServiceInitializer(ApplicationContext ctx) {
+        this.ctx = ctx;
+    }
 
     /**
      * {@inheritDoc}

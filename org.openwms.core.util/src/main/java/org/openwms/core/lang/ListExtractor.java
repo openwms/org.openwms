@@ -25,7 +25,7 @@ package org.openwms.core.lang;
 public interface ListExtractor<K, V> {
 
     /**
-     * From a list node of type <tt>T</tt> extract the key element.
+     * From a list node of type {@code T} extract the key element.
      *
      * @param <T> Type of list node
      * @param listNode The node to extract the key from
@@ -34,7 +34,7 @@ public interface ListExtractor<K, V> {
     <T> K extractKey(T listNode);
 
     /**
-     * From a list node of type <tt>T</tt> extract the value.
+     * From a list node of type {@code T} extract the value.
      *
      * @param <T> Type of list node
      * @param listNode The node to extract the value from

@@ -14,6 +14,6 @@
  * limitations under the License.
  */
 /**
- * This package contains framework classes regarding the application lifecycle.
+ * This package contains framework classes regarding the OSGi application lifecycle.
  */
 package org.openwms.core.startup;

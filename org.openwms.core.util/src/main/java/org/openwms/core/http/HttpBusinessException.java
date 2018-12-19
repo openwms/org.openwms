@@ -18,7 +18,8 @@ package org.openwms.core.http;
 import org.springframework.http.HttpStatus;
 
 /**
- * A HttpBusinessException encapsulates well-known BusinessExceptions into exceptions particular to http translation.
+ * A HttpBusinessException encapsulates well-known BusinessExceptions into exceptions
+ * particular to http translation.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -29,37 +30,37 @@ public class HttpBusinessException extends RuntimeException {
     /**
      * Create a new HttpBusinessException.
      *
-     * @param pHttpStatus
+     * @param httpStatus The passed http status
      */
-    public HttpBusinessException(HttpStatus pHttpStatus) {
+    public HttpBusinessException(HttpStatus httpStatus) {
         super();
-        this.httpStatus = pHttpStatus;
+        this.httpStatus = httpStatus;
     }
 
     /**
      * Create a new HttpBusinessException.
      *
-     * @param pMessage
-     * @param pHttpStatus
+     * @param message The passed message text
+     * @param httpStatus The passed http status
      */
-    public HttpBusinessException(String pMessage, HttpStatus pHttpStatus) {
-        super(pMessage);
-        this.httpStatus = pHttpStatus;
+    public HttpBusinessException(String message, HttpStatus httpStatus) {
+        super(message);
+        this.httpStatus = httpStatus;
     }
 
     /**
      * Create a new HttpBusinessException.
      *
-     * @param pCause
-     * @param pHttpStatus
+     * @param cause The root cause
+     * @param httpStatus The passed http status
      */
-    public HttpBusinessException(Throwable pCause, HttpStatus pHttpStatus) {
-        super(pCause);
-        this.httpStatus = pHttpStatus;
+    public HttpBusinessException(Throwable cause, HttpStatus httpStatus) {
+        super(cause);
+        this.httpStatus = httpStatus;
     }
 
     /**
-     * Get the httpStatus.
+     * Get the http status.
      *
      * @return the httpStatus.
      */

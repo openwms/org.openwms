@@ -16,7 +16,8 @@
 package org.openwms.core.exception;
 
 /**
- * A DomainModelException is a checked top-level exception for all exceptions of the domain model layer.
+ * A DomainModelException is a checked top-level exception for all exceptions within the
+ * domain model layer.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */

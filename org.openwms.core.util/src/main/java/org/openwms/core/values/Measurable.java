@@ -23,14 +23,14 @@ package org.openwms.core.values;
 public interface Measurable<V extends Number, E extends Measurable<V, E, T>, T extends BaseUnit<T>> extends Comparable<E> {
 
     /**
-     * Returns the type of <code>Measurable</code>.
+     * Returns the type of {@code Measurable}.
      *
-     * @return The <code>Measurable</code>'s type
+     * @return The {@code Measurable}'s type
      */
     T getUnitType();
 
     /**
-     * Get the magnitude of this <code>Measurable</code>.
+     * Get the magnitude of this {@code Measurable}.
      *
      * @return the magnitude
      */
@@ -39,21 +39,22 @@ public interface Measurable<V extends Number, E extends Measurable<V, E, T>, T e
     /**
      * Check whether the magnitude is 0.
      *
-     * @return <code>true</code> is magnitude is 0, otherwise <code>false</code>
+     * @return {@literal true} is magnitude is 0, otherwise {@literal false}
      */
     boolean isZero();
 
     /**
      * Check whether the magnitude is of negative value.
      *
-     * @return <code>true</code> if the magnitude is of negative value, otherwise <code>false</code>
+     * @return {@literal true} if the magnitude is of negative value, otherwise
+     * {@literal false}
      */
     boolean isNegative();
 
     /**
-     * Convert this <code>Measurable</code> into another <code>Measurable</code> .
+     * Convert this {@code Measurable} into another {@code Measurable} .
      *
-     * @param unit The <code>BaseUnit</code> to convert to
+     * @param unit The {@code BaseUnit} to convert to
      */
     E convertTo(T unit);
 }

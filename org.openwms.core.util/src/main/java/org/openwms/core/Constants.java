@@ -26,8 +26,9 @@ public final class Constants {
     }
 
     /**
-     * Path to the initial application properties file. This constant can be referenced by Springs Value annotation. Value is {@value} .
-     * appProps is declared in Springs XML configuration.
+     * Path to the initial application properties file. This constant can be referenced by
+     * Springs Value annotation. Value is {@value}. appProps is declared in Springs XML
+     * configuration.
      */
     public static final String APPLICATION_INITIAL_PROPERTIES = "#{ appProps['application.initial.properties'] }";
 

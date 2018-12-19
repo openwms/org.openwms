@@ -17,17 +17,21 @@ package org.openwms.core.event;
 
 import org.springframework.context.ApplicationEvent;
 
+import java.io.Serializable;
+
 /**
- * A RootApplicationEvent.
+ * A RootApplicationEvent is typically used as a super class for specific event types
+ * within the application domain.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
+ * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class RootApplicationEvent extends ApplicationEvent {
+public class RootApplicationEvent extends ApplicationEvent implements Serializable {
 
     /**
      * Create a new RootApplicationEvent.
      *
-     * @param source The event sender
+     * @param source The event sender, never {@literal null}
      */
     public RootApplicationEvent(Object source) {
         super(source);

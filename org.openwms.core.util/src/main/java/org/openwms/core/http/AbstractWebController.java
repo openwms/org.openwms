@@ -35,8 +35,6 @@ import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
-import javax.validation.Validator;
-import java.io.Serializable;
 
 /**
  * A AbstractWebController.
@@ -48,8 +46,6 @@ public abstract class AbstractWebController {
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.PRESENTATION_LAYER_EXCEPTION);
     @Autowired
     private MessageSource messageSource;
-    @Autowired
-    private Validator validator;
 
     /**
      * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@code 500
@@ -59,7 +55,7 @@ public abstract class AbstractWebController {
      * @return A response object wraps the server result
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response<Serializable>> handleException(Exception ex) {
+    public ResponseEntity handleException(Exception ex) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
         if (ex instanceof BehaviorAwareException) {
             BehaviorAwareException bae = (BehaviorAwareException) ex;
@@ -67,19 +63,45 @@ public abstract class AbstractWebController {
         }
         if (ex instanceof BusinessRuntimeException) {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
-            return new ResponseEntity<>(new Response<>(ex.getMessage(), bre.getMessageKey(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), new String[]{bre.getMessageKey()}), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(Response.newBuilder()
+                    .withMessage(bre.getMessage())
+                    .withHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                    .withObj(new String[]{bre.getMessageKey()})
+                    .build(),
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
         }
         if (ex instanceof HttpBusinessException) {
             HttpBusinessException e = (HttpBusinessException) ex;
-            return new ResponseEntity<>(new Response<>(ex.getMessage(), e.getHttpStatus().toString()), e.getHttpStatus());
+            return new ResponseEntity<>(Response.newBuilder()
+                    .withMessage(ex.getMessage())
+                    .withHttpStatus(e.getHttpStatus().toString())
+                    .build(),
+                    e.getHttpStatus()
+            );
         }
         if (ex instanceof ValidationException) {
-            return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.BAD_REQUEST.toString()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(Response.newBuilder()
+                    .withMessage(ex.getMessage())
+                    .withHttpStatus(HttpStatus.BAD_REQUEST.toString())
+                    .build(),
+                    HttpStatus.BAD_REQUEST
+            );
         }
         if (ex instanceof TechnicalRuntimeException) {
-            return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.BAD_GATEWAY.toString()), HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(Response.newBuilder()
+                    .withMessage(ex.getMessage())
+                    .withHttpStatus(HttpStatus.BAD_GATEWAY.toString())
+                    .build(),
+                    HttpStatus.BAD_GATEWAY
+            );
         }
-        return new ResponseEntity<>(new Response<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(Response.newBuilder()
+                .withMessage(ex.getMessage())
+                .withHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                .build(),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
     /**
@@ -90,7 +112,13 @@ public abstract class AbstractWebController {
      */
     @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
     public ResponseEntity<Response> handleValidationException() {
-        return new ResponseEntity<>(new Response(translate(ExceptionCodes.VALIDATION_ERROR), HttpStatus.INTERNAL_SERVER_ERROR.toString()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(
+                Response.newBuilder()
+                        .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
+                        .withHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                        .build(),
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
     }
 
     /**
@@ -115,7 +143,7 @@ public abstract class AbstractWebController {
      * @return A ResponseEntity with status {@code code}
      */
     protected <T extends AbstractBase> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, T... params) {
-        Response result = new Response(msg, msgKey, code.toString(), params);
+        Response result = Response.newBuilder().withMessage(msg).withMessageKey(msgKey).withHttpStatus(code.toString()).withObj(params).build();
         return new ResponseEntity<>(result, code);
     }
 
@@ -131,7 +159,7 @@ public abstract class AbstractWebController {
      * @return A ResponseEntity with status {@code code}
      */
     protected <T extends AbstractBase> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, MultiValueMap<String, String> headers, T... params) {
-        Response result = new Response(msg, msgKey, code.toString(), params);
+        Response result = Response.newBuilder().withMessage(msg).withMessageKey(msgKey).withHttpStatus(code.toString()).withObj(params).build();
         return new ResponseEntity<>(result, headers, code);
     }
 

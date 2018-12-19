@@ -15,13 +15,17 @@
  */
 package org.openwms.core.startup;
 
+import org.openwms.core.SpringProfiles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * A ApplicationInitializer.
+ * A ApplicationInitializer is used to determine the runtime environment OpenWMS is
+ * running in. In case of an OSGi server, like Spring dmServer, the expected Spring
+ * profile is {@link SpringProfiles#OSGI}. If not running in an OSGi environment, the
+ * profile {@link SpringProfiles#NON_OSGI} is activated - if not already set.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -32,20 +36,19 @@ public class ApplicationInitializer implements ApplicationContextInitializer<Con
     /**
      * {@inheritDoc}
      * <p>
-     * Depending on the underlying platform, different Spring profiles are
-     * included.
+     * Depending on the underlying platform, different Spring profiles are included.
      */
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
         String activeProfile = System.getProperty("spring.profiles.active");
-        if ("OSGI".equalsIgnoreCase(activeProfile)) {
+        if (SpringProfiles.OSGI.equalsIgnoreCase(activeProfile)) {
             LOGGER.info("Running in OSGI environment");
-        } else if ("noOSGI".equalsIgnoreCase(activeProfile)) {
-            LOGGER.info("Running in a non-OSGI environment");
+        } else if (SpringProfiles.NON_OSGI.equalsIgnoreCase(activeProfile)) {
+            LOGGER.info("Running in a non OSGI environment");
         } else {
-            applicationContext.getEnvironment().setActiveProfiles("noOSGI");
+            applicationContext.getEnvironment().setActiveProfiles(SpringProfiles.NON_OSGI);
             applicationContext.refresh();
-            LOGGER.info("Switched to a non-OSGI environment");
+            LOGGER.info("Switched to a non OSGI environment");
         }
     }
 }

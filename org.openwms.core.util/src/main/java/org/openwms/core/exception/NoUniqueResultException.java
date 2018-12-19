@@ -15,22 +15,25 @@
  */
 package org.openwms.core.exception;
 
+import org.ameba.exception.IntegrationLayerException;
+
 /**
- * A NoUniqueResultException is thrown when a single result was expected but multiple entities were found.
+ * A NoUniqueResultException is thrown when a single result was expected but multiple
+ * entities were found.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class NoUniqueResultException extends DataException {
+public class NoUniqueResultException extends IntegrationLayerException {
 
     /**
-     * Create a new <code>NoUniqueResultException</code>.
+     * Create a new NoUniqueResultException.
      */
     public NoUniqueResultException() {
         super();
     }
 
     /**
-     * Create a new <code>NoUniqueResultException</code> with a message text.
+     * Create a new NoUniqueResultException with a message text.
      *
      * @param message Message text as String
      */
@@ -39,16 +42,8 @@ public class NoUniqueResultException extends DataException {
     }
 
     /**
-     * Create a new <code>NoUniqueResultException</code> with the root exception.
-     *
-     * @param cause The root exception
-     */
-    public NoUniqueResultException(Throwable cause) {
-        super(cause);
-    }
-
-    /**
-     * Create a new <code>NoUniqueResultException</code> with a message text and the root exception.
+     * Create a new NoUniqueResultException with a message text and the root
+     * exception.
      *
      * @param message Message text as String
      * @param cause The root exception

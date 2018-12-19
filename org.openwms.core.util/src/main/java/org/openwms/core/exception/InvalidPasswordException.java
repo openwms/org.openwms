@@ -16,7 +16,8 @@
 package org.openwms.core.exception;
 
 /**
- * An InvalidPasswordException indicates that a password is not confirm with the defined rules.
+ * An InvalidPasswordException indicates that a password is not confirm with the defined
+ * rules.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  */

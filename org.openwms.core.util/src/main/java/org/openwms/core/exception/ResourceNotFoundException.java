@@ -23,14 +23,14 @@ package org.openwms.core.exception;
 public class ResourceNotFoundException extends RuntimeException {
 
     /**
-     * Create a new <code>ResourceNotFoundException</code>.
+     * Create a new ResourceNotFoundException.
      */
     public ResourceNotFoundException() {
         super();
     }
 
     /**
-     * Create a new <code>ResourceNotFoundException</code> with a message text.
+     * Create a new ResourceNotFoundException with a message text.
      *
      * @param message Message text as String
      */
@@ -39,7 +39,7 @@ public class ResourceNotFoundException extends RuntimeException {
     }
 
     /**
-     * Create a new <code>ResourceNotFoundException</code> with the root exception.
+     * Create a new ResourceNotFoundException with the root exception.
      *
      * @param cause The root exception
      */
@@ -48,7 +48,7 @@ public class ResourceNotFoundException extends RuntimeException {
     }
 
     /**
-     * Create a new <code>ResourceNotFoundException</code> with a message text and the root exception.
+     * Create a new ResourceNotFoundException with a message text and the root exception.
      *
      * @param message Message text as String
      * @param cause The root exception

@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * A SecurityUtils.
+ * A SecurityUtils collects useful functions regarding security aspects.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -29,6 +29,15 @@ public final class SecurityUtils {
 
     private SecurityUtils() {}
 
+    /**
+     * With the given {@code username} and {@code password} create a Base64 encoded valid
+     * http BASIC schema authorization header, and return it within a {@link HttpHeaders}
+     * object.
+     *
+     * @param username The BASIC auth username
+     * @param password The BASIC auth password
+     * @return The HttpHeaders object containing the Authorization Header
+     */
     public static HttpHeaders createHeaders(String username, String password) {
         if (username == null || username.isEmpty()) {
             return new HttpHeaders();

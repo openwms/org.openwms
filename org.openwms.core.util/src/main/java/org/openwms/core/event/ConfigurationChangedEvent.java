@@ -15,17 +15,20 @@
  */
 package org.openwms.core.event;
 
+import java.io.Serializable;
+
 /**
- * A ConfigurationChangedEvent.
+ * A ConfigurationChangedEvent is raised whenever OpenWMS {@code Preferences} change.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class ConfigurationChangedEvent extends RootApplicationEvent {
+public class ConfigurationChangedEvent extends RootApplicationEvent implements Serializable {
 
     /**
      * Create a new ConfigurationChangedEvent.
      *
-     * @param source The <code>Preferences</code> object that has changed or a Collection of those or <code>null</code>
+     * @param source The {@code Preferences} object that has changed or a Collection of
+     * those never {@literal null}
      */
     public ConfigurationChangedEvent(Object source) {
         super(source);

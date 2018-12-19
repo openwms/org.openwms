@@ -18,7 +18,8 @@ package org.openwms.core.listener;
 import org.ameba.exception.ServiceLayerException;
 
 /**
- * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an entity.
+ * A RemovalNotAllowedException is thrown when the caller is not allowed to remove an
+ * entity.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
  */

@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>4</version>
+        <version>6</version>
         <relativePath>./org.openwms.parent</relativePath>
     </parent>
     <artifactId>org.openwms</artifactId>
@@ -62,7 +62,6 @@
                                 <artifactId>org.openwms.doclet</artifactId>
                                 <version>0.0.1-SNAPSHOT</version>
                             </docletArtifact>
-                            <aggregate>true</aggregate>
                             <charset>${project.build.sourceEncoding}</charset>
                             <encoding>${project.build.sourceEncoding}</encoding>
                             <docencoding>${project.build.sourceEncoding}</docencoding>
@@ -187,9 +186,33 @@
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Staging Repository</name>
+            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
     <modules>
         <module>org.openwms.core.lang</module>
-        <module>org.openwms.core.test</module>
         <module>org.openwms.core.util</module>
     </modules>
 </project>

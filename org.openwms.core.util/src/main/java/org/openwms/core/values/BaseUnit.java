@@ -18,8 +18,9 @@ package org.openwms.core.values;
 import java.util.List;
 
 /**
- * A BaseUnit is the type definition of an <code>Measurable</code>. Each BaseUnit defines a base <code>Measurable</code>. For example the
- * BaseUnit of weights can define grams (G), kilograms (KG) or tons (T) and 1G is the base unit.
+ * A BaseUnit is the type definition of an {@code Measurable}. Each BaseUnit defines a
+ * base {@code Measurable}. For example the BaseUnit of weights can define grams (G),
+ * kilograms (KG) or tons (T) and 1G is the base unit.
  *
  * @param <T> Concrete type of BaseUnit
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
@@ -28,17 +29,15 @@ import java.util.List;
 public interface BaseUnit<T extends BaseUnit<T>> {
 
     /**
-     * Return all sub types of the <code>UnitType</code>.
+     * Return all sub types of the {@code UnitType}.
      *
-     * @param <T> Type definition of all concrete Units
      * @return a list of sub types
      */
     List<T> getAll();
 
     /**
-     * Return the base unit type of the <code>UnitType</code>.
+     * Return the base unit type of the {@code UnitType}.
      *
-     * @param <T> Type definition of all concrete Units
      * @return The base unit type
      */
     T getBaseUnit();

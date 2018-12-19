@@ -15,18 +15,20 @@
  */
 package org.openwms.core.event;
 
+import java.io.Serializable;
+
 /**
- * An UserChangedEvent is fired to notify listeners about changes on an <code>User</code> instance. A listener could probably evict a cache
- * of Users.
+ * An UserChangedEvent is raised to notify about changes on an {@code User} instance. A
+ * listener may for instance evict a cache.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class UserChangedEvent extends RootApplicationEvent {
+public class UserChangedEvent extends RootApplicationEvent implements Serializable {
 
     /**
      * Create a new UserChangedEvent.
      *
-     * @param source The <code>User</code> that has changed or <code>null</code>
+     * @param source The {@code User} that has changed
      */
     public UserChangedEvent(Object source) {
         super(source);

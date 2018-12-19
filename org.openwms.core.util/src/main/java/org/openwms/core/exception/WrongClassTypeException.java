@@ -23,14 +23,14 @@ package org.openwms.core.exception;
 public class WrongClassTypeException extends RuntimeException {
 
     /**
-     * Create a new <code>WrongClassTypeException</code> with a message text.
+     * Create a new WrongClassTypeException with a message text.
      */
     public WrongClassTypeException() {
         super();
     }
 
     /**
-     * Create a new <code>WrongClassTypeException</code> with a message text.
+     * Create a new WrongClassTypeException with a message text.
      *
      * @param message Message text as String
      */
@@ -39,7 +39,7 @@ public class WrongClassTypeException extends RuntimeException {
     }
 
     /**
-     * Create a new <code>WrongClassTypeException</code> with the root exception.
+     * Create a new WrongClassTypeException with the root exception.
      *
      * @param cause The root exception
      */
@@ -48,7 +48,7 @@ public class WrongClassTypeException extends RuntimeException {
     }
 
     /**
-     * Create a new <code>WrongClassTypeException</code> with a message text and the root exception.
+     * Create a new WrongClassTypeException with a message text and the root exception.
      *
      * @param message Message text as String
      * @param cause The root exception

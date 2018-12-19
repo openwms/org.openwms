@@ -16,9 +16,11 @@
 package org.openwms.core.event;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
- * A RootNotification.
+ * A RootNotification is used as super class for notifications within the application
+ * domain.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
@@ -32,6 +34,7 @@ public class RootNotification implements Serializable {
      * @param data Any serializable object to be transfered
      */
     public RootNotification(Serializable data) {
+        Objects.requireNonNull(data, "data passed to RootNotification is null");
         this.data = data;
     }
 
@@ -47,7 +50,7 @@ public class RootNotification implements Serializable {
     /**
      * Returns a String representation of this RootNotification.
      *
-     * @return A a String representation of this RootNotification
+     * @return A String
      */
     @Override
     public String toString() {

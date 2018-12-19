@@ -16,7 +16,8 @@
 package org.openwms.core.values;
 
 /**
- * A AbstractBaseUnit.
+ * A AbstractBaseUnit is a stereotype interface that can be used in wildcard boundaries
+ * for any kind of BaseUnit types.
  *
  * @param <T> The type of BaseUnit
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>

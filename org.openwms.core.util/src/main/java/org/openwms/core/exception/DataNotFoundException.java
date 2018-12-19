@@ -15,17 +15,23 @@
  */
 package org.openwms.core.exception;
 
+import org.ameba.exception.IntegrationLayerException;
+
 import java.io.Serializable;
 
+import static java.lang.String.format;
+
 /**
- * A DataNotFoundException is thrown to indicate that data was expected but not found.
+ * A DataNotFoundException is thrown to indicate that data was expected but nothing was
+ * found.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
-public class DataNotFoundException extends DataException {
+public class DataNotFoundException extends IntegrationLayerException {
 
     /**
-     * Create a new <code>DataNotFoundException</code> with a message text and the root exception.
+     * Create a new DataNotFoundException with a message text and the root
+     * exception.
      *
      * @param message Message text as String
      * @param cause The root exception
@@ -35,7 +41,7 @@ public class DataNotFoundException extends DataException {
     }
 
     /**
-     * Create a new <code>DataNotFoundException</code> with a message text.
+     * Create a new DataNotFoundException with a message text.
      *
      * @param message Message text as String
      */
@@ -44,11 +50,11 @@ public class DataNotFoundException extends DataException {
     }
 
     /**
-     * Create a new <code>DataNotFoundException</code> with the id of the expected entity.
+     * Create a new DataNotFoundException with the id of the expected entity.
      *
      * @param id Id of the expected entity
      */
     public DataNotFoundException(Serializable id) {
-        super("Entity class not found in persistence layer, id: " + id);
+        super(format("Entity class not found in persistence layer, id=[%s]",id));
     }
 }

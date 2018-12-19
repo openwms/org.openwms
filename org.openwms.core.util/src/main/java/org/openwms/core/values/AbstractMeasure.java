@@ -16,13 +16,14 @@
 package org.openwms.core.values;
 
 /**
- * A definition of any kind of measurement used in the application. In general an <code>AbstractMeasure</code> is the base class for all
- * kind of measures. For example <code>42 grams</code> is a <code>AbstractMeasure</code> (in particular a <code>Weight</code>), whereas 42
- * is the magnitude and grams is the <code>BaseUnit</code>. This class is merely used to erase the type declaration.
+ * A definition of any kind of measurement used in the application. In general an
+ * {@code AbstractMeasure} is the base class for all kind of measures. For example {@literal 42 grams}
+ * is a {@code AbstractMeasure} (in particular a {@code Weight}, whereas 42 is the
+ * magnitude and grams is the {@code BaseUnit}. This type is merely used to erase the
+ * type declaration.
  *
  * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
  */
 @SuppressWarnings("rawtypes")
 public interface AbstractMeasure extends Measurable {
-
 }

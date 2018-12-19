@@ -23,16 +23,16 @@ package org.openwms.core.values;
 public interface ImageProvider {
 
     /**
-     * Return the image of the <code>User</code>.
+     * Return the image of the {@code User}.
      *
      * @return The current image
      */
     byte[] getImage();
 
     /**
-     * Change the image of the <code>User</code>.
+     * Change the image of the {@code User}.
      *
-     * @param img The new image to set
+     * @param img The image to set
      */
     void setImage(byte[] img);
 }

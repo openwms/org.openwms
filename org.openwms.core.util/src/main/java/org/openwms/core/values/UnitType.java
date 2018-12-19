@@ -23,7 +23,7 @@ package org.openwms.core.values;
 public interface UnitType {
 
     /**
-     * Return the concrete type of <code>Measurable</code>.
+     * Return the concrete type of {@code Measurable}.
      *
      * @return The measurable
      */
