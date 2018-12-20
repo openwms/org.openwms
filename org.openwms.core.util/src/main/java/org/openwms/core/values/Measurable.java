@@ -55,6 +55,7 @@ public interface Measurable<V extends Number, E extends Measurable<V, E, T>, T e
      * Convert this {@code Measurable} into another {@code Measurable} .
      *
      * @param unit The {@code BaseUnit} to convert to
+     * @return The converted unit
      */
     E convertTo(T unit);
 }

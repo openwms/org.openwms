@@ -45,7 +45,7 @@ public class CollectionUtilTest {
      */
     @Test
     public final void testGetFirstOrNull() {
-        List<String> strings = Arrays.asList(new String[]{"1", "2", "3"});
+        List<String> strings = Arrays.asList("1", "2", "3");
         assertEquals("Calling with an list should result in the first element", "1", CollectionUtil.getFirstOrNull(strings));
     }
 
@@ -55,7 +55,7 @@ public class CollectionUtilTest {
      */
     @Test
     public final void testAsHashMapWithNull() {
-        List<String> strings = Arrays.asList(new String[]{"1", "2", "3"});
+        List<String> strings = Arrays.asList("1", "2", "3");
         assertEquals("Calling with null should result in an empty map", Collections.EMPTY_MAP, CollectionUtil.asHashMap(null, null));
         assertEquals("Calling with an empty list shall result in an empty map", Collections.EMPTY_MAP, CollectionUtil.asHashMap(Collections.emptyList(), null));
         assertEquals("Calling with a list and no extractor shall result in an empty map", Collections.EMPTY_MAP, CollectionUtil.asHashMap(strings, null));

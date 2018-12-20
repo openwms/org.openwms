@@ -32,6 +32,6 @@ import java.util.EventObject;
 @Documented
 public @interface FireAfterTransactionAsynchronous {
 
-    /** An array of events that shall be fired after the methods completes. */
+    /** @return An array of events that shall be fired after the methods completes. */
     Class<? extends EventObject>[] events() default {};
 }

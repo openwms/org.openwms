@@ -56,11 +56,6 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.openwms</groupId>
-            <artifactId>org.openwms.core.test</artifactId>
-            <type>test-jar</type>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -68,13 +63,7 @@
             <dependency>
                 <groupId>org.openwms</groupId>
                 <artifactId>org.openwms.core.util</artifactId>
-                <version>1.3.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.openwms</groupId>
-                <artifactId>org.openwms.core.test</artifactId>
-                <version>1.3.0-SNAPSHOT</version>
-                <type>test-jar</type>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

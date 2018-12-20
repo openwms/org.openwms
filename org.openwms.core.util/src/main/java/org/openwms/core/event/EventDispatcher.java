@@ -23,11 +23,12 @@ package org.openwms.core.event;
 public interface EventDispatcher extends EventBroker {
 
     /**
-     * Take an event of type <code>T</code> and dispatch it to all subscribed
-     * listeners.<br />
+     * Take an event of type {@code T} and dispatch it to all subscribed
+     * listeners.
      * Note: It is not defined whether the event is delivered synchronously or
      * asynchronously.
      *
+     * @param <T> A subtype of RootApplicationEvent
      * @param event The event to deliver
      */
     <T extends RootApplicationEvent> void dispatch(T event);

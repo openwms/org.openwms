@@ -25,6 +25,7 @@ public interface UnitType {
     /**
      * Return the concrete type of {@code Measurable}.
      *
+     * @param <T> A subtype of Measurable
      * @return The measurable
      */
     @SuppressWarnings("rawtypes")
