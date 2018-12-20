@@ -16,7 +16,7 @@ Wiki at [Atlassian Confluence](https://openwms.atlassian.net/wiki/display/OPENWM
 [travis-url]: https://travis-ci.org/openwms/org.openwms
 [license-image]: https://img.shields.io/badge/License-Apache%202.0-blue.svg
 [license-url]: LICENSE
-[codacy-image]: https://img.shields.io/codacy/1081cebbe27b40a8be16b6524f246b6b.svg?style=flat-square
+[codacy-image]: https://img.shields.io/codacy/grade/1081cebbe27b40a8be16b6524f246b6b.svg?style=flat-square
 [codacy-url]: https://www.codacy.com/app/openwms/org.openwms
 
 # Current state of development
