@@ -26,6 +26,8 @@ public final class SpringProfiles {
     public static final String ASYNCHRONOUS_PROFILE = "ASYNCHRONOUS";
     /** Used to define that synchronous message handling is used. */
     public static final String SYNCHRONOUS_PROFILE = "SYNCHRONOUS";
+    /** Used to define that synchronous message handling is used. */
+    public static final String IN_MEMORY = "INMEM";
     /** Used to define that running within an OSGi container. */
     public static final String OSGI = "OSGI";
     /** Used to define that not running in an OSGi container. */
