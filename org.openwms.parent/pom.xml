@@ -11,7 +11,7 @@
     </parent>
     <groupId>org.openwms</groupId>
     <artifactId>org.openwms.parent</artifactId>
-    <version>6</version>
+    <version>7</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Parent Project</name>
     <description>OpenWMS.org is an open source warehouse management software</description>
@@ -34,19 +34,19 @@
 
     <distributionManagement>
         <repository>
-            <id>${distribution.repo.serverId}</id>
+            <id>sonatype-nexus-staging</id>
             <name>OpenWMS.org Release Repository</name>
-            <url>${distribution.repo.serverProtocol}://${distribution.repo.serverUrl.rootPath}</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
         <snapshotRepository>
-            <id>${distribution.repo.serverId}</id>
+            <id>sonatype-nexus-staging</id>
             <name>OpenWMS.org Snapshot Repository</name>
-            <url>${distribution.repo.serverProtocol}://${distribution.repo.snapshot.serverUrl.rootPath}</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <site>
-            <id>${distribution.serverId}</id>
+            <id>ftp-io</id>
             <name>OpenWMS.org WebSite</name>
-            <url>${distribution.serverProtocol}://${distribution.serverUrl.sourcePath}</url>
+            <url>scp://ftp.interface21.io/docs/org.openwms</url>
         </site>
     </distributionManagement>
 
@@ -192,16 +192,6 @@
 
     <profiles>
         <profile>
-            <id>sonatype</id>
-            <properties>
-                <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
-                <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-                <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-                <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-            </properties>
-        </profile>
-
-        <profile>
             <id>release</id>
             <properties>
                 <debug.info>false</debug.info>
@@ -226,25 +216,24 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <failOnError>false</failOnError>
                             <detectLinks>false</detectLinks>
+                            <doclint>none</doclint>
+                            <failOnError>false</failOnError>
                             <keywords>true</keywords>
                             <linksource>false</linksource>
+                            <quiet>true</quiet>
                             <source>${project.build.sourceEncoding}</source>
-                            <verbose>true</verbose>
-                            <additionalparam>
-                                -Xdoclint:none
-                                -quiet
-                            </additionalparam>
                             <tags>
                                 <tag>
                                     <name>GlossaryTerm</name>
                                     <placement>a</placement>
                                 </tag>
                             </tags>
+                            <verbose>true</verbose>
                         </configuration>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                         <version>${maven-source-plugin.version}</version>
                         <executions>
@@ -268,6 +257,7 @@
                 <pluginManagement>
                     <plugins>
                         <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-gpg-plugin</artifactId>
                             <version>${maven-gpg-plugin.version}</version>
                             <executions>
@@ -311,46 +301,37 @@
         <documentation.output.dir>${documentation.dir}/site/rest</documentation.output.dir>
         <snippetsDirectory>${documentation.snippet.dir}</snippetsDirectory>
 
-        <!-- May overridden with profiles -->
-        <distribution.serverId>site-server</distribution.serverId>
-        <distribution.serverProtocol>ftp</distribution.serverProtocol>
-        <distribution.serverUrl.rootPath>ftp.interface21.io</distribution.serverUrl.rootPath>
-        <distribution.serverUrl.sourcePath>${distribution.serverUrl.rootPath}</distribution.serverUrl.sourcePath>
-        <!-- Deploy to Maven central OSS snapshots repo -->
-        <distribution.repo.serverId>sonatype-nexus-staging</distribution.repo.serverId>
-        <distribution.repo.serverProtocol>https</distribution.repo.serverProtocol>
-        <distribution.repo.serverUrl.rootPath>oss.sonatype.org/service/local/staging/deploy/maven2</distribution.repo.serverUrl.rootPath>
-        <distribution.repo.snapshot.serverUrl.rootPath>oss.sonatype.org/content/repositories/snapshots</distribution.repo.snapshot.serverUrl.rootPath>
-
         <!-- Dependency versions -->
         <ameba-lib.version>2.0</ameba-lib.version>
-        <aspectj.version>1.8.13</aspectj.version> <!-- Keep in sync with boot -->
+        <aspectj.version>1.8.14</aspectj.version> <!-- Keep in sync with boot -->
         <dozer.version>5.5.1</dozer.version>
+        <feign-httpclient.version>9.7.0</feign-httpclient.version>
+        <guava.version>19.0</guava.version>
+        <hystrix-javanica.version>1.5.12</hystrix-javanica.version>
+        <logstash-logback-encoder.version>5.3</logstash-logback-encoder.version>
 
-        <spring-boot.version>2.0.6.RELEASE</spring-boot.version>
-        <spring-cloud-dependencies.version>Finchley.SR2</spring-cloud-dependencies.version>
-        <spring-restdocs-mockmvc.version>2.0.2.RELEASE</spring-restdocs-mockmvc.version>
-        <spring.version>5.0.10.RELEASE</spring.version> <!-- Keep in sync with boot -->
+        <spring-boot.version>2.0.9.RELEASE</spring-boot.version>
+        <spring-cloud-dependencies.version>Finchley.SR3</spring-cloud-dependencies.version>
+        <spring-restdocs-mockmvc.version>2.0.3.RELEASE</spring-restdocs-mockmvc.version>
+        <spring.version>5.0.13.RELEASE</spring.version> <!-- Keep in sync with boot -->
         <start-class></start-class> <!-- keep it empty, set by actual boot module -->
 
         <!--   Plugin versions   -->
-        <asciidoctor-maven-plugin.version>1.5.3</asciidoctor-maven-plugin.version>
+        <asciidoctor-maven-plugin.version>1.5.6</asciidoctor-maven-plugin.version>
         <aspectj-maven-plugin.version>1.11</aspectj-maven-plugin.version>
-        <git-commit-id-plugin.version>2.2.5</git-commit-id-plugin.version>
-        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <git-commit-id-plugin.version>3.0.0</git-commit-id-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-project-info-reports-plugin.version>3.0.0</maven-project-info-reports-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <maven-site-plugin.version>3.6</maven-site-plugin.version>
         <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-        <maven-surefire-report-plugin.version>2.21.0</maven-surefire-report-plugin.version>
-        <wagon-ssh.version>3.2.0</wagon-ssh.version>
-        <wagon-ftp.version>3.2.0</wagon-ftp.version>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
+        <maven-surefire-report-plugin.version>3.0.0-M3</maven-surefire-report-plugin.version>
+        <wagon-ssh.version>3.3.2</wagon-ssh.version>
+        <wagon-ftp.version>3.3.2</wagon-ftp.version>
     </properties>
 
     <reporting>
@@ -365,24 +346,22 @@
                             <report>aggregate</report>
                         </reports>
                         <configuration>
-                            <failOnError>false</failOnError>
+                            <aggregate>true</aggregate>
                             <detectLinks>false</detectLinks>
+                            <doclint>none</doclint>
+                            <failOnError>false</failOnError>
                             <keywords>true</keywords>
                             <linksource>false</linksource>
+                            <quiet>true</quiet>
+                            <show>private</show>
                             <source>${project.build.sourceEncoding}</source>
-                            <verbose>false</verbose>
-                            <aggregate>true</aggregate>
-                            <additionalparam>
-                                -Xdoclint:none
-                                -quiet
-                            </additionalparam>
                             <tags>
                                 <tag>
                                     <name>GlossaryTerm</name>
                                     <placement>a</placement>
                                 </tag>
                             </tags>
-                            <show>private</show>
+                            <verbose>false</verbose>
                         </configuration>
                     </reportSet>
                 </reportSets>
@@ -491,11 +470,6 @@
                 </plugin>
 
                 <plugin>
-                    <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven-jar-plugin.version}</version>
-                </plugin>
-
-                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>aspectj-maven-plugin</artifactId>
                     <version>${aspectj-maven-plugin.version}</version>
@@ -505,7 +479,7 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <Xlint>ignore</Xlint>
-                        <encoding>UTF-8</encoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                         <verbose>false</verbose>
                         <aspectLibraries>
                             <aspectLibrary>
@@ -619,21 +593,6 @@
                 </plugin>
 
                 <plugin>
-                    <artifactId>maven-install-plugin</artifactId>
-                    <version>${maven-install-plugin.version}</version>
-                    <executions>
-                        <execution>
-                            <goals>
-                                <goal>install</goal>
-                            </goals>
-                            <configuration>
-                                <createChecksum>true</createChecksum>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-
-                <plugin>
                     <groupId>pl.project13.maven</groupId>
                     <artifactId>git-commit-id-plugin</artifactId>
                     <version>${git-commit-id-plugin.version}</version>
@@ -679,13 +638,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>io.interface21</groupId>
                 <artifactId>ameba-lib</artifactId>
                 <version>${ameba-lib.version}</version>
@@ -695,11 +647,6 @@
                 <artifactId>ameba-lib</artifactId>
                 <version>${ameba-lib.version}</version>
                 <type>test-jar</type>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aspects</artifactId>
-                <version>${spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -735,6 +682,43 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-httpclient</artifactId>
+                <version>${feign-httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.netflix.hystrix</groupId>
+                <artifactId>hystrix-javanica</artifactId>
+                <version>${hystrix-javanica.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-encoder.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven.surefire</groupId>
+                <artifactId>surefire-junit47</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -748,5 +732,4 @@
             </snapshots>
         </repository>
     </repositories>
-
 </project>

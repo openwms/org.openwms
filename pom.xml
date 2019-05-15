@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>6</version>
+        <version>7</version>
         <relativePath>./org.openwms.parent</relativePath>
     </parent>
     <artifactId>org.openwms</artifactId>
@@ -37,10 +37,24 @@
                 <dependency>
                     <groupId>org.postgresql</groupId>
                     <artifactId>postgresql</artifactId>
+                    <scope>runtime</scope>
                 </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <!-- Use H2 as database -->
+            <id>h2</id>
+            <activation>
+                <property>
+                    <name>db</name>
+                    <value>h2</value>
+                </property>
+            </activation>
+            <dependencies>
                 <dependency>
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-dbcp2</artifactId>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                    <scope>runtime</scope>
                 </dependency>
             </dependencies>
         </profile>
@@ -116,8 +130,8 @@
         <ms.group>NULL</ms.group>
 
         <!--   Plugin versions   -->
-        <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
-        <site-maven-plugin.version>0.13.1</site-maven-plugin.version>
+        <maven-war-plugin.version>3.2.2</maven-war-plugin.version>
+        <site-maven-plugin.version>0.12</site-maven-plugin.version>
     </properties>
 
     <build>
