@@ -19,4 +19,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar'
+    codeCoverageToolOption: 'jaCoCo'
+    sonarQubeRunAnalysis: true 
+    goals: 'clean install'
