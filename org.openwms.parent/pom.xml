@@ -319,6 +319,7 @@
         <!--   Plugin versions   -->
         <asciidoctor-maven-plugin.version>1.5.6</asciidoctor-maven-plugin.version>
         <aspectj-maven-plugin.version>1.11</aspectj-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.2</jacoco-maven-plugin.version>
         <git-commit-id-plugin.version>3.0.0</git-commit-id-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M2</maven-enforcer-plugin.version>
@@ -556,6 +557,26 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
                     <executions>
@@ -602,20 +623,19 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                     <configuration>
-                        <forkCount>0</forkCount>
-                        <threadCount>1</threadCount>
-                        <useSystemClassLoader>true</useSystemClassLoader>
-                        <skipTests>false</skipTests>
-                        <trimStackTrace>true</trimStackTrace>
+                        <!-- Never set a forkCount to 0 bc. of Jacoco -->
+                        <excludes>
+                            <exclude>**/Abstract*.java</exclude>
+                            <exclude>**/*Tests.java</exclude>
+                        </excludes>
                         <includes>
                             <include>**/*Test.java</include>
                             <include>**/*IT.java</include>
                             <include>**/*Documentation.java</include>
                         </includes>
-                        <excludes>
-                            <exclude>**/Abstract*.java</exclude>
-                            <exclude>**/*Tests.java</exclude>
-                        </excludes>
+                        <threadCount>1</threadCount>
+                        <trimStackTrace>true</trimStackTrace> <!-- default: true -->
+                        <useSystemClassLoader>true</useSystemClassLoader> <!-- default: true -->
                     </configuration>
                     <dependencies>
                         <dependency>
