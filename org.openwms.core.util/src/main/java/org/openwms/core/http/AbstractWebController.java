@@ -80,14 +80,6 @@ public abstract class AbstractWebController {
                     e.getHttpStatus()
             );
         }
-        if (ex instanceof ValidationException) {
-            return new ResponseEntity<>(Response.newBuilder()
-                    .withMessage(ex.getMessage())
-                    .withHttpStatus(HttpStatus.BAD_REQUEST.toString())
-                    .build(),
-                    HttpStatus.BAD_REQUEST
-            );
-        }
         if (ex instanceof TechnicalRuntimeException) {
             return new ResponseEntity<>(Response.newBuilder()
                     .withMessage(ex.getMessage())
@@ -105,8 +97,25 @@ public abstract class AbstractWebController {
     }
 
     /**
-     * Transforming {@link MethodArgumentNotValidException} {@link ValidationException} into server error {@code 500 Internal Server Error}
-     * responses with according validation error message text.
+     * Transform {@link IllegalArgumentException} into a client side error {@code 400 Bad Request} response with the exception's message
+     * text.
+     *
+     * @return A response object wraps the server result
+     */
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<Response> IllegalArgumentException(IllegalArgumentException ex) {
+        return new ResponseEntity<>(
+                Response.newBuilder()
+                        .withMessage(ex.getMessage())
+                        .withHttpStatus(HttpStatus.BAD_REQUEST.toString())
+                        .build(),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    /**
+     * Transform {@link MethodArgumentNotValidException} and {@link ValidationException} into a client side error {@code 400 Bad Request}
+     * response with the proper translated validation error message text.
      *
      * @return A response object wraps the server result
      */
@@ -115,9 +124,9 @@ public abstract class AbstractWebController {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
-                        .withHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                        .withHttpStatus(HttpStatus.BAD_REQUEST.toString())
                         .build(),
-                HttpStatus.INTERNAL_SERVER_ERROR
+                HttpStatus.BAD_REQUEST
         );
     }
 
