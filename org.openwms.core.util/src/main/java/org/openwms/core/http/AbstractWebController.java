@@ -55,17 +55,25 @@ public abstract class AbstractWebController {
      * @return A response object wraps the server result
      */
     @ExceptionHandler(Exception.class)
-    public ResponseEntity handleException(Exception ex) {
+    public ResponseEntity<Response> handleException(Exception ex) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
         if (ex instanceof BehaviorAwareException) {
             BehaviorAwareException bae = (BehaviorAwareException) ex;
-            return bae.toResponse(bae.getData());
+            return new ResponseEntity<>(Response.newBuilder()
+                    .withMessage(bae.getMessage())
+                    .withMessageKey(bae.getMessageKey())
+                    .withHttpStatus(String.valueOf(bae.getStatus().value()))
+                    .withObj(bae.getData())
+                    .build(),
+                    bae.getStatus()
+            );
+
         }
         if (ex instanceof BusinessRuntimeException) {
             BusinessRuntimeException bre = (BusinessRuntimeException) ex;
             return new ResponseEntity<>(Response.newBuilder()
                     .withMessage(bre.getMessage())
-                    .withHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                    .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                     .withObj(new String[]{bre.getMessageKey()})
                     .build(),
                     HttpStatus.INTERNAL_SERVER_ERROR
@@ -75,7 +83,7 @@ public abstract class AbstractWebController {
             HttpBusinessException e = (HttpBusinessException) ex;
             return new ResponseEntity<>(Response.newBuilder()
                     .withMessage(ex.getMessage())
-                    .withHttpStatus(e.getHttpStatus().toString())
+                    .withHttpStatus(String.valueOf(e.getHttpStatus().value()))
                     .build(),
                     e.getHttpStatus()
             );
@@ -83,14 +91,14 @@ public abstract class AbstractWebController {
         if (ex instanceof TechnicalRuntimeException) {
             return new ResponseEntity<>(Response.newBuilder()
                     .withMessage(ex.getMessage())
-                    .withHttpStatus(HttpStatus.BAD_GATEWAY.toString())
+                    .withHttpStatus(String.valueOf(HttpStatus.BAD_GATEWAY.value()))
                     .build(),
                     HttpStatus.BAD_GATEWAY
             );
         }
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(ex.getMessage())
-                .withHttpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                 .build(),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
@@ -107,7 +115,7 @@ public abstract class AbstractWebController {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(ex.getMessage())
-                        .withHttpStatus(HttpStatus.BAD_REQUEST.toString())
+                        .withHttpStatus(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .build(),
                 HttpStatus.BAD_REQUEST
         );
@@ -124,7 +132,7 @@ public abstract class AbstractWebController {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
-                        .withHttpStatus(HttpStatus.BAD_REQUEST.toString())
+                        .withHttpStatus(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .build(),
                 HttpStatus.BAD_REQUEST
         );
