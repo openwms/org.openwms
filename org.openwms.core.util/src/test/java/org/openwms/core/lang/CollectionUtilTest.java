@@ -38,7 +38,7 @@ class CollectionUtilTest {
 
     @Test void testGetFirstOrNull() {
         List<String> strings = Arrays.asList("1", "2", "3");
-        assertEquals("Calling with an list should result in the first element", "1", CollectionUtil.getFirstOrNull(strings));
+        assertEquals("1", CollectionUtil.getFirstOrNull(strings), "Calling with an list should result in the first element");
     }
 
     @Test void testAsHashMapWithNull() {

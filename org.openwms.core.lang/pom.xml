@@ -56,6 +56,10 @@
             <groupId>org.openwms</groupId>
             <artifactId>org.openwms.core.util</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.interface21</groupId>
+            <artifactId>ameba-lib</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

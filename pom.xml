@@ -212,17 +212,6 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
-        <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Staging Repository</name>
-            <url>http://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
     </repositories>
 
     <modules>
