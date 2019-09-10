@@ -19,5 +19,5 @@ addons:
     organization: "openwms-github"
 
 script:
-  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR -Psonar,release,travis --settings=./etc/ci/settings.xml; fi
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR -Psonar,release,travis -U --settings=./etc/ci/settings.xml; fi
   - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean deploy -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Prelease,gpg,travis --settings=./etc/ci/settings.xml; fi
