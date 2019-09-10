@@ -8,43 +8,4 @@
             <password>${env.GHTOKEN}</password>
         </server>
     </servers>
-    <profiles>
-        <profile>
-            <id>travis</id>
-
-            <!-- We need to add the repositories within settings.xml because Travis-CI resolves SNAPSHOT dependencies with timestamp. This
-                 breaks the build with enforcer rules. -->
-            <repositories>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Staging Repository</name>
-                    <url>https://oss.sonatype.org/content/groups/staging</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-
-            <pluginRepositories>
-                <!--pluginRepository>
-                    <id>central</id>
-                    <name>Maven Plugin Repository</name>
-                    <url>http://repo.maven.apache.org/maven2</url>
-                </pluginRepository-->
-                <pluginRepository>
-                    <id>typescript-maven-plugin</id>
-                    <url>https://raw.github.com/ppedregal/typescript-maven-plugin/master/repo</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
-        </profile>
-    </profiles>
 </settings>

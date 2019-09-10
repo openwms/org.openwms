@@ -89,26 +89,6 @@
                 </plugins>
             </build>
         </profile>
-
-        <profile>
-            <id>not-travis</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Staging Repository</name>
-                    <url>https://oss.sonatype.org/content/groups/staging</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-        </profile>
     </profiles>
 
     <properties>
@@ -117,8 +97,6 @@
 
         <maven.min.version>3.5.0</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
-        <github.global.server>github</github.global.server>
-        <github.global.oauth2Token>${env.GHTOKEN}</github.global.oauth2Token>
         <!-- Disable lookup of dependency locations in the maven-project-info-reports-plugin -->
         <dependency.locations.enabled>false</dependency.locations.enabled>
 
