@@ -15,59 +15,36 @@
  */
 package org.openwms.core.lang;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * A CollectionUtilTest.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
-public class CollectionUtilTest {
+class CollectionUtilTest {
 
-    /**
-     * Test method for {@link org.openwms.core.lang.CollectionUtil#getFirstOrNull(java.util.List)} .
-     */
-    @Test
-    public final void testGetFirstOrNullWithNull() {
-        assertNull("Calling with null should result in null", CollectionUtil.getFirstOrNull(null));
-        assertNull("Calling with an empty list shall result in null", CollectionUtil.getFirstOrNull(Collections.emptyList()));
+    @Test void testGetFirstOrNullWithNull() {
+        assertNull(CollectionUtil.getFirstOrNull(null), "Calling with null should result in null");
+        assertNull(CollectionUtil.getFirstOrNull(Collections.emptyList()), "Calling with an empty list shall result in null");
     }
 
-    /**
-     * Test method for {@link org.openwms.core.lang.CollectionUtil#getFirstOrNull(java.util.List)} .
-     */
-    @Test
-    public final void testGetFirstOrNull() {
+    @Test void testGetFirstOrNull() {
         List<String> strings = Arrays.asList("1", "2", "3");
         assertEquals("Calling with an list should result in the first element", "1", CollectionUtil.getFirstOrNull(strings));
     }
 
-    /**
-     * Test method for {@link org.openwms.core.lang.CollectionUtil#asHashMap(java.util.List, org.openwms.core.lang.ListExtractor)}
-     * .
-     */
-    @Test
-    public final void testAsHashMapWithNull() {
+    @Test void testAsHashMapWithNull() {
         List<String> strings = Arrays.asList("1", "2", "3");
-        assertEquals("Calling with null should result in an empty map", Collections.EMPTY_MAP, CollectionUtil.asHashMap(null, null));
-        assertEquals("Calling with an empty list shall result in an empty map", Collections.EMPTY_MAP, CollectionUtil.asHashMap(Collections.emptyList(), null));
-        assertEquals("Calling with a list and no extractor shall result in an empty map", Collections.EMPTY_MAP, CollectionUtil.asHashMap(strings, null));
-    }
-
-    /**
-     * Test method for {@link org.openwms.core.lang.CollectionUtil#asHashMap(java.util.List, org.openwms.core.lang.ListExtractor)}
-     * .
-     */
-    @Test
-    public final void testAsHashMap() {
-        // TODO [scherrer] : Fix the implementation of the ugly ListExtractor
-        // interface, it is not convenient to use and complete the test
+        assertEquals(Collections.EMPTY_MAP, CollectionUtil.asHashMap(null, null), "Calling with null should result in an empty map");
+        assertEquals(Collections.EMPTY_MAP, CollectionUtil.asHashMap(Collections.emptyList(), null), "Calling with an empty list shall result in an empty map");
+        assertEquals(Collections.EMPTY_MAP, CollectionUtil.asHashMap(strings, null), "Calling with a list and no extractor shall result in an empty map");
     }
 }

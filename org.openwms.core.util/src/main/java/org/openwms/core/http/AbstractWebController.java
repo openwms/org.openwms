@@ -39,7 +39,7 @@ import javax.validation.ValidationException;
 /**
  * A AbstractWebController.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public abstract class AbstractWebController {
 

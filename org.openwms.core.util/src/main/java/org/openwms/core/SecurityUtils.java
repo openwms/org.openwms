@@ -23,7 +23,7 @@ import java.util.Base64;
 /**
  * A SecurityUtils collects useful functions regarding security aspects.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class SecurityUtils {
 

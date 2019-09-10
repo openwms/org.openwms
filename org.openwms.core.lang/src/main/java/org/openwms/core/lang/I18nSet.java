@@ -22,7 +22,7 @@ import java.io.Serializable;
 /**
  * An I18nSet encapsulates different languages. Used as an embedded value type in {@link I18n}.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Embeddable
 public class I18nSet implements Serializable {

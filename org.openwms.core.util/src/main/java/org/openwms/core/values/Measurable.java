@@ -18,7 +18,7 @@ package org.openwms.core.values;
 /**
  * A Measurable.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface Measurable<V extends Number, E extends Measurable<V, E, T>, T extends BaseUnit<T>> extends Comparable<E> {
 

@@ -23,7 +23,7 @@ import java.lang.annotation.RetentionPolicy;
  * A CorePackage is a marker annotation to link to the current Java package. This is
  * useful for component scanning.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

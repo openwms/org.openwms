@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  * A LocalServiceInitializer raises {@link MergePropertiesEvent}s whenever the OpenWMS
  * OSGi bundle is started or restarted.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Component
 public class LocalServiceInitializer implements ApplicationListener<ContextRefreshedEvent> {

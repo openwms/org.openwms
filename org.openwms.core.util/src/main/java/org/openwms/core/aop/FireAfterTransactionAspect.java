@@ -48,7 +48,7 @@ import java.util.EventObject;
  * The component can be referenced by name {@value #COMPONENT_NAME}.
  * </p>
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Component(FireAfterTransactionAspect.COMPONENT_NAME)
 public class FireAfterTransactionAspect {

@@ -18,7 +18,7 @@ package org.openwms.core.exception;
 /**
  * A WrongClassTypeException.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class WrongClassTypeException extends RuntimeException {
 

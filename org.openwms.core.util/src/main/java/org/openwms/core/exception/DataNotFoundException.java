@@ -25,7 +25,7 @@ import static java.lang.String.format;
  * A DataNotFoundException is thrown to indicate that data was expected but nothing was
  * found.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class DataNotFoundException extends IntegrationLayerException {
 

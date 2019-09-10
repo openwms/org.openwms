@@ -24,7 +24,7 @@ import java.io.Serializable;
  * within the application domain.
  *
  * @author <a href="mailto:russelltina@users.sourceforge.net">Tina Russell</a>
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class RootApplicationEvent extends ApplicationEvent implements Serializable {
 

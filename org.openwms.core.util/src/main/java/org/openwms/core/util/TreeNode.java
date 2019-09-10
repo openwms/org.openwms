@@ -23,7 +23,7 @@ import java.util.Map;
  * A TreeNode to define a tree data structure.
  *
  * @param <T> The type of node.
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface TreeNode<T> extends Serializable {
 

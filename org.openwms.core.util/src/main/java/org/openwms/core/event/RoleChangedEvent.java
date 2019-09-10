@@ -19,7 +19,7 @@ package org.openwms.core.event;
  * A RoleChangedEvent is fired to notify listeners about changes on an <code>Role</code> instance. A listener could probably evict a cache
  * of Roles.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class RoleChangedEvent extends RootApplicationEvent {
 

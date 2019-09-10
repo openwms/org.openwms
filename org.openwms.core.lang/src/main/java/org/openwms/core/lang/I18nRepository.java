@@ -20,7 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * An I18nRepository is used to find and retrieve i18n translations.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 interface I18nRepository extends JpaRepository<I18n, Long> {
 

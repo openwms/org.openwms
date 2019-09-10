@@ -24,7 +24,7 @@ import java.util.Map;
  * A TreeNodeImpl is a simple implementation of a {@link TreeNode}.
  *
  * @param <T> The type of the node
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
 

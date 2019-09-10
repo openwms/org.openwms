@@ -18,7 +18,7 @@ package org.openwms.core.event;
 /**
  * An EventDispatcher dispatches / delivers events to subscribers.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface EventDispatcher extends EventBroker {
 

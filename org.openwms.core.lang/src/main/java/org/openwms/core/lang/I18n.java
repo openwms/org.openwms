@@ -31,7 +31,7 @@ import java.io.Serializable;
 /**
  * An I18n entity stores multiple translations assigned to an unique key.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Entity
 @Table(name = "COR_I18N", uniqueConstraints = @UniqueConstraint(columnNames = {"C_KEY", "C_MODULE_NAME"}))

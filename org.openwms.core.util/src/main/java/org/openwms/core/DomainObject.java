@@ -29,7 +29,7 @@ import java.io.Serializable;
  * </ul>
  *
  * @param <ID> Type of technical key class
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface DomainObject<ID extends Serializable> {
 

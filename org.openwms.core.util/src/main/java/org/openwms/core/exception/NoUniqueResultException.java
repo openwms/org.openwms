@@ -21,7 +21,7 @@ import org.ameba.exception.IntegrationLayerException;
  * A NoUniqueResultException is thrown when a single result was expected but multiple
  * entities were found.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class NoUniqueResultException extends IntegrationLayerException {
 

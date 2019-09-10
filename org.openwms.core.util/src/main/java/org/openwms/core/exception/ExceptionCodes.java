@@ -20,7 +20,7 @@ package org.openwms.core.exception;
  * CORE. The code is not an integer code, like it is in legacy systems, but a descriptive
  * message code, that can be used for translation.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class ExceptionCodes {
 

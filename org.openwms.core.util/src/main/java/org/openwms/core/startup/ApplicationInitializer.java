@@ -27,7 +27,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * profile is {@link SpringProfiles#OSGI}. If not running in an OSGi environment, the
  * profile {@link SpringProfiles#NON_OSGI} is activated - if not already set.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ApplicationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 

@@ -18,7 +18,7 @@ package org.openwms.core.values;
 /**
  * An UnitType is a super type of all concrete units.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface UnitType {
 

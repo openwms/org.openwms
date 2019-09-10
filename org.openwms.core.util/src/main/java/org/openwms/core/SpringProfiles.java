@@ -18,7 +18,7 @@ package org.openwms.core;
 /**
  * A SpringProfiles is a collection of wellknown Spring Profiles used in OpenWMS.org.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class SpringProfiles {
 

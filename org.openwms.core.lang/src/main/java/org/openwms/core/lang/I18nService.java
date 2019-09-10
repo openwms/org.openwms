@@ -18,7 +18,7 @@ package org.openwms.core.lang;
 /**
  * An I18nService is responsible to find and save i18n translations.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 interface I18nService {
 }

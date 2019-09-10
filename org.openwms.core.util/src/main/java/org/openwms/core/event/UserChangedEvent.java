@@ -21,7 +21,7 @@ import java.io.Serializable;
  * An UserChangedEvent is raised to notify about changes on an {@code User} instance. A
  * listener may for instance evict a cache.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class UserChangedEvent extends RootApplicationEvent implements Serializable {
 

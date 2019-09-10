@@ -3,23 +3,21 @@ language: java
 jdk:
   - openjdk8
 
-node_js:
-  - '0.8'
-  - '0.10'
+cache:
+  directories:
+    - .autoconf
+    - $TRAVIS_HOME/.m2
+
+env:
+  global:
+    secure: FcpmWXdR7VgNoG6Q8Oga+HvteAc55EPz8VjTBNF9EruGqq2/Uk23Hftva8RaWl4EVB//05TUVjLvmKosmZG1qnijZTbU9MZYnIqk/C6aNC0iHamBEaoDNdow3fHBbWhEr2KpBsD30r+ZrhK33uq1rg+eA+GVAlQlunG/oAzwEEs=
 
 install: true
-
-before_script:
-  - npm install -g bower
 
 addons:
   sonarcloud:
     organization: "openwms-github"
 
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar --settings=./etc/ci/settings.xml -Prelease,travis -U -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR
-  - sonar-scanner
-
-env:
-  global:
-    secure: FcpmWXdR7VgNoG6Q8Oga+HvteAc55EPz8VjTBNF9EruGqq2/Uk23Hftva8RaWl4EVB//05TUVjLvmKosmZG1qnijZTbU9MZYnIqk/C6aNC0iHamBEaoDNdow3fHBbWhEr2KpBsD30r+ZrhK33uq1rg+eA+GVAlQlunG/oAzwEEs=
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR -Psonar,release,travis --settings=./etc/ci/settings.xml; fi
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean deploy -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Prelease,gpg,travis --settings=./etc/ci/settings.xml; fi

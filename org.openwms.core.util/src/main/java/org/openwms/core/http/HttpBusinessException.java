@@ -21,7 +21,7 @@ import org.springframework.http.HttpStatus;
  * A HttpBusinessException encapsulates well-known BusinessExceptions into exceptions
  * particular to http translation.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class HttpBusinessException extends RuntimeException {
 

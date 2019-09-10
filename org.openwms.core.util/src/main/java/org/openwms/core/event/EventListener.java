@@ -18,7 +18,7 @@ package org.openwms.core.event;
 /**
  * A EventListener.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface EventListener {
 

@@ -22,7 +22,7 @@ package org.openwms.core.values;
  * magnitude and grams is the {@code BaseUnit}. This type is merely used to erase the
  * type declaration.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @SuppressWarnings("rawtypes")
 public interface AbstractMeasure extends Measurable {

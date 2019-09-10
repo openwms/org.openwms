@@ -20,7 +20,7 @@ package org.openwms.core.values;
  * for any kind of BaseUnit types.
  *
  * @param <T> The type of BaseUnit
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface AbstractBaseUnit<T extends AbstractBaseUnit<T>> extends BaseUnit<T> {
 }

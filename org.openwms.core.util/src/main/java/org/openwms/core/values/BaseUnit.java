@@ -23,7 +23,7 @@ import java.util.List;
  * kilograms (KG) or tons (T) and 1G is the base unit.
  *
  * @param <T> Concrete type of BaseUnit
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @GlossaryTerm
  */
 public interface BaseUnit<T extends BaseUnit<T>> {

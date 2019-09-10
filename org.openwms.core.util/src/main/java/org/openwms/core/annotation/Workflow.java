@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 /**
  * A Workflow annotated type is meant to be used in the BPMN workflow as bean.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

@@ -18,7 +18,7 @@ package org.openwms.core.event;
 /**
  * A ReloadFilePreferencesEvent.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ReloadFilePreferencesEvent extends RootApplicationEvent {
 

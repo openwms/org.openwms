@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * A ConfigurationChangedEvent is raised whenever OpenWMS {@code Preferences} change.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ConfigurationChangedEvent extends RootApplicationEvent implements Serializable {
 

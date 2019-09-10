@@ -20,7 +20,7 @@ package org.openwms.core.lang;
  *
  * @param <K> Type of key
  * @param <V> Type of value
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public interface ListExtractor<K, V> {
 

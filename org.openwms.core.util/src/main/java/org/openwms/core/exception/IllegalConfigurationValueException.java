@@ -20,7 +20,7 @@ package org.openwms.core.exception;
  * configured value, usually derived from a configuration file that is maintained by
  * developers or users.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class IllegalConfigurationValueException extends RuntimeException {
 

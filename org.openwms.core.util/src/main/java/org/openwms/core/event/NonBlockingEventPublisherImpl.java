@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 /**
  * A NonBlockingEventPublisherImpl is publishing events asynchronously.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Component(value = NonBlockingEventPublisherImpl.COMPONENT_NAME)
 public class NonBlockingEventPublisherImpl<T extends RootApplicationEvent> implements EventPublisher<T> {

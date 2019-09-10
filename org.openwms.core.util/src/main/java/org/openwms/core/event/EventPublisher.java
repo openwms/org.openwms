@@ -19,7 +19,7 @@ package org.openwms.core.event;
  * An EventPublisher publishes any type of {@link RootApplicationEvent}s to registered
  * {@code EventListener}s.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  * @see EventListener
  */
 public interface EventPublisher<T extends RootApplicationEvent> {

@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * A CollectionUtil.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class CollectionUtil {
 
@@ -58,7 +58,7 @@ public final class CollectionUtil {
      */
     public static <K, V> Map<K, V> asHashMap(List<V> list, ListExtractor<K, V> extractor) {
         if (list == null || extractor == null || list.isEmpty()) {
-            return Collections.<K, V>emptyMap();
+            return Collections.emptyMap();
         }
         Map<K, V> map = new LinkedHashMap<>(list.size());
         for (V node : list) {

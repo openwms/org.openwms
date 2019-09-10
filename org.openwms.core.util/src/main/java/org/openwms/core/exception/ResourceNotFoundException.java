@@ -18,7 +18,7 @@ package org.openwms.core.exception;
 /**
  * A ResourceNotFoundException is thrown when a given resource couldn't be resolved.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class ResourceNotFoundException extends RuntimeException {
 

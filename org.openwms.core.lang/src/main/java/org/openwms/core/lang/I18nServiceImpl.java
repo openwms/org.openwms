@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * An I18nServiceImpl is a transactional Spring managed bean that is responsible to load and save i18n translations.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @TxService
 class I18nServiceImpl implements I18nService {

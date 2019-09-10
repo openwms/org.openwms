@@ -25,7 +25,7 @@ import java.util.EventObject;
 /**
  * A FireAfterTransactionAsynchronous is used to send a list of events asynchronously after the current transaction has finished.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

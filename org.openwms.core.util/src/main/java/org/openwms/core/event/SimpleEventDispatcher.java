@@ -31,7 +31,7 @@ import static java.lang.String.format;
  * in-memory key-value store implementation and calls all subscribers sequentially and
  * synchronously.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 @Component(value = SimpleEventDispatcher.COMPONENT_NAME)
 public class SimpleEventDispatcher implements EventDispatcher {

@@ -22,7 +22,7 @@ import java.util.Objects;
  * A RootNotification is used as super class for notifications within the application
  * domain.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public class RootNotification implements Serializable {
 

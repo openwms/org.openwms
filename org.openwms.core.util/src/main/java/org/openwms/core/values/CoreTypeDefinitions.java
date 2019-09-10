@@ -18,7 +18,7 @@ package org.openwms.core.values;
 /**
  * A CoreTypeDefinitions.
  *
- * @author <a href="mailto:scherrer@openwms.org">Heiko Scherrer</a>
+ * @author Heiko Scherrer
  */
 public final class CoreTypeDefinitions {
 
