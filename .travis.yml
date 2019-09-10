@@ -3,11 +3,6 @@ language: java
 jdk:
   - openjdk8
 
-cache:
-  directories:
-    - .autoconf
-    - $TRAVIS_HOME/.m2
-
 env:
   global:
     secure: FcpmWXdR7VgNoG6Q8Oga+HvteAc55EPz8VjTBNF9EruGqq2/Uk23Hftva8RaWl4EVB//05TUVjLvmKosmZG1qnijZTbU9MZYnIqk/C6aNC0iHamBEaoDNdow3fHBbWhEr2KpBsD30r+ZrhK33uq1rg+eA+GVAlQlunG/oAzwEEs=
