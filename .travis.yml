@@ -3,10 +3,6 @@ language: java
 jdk:
   - openjdk8
 
-env:
-  global:
-    secure: FcpmWXdR7VgNoG6Q8Oga+HvteAc55EPz8VjTBNF9EruGqq2/Uk23Hftva8RaWl4EVB//05TUVjLvmKosmZG1qnijZTbU9MZYnIqk/C6aNC0iHamBEaoDNdow3fHBbWhEr2KpBsD30r+ZrhK33uq1rg+eA+GVAlQlunG/oAzwEEs=
-
 install: true
 
 addons:
@@ -15,4 +11,4 @@ addons:
 
 script:
   - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean package sonar:sonar -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST -Dmaven.test.error.ignore=true -Dmaven.test.failure.ignore=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Ddocumentation.dir=$TRAVIS_BUILD_DIR -Psonar,release,travis -U --settings=./etc/ci/settings.xml; fi
-  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean deploy -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Prelease,gpg,travis --settings=./etc/ci/settings.xml; fi
+  - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean package -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Prelease,gpg,travis --settings=./etc/ci/settings.xml; fi
