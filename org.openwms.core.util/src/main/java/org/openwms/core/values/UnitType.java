@@ -20,6 +20,7 @@ package org.openwms.core.values;
  *
  * @author Heiko Scherrer
  */
+@Deprecated
 public interface UnitType {
 
     /**
