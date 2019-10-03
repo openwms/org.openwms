@@ -12,6 +12,20 @@
     <name>${project.artifactId}</name>
     <description>A project that contains utility classes, exception types, common event types that are used by all other projects.</description>
 
+    <properties>
+        <spring-data-envers.version>${spring-boot.version}</spring-data-envers.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-envers</artifactId>
+                <version>${spring-data-envers.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
@@ -39,7 +53,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-envers</artifactId>
-            <version>2.1.8.RELEASE</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
