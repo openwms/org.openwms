@@ -47,69 +47,53 @@ public abstract class AbstractWebController {
     @Autowired
     private MessageSource messageSource;
 
-    /**
-     * All general exceptions thrown by services are caught here and translated into http conform responses with a status code {@code 500
-     * Internal Server Error}.
-     *
-     * @param ex The exception occurred
-     * @return A response object wraps the server result
-     */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response> handleException(Exception ex) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
-        if (ex instanceof BehaviorAwareException) {
-            BehaviorAwareException bae = (BehaviorAwareException) ex;
-            return new ResponseEntity<>(Response.newBuilder()
-                    .withMessage(bae.getMessage())
-                    .withMessageKey(bae.getMessageKey())
-                    .withHttpStatus(String.valueOf(bae.getStatus().value()))
-                    .withObj(bae.getData())
-                    .build(),
-                    bae.getStatus()
-            );
-
-        }
-        if (ex instanceof BusinessRuntimeException) {
-            BusinessRuntimeException bre = (BusinessRuntimeException) ex;
-            return new ResponseEntity<>(Response.newBuilder()
-                    .withMessage(bre.getMessage())
-                    .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                    .withObj(new String[]{bre.getMessageKey()})
-                    .build(),
-                    HttpStatus.INTERNAL_SERVER_ERROR
-            );
-        }
-        if (ex instanceof HttpBusinessException) {
-            HttpBusinessException e = (HttpBusinessException) ex;
-            return new ResponseEntity<>(Response.newBuilder()
-                    .withMessage(ex.getMessage())
-                    .withHttpStatus(String.valueOf(e.getHttpStatus().value()))
-                    .build(),
-                    e.getHttpStatus()
-            );
-        }
-        if (ex instanceof TechnicalRuntimeException) {
-            return new ResponseEntity<>(Response.newBuilder()
-                    .withMessage(ex.getMessage())
-                    .withHttpStatus(String.valueOf(HttpStatus.BAD_GATEWAY.value()))
-                    .build(),
-                    HttpStatus.BAD_GATEWAY
-            );
-        }
+    @ExceptionHandler(BehaviorAwareException.class)
+    protected ResponseEntity<Response> handleBehaviorAwareException(BehaviorAwareException bae) {
+        EXC_LOGGER.error("[P] Presentation Layer Exception: " + bae.getLocalizedMessage(), bae);
         return new ResponseEntity<>(Response.newBuilder()
-                .withMessage(ex.getMessage())
+                .withMessage(bae.getMessage())
+                .withMessageKey(bae.getMessageKey())
+                .withHttpStatus(String.valueOf(bae.getStatus().value()))
+                .withObj(bae.getData())
+                .build(),
+                bae.getStatus()
+        );
+    }
+
+    @ExceptionHandler(BusinessRuntimeException.class)
+    protected ResponseEntity<Response> handleBusinessRuntimeException(BusinessRuntimeException bre) {
+        EXC_LOGGER.error("[P] Presentation Layer Exception: " + bre.getLocalizedMessage(), bre);
+        return new ResponseEntity<>(Response.newBuilder()
+                .withMessage(bre.getMessage())
                 .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .withObj(new String[]{bre.getMessageKey()})
                 .build(),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 
-    /**
-     * Transform {@link IllegalArgumentException} into a client side error {@code 400 Bad Request} response with the exception's message
-     * text.
-     *
-     * @return A response object wraps the server result
-     */
+    @ExceptionHandler(HttpBusinessException.class)
+    protected ResponseEntity<Response> handleHttpBusinessException(HttpBusinessException hbe) {
+        EXC_LOGGER.error("[P] Presentation Layer Exception: " + hbe.getLocalizedMessage(), hbe);
+        return new ResponseEntity<>(Response.newBuilder()
+                .withMessage(hbe.getMessage())
+                .withHttpStatus(String.valueOf(hbe.getHttpStatus().value()))
+                .build(),
+                hbe.getHttpStatus()
+        );
+    }
+
+    @ExceptionHandler(TechnicalRuntimeException.class)
+    protected ResponseEntity<Response> handleTechnicalRuntimeException(TechnicalRuntimeException tre) {
+        EXC_LOGGER.error("[P] Presentation Layer Exception: " + tre.getLocalizedMessage(), tre);
+        return new ResponseEntity<>(Response.newBuilder()
+                .withMessage(tre.getMessage())
+                .withHttpStatus(String.valueOf(HttpStatus.BAD_GATEWAY.value()))
+                .build(),
+                HttpStatus.BAD_GATEWAY
+        );
+    }
+
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Response> IllegalArgumentException(IllegalArgumentException ex) {
         return new ResponseEntity<>(
@@ -121,20 +105,25 @@ public abstract class AbstractWebController {
         );
     }
 
-    /**
-     * Transform {@link MethodArgumentNotValidException} and {@link ValidationException} into a client side error {@code 400 Bad Request}
-     * response with the proper translated validation error message text.
-     *
-     * @return A response object wraps the server result
-     */
     @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
-    public ResponseEntity<Response> handleValidationException() {
+    protected ResponseEntity<Response> handleValidationException() {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
                         .withHttpStatus(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .build(),
                 HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<Response> handleException(Exception ex) {
+        EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
+        return new ResponseEntity<>(Response.newBuilder()
+                .withMessage(ex.getMessage())
+                .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .build(),
+                HttpStatus.INTERNAL_SERVER_ERROR
         );
     }
 
