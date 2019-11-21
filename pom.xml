@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>12</version>
+        <version>13</version>
         <relativePath></relativePath>
     </parent>
     <artifactId>org.openwms</artifactId>
@@ -95,7 +95,6 @@
         <moduleDir>.</moduleDir>
         <env.all>true</env.all>
 
-        <maven.min.version>3.5.0</maven.min.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
         <!-- Disable lookup of dependency locations in the maven-project-info-reports-plugin -->
         <dependency.locations.enabled>false</dependency.locations.enabled>
@@ -116,35 +115,12 @@
         <pluginManagement>
             <plugins>
                 <plugin>
-                    <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven-enforcer-plugin.version}</version>
-                    <configuration>
-                        <rules>
-                            <requireMavenVersion>
-                                <message>At least Maven in version ${maven.min.version} is
-                                    required.
-                                </message>
-                                <version>${maven.min.version}</version>
-                            </requireMavenVersion>
-                            <requireJavaVersion>
-                                <message>At least a JDK in version ${java.version} is
-                                    required.
-                                </message>
-                                <version>${java.version}</version>
-                            </requireJavaVersion>
-                            <DependencyConvergence/>
-                        </rules>
-                    </configuration>
-                </plugin>
-
-                <plugin>
                     <artifactId>maven-war-plugin</artifactId>
                     <version>${maven-war-plugin.version}</version>
                     <configuration>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>com.github.github</groupId>
                     <artifactId>site-maven-plugin</artifactId>
@@ -167,16 +143,6 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-messaging</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <repositories>
         <repository>
