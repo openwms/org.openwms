@@ -95,9 +95,6 @@
         <!-- Disable lookup of dependency locations in the maven-project-info-reports-plugin -->
         <dependency.locations.enabled>false</dependency.locations.enabled>
 
-        <!-- Used to make the Maven description property available from Bundlor -->
-        <project.description>${project.description}</project.description>
-
         <!-- Dependency versions -->
         <jdbc.oracle.version>6.0.0</jdbc.oracle.version>
         <ms.group>NULL</ms.group>
