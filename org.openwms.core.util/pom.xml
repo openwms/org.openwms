@@ -9,7 +9,7 @@
         <version>1.7.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.util</artifactId>
-    <name>${project.artifactId}</name>
+    <name>OpenWMS.org CORE: Utilities Library</name>
     <description>A project that contains utility classes, exception types, common event types that are used by all other projects.</description>
 
     <dependencies>

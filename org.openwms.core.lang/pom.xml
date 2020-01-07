@@ -9,7 +9,7 @@
         <version>1.7.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.openwms.core.lang</artifactId>
-    <name>${project.artifactId}</name>
+    <name>OpenWMS.org CORE: I18n Service</name>
     <description>OpenWMS.org :: CORE :: Internationalisation and Localisation services</description>
 
     <properties>
