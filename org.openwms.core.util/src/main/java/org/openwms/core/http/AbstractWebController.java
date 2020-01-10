@@ -35,6 +35,7 @@ import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
+import java.net.URI;
 
 /**
  * A AbstractWebController.
@@ -212,11 +213,20 @@ public abstract class AbstractWebController {
      *
      * @param req The HttpServletRequest object
      * @param objId The ID to append
-     * @return The complete appended URL
+     * @return The complete appended URL as String
      */
     protected String getLocationForCreatedResource(HttpServletRequest req, String objId) {
-        StringBuffer url = req.getRequestURL();
-        UriTemplate template = new UriTemplate(url.append("/{objId}/").toString());
-        return template.expand(objId).toASCIIString();
+        return getLocationURIForCreatedResource(req, objId).toASCIIString();
+    }
+
+    /**
+     * Append the ID of the object that was created to the original request URL and return it.
+     *
+     * @param req The HttpServletRequest object
+     * @param objId The ID to append
+     * @return The complete appended URL
+     */
+    protected URI getLocationURIForCreatedResource(HttpServletRequest req, String objId) {
+        return new UriTemplate(req.getRequestURL().append("/{objId}/").toString()).expand(objId);
     }
 }
