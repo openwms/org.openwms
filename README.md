@@ -66,7 +66,7 @@ run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 | ![2]      | ![3]      | ![4]      | ![5]      | ![6]      | ![7]      | ![8]      | ![9]      | 
 
 
-| [![11]][10g] [![12]][10w] |
+| [![11]][10g] [![12]] |
 | :------------- | 
 |  ![10]         | 
 
@@ -93,30 +93,29 @@ Notice: This task requires upload permissions and is done by the project maintai
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: src/docs/res/srv-uaa.png
 [2g]: https://github.com/openwms/org.openwms.core.uaa
-[2w]: https://www.interface21.io/docs/core/uaa/index.html
+[2w]: https://openwms.github.io/org.openwms.core.uaa/index.html
 [3]: src/docs/res/srv-prefs.png
 [3g]: https://github.com/openwms/org.openwms.core.preferences
-[3w]: https://www.interface21.io/docs/core/preferences/index.html
+[3w]: https://openwms.github.io/org.openwms.core.preferences/index.html
 [4]: src/docs/res/srv-location.png
 [4g]: https://github.com/openwms/org.openwms.common.service
-[4w]: https://www.interface21.io/docs/common/base/index.html
+[4w]: https://openwms.github.io/org.openwms.common.service/index.html
 [5]: src/docs/res/srv-tcp.png
 [5g]: https://github.com/openwms/org.openwms.common.comm
 [5w]: https://www.interface21.io/docs/common/comm/index.html
 [6]: src/docs/res/srv-transportation.png
 [6g]: https://github.com/openwms/org.openwms.tms.transportation
-[6w]: https://www.interface21.io/docs/tms/transportation/index.html
+[6w]: https://openwms.github.io/org.openwms.tms.transportation/index.html
 [7]: src/docs/res/srv-routing.png
 [7g]: https://github.com/openwms/org.openwms.tms.routing
-[7w]: https://www.interface21.io/docs/tms/routing/index.html
+[7w]: https://openwms.github.io/org.openwms.tms.routing/index.html
 [8]: src/docs/res/srv-inventory.png
 [8g]: https://github.com/openwms/org.openwms.wms.inventory
-[8w]: https://www.interface21.io/docs/wms/inventory/index.html
+[8w]: https://openwms.github.io/org.openwms.wms.inventory/index.html
 [9]: src/docs/res/srv-shipping.png
 [9g]: https://github.com/openwms/org.openwms.wms.shipping
-[9w]: https://www.interface21.io/docs/wms/shipping/index.html
+[9w]: https://openwms.github.io/org.openwms.wms.shipping/index.html
 [10]: src/docs/res/srv-receiving.png
 [10g]: https://github.com/openwms/org.openwms.wms.receiving
-[10w]: https://www.interface21.io/docs/wms/receiving/index.html
 [11]: src/docs/res/github-b.png
 [12]: src/docs/res/website-b.png
