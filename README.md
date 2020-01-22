@@ -70,11 +70,25 @@ run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 | :------------- | 
 |  ![10]         | 
 
+# Build
+
+To simply build the base libraryies call:
+
+```
+$ mvn package
+```
+
+Most often you don't need to build the libraries here but fetch them from Maven Central as part of the Microservices referenced above.
+
 # Release
+
+To build a release version and upload artefacts to Maven Central call:
 
 ```
 $ mvn clean deploy -Prelease,gpg
 ```
+
+Notice: This task requires upload permissions and is done by the project maintainers.
 
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: src/docs/res/srv-uaa.png
