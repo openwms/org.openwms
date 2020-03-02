@@ -87,92 +87,92 @@
 									</div>
 								</section>
 
-							<section>
-								<header class="major">
-									<h2 id="hub">Microservice Hub</h2>
-								</header>
-								<p>As we've built a couple of microservices, we find it reasonable to create a central website where all microservices are listed and explained in detail.
-									Beside a functional service description each microservice' website contains informtion about how a service consumer can access and use the outer public API.
-									This API documentation explains how to operate with the exposed resources and describes the interaction model, how service calls can be combined to fulfill
-									common use cases.
-								</p>
-								<p>
-									We differentiate between RTU and BYO services. The former <strong>ready-to-use</strong> services are already deployed in the public cloud and require valid access
-									tokens for access. The latter <strong>build-your-own</strong> services are not installed and not online available. For all online services an account registration
-									is required.
-								</p>
-								<p>
-									Online services may guarantee <a href="https://en.wikipedia.org/wiki/Service-level_agreement" target="_blank">SLA</a> depending on the non-functional service
-									requirements and based on their runtime environment. Some services (like the service registry and configuration service) run in a geo distributed cluster on
-									different <a href="https://en.wikipedia.org/wiki/Platform_as_a_service" target="_blank">PaaS</a> platforms (e.g. Heroku Cloud and OpenShift Cluster) to achieve
-									a high degree of availability. The SLA are defined by the service itself and documented on the service website.
-								</p>
-								<p>The <strong>Public Microservice Hub</strong>.<br/>
-									<table style="text-align:center">
-										<tr>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.core.uaa/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-uaa.png" /></a>
-											</td>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.core.preferences/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-prefs.png" /></a>
-											</td>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.common.service/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-location.png" /></a>
-											</td>
-											<td>
-												<a href="https://www.interface21.io/docs/common/comm/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-tcp.png" /></a>
-											</td>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.tms.transportation/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-transportation.png" /></a>
-											</td>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.tms.routing/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-routing.png" /></a>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.wms.inventory/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-inventory.png" /></a>
-											</td>
-											<td>
-												<a href="https://openwms.github.io/org.openwms.wms.shipping/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-shipping.png" /></a>
-											</td>
-											<td>
-												<!--a href="https://www.interface21.io/docs/wms/receiving/index.html" target="_blank"--><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-receiving.png" /><!--/a-->
-											</td>
-											<td></td>
-											<td></td>
-											<td></td>
-										</tr>
-									</table>
-								</p>
-								<p><strong>Private</strong> services.<br/>
-									<table style="text-align:center">
-										<tr>
-											<td>
-												<a href="https://www.interface21.io/docs/stamplets/stamplet/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-stamplet.png" /></a>
-											</td>
-										</tr>
-									</table>
-								</p>
-							</section>
-
-							<section>
-								<header class="major">
-									<h2 id="sreq">Deployment Scenarios</h2>
-								</header>
-								<p>A typical customer project built with OpenWMS.org is usually a composition of microservices to fulfill the functional requirements. Whereas a service may run
-									in the cloud or on premise customer side. This mainly depends on the quality requirements of the project. For example, a service like the tcp/ip
-									driver must obviously run with low latency close to the automation systems layer whereas and UI services may easily run off-side.</p>
-								<p>OpenWMS.org is designed to run in four deployment models</p>
-								<ul>
-									<li><strong>Cloud</strong><p>All microservices run off-site in the cloud and may shared with other customers. Service access is secured but no QoS are defined.</p></li>
-									<li><strong>Fog</strong><p>All microservices run on-side in the private cloud and are solely dedicated to the customer project.</p></li>
-									<li><strong>Hybrid</strong><p>In a combination of Cloud and Fog deployment, some common shared services may reside on the public cloud where other mission critical of time critical
-										services run locally in the private cloud</p></li>
-									<li><strong>Monolith</strong><p>All microservices are packaged into a single monolithic deployment unit that runs on traditional application services. Notice that in this
-										scenario elasticity is only available on infrastructure level (IaaS) not on service level.</p></li>
-								</ul>
-							</section>
+								<section>
+									<header class="major">
+										<h2 id="sreq">Deployment Scenarios</h2>
+									</header>
+									<p>A typical customer project built with OpenWMS.org is usually a composition of microservices to fulfill the functional requirements. Whereas a service may run
+										in the cloud or on premise customer side. This mainly depends on the quality requirements of the project. For example, a service like the tcp/ip
+										driver must obviously run with low latency close to the automation systems layer whereas and UI services may easily run off-side.</p>
+									<p>OpenWMS.org is designed to run in four deployment models</p>
+									<ul>
+										<li><strong>Cloud</strong><p>All microservices run off-site in the cloud and may shared with other customers. Service access is secured but no QoS are defined.</p></li>
+										<li><strong>Fog</strong><p>All microservices run on-side in the private cloud and are solely dedicated to the customer project.</p></li>
+										<li><strong>Hybrid</strong><p>In a combination of Cloud and Fog deployment, some common shared services may reside on the public cloud where other mission critical of time critical
+											services run locally in the private cloud</p></li>
+										<li><strong>Monolith</strong><p>All microservices are packaged into a single monolithic deployment unit that runs on traditional application services. Notice that in this
+											scenario elasticity is only available on infrastructure level (IaaS) not on service level.</p></li>
+									</ul>
+								</section>
+	
+								<section>
+									<header class="major">
+										<h2 id="hub">Microservice Hub</h2>
+									</header>
+									<p>As we've built a couple of microservices, we find it reasonable to create a central website where all microservices are listed and explained in detail.
+										Beside a functional service description each microservice' website contains informtion about how a service consumer can access and use the outer public API.
+										This API documentation explains how to operate with the exposed resources and describes the interaction model, how service calls can be combined to fulfill
+										common use cases.
+									</p>
+									<p>
+										We differentiate between RTU and BYO services. The former <strong>ready-to-use</strong> services are already deployed in the public cloud and require valid access
+										tokens for access. The latter <strong>build-your-own</strong> services are not installed and not online available. For all online services an account registration
+										is required.
+									</p>
+									<p>
+										Online services may guarantee <a href="https://en.wikipedia.org/wiki/Service-level_agreement" target="_blank">SLA</a> depending on the non-functional service
+										requirements and based on their runtime environment. Some services (like the service registry and configuration service) run in a geo distributed cluster on
+										different <a href="https://en.wikipedia.org/wiki/Platform_as_a_service" target="_blank">PaaS</a> platforms (e.g. Heroku Cloud and OpenShift Cluster) to achieve
+										a high degree of availability. The SLA are defined by the service itself and documented on the service website.
+									</p>
+									<p>The <strong>Public Microservice Hub</strong>.<br/>
+										<table style="text-align:center">
+											<tr>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.core.uaa/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-uaa.png" /></a>
+												</td>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.core.preferences/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-prefs.png" /></a>
+												</td>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.common.service/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-location.png" /></a>
+												</td>
+												<td>
+													<a href="https://www.interface21.io/docs/common/comm/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-tcp.png" /></a>
+												</td>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.tms.transportation/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-transportation.png" /></a>
+												</td>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.tms.routing/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-routing.png" /></a>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.wms.inventory/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-inventory.png" /></a>
+												</td>
+												<td>
+													<a href="https://openwms.github.io/org.openwms.wms.shipping/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-shipping.png" /></a>
+												</td>
+												<td>
+													<!--a href="https://www.interface21.io/docs/wms/receiving/index.html" target="_blank"--><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-receiving.png" /><!--/a-->
+												</td>
+												<td></td>
+												<td></td>
+												<td></td>
+											</tr>
+										</table>
+									</p>
+									<p><strong>Private</strong> services.<br/>
+										<table style="text-align:center">
+											<tr>
+												<td>
+													<a href="https://www.interface21.io/docs/stamplets/stamplet/index.html" target="_blank"><img src="https://github.com/openwms/org.openwms/raw/master/src/docs/res/srv-stamplet.png" /></a>
+												</td>
+											</tr>
+										</table>
+									</p>
+								</section>
 
 							<!-- Section -->
 								<!--section>
@@ -308,13 +308,13 @@
 											<span class="opener">Developers Section</span>
 											<ul>
 												<li><a href="https://sonarcloud.io/organizations/openwms-github/projects" target="_blank">SonarQube Quality Center</a></li>
-												<li><a href="https://openwms.atlassian.net" target="_blank">Issue Tracker</a></li>
+												<li><a href="https://openwms.atlassian.net/secure/Dashboard.jspa" target="_blank">Issue Tracker</a></li>
 												<li><a href="https://openwms.atlassian.net/wiki" target="_blank">Wiki</a></li>
 												<li><a href="https://travis-ci.com/openwms" target="_blank">Travis-ci.com CI/CD</a></li>
 												<li><a href="https://travis-ci.org/openwms" target="_blank">Travis-ci.org CI/CD</a></li>
 											</ul>
 										</li>
-										<li><a href="https://openwms.mooo.com/app/kibana" target="_blank">Live Tracing</a></li>
+										<!--li><a href="https://openwms.mooo.com/app/kibana" target="_blank">Live Tracing</a></li-->
 										<li>
 											<span class="opener">Project Infos</span>
 											<ul>
@@ -374,7 +374,7 @@
 
 							<!-- Footer -->
 								<footer id="footer">
-									<p class="copyright">&copy; Interface21.io. All rights reserved.</p>
+									<p class="copyright">&copy;2020 Interface21.io. All rights reserved.</p>
 								</footer>
 
 						</div>
