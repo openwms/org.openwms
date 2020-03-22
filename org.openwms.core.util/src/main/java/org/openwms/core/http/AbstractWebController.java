@@ -66,8 +66,9 @@ public abstract class AbstractWebController {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + bre.getLocalizedMessage(), bre);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(bre.getMessage())
+                .withMessageKey(bre.getMessageKey())
                 .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
-                .withObj(new String[]{bre.getMessageKey()})
+                .withObj(bre.getData())
                 .build(),
                 HttpStatus.INTERNAL_SERVER_ERROR
         );
@@ -89,7 +90,9 @@ public abstract class AbstractWebController {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + tre.getLocalizedMessage(), tre);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(tre.getMessage())
+                .withMessageKey(tre.getMessageKey())
                 .withHttpStatus(String.valueOf(HttpStatus.BAD_GATEWAY.value()))
+                .withObj(tre.getData())
                 .build(),
                 HttpStatus.BAD_GATEWAY
         );
