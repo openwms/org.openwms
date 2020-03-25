@@ -31,6 +31,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,13 +65,15 @@ public abstract class AbstractWebController {
     @ExceptionHandler(BusinessRuntimeException.class)
     protected ResponseEntity<Response> handleBusinessRuntimeException(BusinessRuntimeException bre) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + bre.getLocalizedMessage(), bre);
+        ResponseStatus annotation = bre.getClass().getAnnotation(ResponseStatus.class);
+        HttpStatus status = annotation != null ? annotation.value() : HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(bre.getMessage())
                 .withMessageKey(bre.getMessageKey())
-                .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
+                .withHttpStatus(String.valueOf(status.value()))
                 .withObj(bre.getData())
                 .build(),
-                HttpStatus.INTERNAL_SERVER_ERROR
+                status
         );
     }
 
