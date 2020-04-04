@@ -1,2 +1,2 @@
 #!/bin/bash
-unzip ./doc/docToolchain.zip
+unzip ./doc/docToolchain.zip -d ./doc
