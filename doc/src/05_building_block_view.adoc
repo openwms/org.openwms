@@ -1,0 +1,265 @@
+[[section-building-block-view]]
+
+
+== Building Block View
+
+=== The Abstract View
+
+OpenWMS.org is made up microservices that communicate between each other in a variety of protocols either in synchronous or asynchronous
+style. A directed synchronous communication should always happen from north to south and west to east, whereas asynchronous events, commands
+and messages may be interchanged in all directions to get information populated across the whole system.
+
+[#img-05-direction]
+.Callgraph and informationflow between the four OpenWMS.org domains
+image::05_direction-EN.png["Callgraph and Informationflow"]
+
+**Contained Building Blocks**
+[cols="1,2" options="header"]
+
+|===
+| **Component** | **Responsibility**
+| ERP           | The external Enterprise Resource Planning system is the host that sends higher level warehouse orders. Not part of
+OpenWMS.org
+| WMS Domain    | The Warehouse Management System is the layer that interacts with the ERP and implements all common warehouse processes,
+like Receiving, Shipping, Inventory, Picking etc.
+| TMS Domain    | The Transport Management System implements the Material Flow Control (MFC) in automatic warehouses and also the processes
+used in manual warehouses
+| COMMON Domain | This layer contains all essential processes and services for every warehouse solution, no matter if automatic or manual
+warehouses, with or without a WMS layer. These services are always part of each customer project
+| CORE Domain   | The CORE domain contains infrastructure components, that are not specific to warehouse projects and can also be used in
+other arbitrary projects. Most of these services are optional to use and depend on the deployment scenario
+| Subsystems    | Subsystems do not belong to OpenWMS.org, but are communication partners like PLC (Programmable Logic Controllers), scale
+units, robots etc.
+|===
+
+=== The Information Flow View
+Each of the OpenWMS.org services can be assigned to one of the four domains: *CORE*, *COMMON*, *TMS* or *WMS*. A more concrete view with
+seven often used microservices looks like below. Notice that the information flow is visualized not the dependency graph. *WMS* services are
+not directly called from services of the *COMMON* or *TMS* domain.
+
+[#img-05-bb-L0]
+.Informationflow between 7 OpenWMS.org microservices
+image::05_building_blocks_L0-EN.png["Building Blocks Level 0"]
+
+|===
+| **Component** | **Responsibility**
+| COMMON Service           | Manages `Locations`, `LocationGroups`, `TransportUnits` and other essential domain objects that exist in
+every warehouse solution.
+
+The COMMON Service does not know about other surrounding services but sends out information to its outer components
+| TMS Service   | Tracks the movement of `TransportUnits` with `TransportOrders` in automatic warehouses. The service directly uses the
+interfaces of the COMMON Service
+| COMMON Driver | This is the TCP/IP driver component used to communicate to subsystems that implements the https://interface21-io.gitbook.io/osip/[OSIP]
+protocol. It forwards incoming messages to a routing component, like TMS Routing in an automatic warehouse
+| TMS Routing   | This is a routing component used in automatic warehouses where actually the material flow control logic is defined. For
+this it uses many API of other services indirectly
+| WMS Inventory | This service is responsible to manage warehouse inventory, like `Products` and is mainly triggered by changes in other
+components
+| WMS Receiving | Warehouse receiving processes, like receipt announcements are implemented and processed here. It consumes events from
+other services and directly calls API of others
+| WMS Shipping  | Contains warehouse shipping processes that trigger movements
+|===
+
+**Contained Building Blocks**
+[cols="1,2" options="header"]
+|===
+| **Component** | **Responsibility**
+| Location Management | Functional building block to manage Locations and LocationGroups
+| Transport Management | Functional building block to manage TransportUnits and TransportUnitTypes
+| app | A package that contains lifecylce components of the Common Service, without any business value
+| Location Tables | A set of database tables belong and accessed by the Location Management
+| Transport Tables | A set of database tables belong and accessed by the Transport Management
+|===
+
+=== The Messaging Whitebox View
+
+Lets have a closer look and look inside the microservices to see how they interact between each other. Only the asynchronous communication path
+is shown with the messaging components like Message Filters, Message Queues and routing information.
+
+[#img-05-bb-L1]
+.Insight of communication between the 7 OpenWMS.org microservices
+image::05_building_blocks_L1-EN.png["Building Blocks Level 1"]
+
+Important to notice is the component who owns a shared resource. Basically queues are never shared and always kept by the service internally.
+But intermediary components like Routers or Filters (here RabbitMQ exchanges) need to be accessed from both communication partners, hence a
+clear ownership must be defined. As an example take the exchange with name `common.tu.commands` into account. This is owned by the
+COMMON Service and used as an inbox _and_ outbox for command messages. Consumers interested in outgoing commands may subscribe a queue to
+this exchange to gets updates on cache evicts or to send commands to create data managed by the COMMON service. The command structure itself
+is also given by the COMMON service.
+
+=== Whitebox: Common Service
+
+[role="arc42help"]
+****
+Here you describe the decomposition of the overall system using the following white box template. It contains
+
+ * an overview diagram
+ * a motivation for the decomposition
+ * black box descriptions of the contained building blocks. For these we offer you alternatives:
+
+   ** use _one_ table for a short and pragmatic overview of all contained building blocks and their interfaces
+   ** use a list of black box descriptions of the building blocks according to the black box template (see below).
+   Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).
+
+
+ * (optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
+Since there are so many ways to specify interfaces why do not provide a specific template for them.
+ In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
+ restrictions, versions, qualities, necessary compatibilities and many things more.
+In the best case you will get away with examples or simple signatures.
+
+****
+
+image:05-whitebox_L1-EN.png["Whitebox View Level1"]
+
+**Motivation**
+Present a rough overview on how the Common Service is built internally. The service basically consists of two major functional components,
+one to manage Locations and LocationGroups and one to manage TransportUnits.
+
+
+
+**Important Interfaces**
+[cols="1,2" options="header"]
+|===
+| **Interface** | **Description**
+| REST API | The public REST API is comprised of the Location Management API, the Transport Management API and an Index that lists and delegated to those two
+| Async Command API | The asnychronous Command API is exposed to trigger actions on the Location- and Transport Management resources
+|===
+
+[role="arc42help"]
+****
+
+Insert your explanations of black boxes from level 1:
+
+If you use tabular form you will only describe your black boxes with name and
+responsibility according to the following schema:
+
+[cols="1,2" options="header"]
+|===
+| **Name** | **Responsibility**
+| _<black box 1>_ | _<Text>_
+| _<black box 2>_ | _<Text>_
+|===
+
+
+
+If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
+Its headline is the name of the black box.
+****
+
+
+==== Component: Location Management>
+
+image:05-whitebox_L2-EN.png["Whitebox View: location management"]
+
+[role="arc42help"]
+****
+Here you describe <black box 1>
+according the the following black box template:
+
+* Purpose/Responsibility
+* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
+* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
+* (Optional) directory/file location
+* (Optional) Fulfilled requirements (if you need traceability to requirements).
+* (Optional) Open issues/problems/risks
+
+****
+
+_<Purpose/Responsibility>_
+
+_<Interface(s)>_
+
+_<(Optional) Quality/Performance Characteristics>_
+
+_<(Optional) Directory/File Location>_
+
+_<(Optional) Fulfilled Requirements>_
+
+_<(optional) Open Issues/Problems/Risks>_
+
+
+
+
+==== <Name black box 2>
+
+_<black box template>_
+
+==== <Name black box n>
+
+_<black box template>_
+
+
+==== <Name interface 1>
+
+...
+
+==== <Name interface m>
+
+
+
+=== Level 2
+
+[role="arc42help"]
+****
+Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
+
+You have to decide which building blocks of your system are important enough to justify such a detailed description.
+Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
+Leave out normal, simple, boring or standardized parts of your system
+****
+
+==== White Box _<building block 1>_
+
+[role="arc42help"]
+****
+...describes the internal structure of _building block 1_.
+****
+
+_<white box template>_
+
+==== White Box _<building block 2>_
+
+
+_<white box template>_
+
+...
+
+==== White Box _<building block m>_
+
+
+_<white box template>_
+
+
+
+=== Level 3
+
+[role="arc42help"]
+****
+Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
+
+When you need more detailed levels of your architecture please copy this
+part of arc42 for additional levels.
+****
+
+
+==== White Box <_building block x.1_>
+
+[role="arc42help"]
+****
+Specifies the internal structure of _building block x.1_.
+****
+
+
+_<white box template>_
+
+
+==== White Box <_building block x.2_>
+
+_<white box template>_
+
+
+
+==== White Box <_building block y.1_>
+
+_<white box template>_

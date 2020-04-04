@@ -1,0 +1,74 @@
+[[section-introduction-and-goals]]
+== Introduction and Goals
+
+**OpenWMS.org** is a _flexible_ and _free-to-use_ warehouse management and material flow control system. It is _flexible_ because it can be
+tailored depending on the required functionality in the actual customer project. If, for example, a warehouse management is not required,
+this functionality can simply be omitted. Even more fine-grained tailoring is possible. If a project does not require Picking processes, the
+OpenWMS.org WMS Picking Service can be omitted either. +
+**OpenWMS.org** is _free-to-use_ because the sourcecode is available as opensource under the http://www.apache.org/licenses[Apache 2.0 opensource license].
+Hence consultancies, integrators or any other development team can download the software as source or pre-built container images, customize
+it for the end-customer projects need and sell it with the project.
+
+=== Business Drivers & Goals
+
+Because the software is free-to-use there is not a superficial business model for the authors. What is the business driver or goals of this
+project? The authors offer consulting, coaching as well as development services based on OpenWMS.org.
+
+[quote]
+The driver for the authors is to make OpenWMS.org a widely used framework to build projects in the intralogistics domain with.
+
+The business goal is to even extend this vision to make OpenWMS.org a **disruptive software framework** in the warehouse management and
+logistics software and to replace any other closed source warehouse management and material flow control software.
+
+=== Requirements Overview
+
+The most important functional requirements of the OpenWMS.org project.
+
+* OpenWMS.org must offer a Material Flow Control (MFC) solution for automated warehouses and should also provide a base solution for manual
+warehouses
+
+* OpenWMS.org must provide WMS modules for the basic warehouse management processes that can be used as-is or as a base for custom
+implementations
+
+The existing and upcoming functionality of OpenWMS.org is comprised by the issues tracked in GitHubs issue tracker. Notice, that most of the
+requirements target on particular microservices only and are therefor directly put in one microservice' issue trackers.
+
+[role="owmsExpand"]
+****
+Last 100 issues of the OpenWMS.org basesystem, almost touching more that one microservice
+[options="header"]
+|===
+| Issue ID | State | Assigned Milestone | Title
+include::allGitHubIssues.adoc[]
+|===
+****
+
+=== Quality Goals
+
+* OpenWMS.org must be built flexible and customizable enough to be tailorable in each particular project to the required functionality
+
+* Building applications, solutions and projects on top of OpenWMS.org must be painful and simple as possible in order to reduce the effort
+in customer projects
+
+* Solutions based on OpenWMS.org must support Cloud and On-Premise deployment scenarios
+
+* Systems built on OpenWMS.org must behave in a consistent and reliable manner. Data loss and deadlock situations must always be prevented
+
+[role="arc42help"]
+****
+.Contents
+The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don't confuse them with project goals. They are not necessarily identical.
+
+.Motivation
+You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
+If you as an architect do not know how the quality of your work will be judged …
+
+.Form
+A table with quality goals and concrete scenarios, ordered by priorities
+****
+
+[cols="1,2,3,4,5" options="header"]
+|===
+| **Priority** | **Characteristic** | **Scenario**
+|  |  |
+|===
