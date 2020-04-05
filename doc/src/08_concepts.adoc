@@ -1,15 +1,13 @@
 [[section-concepts]]
 == Cross-cutting Concepts
 
-
-
 === Interoperability
-
 Communication between microservices is essential. Likewise the communication format, the protocol, is essential and absolutely required to
 use a well-defined structure that both communication partners, provider and consumer, understand.
 
 Three kind of communication formats must be considered.
 
+[#informtion-data]
 ==== Information Data
 The actual transferred business payload between two services is the common case of microservice communication. The service provider is in
 the role of upstream service and feeds all consuming services (aka. downstream services). *Hence the provider narrows the protocol and data
@@ -60,7 +58,7 @@ that the format is baked into and driven by Spring Boot and may change between m
 Therefor a RFC was initiated, the Problem Details for HTTP APIs (RFC7807). By applying this RFC to all OpenWMS microservice implementations
 we ensure that we align to a standardized but flexible and extendable format.
 
-[source]
+[source,json]
 ----
 {
     "type": "https://api.openwms.dev/meta/v1/error/AlreadyExistsException",
@@ -86,3 +84,24 @@ we ensure that we align to a standardized but flexible and extendable format.
     "message": "JWT expired at 2019-09-11T13:30:41Z. Current time: 2019-09-11T13:43:27Z"
 }
 ----
+
+==== Communication Structures
+This chapter describes how microservices communicate between each other. Basically two communication patterns are used:
+
+* synchronous communication with REST API and
+* asynchronous communication via RabbitMQ message broker
+
+In all REST API the DTO (Data Transfer Objects) are called VO (View Objects), like the `LocationVO`, `LocationGroupVO` etc. These type of
+classes may include hypermedia links, JSON mapping annotation etc. All those things handy for communication over HTTP.
+
+When microservices use asynchronous messaging, the proposed data format over the wire is JSON, but also a byte array stream is possible.
+JSON is better suited because it is independent from the microservice implementation technology and can be read by any language like Java,
+.NET, C and many others.
+
+In all microservices built with Java, the data structures are MO (Message Objects) that are exchanged between parties. A MO is a simple DTO
+that encapsulates relevant data, like the `LocationMO`.
+
+On consumer side the MO as well as VO need to be translated into internal structures and must not be used internally (see <<informtion-data,chapter about ACL>>)
+
+A microservice may use internal synchronous eventing through out the Spring `ApplicationContext`. The events used internally must not be
+propagated to the outside of the microservice and must be converted into a MO or VO first.
