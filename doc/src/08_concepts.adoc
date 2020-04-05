@@ -3,18 +3,86 @@
 
 
 
-=== _<Concept 1>_
+=== Interoperability
 
-_<explanation>_
+Communication between microservices is essential. Likewise the communication format, the protocol, is essential and absolutely required to
+use a well-defined structure that both communication partners, provider and consumer, understand.
 
+Three kind of communication formats must be considered.
 
+==== Information Data
+The actual transferred business payload between two services is the common case of microservice communication. The service provider is in
+the role of upstream service and feeds all consuming services (aka. downstream services). *Hence the provider narrows the protocol and data
+structures that are possible for the communication*. But the consumer may choose between options, like different representation formats
+(JSON, XML, vendor specific, etc.) or transport protocols.
 
-=== _<Concept 2>_
+[#img-05-bb-L1]
+.Information Flow
+image::08-IOP-InFlow.png.png["Interoperability Information Flow"]
 
-_<explanation>_
+The consumer is responsible to transform the received structures into it’s own internal used data structures. This often happens in a
+so-called ACL (Anti Corruption layer).
 
-...
+==== Context Data
+Beside the actual business payload context relevant information must be transmitted as part of each microservice communication. For example
+this is relevant to trace calls within a call chain and particular to support operationability and monitoring of a distributed system.
 
-=== _<Concept n>_
+This contextual data is not specific to each microservice, like information data is, but has to follow a common structure that is applied in
+every microservice implementation. Each microservice acts as consumer and additional as producer, respectively enricher, of context data.
+Finally the transferred information must be sufficient to feed external monitoring systems with.
 
-_<explanation>_
+*Context data of OpenWMS microservices is transferred in headers, either HTTP headers or RabbitMQ headers*.
+
+==== Failure Data
+In failure situations a microservice might not respond with self-defined information data structure but with failure or error responses. The
+structure and the protocol of these error responses must be consist across all microservices in order to establish communication even in
+case of errors. As an example: It is not an option that Service A returns an error response to Service B that cannot be processed by
+Service B because the protocol or format is unknown to Service B.
+
+With OpenWMS we use Spring Boot as implementation framework. Spring Boot already comes with it’s own format like it exposes errors to API
+consumers. For REST API over HTTP a typical Spring Boot error response looks like this:
+
+[source,json,linenums]
+----
+{
+    "timestamp": 1568208641323,
+    "status": 500,
+    "error": "Internal Server Error",
+    "exception": "org.ameba.oauth2.InvalidTokenException",
+    "message": "JWT expired at 2019-09-11T13:30:41Z. Current time: 2019-09-11T13:43:27Z",
+    "path": "/transport-units/S000005270119225"
+}
+----
+
+This works well with Spring Boot consumers on the client side. Even clients in JavaScript can deal with this format. *The problem here is,
+that the format is baked into and driven by Spring Boot and may change between mayor framework releases*.
+
+Therefor a RFC was initiated, the Problem Details for HTTP APIs (RFC7807). By applying this RFC to all OpenWMS microservice implementations
+we ensure that we align to a standardized but flexible and extendable format.
+
+[source,json,linenums]
+----
+{
+    "type": "https://api.openwms.dev/meta/v1/error/AlreadyExistsException",
+    "title": "AlreadyExistsException",
+    "status": 500,
+    "detail": "The TransportUnit with Barcode [S000005270119225] already exists and cannot be created",
+    "messageKey": "E0033",
+    "messageLanguage": "en-US",
+    "messageCategory": "ERROR",
+    "args": ["S000005270119225"],
+    "call": {
+        "headers": {
+            "x-span-id": "2485ec27856c56f4",
+            "x-trace-id": "1210be13194bfe5"
+        },
+        "uri": "https://api.openwms.dev/v1/transport-units/S000005270119225",
+        "path": "/transport-units/S000005270119225",
+        "method": "POST"
+    }
+    "timestamp": 1568208641323,
+    "error": "Internal Server Error",
+    "exception": "org.ameba.oauth2.InvalidTokenException",
+    "message": "JWT expired at 2019-09-11T13:30:41Z. Current time: 2019-09-11T13:43:27Z"
+}
+----
