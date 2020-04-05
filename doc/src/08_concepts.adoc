@@ -42,7 +42,7 @@ Service B because the protocol or format is unknown to Service B.
 With OpenWMS we use Spring Boot as implementation framework. Spring Boot already comes with it’s own format like it exposes errors to API
 consumers. For REST API over HTTP a typical Spring Boot error response looks like this:
 
-[source,json,linenums]
+[source,json]
 ----
 {
     "timestamp": 1568208641323,
@@ -60,7 +60,7 @@ that the format is baked into and driven by Spring Boot and may change between m
 Therefor a RFC was initiated, the Problem Details for HTTP APIs (RFC7807). By applying this RFC to all OpenWMS microservice implementations
 we ensure that we align to a standardized but flexible and extendable format.
 
-[source,json,linenums]
+[source]
 ----
 {
     "type": "https://api.openwms.dev/meta/v1/error/AlreadyExistsException",
