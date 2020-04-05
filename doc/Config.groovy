@@ -19,8 +19,8 @@ taskInputsFiles = ["${inputPath}/arc42-template.adoc"]
 
 confluence = [:]
 confluence.with {
-    input = [[ file: "build/html5/arc42-template.html", ancestorId: '360466']]
-    ancestorId = '360466'
+    input = [[ file: "build/html5/arc42-template.html", ancestorId: '859701408']]
+    ancestorId = '859701408'
     api = 'https://openwms.atlassian.net/wiki/rest/api/'
     spaceKey = 'OPENWMS'
     createSubpages = false

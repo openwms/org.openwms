@@ -60,17 +60,6 @@ other services and directly calls API of others
 | WMS Shipping  | Contains warehouse shipping processes that trigger movements
 |===
 
-**Contained Building Blocks**
-[cols="1,2" options="header"]
-|===
-| **Component** | **Responsibility**
-| Location Management | Functional building block to manage Locations and LocationGroups
-| Transport Management | Functional building block to manage TransportUnits and TransportUnitTypes
-| app | A package that contains lifecylce components of the Common Service, without any business value
-| Location Tables | A set of database tables belong and accessed by the Location Management
-| Transport Tables | A set of database tables belong and accessed by the Transport Management
-|===
-
 === The Messaging Whitebox View
 
 Lets have a closer look and look inside the microservices to see how they interact between each other. Only the asynchronous communication path
