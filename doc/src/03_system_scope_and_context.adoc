@@ -4,6 +4,9 @@
 
 === Business Context
 
+[#img-03-bc]
+.Business Context
+image::03_Business_Context.png["Business context of OpenWMS.org", align="left"]
 
 === Technical Context
 

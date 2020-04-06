@@ -16,7 +16,7 @@ structures that are possible for the communication*. But the consumer may choose
 
 [#img-05-bb-L1]
 .Information Flow
-image::08-IOP-InFlow.png["Interoperability Information Flow"]
+image::08-IOP-InFlow.png["Interoperability Information Flow", float="right",align="center"]
 
 The consumer is responsible to transform the received structures into it’s own internal used data structures. This often happens in a
 so-called ACL (Anti Corruption layer).
