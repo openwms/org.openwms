@@ -66,7 +66,7 @@ run on a PaaS, currently deployed to [Heroku](https://www.heroku.com)
 | ![2]      | ![3]      | ![4]      | ![5]      | ![6]      | ![7]      | ![8]      | ![9]      | 
 
 
-| [![11]][10g]   |
+| [![11]][10g] [![12]][10w] |
 | :------------- | 
 |  ![10]         | 
 
@@ -117,5 +117,6 @@ Notice: This task requires upload permissions and is done by the project maintai
 [9w]: https://openwms.github.io/org.openwms.wms.shipping/index.html
 [10]: src/docs/res/srv-receiving.png
 [10g]: https://github.com/openwms/org.openwms.wms.receiving
+[10w]: https://openwms.github.io/org.openwms.wms.receiving/index.html
 [11]: src/docs/res/github-b.png
 [12]: src/docs/res/website-b.png
