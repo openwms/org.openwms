@@ -75,3 +75,31 @@ clear ownership must be defined. As an example take the exchange with name `comm
 COMMON Service and used as an inbox _and_ outbox for command messages. Consumers interested in outgoing commands may subscribe a queue to
 this exchange to gets updates on cache evicts or to send commands to create data managed by the COMMON service. The command structure itself
 is also given by the COMMON service.
+
+=== Package View
+An OpenWMS.org microservice implementation with Java technology is structured into source packages. Some generic and often used packages
+exist in all microservices with a common sense.
+
+[#img-05-pv]
+.Java package organisation
+image::05_package_view-EN.png["Package View"]
+
+Beside these packages exist dozens of others specific to every microservice. The Transportation service for example has also a separation
+into functional packages, like `transports` or `routes`. The packages and conventions shown here should be followed for every OpenWMS.org
+microservice implementation when possible.
+
+|===
+| **Package** | **Responsibility**
+| org.openwms | Top level product package
+| core        | All types that belong to the CORE domain
+| common      | All types that belong to the COMMON domain
+| tms         | All types that belong to the TMS domain
+| wms         | All types that belong to the WMS domain
+| api         | Types that are relevant for client applications or API consumers and that are cut off into a separate build artifact
+| app         | Types and configuration artifacts that are responsible for the microservice lifecyle
+| commands    | Contains all command types and handlers, processors of commands
+| config      | Contains configuration classes responsible for the microservice external configuration, most often Spring Boot managed
+classes mapped to properties files
+| events      | All event types used service internally and externally. External events must put under api.events
+| impl        | The internal implementation details of the microservice API
+|===

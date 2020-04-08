@@ -4,9 +4,9 @@
 
 === Business Context
 
-The OpenWMS.org system consists of warehouse management and material flow control components. It is embedded in an ecosystem with
-typical enterprise resource planning systems, field controllers, enterprise control systems and other counterparts that exist in the
-area of intralogistics warehousing.
+The OpenWMS.org system consists of warehouse management and material flow control components. It is embedded into an ecosystem with a
+typical enterprise resource planning system, field controllers, manufacturing control systems and other counterparts that exist in the
+area of eCommerce and intralogistics warehousing.
 
 [#img-03-bc]
 .Business Context
@@ -29,19 +29,29 @@ and reports
 
 === Technical Context
 
+The technical context focuses on the technical details of the interfaces between OpenWMS.org and surrounding systems.
+
 [#img-03-tc]
 .Technical Context
 image::03_Technical_Context.png["Technical context of OpenWMS.org", align="left"]
 
-[cols="1,2" options="header"]
+[cols="1,2" options="header" width="100%"]
 |===
 | **Component** | **Description**
 | SCM | The Supply Chain Management module of an ERP
 | DB  | A database with tables used to transfer data
+| User Interfaces | A group of all user interfaces connected to OpenWMS.org
 |===
 
-[cols="1,2,3" options="header"]
+[cols="1,2,3" options="header" width="100%"]
 |===
 | **Relationship** | **Name** | **Description**
 | SCM-WMS | transfer tables | Tables to receive and send information between the ERP and WMS
+| SCM-WMS | RFC | A RFC connection over tcp/ip is used to transfer information between the ERP and WMS
+| SCM-WMS | webservice | A webservice connection over http is used to transfer information between the ERP and WMS
+| User Interfaces-WMS | REST | User interfaces communicate via REST API with OpenWMS.org services
+| User Interfaces-WMS | Events | User interfaces may also communicate via websockets and receive events from OpenWMS.org
+| MES-TMS | webservice | MES may control the TMS services via http webservices
+| PLC-TMS | RFC | A PLC is usually connected via RFC over tcp/ip to the TMS services
+| Printing System-WMS | RFC | A printing system is addressed over tcp/ip to print reports from WMS
 |===
