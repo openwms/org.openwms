@@ -1,5 +1,5 @@
 [[section-introduction-and-goals]]
-== Introduction and Goals
+== Introduction
 
 **OpenWMS.org** is a _flexible_ and _free-to-use_ warehouse management and material flow control system. It is _flexible_ because it can be
 tailored depending on the required functionality in the actual customer project. If, for example, a warehouse management is not required,
@@ -45,30 +45,33 @@ include::allGitHubIssues.adoc[]
 
 === Quality Goals
 
-* OpenWMS.org must be built flexible and customizable enough to be tailorable in each particular project to the required functionality
+**In a nutshell**
 
-* Building applications, solutions and projects on top of OpenWMS.org must be painful and simple as possible in order to reduce the effort
+* OpenWMS.org must be built flexible and customizable enough to be tailorable in every particular project to the required functionality
+
+* Building applications, solutions and projects on top of OpenWMS.org must be painful and simple as possible in order to minimize the effort
 in customer projects
-
-* Solutions based on OpenWMS.org must support Cloud and On-Premise deployment scenarios
 
 * Systems built on OpenWMS.org must behave in a consistent and reliable manner. Data loss and deadlock situations must always be prevented
 
-[role="arc42help"]
-****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don't confuse them with project goals. They are not necessarily identical.
+**In detail**
 
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged …
+An increasing list o quality goals...
 
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
-****
-
-[cols="1,2,3,4,5" options="header"]
+[cols="1,2,3,4" options="header"]
 |===
-| **Priority** | **Characteristic** | **Scenario**
-|  |  |
+| **Domain** | **Priority** | **Characteristic** | **Scenario**
+| WMS        | High         | Accountability     | The system must durably store who triggered when what kind of critical operation
+| TMS        | High         | Performance        | Requests that drive the material flow control, in OSIP a https://interface21-io.gitbook.io/osip/messaging-between-layer-n-and-layer-n-1#request-telegram-req_[REQ],
+must be answered in less than 200ms
+| TMS        | High         | Availability       | Critical processes in TMS must not depend on the availability of WMS processes
+| General    | High         | Performance        | Processing orders in each domain must not affect the performance the processing in other
+domains
+| General    | Medium       | Reliability, Maintainability | Software changes must be applied within zero downtime of the whole system and
+may not affect unchanged parts of the system in terms of availability
+| General    | Medium       | Portability        | The system must not depend on any runtime platform to make it portable across different
+runtime environments
+| General    | Medium       | Installability, Performance | Solutions built on top of OpenWMS.org can be split into parts that run on
+different platforms. Some parts may require to run close to hardware in order to fulfill performance requirements
+| General    | Low          | Extendability      | The system must be built in order to be highly extendable in customer projects
 |===

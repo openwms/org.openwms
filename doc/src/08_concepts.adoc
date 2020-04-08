@@ -14,7 +14,7 @@ the role of upstream service and feeds all consuming services (aka. downstream s
 structures that are possible for the communication*. But the consumer may choose between options, like different representation formats
 (JSON, XML, vendor specific, etc.) or transport protocols.
 
-[#img-05-bb-L1]
+[#img-08-if]
 .Information Flow
 image::08-IOP-InFlow.png["Interoperability Information Flow", float="right",align="center"]
 

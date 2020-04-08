@@ -7,7 +7,7 @@ outputPath = 'build'
 inputPath = '.'
 
 inputFiles = [
-        [file: 'arc42-template.adoc', formats: ['html','pdf','docbook']],
+        [file: 'index.adoc', formats: ['html','pdf','docbook']],
         [file: 'ppt/Demo.pptx.ad', formats: ['revealjs']]
              ]
 
@@ -15,11 +15,11 @@ taskInputsDirs = ["${inputPath}/src",
                   "${inputPath}/images",
                  ]
 
-taskInputsFiles = ["${inputPath}/arc42-template.adoc"]
+taskInputsFiles = ["${inputPath}/index.adoc"]
 
 confluence = [:]
 confluence.with {
-    input = [[ file: "build/html5/arc42-template.html", ancestorId: '859701408']]
+    input = [[ file: "build/html5/index.html", ancestorId: '859701408']]
     ancestorId = '859701408'
     api = 'https://openwms.atlassian.net/wiki/rest/api/'
     spaceKey = 'OPENWMS'

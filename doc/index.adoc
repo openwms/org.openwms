@@ -46,9 +46,6 @@ For documentation of your own system you use better the _plain_ version.
 // 1. Introduction and Goals
 include::src/01_introduction_and_goals.adoc[]
 
-<<<<
-// 2. Architecture Constraints
-include::src/02_architecture_constraints.adoc[]
 
 <<<<
 // 3. System Scope and Context
