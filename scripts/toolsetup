@@ -1,2 +1,3 @@
 #!/bin/bash
-unzip ./doc/docToolchain.zip -d ./doc
+wget https://github.com/openwms/docToolchain/archive/master.zip -P doc/
+unzip ./doc/master.zip

@@ -26,4 +26,4 @@ script:
   - if [[ ( "$TRAVIS_BRANCH" == "master" ) ]]; then mvn clean package -Denforcer.skip=true -Dci.buildNumber=$TRAVIS_BRANCH-$TRAVIS_BUILD_NUMBER -Prelease,gpg,travis -B $MAVEN_OPTS; fi
 
 after_success:
-  - ./doc/docToolchain-master/bin/doctoolchain doc publishToConfluence
+  - ./docToolchain-master/bin/doctoolchain doc publishToConfluence
