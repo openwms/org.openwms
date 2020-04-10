@@ -15,7 +15,6 @@ image::05_direction-EN.png["Callgraph and Informationflow"]
 
 **Contained Building Blocks**
 [cols="1,2" options="header"]
-
 |===
 | **Component** | **Responsibility**
 | ERP           | The external Enterprise Resource Planning system is the host that sends higher level warehouse orders. Not part of
@@ -78,7 +77,8 @@ is also given by the COMMON service.
 
 === Package View
 An OpenWMS.org microservice implementation with Java technology is structured into source packages. Some generic and often used packages
-exist in all microservices with a common sense.
+exist in all microservices with a common sense. In the example below the structure underneath the `common` package is also applied to any
+other domain package like `core`, `tms` or `wms`.
 
 [#img-05-pv]
 .Java package organisation
