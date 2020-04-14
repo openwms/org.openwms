@@ -93,20 +93,9 @@ available to both nodes and microservices on each node.
 
 === Microsoft Azure Deployment
 
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
+[#img-07-cloud-deployment]
+.Deployment on Microsoft Azure AKS
+image::07_op-cloud-deployment.png["Cloud deployment on Microsoft Azure AKS"]
 
 === Hybrid Deployment
 
