@@ -17,7 +17,7 @@ project, therefor there is no need to scale out processes on demand.
 
 [#img-07-single-server]
 .Simplest deployment on single server
-image::07-op-single-server.png["Simplest deployment on a single server"]
+image::07_op-single-server.png["Simplest deployment on a single server"]
 
 The services could also be installed as Docker containers on https://docs.docker.com/compose/[Docker Compose] to increase operability and
 reliability but this is not a requirement.
@@ -58,7 +58,7 @@ on Kubernetes or any PaaS solution. The basic requirements of this scenario are 
 
 [#img-07-single-server]
 .Deployment distributed on multiple servers
-image::07-op-multiple-server.png["Deployment distributed on multiple servers"]
+image::07_op-multiple-server.png["Deployment distributed on multiple servers"]
 
 The benefit of a container scheduler in a _distributed_ environment is tremendous. We do not need to care about low-level infrastructure
 details on our own and rely on proven scheduling technologies.
