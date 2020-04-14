@@ -109,3 +109,7 @@ _<diagram + explanation>_
 _<diagram + explanation>_
 
 === Hybrid Deployment
+
+[#img-07-hybrid-deployment]
+.Deployment distributed on-premise and cloud
+image::07_hybrid_deployment.png["Hybrid deployment on-premise and in the cloud"]
