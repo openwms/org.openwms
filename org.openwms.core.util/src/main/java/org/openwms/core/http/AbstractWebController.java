@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Heiko Scherrer
+ * Copyright 2005-2020 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,8 +35,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.net.URI;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * A AbstractWebController.
@@ -106,6 +110,7 @@ public abstract class AbstractWebController {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(ex.getMessage())
+                        .withMessageKey(ExceptionCodes.INVALID_PARAMETER_ERROR)
                         .withHttpStatus(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .build(),
                 HttpStatus.BAD_REQUEST
@@ -117,6 +122,20 @@ public abstract class AbstractWebController {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
+                        .withMessageKey(ExceptionCodes.VALIDATION_ERROR)
+                        .withHttpStatus(String.valueOf(HttpStatus.BAD_REQUEST.value()))
+                        .build(),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<Response> handleConstraintViolationException(ConstraintViolationException ex) {
+        List<String> properties = ex.getConstraintViolations().stream().map(c -> c.getPropertyPath().toString()).collect(Collectors.toList());
+        return new ResponseEntity<>(
+                Response.newBuilder()
+                        .withMessage(translate(ExceptionCodes.VALIDATION_ERROR, properties))
+                        .withMessageKey(ExceptionCodes.VALIDATION_ERROR)
                         .withHttpStatus(String.valueOf(HttpStatus.BAD_REQUEST.value()))
                         .build(),
                 HttpStatus.BAD_REQUEST
@@ -128,6 +147,7 @@ public abstract class AbstractWebController {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(ex.getMessage())
+                .withMessageKey(ExceptionCodes.TECHNICAL_RT_ERROR)
                 .withHttpStatus(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                 .build(),
                 HttpStatus.INTERNAL_SERVER_ERROR
@@ -142,7 +162,7 @@ public abstract class AbstractWebController {
      * @return the messageSource.
      */
     protected String translate(String key, Object... objects) {
-        return messageSource.getMessage(key, objects, null);
+        return messageSource.getMessage(key, objects, Locale.getDefault());
     }
 
     /**
