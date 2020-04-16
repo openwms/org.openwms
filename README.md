@@ -78,9 +78,9 @@ or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/ope
 | ![2]      | ![3]      | ![4]      | ![5]      | ![6]      | ![7]      | ![8]      | ![9]      | 
 
 
-| [![11]][10g] [![12]][10w] |
-| :------------- | 
-|  ![10]         | 
+| [![11]][10g] [![12]][10w] | ![11] ![12]               | ![11] ![12]               | ![11] ![12]               | ![11] ![12]               | ![11] ![12]
+| :------------------------ | :------------------------ | :------------------------ | :------------------------ | :------------------------ | :------------------------ 
+|  ![10]                    |  ![13]                    |  ![14]                    |  ![15]                    |  ![16]                    |  ![17]                   
 
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: src/docs/res/srv-uaa.png
@@ -112,3 +112,8 @@ or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/ope
 [10w]: https://openwms.github.io/org.openwms.wms.receiving/index.html
 [11]: src/docs/res/github-b.png
 [12]: src/docs/res/website-b.png
+[13]: src/docs/res/srv-portal.png
+[14]: src/docs/res/srv-i18n.png
+[15]: src/docs/res/srv-movement.png
+[16]: src/docs/res/srv-picking.png
+[17]: src/docs/res/srv-putaway.png
