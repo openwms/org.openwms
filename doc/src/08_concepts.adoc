@@ -31,6 +31,10 @@ Finally the transferred information must be sufficient to feed external monitori
 
 *Context data of OpenWMS microservices is transferred in headers, either HTTP headers or RabbitMQ headers*.
 
+For example: When OpenWMS.org microservices are deployed in a multi-tenant environment the tenant identifier is required with each call.
+This information is typical context data that needs to be transferred between client and server. For a HTTP call the tenant identifier is
+propagated as custom HTTP header `X-Tenant` and for asynchronous AQMP messages the AMQP header `osip_tenant` transfers this information.
+
 ==== Failure Data
 In failure situations a microservice might not respond with self-defined information data structure but with failure or error responses. The
 structure and the protocol of these error responses must be consist across all microservices in order to establish communication even in
