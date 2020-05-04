@@ -1,23 +1,30 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
+This chapter lists all common design principles valid for all OpenWMS.org microservices. Each microservice implementation may add specific
+rules and principles but overall rules are captured here.
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
+=== Microservice Architecture
+[cols="h,1"]
+|===
+|Description   |Originally coming from a more technically organized application layout, in 2016 the step was taken towards a microservice
+architecture. Each microservice focus on its own functional use cases, business functions and business value. The whole OpenWMS.org system
+encompasses around 15 different services that serve different purpose and that can be composed differently in end-customer projects.
+|Justification |OSGi was a great technology to built modular applications. One of the most important requirements on OpenWMS.org is the
+ability to extend in a flexible way and to get changes into production without downtime. The best successive architecture style after OSGi
+is te microservice style, it helps us to deploy changes easily and without downtime and to implement new features quickly.
+|Addressing    |Modularity, Flexibility, Extendability, Changeability
+|===
 
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
-
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
+=== Database Table Separation
+[cols="h,1"]
+|===
+|Description   |Each microservice has its own set of database tables, either relational database tables or NoSQL collections/tables. Tables
+are differentiated by a naming pattern. Each table has a prefix that points to the owning microservice. All tables can be deployed into a
+single database, or in multiple databases or database schemas. This is a question of distribution and what need to be deployed where.
+Relationships between database tables of different microservices are forbidden.
+|Justification |It is absolutely fine to use one database for all the tables used in a system. It may also make sense to separate between
+database schemas, for example to separate WMS tables from TMS or BPMN tables. With this approach we do not get in conflict with the strict
+data separation enforced in microservice architecture style and still have the flexibility of different deployment forms
+|Addressing    |Flexibility, Performance
+|===
