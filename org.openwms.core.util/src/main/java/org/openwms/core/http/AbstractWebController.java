@@ -54,7 +54,7 @@ public abstract class AbstractWebController {
     private MessageSource messageSource;
 
     @ExceptionHandler(BehaviorAwareException.class)
-    protected ResponseEntity<Response> handleBehaviorAwareException(BehaviorAwareException bae) {
+    protected ResponseEntity<Response<?>> handleBehaviorAwareException(BehaviorAwareException bae) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + bae.getLocalizedMessage(), bae);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(bae.getMessage())
@@ -67,7 +67,7 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler(BusinessRuntimeException.class)
-    protected ResponseEntity<Response> handleBusinessRuntimeException(BusinessRuntimeException bre) {
+    protected ResponseEntity<Response<?>> handleBusinessRuntimeException(BusinessRuntimeException bre) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + bre.getLocalizedMessage(), bre);
         ResponseStatus annotation = bre.getClass().getAnnotation(ResponseStatus.class);
         HttpStatus status = annotation != null ? annotation.value() : HttpStatus.INTERNAL_SERVER_ERROR;
@@ -82,7 +82,7 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler(HttpBusinessException.class)
-    protected ResponseEntity<Response> handleHttpBusinessException(HttpBusinessException hbe) {
+    protected ResponseEntity<Response<?>> handleHttpBusinessException(HttpBusinessException hbe) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + hbe.getLocalizedMessage(), hbe);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(hbe.getMessage())
@@ -93,8 +93,17 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler(TechnicalRuntimeException.class)
-    protected ResponseEntity<Response> handleTechnicalRuntimeException(TechnicalRuntimeException tre) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: " + tre.getLocalizedMessage(), tre);
+    protected ResponseEntity<Response<?>> handleTechnicalRuntimeException(TechnicalRuntimeException tre) {
+        if (tre.getCause() instanceof BehaviorAwareException) {
+            return handleBehaviorAwareException((BehaviorAwareException) tre.getCause());
+        }
+        if (tre.getCause() instanceof BusinessRuntimeException) {
+            return handleBusinessRuntimeException((BusinessRuntimeException) tre.getCause());
+        }
+        if (tre.getCause() instanceof HttpBusinessException) {
+            return handleHttpBusinessException((HttpBusinessException) tre.getCause());
+        }
+        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", tre.getLocalizedMessage(), tre);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(tre.getMessage())
                 .withMessageKey(tre.getMessageKey())
@@ -106,7 +115,7 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler({IllegalArgumentException.class})
-    public ResponseEntity<Response> IllegalArgumentException(IllegalArgumentException ex) {
+    public ResponseEntity<Response<?>> IllegalArgumentException(IllegalArgumentException ex) {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(ex.getMessage())
@@ -118,7 +127,7 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
-    protected ResponseEntity<Response> handleValidationException() {
+    protected ResponseEntity<Response<?>> handleValidationException() {
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
@@ -130,7 +139,7 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    protected ResponseEntity<Response> handleConstraintViolationException(ConstraintViolationException ex) {
+    protected ResponseEntity<Response<?>> handleConstraintViolationException(ConstraintViolationException ex) {
         List<String> properties = ex.getConstraintViolations().stream().map(c -> c.getPropertyPath().toString()).collect(Collectors.toList());
         return new ResponseEntity<>(
                 Response.newBuilder()
@@ -143,7 +152,7 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler(Exception.class)
-    protected ResponseEntity<Response> handleException(Exception ex) {
+    protected ResponseEntity<Response<?>> handleException(Exception ex) {
         EXC_LOGGER.error("[P] Presentation Layer Exception: " + ex.getLocalizedMessage(), ex);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(ex.getMessage())
