@@ -10,7 +10,7 @@
         <relativePath></relativePath>
     </parent>
     <artifactId>org.openwms</artifactId>
-    <version>1.8.0</version>
+    <version>1.9.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>OpenWMS.org Project</name>
 
