@@ -29,6 +29,7 @@
             </plugins>
         </pluginManagement>
     </build>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
