@@ -262,6 +262,20 @@ public abstract class AbstractWebController {
      * @return The complete appended URL
      */
     protected URI getLocationURIForCreatedResource(HttpServletRequest req, String objId) {
-        return new UriTemplate(req.getRequestURL().append("/{objId}/").toString()).expand(objId);
+        String proto = req.getHeader("x-forwarded-proto");
+        String host = req.getHeader("x-forwarded-host");
+        StringBuilder url = new StringBuilder();
+        if (proto != null && host != null) {
+            url.append(proto.endsWith("://") ? proto : proto + "://").append(host);
+        } else {
+            url.append(req.getScheme()).append(req.getServerName());
+        }
+        String prefix = req.getHeader("x-forwarded-prefix");
+        if (prefix != null) {
+            url.append(prefix);
+        }
+        url.append(req.getRequestURI());
+        url.append("/{objId}/");
+        return new UriTemplate(url.toString()).expand(objId);
     }
 }
