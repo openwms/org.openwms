@@ -28,10 +28,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AbstractWebControllerTest {
 
     @Test
-    void getLocationURIForCreatedResource() {
+    void test_Location_header_without_forwarded() {
 
         MockHttpServletRequest request = new MockHttpServletRequest();
-        request.setServerName("172.19.0.4:8120");
+        request.setServerName("172.19.0.4");
+        request.setRequestURI("/v1/rest");
+
+        AbstractWebController testee = new AbstractWebController(){};
+        assertThat(testee.getLocationURIForCreatedResource(request, "4711").toASCIIString()).isEqualTo("http://172.19.0.4:80/v1/rest/4711/");
+    }
+
+    @Test
+    void test_Location_header_with_forwarded() {
+
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setServerName("172.19.0.4");
         request.setRequestURI("/v1/rest");
         request.addHeader("x-forwarded-for", "10.10.16.6");
         request.addHeader("x-forwarded-proto", "http");

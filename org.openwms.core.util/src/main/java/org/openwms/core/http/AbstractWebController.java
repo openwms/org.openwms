@@ -268,7 +268,9 @@ public abstract class AbstractWebController {
         if (proto != null && host != null) {
             url.append(proto.endsWith("://") ? proto : proto + "://").append(host);
         } else {
-            url.append(req.getScheme()).append(req.getServerName());
+            url.append(req.getScheme().endsWith("://") ? req.getScheme() : req.getScheme() + "://")
+                    .append(req.getServerName()).append(":")
+                    .append(req.getServerPort());
         }
         String prefix = req.getHeader("x-forwarded-prefix");
         if (prefix != null) {
