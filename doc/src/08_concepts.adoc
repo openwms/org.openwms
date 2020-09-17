@@ -134,16 +134,49 @@ A consumer could also decided to forward a message it could not process to someo
 knowing about the consumers of that store - there might actually be no consumer. This pattern in basically called https://www.enterpriseintegrationpatterns.com/patterns/messaging/DeadLetterChannel.html[Dead-Letter Queueing]
 and also RabbitMQ offers this technique.
 
-The list of strategies is for sure not complete but enough for what we need in OpenWMS.org. So here is a short comparison of these three
+The list of strategies is by for sure not complete but enough for what we need in OpenWMS.org. So here is a short comparison of these three
 strategies in relation to the use in OpenWMS.org:
 [cols="1,2,3" options="header"]
 |===
 | Strategy    | Advantage | Disadvantage
 | Re-Queueing | The message is not lost. It stays in the queue even after the consumer gets updated or restarted. | May slow down the system
 cause of repetition. Blocks other messages in the queue from being processed
-| Throw-Away  | Processing other messages goes on, the queue is not blocked | The thrown away message is lost but might be worth to know for
-consumers. Throwing it away may lead to data inconsistencies
+| Throw-Away  | Processing other messages goes on, the queue is not blocked | The thrown away message is lost but could have been worth to
+know for consumers. Throwing it away may lead to data inconsistencies
 | Forward     | Processing other messages goes on, the queue is not blocked, the message is not lost | The process of handling this kind of
 failed messages must be defined and handling them must be established. May lead to problems when a message sequence is expected (e.g. OSIP
 UPDX telegrams must be processed and acknowledged before any other telegram can take place)
 |===
+
+So when to use what kind of strategy and what configuration to apply is often a decision specific to the use case.
+
+===== Strategies to re-queue Messages
+By default, Spring AMQP does not acknowledge a message to RabbitMQ that has failed to process. That means a listener is called over and over
+again. This behaviour can simply be stopped by throwing an `org.springframework.amqp.AmqpRejectAndDontRequeueException` within the
+application listener code.
+
+But with Spring AMQP the handling is also configurable: How often a message is re-queued and the repeat interval with many other options.
+...
+
+A typical Spring AMQP RabbitTemplate configuration of a service looks like:
+```
+    @Bean
+    RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+        backOffPolicy.setMultiplier(2);
+        backOffPolicy.setMaxInterval(15000);
+        backOffPolicy.setInitialInterval(500);
+        RetryTemplate retryTemplate = new RetryTemplate();
+        retryTemplate.setBackOffPolicy(backOffPolicy);
+        rabbitTemplate.setRetryTemplate(retryTemplate);
+        rabbitTemplate.setMessageConverter(jsonConverter());
+        return rabbitTemplate;
+    }
+```
+
+This is often done in use cases where the consumer expects the message is going to be repeated by the sender after a period of time.
+
+===== Strategies to Throw-Away Messages
+
+===== Strategies to Forward Messages
