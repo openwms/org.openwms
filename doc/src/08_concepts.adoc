@@ -109,3 +109,41 @@ On consumer side the MO as well as VO need to be translated into internal struct
 
 A microservice may use internal synchronous eventing through out the Spring `ApplicationContext`. The events used internally must not be
 propagated to the outside of the microservice and must be converted into a MO or VO first.
+
+=== Error Handling in Distributed Systems
+In a distributed system we must ensure that failure situations across the network are handled properly without impacting the robustness nor
+performance of the whole system negatively. A technical error handling can often be done with libraries, like Hystrix, resilience4j, feign
+or others. Also Spring AMQP cares about and offers different strategies to deal with errors. But it is not always possible to handle
+failures in one standardized and automated way. At least, we need to decide what failure resolution strategy from one of those libraries is
+chosen in case of an error.
+
+==== Error Handling with Asynchronous AMQP Messaging
+Spring AMQP with RabbitMQ is used for the asynchronous messaging infrastructure. A publisher sends a message to an AMQP Exchange where a
+consumer process has connected a AMQP Queue to. A message is sent to the Exchange and published to one or more connected Queues. If a
+consumer fails to process the queued message it has several possibilities to react: Re-Queue, Throw-Away or Forward.
+
+**Re-Queuing failed Messages**
+In case of re-queueing the message is left in the queue and executed again. How often this happens and with what interval can be configured.
+
+**Throw-Away failed Messages**
+Simply omit the error occurred and be silent could also be a consumer strategy. In this case the message is acknowledged to RabbitMQ and is
+gone from the queue - but without handling the message as demanded.
+
+**Forward failed Messages**
+A consumer could also decided to forward a message it could not process to someone else or to just forward it into a message store without
+knowing about the consumers of that store - there might actually be no consumer. This pattern in basically called https://www.enterpriseintegrationpatterns.com/patterns/messaging/DeadLetterChannel.html[Dead-Letter Queueing]
+and also RabbitMQ offers this technique.
+
+The list of strategies is for sure not complete but enough for what we need in OpenWMS.org. So here is a short comparison of these three
+strategies in relation to the use in OpenWMS.org:
+[cols="1,2,3" options="header"]
+|===
+| Strategy    | Advantage | Disadvantage
+| Re-Queueing | The message is not lost. It stays in the queue even after the consumer gets updated or restarted. | May slow down the system
+cause of repetition. Blocks other messages in the queue from being processed
+| Throw-Away  | Processing other messages goes on, the queue is not blocked | The thrown away message is lost but might be worth to know for
+consumers. Throwing it away may lead to data inconsistencies
+| Forward     | Processing other messages goes on, the queue is not blocked, the message is not lost | The process of handling this kind of
+failed messages must be defined and handling them must be established. May lead to problems when a message sequence is expected (e.g. OSIP
+UPDX telegrams must be processed and acknowledged before any other telegram can take place)
+|===
