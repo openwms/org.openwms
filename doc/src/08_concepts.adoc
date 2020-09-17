@@ -153,7 +153,7 @@ So when to use what kind of strategy and what configuration to apply is often a 
 ===== Strategies to re-queue Messages
 By default, Spring AMQP does not acknowledge a message to RabbitMQ that has failed to process. That means a listener is called over and over
 again. This behaviour can simply be stopped by throwing an `org.springframework.amqp.AmqpRejectAndDontRequeueException` within the
-application listener code.
+application listener code like it is shown in <<throw-away>>.
 
 But with Spring AMQP the handling is also configurable: How often a message is re-queued and the repeat interval with many other options.
 ...
@@ -178,6 +178,7 @@ A typical Spring AMQP RabbitTemplate configuration of a service looks like:
 **Use Cases**
 This is often done in use cases where the consumer expects the message is going to be repeated by the sender after a period of time.
 
+[[throw-away]]
 ===== Strategies to Throw-Away Messages
 
 **Use Cases**

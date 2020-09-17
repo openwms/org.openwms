@@ -13,7 +13,7 @@ server or on multiple ones. This on-premise deployment has the advantage of incr
 The simplest way to deploy OpenWMS.org is the Single Box deployment. All components installed on one single physical or virtual server. All
 processes run and communicate in-memory and do not require an external network access. In its simplest way all the microservices can be
 installed as single instances as Unix daemons or MS Windows services. Scalability and elasticity are not an option in a typical warehouse
-project, therefor there is no need to scale out processes on demand.
+project, therefore there is no need to scale out processes on demand.
 
 [#img-07-single-server]
 .Simplest deployment on single server
