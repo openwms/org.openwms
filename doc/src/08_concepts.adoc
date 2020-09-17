@@ -175,8 +175,31 @@ A typical Spring AMQP RabbitTemplate configuration of a service looks like:
     }
 ```
 
+**Use Cases**
 This is often done in use cases where the consumer expects the message is going to be repeated by the sender after a period of time.
 
 ===== Strategies to Throw-Away Messages
+
+**Use Cases**
+For sure we can throw away messages, silently acknowledge them, where we know the publisher expects no answer and repeats the message in
+case no answer is returned. So we depend on the frequency of the publisher how often the message is repeated. For example, the publisher may
+be a https://en.wikipedia.org/wiki/Programmable_logic_controller[PLC] that is configured to resend the initial message request every 150
+milliseconds. In this case, this could have an impact on the overall performance. Whereas an PLC may also be configured to repeat the
+message only after e.g. 30 seconds what has not that much impact on performance.
+
+**Configuration**
+A typical message listener consuming the message and throws it away on any exceptions looks like this:
+```
+    @RabbitListener(queues = "${owms.commands.common.tu.queue-name}")
+    public void onCommand(@Payload TUCommand command) {
+        try {
+            handler.handle(command);
+        } catch (Exception ex) {
+            throw new AmqpRejectAndDontRequeueException(ex.getMessage(), ex);
+        }
+    }
+```
+The listener delegates to a message handler that is responsible to execute the business logic. In case of any errors the listener throws
+an `AmqpRejectAndDontRequeueException` to signal the Spring AMQP runtime to reject the message. So it is not processed anymore.
 
 ===== Strategies to Forward Messages
