@@ -120,7 +120,7 @@ chosen in case of an error.
 ==== Error Handling with Asynchronous AMQP Messaging
 Spring AMQP with RabbitMQ is used for the asynchronous messaging infrastructure. A publisher sends a message to an AMQP Exchange where a
 consumer process has connected a AMQP Queue to. A message is sent to the Exchange and published to one or more connected Queues. If a
-consumer fails to process the queued message it has several possibilities to react: Re-Queue, Throw-Away or Forward.
+consumer fails to process the queued message there are several possibilities how to react: Re-Queue, Throw-Away or Forward.
 
 **Re-Queuing failed Messages**
 In case of re-queueing the message is left in the queue and executed again. How often this happens and with what interval can be configured.
