@@ -1,11 +1,11 @@
 OpenWMS.org
 =====================
 
-Is a free to use and extendible Warehouse Management System with a Material Flow Control System for automatic and manual warehouses. 
+Is a free to use and extensible Warehouse Management System (WMS) with a Material Flow Control (MFC) system for automatic and manual
+warehouses. 
 
 # Resources
-
-See further documentation  at [Atlassian Confluence...](https://openwms.atlassian.net/wiki/display/OPENWMS)
+Find further documentation  at [Atlassian Confluence...](https://openwms.atlassian.net/wiki/display/OPENWMS)
 
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
@@ -20,55 +20,51 @@ See further documentation  at [Atlassian Confluence...](https://openwms.atlassia
 [codacy-url]: https://www.codacy.com/app/openwms/org.openwms
 
 # Current state of development
-
 Most components are under active development. In 2016 the whole product has been migrated from the technical structured OSGi architecture
-towards a business oriented architecture with Spring Boot microservices and Netflix OSS components. Documentation of previous released
+towards a business oriented architecture with Spring Boot microservices and Netflix OSS components. Documentation of previously released
 versions does still exist on [SourceForge.net](http://openwms2005.sourceforge.net/).
 
 # Current Architecture
-
 Instead of applying a technical layered architecture (like with OSGi and before that with J2EE1.4) the current architecture focuses on
-business components. Business functions with a high degree of cohesion are kept together as small deployable software components. Each
-component has it's own development lifecycle with its roadmap of the API evolution and an separate data store. The following sketch shows
+business components. Business functions with a high degree of cohesion kept together as small deployable software components. Each
+component has its own development lifecycle with its roadmap of the API evolution, and a separate data store. The following sketch shows
 all currently existing components of the OpenWMS.org system together with all potential surrounding systems.
 
 ![Architecture][1]
 
-Beside the user interface, several other systems interact with the OpenWMS.org system. On top, we have ERP systems sending high-level tasks
+Beside the user interface, several other systems interact with the OpenWMS.org system. On top, we find ERP systems sending high-level tasks
 to OpenWMS.org, e.g. a customer order with order positions where each refers to a product that is managed by the `Inventory Service`.
 OpenWMS.org fulfills these tasks by orchestrating the underlying subsystem. The communication between OpenWMS.org and an ERP system may not 
-be exclusively unidirectional, OpenWMS.org can although send status messages back to the ERP or may request product catalog updates, this
+be exclusively unidirectional, OpenWMS.org does although send status messages back to the ERP or may request product catalog updates, this
 depends on the project needs. On the bottom we have devices that are close to actors and sensors in automatic warehouses. Those devices are
 almost limited in hardware resources and protocol stacks. Typical [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller)
-(Programmable Logic Controllers) are used to interact with field sensors and to control actors. OpenWMS.org is open source software and
-therefore promotes the usage of open source hardware components over commercial PLC products. The first choice of supported devices are
-boards, like [Arduino](https://www.arduino.cc), [Raspberry Pi](https://www.raspberrypi.org/) or the industrial version [Revolution Pi](https://revolution.kunbus.com/),
-with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are close to
-the hardware and expect responses from the server in no time to control motors and switch gates to the right direction. They although have
-the power to bring a serving component down just by sending requests all the time. Typical web applications are different in that the
-infrastructure takes care of DoS attacks and the application server pools incoming traffic.
+(Programmable Logic Controllers) are used to interact with field sensors and to control actors. OpenWMS.org is an open source software and
+therefore promotes the usage of open source hardware components over commercial PLC products as well. The first choice of supported devices
+are boards, like [Arduino](https://www.arduino.cc), [Raspberry Pi](https://www.raspberrypi.org/) or the industrial [Revolution Pi](https://revolution.kunbus.com/)
+version, with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are
+close to the hardware and expect responses from the server in no time to control motors and switch gates to the right direction. They
+although have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in
+that the infrastructure takes care of DoS attacks, and the application server pools incoming traffic.
 
-Read more about each components architecture and design on the components Github page.
+Read more about each components architecture and design on the components corresponding Github page.
 
 # Previous Architectures
-
 The project started in 2005 with an J2EE server approach based on EJB2.1 with XDoclets, Hibernate and JavaServer Faces (JSF). In more than
-15 years we've seen a bunch of technologies that all address the same problems.
+15 years we've seen a bunch of technologies that all addresses the same problems.
  
 A POC has been implemented with EJB2.1, but the project actually started with EJB3.0. Since about 2007 OpenWMS.org is on the Spring
-Framework and this is still fine and the right choice. Spring in combination with OSGi seemed to be the perfect match to build a modular and
-extendible base project. Unfortunately Spring stopped their efforts on OSGi, in particular on Spring dmServer and Spring Dynamic Modules. In
-a transition step to the current microservice architecture, we put all the OSGi bundles into a fat JavaEE WAR deployment unit to run the
-application on a servlet container like Apache Tomcat. After that we redesigned all services and business functions and applied a
+Framework and this is still fine, and the right choice. Spring in combination with OSGi seemed to be the perfect match to build a modular
+and extensible base project. Unfortunately Spring stopped their efforts on OSGi, in particular on Spring dmServer and Spring Dynamic Modules
+. In a transition step to the current microservice architecture, we put all the OSGi bundles into a fat JavaEE WAR deployment unit to run
+the application on a servlet container like Apache Tomcat. After that we redesigned all services and business functions and applied a
 microservice architecture.
 
 # Technologies
-
 In addition to a bunch of Spring Framework subprojects, OpenWMS.org uses one of the popular BPMN workflow engines [Activiti](https://www.activiti.org),
 [Flowable](https://www.flowable.org) or [Camunda](https://www.camunda.org) as embedded engine to take routing decisions in the TMS layer.
-RDBMS access is shielded with the Java Persistence API. Some components might use NoSQL databases, like MongoDB, solely. RabbitMQ is used in
-combination with Spring Integration as notification and event broker. All hexagon components are Spring Boot applications designed to run on
-any modern PaaS, like [Heroku](https://www.heroku.com), [Azure Kubernetes Service](https://azure.microsoft.com/de-de/services/kubernetes-service/)
+RDBMS access is most of time realised with the Java Persistence API. Some components might use NoSQL databases, like MongoDB, solely.
+RabbitMQ in combination with Spring Integration as notification is used as an event broker. All hexagon components are Spring Boot
+applications designed to run on any modern PaaS cloud platforms, like [Heroku](https://www.heroku.com), [Azure Kubernetes Service](https://azure.microsoft.com/de-de/services/kubernetes-service/)
 or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift).
 
 # Microservices
