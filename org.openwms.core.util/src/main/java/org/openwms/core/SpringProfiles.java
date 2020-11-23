@@ -22,8 +22,12 @@ package org.openwms.core;
  */
 public final class SpringProfiles {
 
+    /** Used to define that the service is running in a distributed environment. */
+    public static final String DISTRIBUTED = "DISTRIBUTED";
     /** Used to define that asynchronous message handling is used. */
     public static final String ASYNCHRONOUS_PROFILE = "ASYNCHRONOUS";
+    /** Used to define that the asynchronous message handling is NOT used. */
+    public static final String NOT_ASYNCHRONOUS = "!ASYNCHRONOUS";
     /** Used to define that synchronous message handling is used. */
     public static final String SYNCHRONOUS_PROFILE = "SYNCHRONOUS";
     /** Used to define that synchronous message handling is used. */
