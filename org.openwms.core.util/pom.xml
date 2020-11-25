@@ -23,7 +23,7 @@
                         <optimize>true</optimize>
                         <fork>true</fork>
                         <encoding>${project.build.sourceEncoding}</encoding>
-                        <release>8</release>
+                        <release>11</release>
                     </configuration>
                 </plugin>
             </plugins>
