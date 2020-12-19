@@ -6,8 +6,8 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>18</version>
-        <relativePath></relativePath>
+        <version>19</version>
+        <relativePath />
     </parent>
     <artifactId>org.openwms</artifactId>
     <version>1.9.0-SNAPSHOT</version>
@@ -96,7 +96,7 @@
         <ms.group>NULL</ms.group>
 
         <!--   Plugin versions   -->
-        <maven-war-plugin.version>3.3.1</maven-war-plugin.version> <!-- Keep in sync with Boot -->
+        <maven-war-plugin.version>3.2.3</maven-war-plugin.version> <!-- Keep in sync with Boot -->
         <site-maven-plugin.version>0.12</site-maven-plugin.version>
     </properties>
 
