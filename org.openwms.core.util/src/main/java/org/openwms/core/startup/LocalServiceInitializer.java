@@ -35,7 +35,7 @@ public class LocalServiceInitializer implements ApplicationListener<ContextRefre
     private static final Logger LOGGER = LoggerFactory.getLogger(LocalServiceInitializer.class);
     private final ApplicationContext ctx;
 
-    LocalServiceInitializer(ApplicationContext ctx) {
+    public LocalServiceInitializer(ApplicationContext ctx) {
         this.ctx = ctx;
     }
 
