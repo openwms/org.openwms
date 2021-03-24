@@ -15,7 +15,7 @@
  */
 package org.openwms.core.values;
 
-import org.dozer.DozerConverter;
+import com.github.dozermapper.core.DozerConverter;
 
 /**
  * A PriorityConverter is a {@link DozerConverter} to convert between {@link Integer} and {@link PriorityLevel}.
