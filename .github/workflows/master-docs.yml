@@ -1,0 +1,85 @@
+name: 'master_docs'
+on:
+  workflow_run:
+    workflows: ["master_build"]
+    branches: [ master ]
+    types:
+      - completed
+
+env:
+  MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+
+jobs:
+  site_job:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    name: Build Microservice Docs
+    services:
+      postgres:
+        image: openwms/postgres-image:latest
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Install tools
+        run: |
+          sudo apt-get install graphviz
+          git config --global user.email "ci@example.com"
+          git config --global user.name "CI Server"
+      - name: Site
+        run: >
+          ./mvnw post-integration-test site scm-publish:publish-scm
+          -DM2_REPO_DIR=/home/runner/.m2/repository
+          -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG
+          -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG
+          -Dspring.datasource.url=jdbc:postgresql://localhost:5432/testdb
+          -DDB_HOST=localhost
+          -DDB_USERNAME=KARL
+          -DDB_PASSWORD=KARL
+          -Dscmuser=$PUSHKEY
+          -Dscmpublish.pubScmUrl=scm:git:https://$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
+          -DdeveloperConnectionUrl=scm:git:https://$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
+          -Dci.buildNumber=$GITHUB_RUN_NUMBER
+          -Pschemagen -B $MAVEN_OPTS
+        env:
+          PUSHKEY: ${{ secrets.PUSHKEY }}
+      - name: Sonar
+        run: >
+          ./mvnw clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
+          -Dsonar.login=$SONAR_TOKEN
+          -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
+          -Dci.buildNumber=$GITHUB_RUN_NUMBER
+          -DSONAR_TOKEN=$SONAR_TOKEN
+          -Pcoverage -B $MAVEN_OPTS
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Confluence Update
+        run: |
+          ./scripts/toolsetup
+          ./docToolchain-master/bin/doctoolchain doc exportGithubIssues publishToConfluence
+        env:
+          ATLASSIAN_USER: ${{ secrets.ATLASSIAN_USER }}
+          ATLASSIAN_PASSWORD: ${{ secrets.ATLASSIAN_PASSWORD }}
+          GITHUB_USER: ${{ secrets.GH_USER }}
+          GITHUB_PASSWORD: ${{ secrets.GH_PASSWORD }}
