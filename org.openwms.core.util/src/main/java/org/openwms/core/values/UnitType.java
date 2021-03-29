@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Heiko Scherrer
+ * Copyright 2005-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ package org.openwms.core.values;
  * An UnitType is a super type of all concrete units.
  *
  * @author Heiko Scherrer
+ * @deprecated Use the class in the org.openwms.core.units module
  */
 @Deprecated
 public interface UnitType {
