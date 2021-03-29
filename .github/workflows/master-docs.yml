@@ -51,17 +51,13 @@ jobs:
         run: >
           ./mvnw post-integration-test site scm-publish:publish-scm
           -DM2_REPO_DIR=/home/runner/.m2/repository
-          -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG
-          -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST,TESTPG
-          -Dspring.datasource.url=jdbc:postgresql://localhost:5432/testdb
-          -DDB_HOST=localhost
-          -DDB_USERNAME=KARL
-          -DDB_PASSWORD=KARL
+          -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
+          -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dscmuser=$PUSHKEY
           -Dscmpublish.pubScmUrl=scm:git:https://$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
           -DdeveloperConnectionUrl=scm:git:https://$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
-          -Pschemagen -B $MAVEN_OPTS
+          -B $MAVEN_OPTS
         env:
           PUSHKEY: ${{ secrets.PUSHKEY }}
       - name: Sonar

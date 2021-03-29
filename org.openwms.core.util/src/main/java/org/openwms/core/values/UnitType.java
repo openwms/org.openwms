@@ -21,7 +21,7 @@ package org.openwms.core.values;
  * @author Heiko Scherrer
  * @deprecated Use the class in the org.openwms.core.units module
  */
-@Deprecated
+@Deprecated(forRemoval =  true)
 public interface UnitType {
 
     /**
