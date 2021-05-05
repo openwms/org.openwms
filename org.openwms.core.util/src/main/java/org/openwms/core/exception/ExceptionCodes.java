@@ -43,6 +43,10 @@ public final class ExceptionCodes {
     /** Thrown if an User to persist already exists. */
     public static final String USER_ALREADY_EXISTS = "user.already.exists";
     /** Thrown if an User has been looked up but hasn't been found. */
+    public static final String USER_WITH_PKEY_NOT_EXIST = "user.pkey.not.exist";
+    /** Thrown if an User has been looked up but hasn't been found. */
+    public static final String USER_WITH_NAME_NOT_EXIST = "user.name.not.exist";
+    /** Thrown if an User has been looked up but hasn't been found. */
     public static final String USER_NOT_EXIST = "user.not.exist";
     /** Thrown if removing a User was requested with {@code null} argument. */
     public static final String USER_REMOVE_NOT_BE_NULL = "user.remove.null.argument";
