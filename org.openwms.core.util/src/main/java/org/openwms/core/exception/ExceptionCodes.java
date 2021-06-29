@@ -32,7 +32,6 @@ public final class ExceptionCodes {
     /** A generic validation error. */
     public static final String VALIDATION_ERROR = "core.validation.error";
 
-
     /** Thrown if an entity to persist already exists. */
     public static final String ENTITY_ALREADY_EXISTS = "entity.already.exists";
     /** Thrown if an entity has been looked up but hasn't been found. */
@@ -59,7 +58,7 @@ public final class ExceptionCodes {
     /** Thrown if changing a User's password was requested with {@code null} argument. */
     public static final String USER_PW_SAVE_NOT_BE_NULL = "user.password.save.null.argument";
     /** Thrown if changing a User's password was requested, but the new password does not match the defined password rules. */
-    public static final String USER_PW_INVALID = "user.passwort.invalid";
+    public static final String USER_PW_INVALID = "user.password.invalid";
 
     /** Thrown if a Role to persist already exists. */
     public static final String ROLE_ALREADY_EXISTS = "role.already.exists";
