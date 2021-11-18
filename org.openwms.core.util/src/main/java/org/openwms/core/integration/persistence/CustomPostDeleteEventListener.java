@@ -13,19 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.openwms.core.http;
+package org.openwms.core.integration.persistence;
 
-import org.ameba.http.AbstractBase;
-import org.springframework.hateoas.Link;
+import org.hibernate.envers.boot.internal.EnversService;
+import org.hibernate.envers.event.spi.EnversPostDeleteEventListenerImpl;
+import org.hibernate.event.spi.PostDeleteEvent;
 
 /**
- * A Index encapsulates HAL links to point to exposed REST resources.
+ * A CustomPostDeleteEventListener.
  *
  * @author Heiko Scherrer
  */
-public class Index extends AbstractBase<Index> {
+public class CustomPostDeleteEventListener extends EnversPostDeleteEventListenerImpl {
 
-    public Index(Link... links) {
-        this.add(links);
+    public CustomPostDeleteEventListener(EnversService enversService) {
+        super(enversService);
+    }
+
+    @Override
+    public void onPostDelete(PostDeleteEvent event) {
+        return;
     }
 }
