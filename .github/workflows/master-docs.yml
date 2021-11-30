@@ -1,4 +1,4 @@
-name: 'master_docs'
+name: 'Build Documentation & QA'
 on:
   workflow_run:
     workflows: ["master_build"]
@@ -10,7 +10,7 @@ env:
   MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
 
 jobs:
-  site_job:
+  build_site:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     name: Build Microservice Docs
@@ -31,7 +31,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -54,8 +54,8 @@ jobs:
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dscmuser=$PUSHKEY
-          -Dscmpublish.pubScmUrl=scm:git:https://$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
-          -DdeveloperConnectionUrl=scm:git:https://$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
+          -Dscmpublish.pubScmUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
+          -DdeveloperConnectionUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -B $MAVEN_OPTS
         env:
