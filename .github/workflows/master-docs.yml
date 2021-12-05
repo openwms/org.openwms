@@ -54,8 +54,8 @@ jobs:
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dscmuser=$PUSHKEY
-          -Dscmpublish.pubScmUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.lang.git
-          -DdeveloperConnectionUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.lang.git
+          -Dscmpublish.pubScmUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
+          -DdeveloperConnectionUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -B $MAVEN_OPTS
         env:
