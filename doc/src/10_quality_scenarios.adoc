@@ -1,7 +1,0 @@
-[[section-quality-scenarios]]
-== Quality Requirements
-
-=== Quality Tree
-
-=== Quality Scenarios
-

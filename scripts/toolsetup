@@ -1,3 +1,0 @@
-#!/bin/bash
-wget https://github.com/openwms/docToolchain/archive/master.zip -P doc/
-unzip ./doc/master.zip
