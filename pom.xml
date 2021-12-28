@@ -185,7 +185,6 @@
     </pluginRepositories>
 
     <modules>
-        <module>org.openwms.core.lang</module>
         <module>org.openwms.core.util</module>
     </modules>
 </project>
