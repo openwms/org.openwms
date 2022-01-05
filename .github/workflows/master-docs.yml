@@ -32,10 +32,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Set up JDK 11
+      - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -70,12 +70,16 @@ jobs:
           -Pcoverage -B $MAVEN_OPTS
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#      - name: Confluence Update
-#        run: |
-#          ./scripts/toolsetup
-#          ./docToolchain-master/bin/doctoolchain doc exportGithubIssues publishToConfluence
-#        env:
-#          ATLASSIAN_USER: ${{ secrets.ATLASSIAN_USER }}
-#          ATLASSIAN_PASSWORD: ${{ secrets.ATLASSIAN_PASSWORD }}
-#          GITHUB_USER: ${{ secrets.GH_USER }}
-#          GITHUB_PASSWORD: ${{ secrets.GH_PASSWORD }}
+      - uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: '11'
+          architecture: x64
+      - name: Confluence Update
+        run: |
+          ./scripts/toolsetup
+          ./docToolchain-master/bin/doctoolchain doc exportGithubIssues publishToConfluence
+        env:
+          ATLASSIAN_USER: ${{ secrets.ATLASSIAN_USER }}
+          ATLASSIAN_PASSWORD: ${{ secrets.ATLASSIAN_PASSWORD }}
+          GITHUB_USER: ${{ secrets.GH_USER }}
+          GITHUB_PASSWORD: ${{ secrets.GH_PASSWORD }}
