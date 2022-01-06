@@ -11,6 +11,14 @@ inputFiles = [
         [file: 'ppt/Demo.pptx.ad', formats: ['revealjs']]
              ]
 
+//folders in which asciidoc will find images.
+//these will be copied as resources to ./images
+//folders are relative to inputPath
+imageDirs = [
+        /** imageDirs **/
+        "${inputPath}/images"
+]
+
 taskInputsDirs = ["${inputPath}/src",
                   "${inputPath}/images",
                  ]
