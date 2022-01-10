@@ -5,7 +5,7 @@ Is a free to use and extensible Warehouse Management System (WMS) with a Materia
 warehouses. 
 
 # Resources
-Find further documentation in the [Wiki](https://openproject.butan092.startdedicated.de/projects/openwms/wiki)
+Find further documentation in the [Wiki](https://wiki.butan092.startdedicated.de/projects/openwms/wiki)
 
 [![Build status][travis-image]][travis-url]
 [![License][license-image]][license-url]
