@@ -30,6 +30,8 @@ public final class SpringProfiles {
     public static final String NOT_ASYNCHRONOUS = "!ASYNCHRONOUS";
     /** Used to define that synchronous message handling is used. */
     public static final String SYNCHRONOUS_PROFILE = "SYNCHRONOUS";
+    /** Used to define application slices when the application's workflow is not managed by a supervisor process. */
+    public static final String NOT_MANAGED = "!MANAGED";
     /** Used to define that synchronous message handling is used. */
     public static final String IN_MEMORY = "INMEM";
     /** Used to define that running within an OSGi container. */
