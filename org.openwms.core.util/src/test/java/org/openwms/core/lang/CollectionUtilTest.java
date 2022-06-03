@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2021 the original author or authors.
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -37,12 +36,12 @@ class CollectionUtilTest {
     }
 
     @Test void testGetFirstOrNull() {
-        List<String> strings = Arrays.asList("1", "2", "3");
+        var strings = Arrays.asList("1", "2", "3");
         assertEquals("1", CollectionUtil.getFirstOrNull(strings), "Calling with an list should result in the first element");
     }
 
     @Test void testAsHashMapWithNull() {
-        List<String> strings = Arrays.asList("1", "2", "3");
+        var strings = Arrays.asList("1", "2", "3");
         assertEquals(Collections.EMPTY_MAP, CollectionUtil.asHashMap(null, null), "Calling with null should result in an empty map");
         assertEquals(Collections.EMPTY_MAP, CollectionUtil.asHashMap(Collections.emptyList(), null), "Calling with an empty list shall result in an empty map");
         assertEquals(Collections.EMPTY_MAP, CollectionUtil.asHashMap(strings, null), "Calling with a list and no extractor shall result in an empty map");

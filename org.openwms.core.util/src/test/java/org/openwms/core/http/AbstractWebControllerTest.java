@@ -1,5 +1,5 @@
 /*
- * Copyright 2005-2021 the original author or authors.
+ * Copyright 2005-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,18 +30,18 @@ class AbstractWebControllerTest {
     @Test
     void test_Location_header_without_forwarded() {
 
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        var request = new MockHttpServletRequest();
         request.setServerName("172.19.0.4");
         request.setRequestURI("/v1/rest");
 
-        AbstractWebController testee = new AbstractWebController(){};
+        var testee = new AbstractWebController(){};
         assertThat(testee.getLocationURIForCreatedResource(request, "4711").toASCIIString()).isEqualTo("http://172.19.0.4:80/v1/rest/4711/");
     }
 
     @Test
     void test_Location_header_with_forwarded() {
 
-        MockHttpServletRequest request = new MockHttpServletRequest();
+        var request = new MockHttpServletRequest();
         request.setServerName("172.19.0.4");
         request.setRequestURI("/v1/rest");
         request.addHeader("x-forwarded-for", "10.10.16.6");
@@ -50,7 +50,7 @@ class AbstractWebControllerTest {
         request.addHeader("x-forwarded-port", "8086");
         request.addHeader("x-forwarded-host", "hostname.local:8086");
 
-        AbstractWebController testee = new AbstractWebController(){};
+        var testee = new AbstractWebController(){};
         assertThat(testee.getLocationURIForCreatedResource(request, "4711").toASCIIString()).isEqualTo("http://hostname.local:8086/common/v1/rest/4711/");
     }
 }
