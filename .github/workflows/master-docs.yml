@@ -36,6 +36,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
       - name: Cache Maven packages
         uses: actions/cache@v1
         with:
@@ -44,7 +50,8 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Install tools
         run: |
-          sudo apt-get install graphviz
+          sudo apt-get update
+          sudo apt-get install graphviz gsfonts graphviz-doc
           git config --global user.email "ci@example.com"
           git config --global user.name "CI Server"
       - name: Site
@@ -54,8 +61,8 @@ jobs:
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dscmuser=$PUSHKEY
-          -Dscmpublish.pubScmUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
-          -DdeveloperConnectionUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.core.lang.git
+          -Dscmpublish.pubScmUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.git
+          -DdeveloperConnectionUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.git
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -B $MAVEN_OPTS
         env:
@@ -63,10 +70,10 @@ jobs:
       - name: Sonar
         run: >
           ./mvnw clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
+          -DsurefireArgs="-Dspring.profiles.active=TEST"
           -Dsonar.login=$SONAR_TOKEN
-          -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
-          -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -DSONAR_TOKEN=$SONAR_TOKEN
+          -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -Pcoverage -B $MAVEN_OPTS
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
