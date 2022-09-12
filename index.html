@@ -35,12 +35,14 @@
 											Open Warehouse Management System</h1>
 											<p>An open source software to build intralogistic projects with.</p>
 										</header>
-										<p><strong>OpenWMS.org</strong> is a software project to build modern warehouse management systems with. Integrators as well as software consultant companies use and extend
-											OpenWMS.org to realize customer projects. Integration with a varying number of enterprise information systems (like <a href="https://en.wikipedia.org/wiki/Enterprise_resource_planning" target="_blank">ERP</a>) and fields controllers (e.g. <a href="https://en.wikipedia.org/wiki/Programmable_logic_controller" target="_blank">PLC</a>)
-											is essential for the project. Almost all customer projects in the intralogistics domain bring in own specific functional requirements. This strives for <strong>extendability</strong>
-											and <strong>flexibility</strong> of the software product to realize features efficiently. OpenWMS.org consists of the Warehouse Management part (WMS), the Transport Management (TMS)
-											and connectors to other systems. The WMS part is connected to <a href="https://en.wikipedia.org/wiki/Enterprise_resource_planning" target="_blank">ERP</a> systems whereas the Transport Management System controls field controllers, like <strong><a href="https://en.wikipedia.org/wiki/Raspberry_Pi" target="_blank">Raspberry Pi</a></strong> or <strong><a href="https://en.wikipedia.org/wiki/Programmable_logic_controller" target="_blank">PLC</a></strong>.
-											Non-functional requirements like the systems availability, performance and reliability are considered as well.</p>
+										<p><strong>OpenWMS.org</strong> is a software project to build modern warehouse management systems with. Integrators use and extend
+											OpenWMS.org to realize customer projects. Over the years even customers ramped up DevOps teams to customize and operate OpenWMS.org in their own way to reduce cost and time-to-market.
+											Integration with a varying number of enterprise information systems (like <a href="https://en.wikipedia.org/wiki/Enterprise_resource_planning" target="_blank">ERP</a>) and field controllers (e.g. <a href="https://en.wikipedia.org/wiki/Programmable_logic_controller" target="_blank">PLC</a>)
+											is essential for this project. Almost all customer projects in the intralogistics domain bring their own specific functional requirements. This strives for <strong>extendability</strong>
+											and <strong>flexibility</strong> of the software to realize features efficiently. OpenWMS.org consists of a Warehouse Management part (the WMS domain), the WCS (TMS domain)
+											and connectors to other systems. The WMS part is connected to <a href="https://en.wikipedia.org/wiki/Enterprise_resource_planning" target="_blank">ERP</a> systems whereas the Transport Management System controls field controllers, like <strong><a href="https://en.wikipedia.org/wiki/Raspberry_Pi" target="_blank">Raspberry Pi</a></strong>
+											or <strong><a href="https://en.wikipedia.org/wiki/Programmable_logic_controller" target="_blank">PLC</a></strong>.
+											Non-functional requirements like the systems availability, performance and reliability are first-class requirements, too.</p>
 										<!--ul class="actions">
 											<li><a href="#" class="button big">Learn More</a></li>
 										</ul-->
@@ -67,21 +69,21 @@
 											<span class="icon fa-cloud"></span>
 											<div class="content">
 												<h3>Cloud Native</h3>
-												<p>Strictly following the <strong><a href="https://12factor.net/" target="_blank">Twelve-Factor</a></strong> manifesto all services are cloud enabled but do not have to run in the cloud.</p>
+												<p>Strictly following the <strong><a href="https://12factor.net/" target="_blank">Twelve-Factor</a></strong> manifesto all services are cloud enabled but do not require to run in the cloud.</p>
 											</div>
 										</article>
 										<article>
 											<span class="icon fa-database"></span>
 											<div class="content">
 												<h3>Polyglot</h3>
-												<p>OpenWMS.org does not depend on a particular database product nor on storage technology. Different services use different types of datastores. From <strong>relational</strong> to <strong>NoSQL</strong> databases.</p>
+												<p>OpenWMS.org does not depend on a particular database product nor on storage technology. Different services may use different types of datastores. From <strong>relational</strong> to <strong>NoSQL</strong> databases.</p>
 											</div>
 										</article>
 										<article>
 											<span class="icon fa-puzzle-piece"></span>
 											<div class="content">
 												<h3>Workflow</h3>
-												<p>A workflow engine is used to control and change the <strong>material flow handling</strong> dynamically without interrupts and downtimes. </p>
+												<p>A workflow engine is used to control and change the <strong>material flow handling (MFC/WCS)</strong> dynamically without interrupts nor downtimes. </p>
 											</div>
 										</article>
 									</div>
