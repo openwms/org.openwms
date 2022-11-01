@@ -48,25 +48,6 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Install tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install graphviz gsfonts graphviz-doc
-          git config --global user.email "ci@example.com"
-          git config --global user.name "CI Server"
-      - name: Site
-        run: >
-          ./mvnw post-integration-test site scm-publish:publish-scm
-          -DM2_REPO_DIR=/home/runner/.m2/repository
-          -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
-          -Dargs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
-          -Dscmuser=$PUSHKEY
-          -Dscmpublish.pubScmUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.git
-          -DdeveloperConnectionUrl=scm:git:https://openwms:$PUSHKEY@github.com/openwms/org.openwms.git
-          -Dci.buildNumber=$GITHUB_RUN_NUMBER
-          -B $MAVEN_OPTS
-        env:
-          PUSHKEY: ${{ secrets.PUSHKEY }}
       - name: Sonar
         run: >
           ./mvnw clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
