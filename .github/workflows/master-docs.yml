@@ -77,16 +77,3 @@ jobs:
           -Pcoverage -B $MAVEN_OPTS
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - uses: AdoptOpenJDK/install-jdk@v1
-        with:
-          version: '11'
-          architecture: x64
-      - name: Confluence Update
-        run: |
-          ./scripts/toolsetup
-          ./docToolchain-master/bin/doctoolchain doc exportGithubIssues publishToConfluence
-        env:
-          ATLASSIAN_USER: ${{ secrets.ATLASSIAN_USER }}
-          ATLASSIAN_PASSWORD: ${{ secrets.ATLASSIAN_PASSWORD }}
-          GITHUB_USER: ${{ secrets.GH_USER }}
-          GITHUB_PASSWORD: ${{ secrets.GH_PASSWORD }}
