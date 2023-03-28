@@ -83,6 +83,19 @@ or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/ope
 | Service Name | Repository | Build | Extra options for distributed | JDK |
 | ------------ | ---------- | ----- | ----------------------------- | --- |
 | UAA Service | [org.openwms.core.uaa](https://github.com/openwms/org.openwms.core.uaa.git) | `mvn clean install` | - | `17.0.4.1` |
+| Preference Service | [org.openwms.core.preferences](https://github.com/openwms/org.openwms.core.preferences.git) | `mvn clean install` | - | `17.0.4.1` |
+| Common Service | [org.openwms.common.service](https://github.com/openwms/org.openwms.common.service.git) | `mvn clean install` | - | `17.0.4.1` |
+| OSIP/TCP Driver | PLANNING | `mvn clean install` | - | `17.0.4.1` |
+| Transportation Service | [org.openwms.tms.transportation](https://github.com/openwms/org.openwms.tms.transportation.git) | `mvn clean install` | - | `17.0.4.1` |
+| TMS Routing | [org.openwms.tms.routing](https://github.com/openwms/org.openwms.tms.routing.git) | `mvn clean install` | - | `17.0.4.1` |
+| Inventory Service | PLANNING | `mvn clean install` | - | `17.0.4.1` |
+| Shipping Service | PLANNING | `mvn clean install` | - | `17.0.4.1` |
+| Receiving Service | [org.openwms.wms.receiving](https://github.com/openwms/org.openwms.wms.receiving.git) | `mvn clean install` | - | `17.0.4.1` |
+| Portal | PLANNING | `mvn clean install` | - | `17.0.4.1` |
+| I18n Service | PLANNING | `mvn clean install` | - | `17.0.4.1` |
+| Movement Service | [org.openwms.wms.movements](https://github.com/openwms/org.openwms.wms.movements.git) | `mvn clean install` | - | `17.0.4.1` |
+| Picking Service | PLANNING | `mvn clean install` | - | `17.0.4.1` |
+| Putaway Service | PLANNING | `mvn clean install` | - | `17.0.4.1` |
 
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-uaa.png
