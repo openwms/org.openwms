@@ -78,6 +78,12 @@ or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/ope
 | :------------------------ | :------------------------ | :------------------------ | :------------------------ | :------------------------ | :------------------------ 
 |  ![10]                    |  ![13]                    |  ![14]                    |  ![15]                    |  ![16]                    |  ![17]                   
 
+# Build introduction
+
+| Service Name | Repository | Build monolithic | Build distributed | JDK |
+| ------------ | ---------- | ---------------- | ----------------- | --- |
+| UAA Service | [org.openwms.core.uaa](https://github.com/openwms/org.openwms.core.uaa.git) | `mvn clean install` | `mvn clean install` | `openjdk version "17.0.4.1" 2022-08-12` |
+
 [1]: src/docs/res/microservice_architecture.jpeg
 [2]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-uaa.png
 [2g]: https://github.com/openwms/org.openwms.core.uaa
