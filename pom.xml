@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>21</version>
+        <version>23</version>
         <relativePath />
     </parent>
     <artifactId>org.openwms</artifactId>
@@ -163,6 +163,9 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </repository>
     </repositories>
 
@@ -174,11 +177,17 @@
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
         </pluginRepository>
         <pluginRepository>
             <id>sonatype-nexus-snapshots</id>
             <name>Snapshot Repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
             <releases>
                 <enabled>false</enabled>
             </releases>
