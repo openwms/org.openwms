@@ -262,22 +262,38 @@ public abstract class AbstractWebController {
      * @return The complete appended URL
      */
     protected URI getLocationURIForCreatedResource(HttpServletRequest req, String objId) {
-        String proto = req.getHeader("x-forwarded-proto");
-        String host = req.getHeader("x-forwarded-host");
-        StringBuilder url = new StringBuilder();
-        if (proto != null && host != null) {
-            url.append(proto.endsWith("://") ? proto : proto + "://").append(host);
+        var protos = req.getHeader("x-forwarded-proto");
+        var hosts = req.getHeader("x-forwarded-host");
+        var url = new StringBuilder();
+        if (protos != null && hosts != null) {
+            var host = resolveFirstHost(hosts);
+            var proto = resolveFirstProtocol(protos);
+            url.append(proto).append(host);
         } else {
             url.append(req.getScheme().endsWith("://") ? req.getScheme() : req.getScheme() + "://")
                     .append(req.getServerName()).append(":")
                     .append(req.getServerPort());
         }
-        String prefix = req.getHeader("x-forwarded-prefix");
+        var prefix = req.getHeader("x-forwarded-prefix");
         if (prefix != null) {
             url.append(prefix);
         }
         url.append(req.getRequestURI());
         url.append("/{objId}/");
         return new UriTemplate(url.toString()).expand(objId);
+    }
+
+    private String resolveFirstHost(String hosts) {
+        var parts = hosts.split(",");
+        return parts.length == 1 ? hosts : parts[0];
+    }
+
+    private String resolveFirstProtocol(String protocols) {
+        var parts = protocols.split(",");
+        if (parts.length == 1) {
+            return protocols.endsWith("://") ? protocols : protocols + "://";
+        } else {
+            return parts[0].endsWith("://") ? parts[0] : parts[0] + "://";
+        }
     }
 }
