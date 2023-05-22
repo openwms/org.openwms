@@ -94,14 +94,14 @@ public abstract class AbstractWebController {
 
     @ExceptionHandler(TechnicalRuntimeException.class)
     protected ResponseEntity<Response<?>> handleTechnicalRuntimeException(TechnicalRuntimeException tre) {
-        if (tre.getCause() instanceof BehaviorAwareException) {
-            return handleBehaviorAwareException((BehaviorAwareException) tre.getCause());
+        if (tre.getCause() instanceof BehaviorAwareException bae) {
+            return handleBehaviorAwareException(bae);
         }
-        if (tre.getCause() instanceof BusinessRuntimeException) {
-            return handleBusinessRuntimeException((BusinessRuntimeException) tre.getCause());
+        if (tre.getCause() instanceof BusinessRuntimeException bre) {
+            return handleBusinessRuntimeException(bre);
         }
-        if (tre.getCause() instanceof HttpBusinessException) {
-            return handleHttpBusinessException((HttpBusinessException) tre.getCause());
+        if (tre.getCause() instanceof HttpBusinessException hbe) {
+            return handleHttpBusinessException(hbe);
         }
         EXC_LOGGER.error("[P] Presentation Layer Exception: {}", tre.getLocalizedMessage(), tre);
         return new ResponseEntity<>(Response.newBuilder()
