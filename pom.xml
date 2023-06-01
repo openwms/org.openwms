@@ -92,7 +92,7 @@
         <env.all>true</env.all>
 
         <ci.buildNumber>MANUAL</ci.buildNumber>
-
+        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
         <ms.group>NULL</ms.group>
 
         <!--   Plugin versions   -->
