@@ -19,13 +19,6 @@
         <url>https://github.com/openwms/${project.artifactId}/issues</url>
     </issueManagement>
 
-    <scm>
-        <url>https://github.com/openwms/${project.artifactId}</url>
-        <connection>scm:git:https://github.com/openwms/${project.artifactId}.git</connection>
-        <developerConnection>scm:git:https://github.com/openwms/${project.artifactId}.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
     <profiles>
         <profile>
             <!-- Use PostgreSQL as database -->
