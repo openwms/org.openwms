@@ -12,6 +12,13 @@
     <name>OpenWMS.org CORE: Utilities Library</name>
     <description>A project that contains utility classes, exception types, common event types that are used by all other projects.</description>
 
+    <scm>
+        <url>https://github.com/openwms/${project.artifactId}</url>
+        <connection>scm:git:https://${scmuser}github.com/openwms/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:https://github.com/openwms/${project.artifactId}.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
     <dependencies>
         <!-- Spring Framework -->
         <dependency>
