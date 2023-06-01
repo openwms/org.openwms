@@ -50,7 +50,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Sonar
         run: >
-          ./mvnw clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
+          ./mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar
           -DsurefireArgs="-Dspring.profiles.active=TEST"
           -Dsonar.login=$SONAR_TOKEN
           -DSONAR_TOKEN=$SONAR_TOKEN

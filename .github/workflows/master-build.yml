@@ -23,9 +23,17 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - uses: s4u/maven-settings-action@v2.8.0
+        with:
+          servers: |
+            [{
+              "id": "sonatype-nexus-snapshots",
+              "username": "${{ secrets.OSS_USERNAME }}",
+              "password": "${{ secrets.OSS_PASSWORD }}"
+            }]
       - name: Build
         run: >
-          ./mvnw clean verify
+          ./mvnw deploy
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -U -B $MAVEN_OPTS
