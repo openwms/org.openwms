@@ -40,50 +40,39 @@ or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/ope
 
 # Microservices
 
-| [![11]][2g] [![12]][2w]  | [![11]][3g] [![12]][3w] | [![11]][4g] [![12]][4w] | [![11]][5g] [![12]][5w] | [![11]][6g] [![12]][6w] | [![11]][7g] [![12]][7w] | [![11]][8g] [![12]][8w] | [![11]][9g] [![12]][9w] |
-| :------------- | :------------- | :------------- | :------------- | :------------- | :------------- | :------------- | :------------- |
-| ![2]      | ![3]      | ![4]      | ![5]      | ![6]      | ![7]      | ![8]      | ![9]      | 
+# Build introduction
 
-
-| [![11]][10g] [![12]][10w] | ![11] ![12]               | ![11] ![12]               | ![11] ![12]               | ![11] ![12]               | ![11] ![12]
-| :------------------------ | :------------------------ | :------------------------ | :------------------------ | :------------------------ | :------------------------ 
-|  ![10]                    |  ![13]                    |  ![14]                    |  ![15]                    |  ![16]                    |  ![17]                   
+| Service Name          | Repository                                                                                    | Accessibility        | License           |
+|-----------------------|-----------------------------------------------------------------------------------------------|----------------------|-------------------|
+| Service Registry      | [org.openwms.services](https://github.com/spring-labs/org.openwms.services)                   | Public               | Apache License v2 |
+| Configuration Service | [org.openwms.configuration](https://github.com/spring-labs/org.openwms.configuration)         | Public               | Apache License v2 |
+| Gateway Service       | [org.openwms.gateway](https://github.com/spring-labs/org.openwms.gateway)                     | Public               | Apache License v2 |
+| Auth Service          | [org.openwms.auth](https://github.com/spring-labs/org.openwms.auth)                           | Private              | GPLv3             |
+| UAA Service           | [org.openwms.core.uaa](https://github.com/openwms/org.openwms.core.uaa)                       | Public               | Apache License v2 |
+| Preference Service    | [org.openwms.core.preferences](https://github.com/openwms/org.openwms.core.preferences)       | Public               | Apache License v2 |
+| Printing Service      | [org.openwms.core.printing](https://github.com/openwms/org.openwms.core.printing)             | Private              | GPLv3             |
+| Translation Service   | [org.openwms.core.lang](https://github.com/openwms/org.openwms.core.lang)                     | Private Preview      | Apache License v2 |
+| Common Service        | [org.openwms.common.service](https://github.com/openwms/org.openwms.common.service)           | Public               | Apache License v2 |
+| OSIP/TCP Driver       | [org.openwms.common.comm](https://github.com/openwms/org.openwms.common.comm)                 | Public               | Apache License v2 |
+| OPCUA Driver          | [org.openwms.common.opcua](https://github.com/interface21-io/org.openwms.common.opcua)        | Private Preview      | Apache License v2 |
+| Transaction Service   | [org.openwms.common.transactions](https://github.com/openwms/org.openwms.common.transactions) | Private Preview      | Apache License v2 |
+| Common Tasks Service  | [org.openwms.common.tasks](https://github.com/openwms/org.openwms.common.tasks)               | Public               | Apache License v2 |
+| Transportation Service | [org.openwms.tms.transportation](https://github.com/openwms/org.openwms.tms.transportation)   | Public               | Apache License v2 |
+| TMS Routing           | [org.openwms.tms.routing](https://github.com/openwms/org.openwms.tms.routing)                 | Public               | Apache License v2 |
+| Receiving Service     | [org.openwms.wms.receiving](https://github.com/openwms/org.openwms.wms.receiving)             | Public               | Apache License v2 |
+| Inventory Service     | [org.openwms.wms.inventory](https://github.com/interface21-io/org.openwms.wms.inventory)      | Private Preview      | Apache License v2 |
+| Picking Library       | [org.openwms.wms.picking](https://github.com/openwms/org.openwms.wms.picking)                 | Private              | GPLv3             |
+| Movements Service     | [org.openwms.wms.movements](https://github.com/openwms/org.openwms.wms.movements)             | Public               | Apache License v2 |
+| WMS Tasks Service     | [org.openwms.wms.tasks](https://github.com/openwms/org.openwms.wms.tasks)                     | Private Preview      | Apache License v2 |
+| Partner Service       | [org.openwms.wms.partners](https://github.com/interface21-io/org.openwms.wms.partners)        | Private Preview      | Apache License v2 |
+| Trucks Service        | [org.openwms.wms.trucks](https://github.com/openwms/org.openwms.wms.trucks)                   | Private Preview      | Apache License v2 |
+| Shipping Service      | [org.openwms.wms.shipping](https://github.com/openwms/org.openwms.wms.shipping)               | Private Preview      | Apache License v2 |
+| Putaway Library       | [org.openwms.wms.putaway](https://github.com/openwms/org.openwms.wms.putaway)                 | Private              | GPLv3             |
+| SAP Adapter           | [org.openwms.wms.sap](https://github.com/openwms/org.openwms.wms.sap)                         | Private              | GPLv3             |
+| Dynamics Adapter      | [org.openwms.wms.msdynamics](https://github.com/openwms/org.openwms.wms.msdynamics)           | Private              | GPLv3             |
+| NetSuite Adapter      | [org.openwms.wms.netsuite](https://github.com/openwms/org.openwms.wms.netsuite)               | Private              | GPLv3             |
 
 [1]: src/docs/res/microservice_architecture.jpeg
-[2]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-uaa.png
-[2g]: https://github.com/openwms/org.openwms.core.uaa
-[2w]: https://openwms.github.io/org.openwms.core.uaa/index.html
-[3]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-prefs.png
-[3g]: https://github.com/openwms/org.openwms.core.preferences
-[3w]: https://openwms.github.io/org.openwms.core.preferences/index.html
-[4]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-location.png
-[4g]: https://github.com/openwms/org.openwms.common.service
-[4w]: https://openwms.github.io/org.openwms.common.service/index.html
-[5]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-tcp.png
-[5g]: https://github.com/openwms/org.openwms.common.comm
-[5w]: https://www.interface21.io/docs/common/comm/index.html
-[6]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-transportation.png
-[6g]: https://github.com/openwms/org.openwms.tms.transportation
-[6w]: https://openwms.github.io/org.openwms.tms.transportation/index.html
-[7]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-routing.png
-[7g]: https://github.com/openwms/org.openwms.tms.routing
-[7w]: https://openwms.github.io/org.openwms.tms.routing/index.html
-[8]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-inventory.png
-[8g]: https://github.com/openwms/org.openwms.wms.inventory
-[8w]: https://openwms.github.io/org.openwms.wms.inventory/index.html
-[9]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-shipping.png
-[9g]: https://github.com/openwms/org.openwms.wms.shipping
-[9w]: https://openwms.github.io/org.openwms.wms.shipping/index.html
-[10]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-receiving.png
-[10g]: https://github.com/openwms/org.openwms.wms.receiving
-[10w]: https://openwms.github.io/org.openwms.wms.receiving/index.html
-[11]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/github-b.png
-[12]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/website-b.png
-[13]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-portal.png
-[14]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-i18n.png
-[15]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-movement.png
-[16]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-picking.png
-[17]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-putaway.png
 
 # Current state of development
 Most components are under active development. In 2016 the whole product has been migrated from the technical structured OSGi architecture
