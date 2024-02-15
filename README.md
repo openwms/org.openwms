@@ -43,35 +43,36 @@ Due to OpenWMS.org is built on a modern distributed microservice architecture th
 methodology, all functional business components are managed within their own SDLC (Software Development Life Cycle) and own source code
 repositories.
 
-| Service Name          | Repository                                                                                    | Accessibility        | License           |
-|-----------------------|-----------------------------------------------------------------------------------------------|----------------------|-------------------|
-| Service Registry      | [org.openwms.services](https://github.com/spring-labs/org.openwms.services)                   | Public               | Apache License v2 |
-| Configuration Service | [org.openwms.configuration](https://github.com/spring-labs/org.openwms.configuration)         | Public               | Apache License v2 |
-| Gateway Service       | [org.openwms.gateway](https://github.com/spring-labs/org.openwms.gateway)                     | Public               | Apache License v2 |
-| Auth Service          | [org.openwms.auth](https://github.com/spring-labs/org.openwms.auth)                           | Private              | GPLv3             |
-| UAA Service           | [org.openwms.core.uaa](https://github.com/openwms/org.openwms.core.uaa)                       | Public               | Apache License v2 |
-| Preference Service    | [org.openwms.core.preferences](https://github.com/openwms/org.openwms.core.preferences)       | Public               | Apache License v2 |
-| Printing Service      | [org.openwms.core.printing](https://github.com/openwms/org.openwms.core.printing)             | Private              | GPLv3             |
-| Translation Service   | [org.openwms.core.lang](https://github.com/openwms/org.openwms.core.lang)                     | Private Preview      | Apache License v2 |
-| Common Service        | [org.openwms.common.service](https://github.com/openwms/org.openwms.common.service)           | Public               | Apache License v2 |
-| OSIP/TCP Driver       | [org.openwms.common.comm](https://github.com/openwms/org.openwms.common.comm)                 | Public               | Apache License v2 |
-| OPCUA Driver          | [org.openwms.common.opcua](https://github.com/interface21-io/org.openwms.common.opcua)        | Private Preview      | Apache License v2 |
-| Transaction Service   | [org.openwms.common.transactions](https://github.com/openwms/org.openwms.common.transactions) | Private Preview      | Apache License v2 |
-| Common Tasks Service  | [org.openwms.common.tasks](https://github.com/openwms/org.openwms.common.tasks)               | Public               | Apache License v2 |
-| Transportation Service | [org.openwms.tms.transportation](https://github.com/openwms/org.openwms.tms.transportation)   | Public               | Apache License v2 |
-| TMS Routing           | [org.openwms.tms.routing](https://github.com/openwms/org.openwms.tms.routing)                 | Public               | Apache License v2 |
-| Receiving Service     | [org.openwms.wms.receiving](https://github.com/openwms/org.openwms.wms.receiving)             | Public               | Apache License v2 |
-| Inventory Service     | [org.openwms.wms.inventory](https://github.com/interface21-io/org.openwms.wms.inventory)      | Private Preview      | Apache License v2 |
-| Picking Library       | [org.openwms.wms.picking](https://github.com/openwms/org.openwms.wms.picking)                 | Private              | GPLv3             |
-| Movements Service     | [org.openwms.wms.movements](https://github.com/openwms/org.openwms.wms.movements)             | Public               | Apache License v2 |
-| WMS Tasks Service     | [org.openwms.wms.tasks](https://github.com/openwms/org.openwms.wms.tasks)                     | Private Preview      | Apache License v2 |
-| Partner Service       | [org.openwms.wms.partners](https://github.com/interface21-io/org.openwms.wms.partners)        | Private Preview      | Apache License v2 |
-| Trucks Service        | [org.openwms.wms.trucks](https://github.com/openwms/org.openwms.wms.trucks)                   | Private Preview      | Apache License v2 |
-| Shipping Service      | [org.openwms.wms.shipping](https://github.com/openwms/org.openwms.wms.shipping)               | Private Preview      | Apache License v2 |
-| Putaway Library       | [org.openwms.wms.putaway](https://github.com/openwms/org.openwms.wms.putaway)                 | Private              | GPLv3             |
-| SAP Adapter           | [org.openwms.wms.sap](https://github.com/openwms/org.openwms.wms.sap)                         | Private              | GPLv3             |
-| Dynamics Adapter      | [org.openwms.wms.msdynamics](https://github.com/openwms/org.openwms.wms.msdynamics)           | Private              | GPLv3             |
-| NetSuite Adapter      | [org.openwms.wms.netsuite](https://github.com/openwms/org.openwms.wms.netsuite)               | Private              | GPLv3             |
+| Service Name               | Repository                                                                                    | Accessibility        | License           |
+|----------------------------|-----------------------------------------------------------------------------------------------|----------------------|-------------------|
+| Service Registry           | [org.openwms.services](https://github.com/spring-labs/org.openwms.services)                   | Public               | Apache License v2 |
+| Configuration Service      | [org.openwms.configuration](https://github.com/spring-labs/org.openwms.configuration)         | Public               | Apache License v2 |
+| Gateway Service            | [org.openwms.gateway](https://github.com/spring-labs/org.openwms.gateway)                     | Public               | Apache License v2 |
+| Gateway Service ENTERPRISE | [org.openwms.gateway](https://github.com/interface21-io/org.openwms.gateway)                  | Private              | GPLv3             |
+| Auth Service               | [org.openwms.auth](https://github.com/spring-labs/org.openwms.auth)                           | Private              | GPLv3             |
+| UAA Service                | [org.openwms.core.uaa](https://github.com/openwms/org.openwms.core.uaa)                       | Public               | Apache License v2 |
+| Preference Service         | [org.openwms.core.preferences](https://github.com/openwms/org.openwms.core.preferences)       | Public               | Apache License v2 |
+| Printing Service           | [org.openwms.core.printing](https://github.com/openwms/org.openwms.core.printing)             | Private              | GPLv3             |
+| Translation Service        | [org.openwms.core.lang](https://github.com/openwms/org.openwms.core.lang)                     | Private Preview      | Apache License v2 |
+| Common Service             | [org.openwms.common.service](https://github.com/openwms/org.openwms.common.service)           | Public               | Apache License v2 |
+| OSIP/TCP Driver            | [org.openwms.common.comm](https://github.com/openwms/org.openwms.common.comm)                 | Public               | Apache License v2 |
+| OPCUA Driver               | [org.openwms.common.opcua](https://github.com/interface21-io/org.openwms.common.opcua)        | Private Preview      | Apache License v2 |
+| Transaction Service        | [org.openwms.common.transactions](https://github.com/openwms/org.openwms.common.transactions) | Private Preview      | Apache License v2 |
+| Common Tasks Service       | [org.openwms.common.tasks](https://github.com/openwms/org.openwms.common.tasks)               | Public               | Apache License v2 |
+| Transportation Service     | [org.openwms.tms.transportation](https://github.com/openwms/org.openwms.tms.transportation)   | Public               | Apache License v2 |
+| TMS Routing                | [org.openwms.tms.routing](https://github.com/openwms/org.openwms.tms.routing)                 | Public               | Apache License v2 |
+| Receiving Service          | [org.openwms.wms.receiving](https://github.com/openwms/org.openwms.wms.receiving)             | Public               | Apache License v2 |
+| Inventory Service          | [org.openwms.wms.inventory](https://github.com/interface21-io/org.openwms.wms.inventory)      | Private Preview      | Apache License v2 |
+| Picking Library            | [org.openwms.wms.picking](https://github.com/openwms/org.openwms.wms.picking)                 | Private              | GPLv3             |
+| Movements Service          | [org.openwms.wms.movements](https://github.com/openwms/org.openwms.wms.movements)             | Public               | Apache License v2 |
+| WMS Tasks Service          | [org.openwms.wms.tasks](https://github.com/openwms/org.openwms.wms.tasks)                     | Private Preview      | Apache License v2 |
+| Partner Service            | [org.openwms.wms.partners](https://github.com/interface21-io/org.openwms.wms.partners)        | Private Preview      | Apache License v2 |
+| Trucks Service             | [org.openwms.wms.trucks](https://github.com/openwms/org.openwms.wms.trucks)                   | Private Preview      | Apache License v2 |
+| Shipping Service           | [org.openwms.wms.shipping](https://github.com/openwms/org.openwms.wms.shipping)               | Private Preview      | Apache License v2 |
+| Putaway Library            | [org.openwms.wms.putaway](https://github.com/openwms/org.openwms.wms.putaway)                 | Private              | GPLv3             |
+| SAP Adapter                | [org.openwms.wms.sap](https://github.com/openwms/org.openwms.wms.sap)                         | Private              | GPLv3             |
+| Dynamics Adapter           | [org.openwms.wms.msdynamics](https://github.com/openwms/org.openwms.wms.msdynamics)           | Private              | GPLv3             |
+| NetSuite Adapter           | [org.openwms.wms.netsuite](https://github.com/openwms/org.openwms.wms.netsuite)               | Private              | GPLv3             |
 
 [1]: src/docs/res/microservice_architecture.jpeg
 
@@ -79,7 +80,7 @@ repositories.
 Most components are under active development. In 2016 the whole product has been migrated from the technical structured OSGi architecture
 towards a business oriented architecture with Spring Boot microservices and Netflix OSS components. Documentation of previously released
 versions does still exist on [SourceForge.net](http://openwms2005.sourceforge.net) and [Atlassian Confluence](https://openwms.atlassian.net/wiki).
-All current documentation is held in [OpenWMS Cloud Wiki](https://wiki.openwms.cloud).
+**All current documentation is maintained in [OpenWMS Cloud Wiki](https://wiki.openwms.cloud)**.
 
 # Previous Architectures
 The project started in 2005 with an J2EE server approach based on EJB2.1 with XDoclets, Hibernate and JavaServer Faces (JSF). In more than
