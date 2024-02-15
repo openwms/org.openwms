@@ -7,9 +7,9 @@ warehouses.
 Find further documentation in the [Wiki](https://wiki.openwms.cloud/projects/openwms/wiki/00-dot-02-business-services)
 
 # Architecture
-Instead of applying a technical layered architecture (like with OSGi and before that with J2EE1.4) the current architecture focuses on
-business components. Business functions with a high degree of cohesion kept together as small deployable software components. Each
-component has its own development lifecycle with its roadmap of the API evolution, and a separate data store. The following sketch shows
+Instead of applying a technical layered architecture (like with previous technologies), the current architecture focuses on
+business components. Business functions with a high cohesion are kept together as small deployable software components. Each
+component has its own development lifecycle with its own roadmap of the API evolution and a separate data store. The following sketch shows
 all currently existing components of the OpenWMS.org system together with all potential surrounding systems.
 
 ![Architecture][1]
