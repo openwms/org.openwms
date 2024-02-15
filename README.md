@@ -4,25 +4,7 @@ OpenWMS.org
 Is a free to use and extensible Warehouse Management System (WMS) with a Material Flow Control (MFC) system for automatic and manual
 warehouses. 
 
-# Resources
-Find further documentation in the [Wiki](https://wiki.butan092.startdedicated.de/projects/openwms/wiki)
-
-[![Build status][travis-image]][travis-url]
-[![License][license-image]][license-url]
-[![Quality][codacy-image]][codacy-url]
-[![Join the chat at https://gitter.im/openwms/org.openwms](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/openwms/org.openwms?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-[travis-image]: https://img.shields.io/travis/openwms/org.openwms.svg?style=flat-square
-[travis-url]: https://travis-ci.org/openwms/org.openwms
-[license-image]: https://img.shields.io/badge/License-Apache%202.0-blue.svg
-[license-url]: LICENSE
-[codacy-image]: https://img.shields.io/codacy/grade/1081cebbe27b40a8be16b6524f246b6b.svg?style=flat-square
-[codacy-url]: https://www.codacy.com/app/openwms/org.openwms
-
-# Current state of development
-Most components are under active development. In 2016 the whole product has been migrated from the technical structured OSGi architecture
-towards a business oriented architecture with Spring Boot microservices and Netflix OSS components. Documentation of previously released
-versions does still exist on [SourceForge.net](http://openwms2005.sourceforge.net/).
+Find further documentation in the [Wiki](https://wiki.openwms.cloud/projects/openwms/wiki/00-dot-02-business-services)
 
 # Current Architecture
 Instead of applying a technical layered architecture (like with OSGi and before that with J2EE1.4) the current architecture focuses on
@@ -113,3 +95,8 @@ or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/ope
 [15]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-movement.png
 [16]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-picking.png
 [17]: https://raw.githubusercontent.com/openwms/org.openwms/gh-pages/src/docs/res/srv-putaway.png
+
+# Current state of development
+Most components are under active development. In 2016 the whole product has been migrated from the technical structured OSGi architecture
+towards a business oriented architecture with Spring Boot microservices and Netflix OSS components. Documentation of previously released
+versions does still exist on [SourceForge.net](http://openwms2005.sourceforge.net/).
