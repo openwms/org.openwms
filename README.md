@@ -78,15 +78,17 @@ repositories.
 # Current state of development
 Most components are under active development. In 2016 the whole product has been migrated from the technical structured OSGi architecture
 towards a business oriented architecture with Spring Boot microservices and Netflix OSS components. Documentation of previously released
-versions does still exist on [SourceForge.net](http://openwms2005.sourceforge.net/).
+versions does still exist on [SourceForge.net](http://openwms2005.sourceforge.net) and [Atlassian Confluence](https://openwms.atlassian.net/wiki).
+All current documentation is held in [OpenWMS Cloud Wiki](https://wiki.openwms.cloud).
 
 # Previous Architectures
 The project started in 2005 with an J2EE server approach based on EJB2.1 with XDoclets, Hibernate and JavaServer Faces (JSF). In more than
-15 years we've seen a bunch of technologies that all addresses the same problems.
+15 years we've seen a bunch of technologies addressing all the same problems.
  
-A POC has been implemented with EJB2.1, but the project actually started with EJB3.0. Since about 2007 OpenWMS.org is on the Spring
+A PoC has been implemented with EJB2.1, but the project actually started with EJB3.0. Since around 2007 OpenWMS.org is based on the Spring
 Framework and this is still fine, and the right choice. Spring in combination with OSGi seemed to be the perfect match to build a modular
 and extensible base project. Unfortunately Spring stopped their efforts on OSGi, in particular on Spring dmServer and Spring Dynamic Modules
 . In a transition step to the current microservice architecture, we put all the OSGi bundles into a fat JavaEE WAR deployment unit to run
 the application on a servlet container like Apache Tomcat. After that we redesigned all services and business functions and applied a
-microservice architecture.
+microservice architecture. The standalone WAR deployment is not supported anymore because it was not demanded by the community. Only the
+microservice architecture is supported right now.
