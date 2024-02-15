@@ -39,8 +39,9 @@ applications designed to run on any modern PaaS cloud platforms, like [Heroku](h
 or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift).
 
 # Microservices
-
-# Build introduction
+Due to OpenWMS.org is built on a modern distributed microservice architecture that follows the [Twelve-Factor](https://12factor.net)
+methodology, all functional business components are managed within their own SDLC (Software Development Life Cycle) and own source code
+repositories.
 
 | Service Name          | Repository                                                                                    | Accessibility        | License           |
 |-----------------------|-----------------------------------------------------------------------------------------------|----------------------|-------------------|
