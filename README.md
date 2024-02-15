@@ -14,29 +14,29 @@ all currently existing components of the OpenWMS.org system together with all po
 
 ![Architecture][1]
 
-Beside the user interface, several other systems interact with the OpenWMS.org system. On top, we find ERP systems sending high-level tasks
-to OpenWMS.org, e.g. a customer order with order positions where each refers to a product that is managed by the `Inventory Service`.
-OpenWMS.org fulfills these tasks by orchestrating the underlying subsystem. The communication between OpenWMS.org and an ERP system may not 
-be exclusively unidirectional, OpenWMS.org does although send status messages back to the ERP or may request product catalog updates, this
-depends on the project needs. On the bottom we have devices that are close to actors and sensors in automatic warehouses. Those devices are
-almost limited in hardware resources and protocol stacks. Typical [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller)
+Beside the user interface, several other systems interact with the OpenWMS.org system. ERP systems on top are sending high-level tasks
+to OpenWMS.org, e.g. a customer orders with order lines that refer to products managed by the `Inventory Service`.
+OpenWMS.org fulfills these tasks by orchestrating the underlying subsystems. The communication between OpenWMS.org and an ERP system might 
+be in both directions, OpenWMS.org although sends status messages back to the ERP or might request product catalog updates, depending on the
+project needs. On the bottom of the above graphic the system if connected to devices that are close to actors and sensors in automatic
+warehouses. Those devices are almost limited in hardware resources and protocol stacks. Typical [PLC](https://en.wikipedia.org/wiki/Programmable_logic_controller)
 (Programmable Logic Controllers) are used to interact with field sensors and to control actors. OpenWMS.org is an open source software and
-therefore promotes the usage of open source hardware components over commercial PLC products as well. The first choice of supported devices
-are boards, like [Arduino](https://www.arduino.cc), [Raspberry Pi](https://www.raspberrypi.org/) or the industrial [Revolution Pi](https://revolution.kunbus.com/)
-version, with an open microcontroller architecture, free to use. All these subsystems in the field area have one thing in common: They are
-close to the hardware and expect responses from the server in no time to control motors and switch gates to the right direction. They
-although have the power to bring a serving component down just by sending requests all the time. Typical web applications are different in
-that the infrastructure takes care of DoS attacks, and the application server pools incoming traffic.
+therefore promotes the usage of open source hardware components over commercial PLC products. The first choice of supported devices
+are boards, like [Raspberry Pi](https://www.raspberrypi.org/) or industrial [Revolution Pi](https://revolution.kunbus.com/), with an open
+microcontroller architecture. But nevertheless also closed proprietary systems are supported as well. All this kind of subsystems have one
+thing in common: They are close to the hardware and expect response times in the range of milliseconds to control motors and switch gates
+very quickly. They have the power to bring down a serving component down just by repeating requests all the time. Typical web application
+clients are different in that the infrastructure takes care of DoS attacks, and the application server pools incoming traffic.
 
-Read more about each components architecture and design on the components corresponding Github page.
+Read more about each components architecture and design on the components corresponding GitHub page.
 
 # Technologies
-In addition to a bunch of Spring Framework subprojects, OpenWMS.org uses one of the popular BPMN workflow engines [Activiti](https://www.activiti.org),
-[Flowable](https://www.flowable.org) or [Camunda](https://www.camunda.org) as embedded engine to take routing decisions in the TMS layer.
-RDBMS access is most of time realised with the Java Persistence API. Some components might use NoSQL databases, like MongoDB, solely.
-RabbitMQ in combination with Spring Integration as notification is used as an event broker. All hexagon components are Spring Boot
-applications designed to run on any modern PaaS cloud platforms, like [Heroku](https://www.heroku.com), [Azure Kubernetes Service](https://azure.microsoft.com/de-de/services/kubernetes-service/)
-or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift).
+In addition to a bunch of Spring Framework subprojects, OpenWMS.org supports popular BPMN workflow engines like [Activiti](https://www.activiti.org),
+[Flowable](https://www.flowable.org) and [Camunda](https://www.camunda.org) to take routing decisions on the transport layer.
+RDBMS access is most often realised with the [Jakarta Persistence API](https://de.wikipedia.org/wiki/Jakarta_Persistence_API). Some
+components might also use NoSQL databases, like MongoDB. [RabbitMQ](https://rabbitmq.com) in combination with the Spring Integration project
+is used as an event broker for asynchronous event and command propagation. Currently, all microservices are realised as Spring Boot 
+applications designed to run on any modern PaaS cloud platforms, like the [Azure Kubernetes Service](https://azure.microsoft.com/de-de/services/kubernetes-service), [AWS EKS](https://aws.amazon.com/eks) or [Redhat OpenShift](https://www.redhat.com/en/technologies/cloud-computing/openshift).
 
 # Microservices
 Due to OpenWMS.org is built on a modern distributed microservice architecture that follows the [Twelve-Factor](https://12factor.net)
