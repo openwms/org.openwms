@@ -18,6 +18,7 @@ package org.openwms.core.time;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -45,35 +46,62 @@ public interface TimeProvider {
      *
      * @return Timezone aware Date
      */
-    default Date nowAsDate() {
-        return Date.from(ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()).toInstant());
+    default Date nowAsCurrentDate() {
+        return Date.from(ZonedDateTime.of(LocalDateTime.now(ZoneId.systemDefault()), ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * Returns the current date and time in UTC timezone.
+     *
+     * @return UTC Date
+     */
+    default Date nowAsZuluDate() {
+        return Date.from(ZonedDateTime.now(ZoneId.of("Z")).toInstant());
     }
 
     /**
      * Returns the current date and time considering the configured timezone.
      *
-     * @return Timezone aware DateTime
+     * @return Timezone aware ZonedDateTime
      */
-    default ZonedDateTime nowAsZonedDateTime() {
+    default ZonedDateTime nowAsCurrentZonedDateTime() {
         return nowAsZonedDateTime(ZoneId.systemDefault());
     }
 
     /**
      * Returns the current date and time considering the configured timezone.
      *
-     * @param zoneId ZoneId
-     * @return Timezone aware DateTime
+     * @return Timezone aware ZonedDateTime
+     */
+    default ZonedDateTime nowAsZuluZonedDateTime() {
+        return nowAsZonedDateTime(ZoneOffset.UTC);
+    }
+
+    /**
+     * Returns the current date and time considering the given timezone.
+     *
+     * @param zoneId ZoneId to consider
+     * @return Timezone aware ZonedDateTime
      */
     default ZonedDateTime nowAsZonedDateTime(ZoneId zoneId) {
-        return ZonedDateTime.of(LocalDateTime.now(), zoneId);
+        return ZonedDateTime.now(zoneId);
     }
 
     /**
      * Returns the current date and time of the system considering the configured timezone.
      *
-     * @return Timezone aware Date
+     * @return Timezone aware Instant
      */
-    default Instant now() {
-        return ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault()).toInstant();
+    default Instant nowAsCurrentInstant() {
+        return ZonedDateTime.of(LocalDateTime.now(ZoneId.systemDefault()), ZoneId.systemDefault()).toInstant();
+    }
+
+    /**
+     * Returns the date and time in UTC timezone.
+     *
+     * @return Timezone aware Instant
+     */
+    default Instant nowAsZuluInstant() {
+        return ZonedDateTime.of(LocalDateTime.now(ZoneOffset.UTC), ZoneOffset.UTC).toInstant();
     }
 }
