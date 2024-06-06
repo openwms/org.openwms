@@ -15,11 +15,13 @@
  */
 package org.openwms.core.http;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.validation.ValidationException;
 import org.ameba.LoggingCategories;
 import org.ameba.exception.BehaviorAwareException;
 import org.ameba.exception.BusinessRuntimeException;
 import org.ameba.exception.TechnicalRuntimeException;
-import org.ameba.http.AbstractBase;
 import org.ameba.http.Response;
 import org.openwms.core.exception.ExceptionCodes;
 import org.openwms.core.listener.RemovalNotAllowedException;
@@ -35,9 +37,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.util.UriTemplate;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
+import java.io.Serializable;
 import java.net.URI;
 import java.util.Locale;
 
@@ -73,7 +73,7 @@ public abstract class AbstractWebController {
                 .withMessageKey(rnae.getMessageKey())
                 .withObj(rnae.getData())
                 .build(),
-                HttpStatus.UNAUTHORIZED
+                HttpStatus.FORBIDDEN
         );
     }
 
@@ -195,7 +195,7 @@ public abstract class AbstractWebController {
      * @param params A set of Serializable objects that are passed to the caller
      * @return A ResponseEntity with status {@code code}
      */
-    protected <T extends AbstractBase> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, T... params) {
+    protected <T extends Serializable> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, T... params) {
         Response result = Response.newBuilder().withMessage(msg).withMessageKey(msgKey).withHttpStatus(code.toString()).withObj(params).build();
         return new ResponseEntity<>(result, code);
     }
@@ -211,7 +211,7 @@ public abstract class AbstractWebController {
      * @param params A set of Serializable objects that are passed to the caller
      * @return A ResponseEntity with status {@code code}
      */
-    protected <T extends AbstractBase> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, MultiValueMap<String, String> headers, T... params) {
+    protected <T extends Serializable> ResponseEntity<Response<T>> buildResponse(HttpStatus code, String msg, String msgKey, MultiValueMap<String, String> headers, T... params) {
         Response result = Response.newBuilder().withMessage(msg).withMessageKey(msgKey).withHttpStatus(code.toString()).withObj(params).build();
         return new ResponseEntity<>(result, headers, code);
     }
@@ -223,7 +223,7 @@ public abstract class AbstractWebController {
      * @param params A set of Serializable objects that are passed to the caller
      * @return A ResponseEntity with status {@link HttpStatus#OK}
      */
-    protected <T extends AbstractBase> ResponseEntity<Response<T>> buildOKResponse(T... params) {
+    protected <T extends Serializable> ResponseEntity<Response<T>> buildOKResponse(T... params) {
         return buildResponse(HttpStatus.OK, "", "", params);
     }
 
@@ -237,7 +237,7 @@ public abstract class AbstractWebController {
      * @param params A set of Serializable objects that are passed to the caller
      * @return A ResponseEntity with status {@code code}
      */
-    protected <T extends AbstractBase> ResponseEntity<Response<T>> buildNOKResponseWithKey(HttpStatus code, String msg, String msgKey, T... params) {
+    protected <T extends Serializable> ResponseEntity<Response<T>> buildNOKResponseWithKey(HttpStatus code, String msg, String msgKey, T... params) {
         return buildResponse(code, msg, msgKey, params);
     }
 
@@ -250,7 +250,7 @@ public abstract class AbstractWebController {
      * @param params A set of Serializable objects that are passed to the caller
      * @return A ResponseEntity with status {@code code}
      */
-    protected <T extends AbstractBase> ResponseEntity<Response<T>> buildNOKResponse(HttpStatus code, String msg, T... params) {
+    protected <T extends Serializable> ResponseEntity<Response<T>> buildNOKResponse(HttpStatus code, String msg, T... params) {
         return buildResponse(code, msg, "", params);
     }
 
