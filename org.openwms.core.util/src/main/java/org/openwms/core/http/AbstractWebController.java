@@ -290,7 +290,7 @@ public abstract class AbstractWebController {
             url.append(prefix);
         }
         url.append(req.getRequestURI());
-        url.append("/{objId}/");
+        url.append("/{objId}");
         return new UriTemplate(url.toString()).expand(objId);
     }
 
