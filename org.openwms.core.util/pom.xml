@@ -19,6 +19,7 @@
 
     <properties>
         <dozer.version>6.5.2</dozer.version>
+        <mockito-core.version>5.7.0</mockito-core.version>
     </properties>
 
     <dependencyManagement>
@@ -41,6 +42,11 @@
                         <artifactId>jcl-over-slf4j</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -110,7 +116,6 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>5.7.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
