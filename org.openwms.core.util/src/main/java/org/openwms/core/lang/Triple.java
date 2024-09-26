@@ -15,6 +15,8 @@
  */
 package org.openwms.core.lang;
 
+import java.util.Objects;
+
 /**
  * A Triple.
  *
@@ -32,7 +34,7 @@ public record Triple<K, V, T>(K key, V value, T type) {
      */
     @SuppressWarnings("unchecked")
     public <U> U valueAs(Class<U> clazz) {
-        if (clazz.equals(this.type.getClass())) {
+        if (Objects.equals(this.type.getClass().getComponentType(), clazz.getComponentType())) {
             return (U) value;
         }
         throw new ClassCastException("Cannot case requested type [%s] from [%s]".formatted(clazz, type.getClass()));
