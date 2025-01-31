@@ -42,7 +42,7 @@ class TimeProviderTest {
      * the actual result.
      */
     @Test
-    public void testNowAsCurrentDate() {
+    void testNowAsCurrentDate() {
         TimeProvider timeProvider = new TimeProvider() {};
 
         // Call the method under test
@@ -69,7 +69,7 @@ class TimeProviderTest {
         System.out.println(zuluTime);
 
         ZonedDateTime nowGMTPlus1 = ZonedDateTime.now(ZoneId.of("GMT+1"));
-        Date nowZulu = Date.from(nowGMTPlus1.toInstant());
+        Date.from(nowGMTPlus1.toInstant());
         System.out.println(nowGMTPlus1);
 
         assertTrue(zuluTime.isBefore(nowGMTPlus1));
@@ -79,12 +79,12 @@ class TimeProviderTest {
     /**
      * Trivial implementation of TimeProvider for testing purposes.
      */
-    private final TimeProvider timeProvider = new TimeProvider() {};
+    private final TimeProvider tp = new TimeProvider() {};
 
     @Test
     void testNowAsCurrentInstant() {
         Instant testInstant = Instant.now();
-        Instant methodInstant = timeProvider.nowAsCurrentInstant();
+        Instant methodInstant = tp.nowAsCurrentInstant();
 
         // We only check minutes as the precision of the test might result in a difference in milliseconds
         assertEquals(testInstant.atZone(ZoneId.systemDefault()).getMinute(), methodInstant.atZone(ZoneId.systemDefault()).getMinute());

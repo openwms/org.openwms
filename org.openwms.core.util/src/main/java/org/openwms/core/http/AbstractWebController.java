@@ -49,12 +49,23 @@ import java.util.Locale;
 public abstract class AbstractWebController {
 
     private static final Logger EXC_LOGGER = LoggerFactory.getLogger(LoggingCategories.PRESENTATION_LAYER_EXCEPTION);
+    private static final String P_PRESENTATION_LAYER_EXCEPTION = "[P] Presentation Layer Exception: {}";
     @Autowired
     private MessageSource messageSource;
 
+    /**
+     * @deprecated Will become private. Migrate to use {@link #AbstractWebController(MessageSource)} instead.
+     */
+    @Deprecated(since = "3.0.0")
+    public AbstractWebController() { }
+
+    protected AbstractWebController(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @ExceptionHandler(BehaviorAwareException.class)
     protected ResponseEntity<Response<?>> handleBehaviorAwareException(BehaviorAwareException bae) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", bae.getLocalizedMessage(), bae);
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, bae.getLocalizedMessage(), bae);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(bae.getMessage())
                 .withMessageKey(bae.getMessageKey())
@@ -67,7 +78,7 @@ public abstract class AbstractWebController {
 
     @ExceptionHandler(RemovalNotAllowedException.class)
     protected ResponseEntity<Response<?>> handleRemovalNotAllowedException(RemovalNotAllowedException rnae) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", rnae.getLocalizedMessage(), rnae);
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, rnae.getLocalizedMessage(), rnae);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(rnae.getMessage())
                 .withMessageKey(rnae.getMessageKey())
@@ -79,7 +90,7 @@ public abstract class AbstractWebController {
 
     @ExceptionHandler(BusinessRuntimeException.class)
     protected ResponseEntity<Response<?>> handleBusinessRuntimeException(BusinessRuntimeException bre) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", bre.getLocalizedMessage(), bre);
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, bre.getLocalizedMessage(), bre);
         ResponseStatus annotation = bre.getClass().getAnnotation(ResponseStatus.class);
         HttpStatus status = annotation != null ? annotation.value() : HttpStatus.INTERNAL_SERVER_ERROR;
         return new ResponseEntity<>(Response.newBuilder()
@@ -94,7 +105,7 @@ public abstract class AbstractWebController {
 
     @ExceptionHandler(HttpBusinessException.class)
     protected ResponseEntity<Response<?>> handleHttpBusinessException(HttpBusinessException hbe) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", hbe.getLocalizedMessage(), hbe);
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, hbe.getLocalizedMessage(), hbe);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(hbe.getMessage())
                 .withHttpStatus(String.valueOf(hbe.getHttpStatus().value()))
@@ -114,7 +125,7 @@ public abstract class AbstractWebController {
         if (tre.getCause() instanceof HttpBusinessException hbe) {
             return handleHttpBusinessException(hbe);
         }
-        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", tre.getLocalizedMessage(), tre);
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, tre.getLocalizedMessage(), tre);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(tre.getMessage())
                 .withMessageKey(tre.getMessageKey())
@@ -164,7 +175,7 @@ public abstract class AbstractWebController {
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Response<?>> handleException(Exception ex) {
-        EXC_LOGGER.error("[P] Presentation Layer Exception: {}", ex.getLocalizedMessage(), ex);
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, ex.getLocalizedMessage(), ex);
         return new ResponseEntity<>(Response.newBuilder()
                 .withMessage(ex.getMessage())
                 .withMessageKey(ExceptionCodes.TECHNICAL_RT_ERROR)

@@ -20,7 +20,7 @@ import org.hibernate.envers.event.spi.EnversPostDeleteEventListenerImpl;
 import org.hibernate.event.spi.PostDeleteEvent;
 
 /**
- * A CustomPostDeleteEventListener.
+ * A CustomPostDeleteEventListener overrides the default implementation.
  *
  * @author Heiko Scherrer
  */
@@ -30,8 +30,13 @@ public class CustomPostDeleteEventListener extends EnversPostDeleteEventListener
         super(enversService);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Bypass the default implementation.
+     */
     @Override
     public void onPostDelete(PostDeleteEvent event) {
-        return;
+        // Bypass the default implementation and do nothing.
     }
 }

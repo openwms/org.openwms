@@ -26,11 +26,11 @@ import java.util.Map;
  * @param <T> The type of the node
  * @author Heiko Scherrer
  */
-public class TreeNodeImpl<T> implements TreeNode<T>, Serializable {
+public class TreeNodeImpl<T extends Serializable> implements TreeNode<T>, Serializable {
 
     private T data;
     private TreeNode<T> parent;
-    private Map<Object, TreeNode<T>> childrenMap = new LinkedHashMap<>();
+    private final Map<Object, TreeNode<T>> childrenMap = new LinkedHashMap<>();
 
     /**
      * {@inheritDoc}

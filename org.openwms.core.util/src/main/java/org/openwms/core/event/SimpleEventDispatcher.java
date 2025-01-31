@@ -58,7 +58,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
         synchronized (subscriptions) {
             Set<EventListener> listeners = subscriptions.get(event);
             if (listeners == null) {
-                listeners = new HashSet<>(1);
+                listeners = HashSet.newHashSet(1);
                 listeners.add(listener);
             } else {
                 listeners.add(listener);
@@ -73,8 +73,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     @Override
     public void subscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {
         Object instance = ctx.getBean(listenerBeanName);
-        if (instance instanceof EventListener) {
-            subscribe(event, (EventListener) instance);
+        if (instance instanceof EventListener i) {
+            subscribe(event, i);
         } else {
             throw new ServiceLayerException(format("The bean with name [%s] is not of type EventListener and cannot subscribe to events", listenerBeanName));
         }
@@ -98,8 +98,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
     @Override
     public void unsubscribe(Class<? extends RootApplicationEvent> event, String listenerBeanName) {
         Object instance = ctx.getBean(listenerBeanName);
-        if (instance instanceof EventListener) {
-            unsubscribe(event, (EventListener) instance);
+        if (instance instanceof EventListener i) {
+            unsubscribe(event, i);
         } else {
             throw new ServiceLayerException(format("The bean with name [%s] is not of type EventListener and cannot unsubscribe to events", listenerBeanName));
         }

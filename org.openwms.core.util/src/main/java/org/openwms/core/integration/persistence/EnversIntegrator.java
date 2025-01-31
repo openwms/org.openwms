@@ -44,6 +44,11 @@ public class EnversIntegrator implements Integrator {
 
     public static final String AUTO_REGISTER = "hibernate.envers.autoRegisterListeners";
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
+    @Override
     public void integrate(
             Metadata metadata,
             SessionFactoryImplementor sessionFactory,

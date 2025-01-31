@@ -15,6 +15,7 @@
  */
 package org.openwms.core.aop;
 
+import org.ameba.exception.TechnicalRuntimeException;
 import org.openwms.core.annotation.FireAfterTransaction;
 import org.openwms.core.annotation.FireAfterTransactionAsynchronous;
 import org.openwms.core.event.RootApplicationEvent;
@@ -68,9 +69,8 @@ public class FireAfterTransactionAspect {
      *
      * @param publisher The instance that is publishing the event
      * @param events A list of event classes to fire
-     * @throws RuntimeException Any exception is re-thrown
      */
-    public void fireEvent(Object publisher, FireAfterTransaction events) throws RuntimeException {
+    public void fireEvent(Object publisher, FireAfterTransaction events) {
         try {
             for (int i = 0; i < events.events().length; i++) {
                 Class<? extends EventObject> event = events.events()[i];
@@ -79,7 +79,7 @@ public class FireAfterTransactionAspect {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new TechnicalRuntimeException(e.getMessage(), e);
         }
     }
 
@@ -89,16 +89,19 @@ public class FireAfterTransactionAspect {
      *
      * @param publisher The instance that is publishing the event
      * @param events Stores a list of event classes to fire
-     * @throws Exception Any exception is re-thrown
      */
     @Async
-    public void fireEventAsync(Object publisher, FireAfterTransactionAsynchronous events) throws Exception {
-        for (int i = 0; i < events.events().length; i++) {
-            Class<? extends EventObject> event = events.events()[i];
-            if (RootApplicationEvent.class.isAssignableFrom(event)) {
-                LOGGER.debug("Sending event: [{}]", event);
-                ctx.publishEvent((RootApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
+    public void fireEventAsync(Object publisher, FireAfterTransactionAsynchronous events) {
+        try {
+            for (int i = 0; i < events.events().length; i++) {
+                Class<? extends EventObject> event = events.events()[i];
+                if (RootApplicationEvent.class.isAssignableFrom(event)) {
+                    LOGGER.debug("Sending event: [{}]", event);
+                    ctx.publishEvent((RootApplicationEvent) event.getConstructor(Object.class).newInstance(publisher));
+                }
             }
+        } catch (Exception e) {
+            throw new TechnicalRuntimeException(e.getMessage(), e);
         }
     }
 }
