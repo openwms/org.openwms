@@ -22,9 +22,19 @@ package org.openwms.core;
  */
 public final class SpringProfiles {
 
-    /** Used to define that the service is running in a distributed environment. */
+    /**
+     * Used to define that the service is running in a distributed environment.
+     *
+     * @deprecated Use {@link org.ameba.app.SpringProfiles#DISTRIBUTED DISTRIBUTED} instead
+     */
+    @Deprecated(forRemoval = true)
     public static final String DISTRIBUTED = "DISTRIBUTED";
-    /** Used to define that asynchronous message handling is used. */
+    /**
+     * Used to define that asynchronous message handling is used.
+     *
+     * @deprecated Use {@link org.ameba.app.SpringProfiles#AMQP AMQP} instead
+     */
+    @Deprecated(forRemoval = true)
     public static final String ASYNCHRONOUS_PROFILE = "ASYNCHRONOUS";
     /** Used to define that the asynchronous message handling is NOT used. */
     public static final String NOT_ASYNCHRONOUS = "!ASYNCHRONOUS";
@@ -34,11 +44,20 @@ public final class SpringProfiles {
     public static final String NOT_MANAGED = "!MANAGED";
     /** Used to define that synchronous message handling is used. */
     public static final String IN_MEMORY = "INMEM";
-    /** Used to define that running within an OSGi container. */
+    /**
+     * Used to define that running within an OSGi container.
+     *
+     * @deprecated In the next mayor release
+     */
+    @Deprecated(forRemoval = true)
     public static final String OSGI = "OSGI";
-    /** Used to define that not running in an OSGi container. */
+    /**
+     * Used to define that not running in an OSGi container.
+     *
+     * @deprecated In the next mayor release
+     */
+    @Deprecated(forRemoval = true)
     public static final String NON_OSGI = "noOSGI";
 
-    private SpringProfiles() {
-    }
+    private SpringProfiles() { }
 }
