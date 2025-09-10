@@ -28,7 +28,9 @@ import org.springframework.context.ConfigurableApplicationContext;
  * profile {@link SpringProfiles#NON_OSGI} is activated - if not already set.
  *
  * @author Heiko Scherrer
+ * @deprecated Multiple environments are likely going to be removed
  */
+@Deprecated
 public class ApplicationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationInitializer.class);
@@ -40,7 +42,7 @@ public class ApplicationInitializer implements ApplicationContextInitializer<Con
      */
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-        String activeProfile = System.getProperty("spring.profiles.active");
+        var activeProfile = System.getProperty("spring.profiles.active");
         if (SpringProfiles.OSGI.equalsIgnoreCase(activeProfile)) {
             LOGGER.info("Running in OSGI environment");
         } else if (SpringProfiles.NON_OSGI.equalsIgnoreCase(activeProfile)) {
