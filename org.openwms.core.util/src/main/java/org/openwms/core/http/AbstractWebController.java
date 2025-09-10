@@ -138,6 +138,7 @@ public abstract class AbstractWebController {
 
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Response<?>> illegalArgumentException(IllegalArgumentException ex) {
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, ex.getLocalizedMessage(), ex);
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(ex.getMessage())
@@ -149,7 +150,8 @@ public abstract class AbstractWebController {
     }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, ValidationException.class})
-    protected ResponseEntity<Response<?>> handleValidationException() {
+    protected ResponseEntity<Response<?>> handleValidationException(Exception e) {
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, e.getLocalizedMessage(), e);
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR))
@@ -163,6 +165,7 @@ public abstract class AbstractWebController {
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<Response<?>> handleConstraintViolationException(ConstraintViolationException ex) {
         var properties = ex.getConstraintViolations().stream().map(c -> c.getPropertyPath().toString()).toList();
+        EXC_LOGGER.error(P_PRESENTATION_LAYER_EXCEPTION, ex.getLocalizedMessage(), ex);
         return new ResponseEntity<>(
                 Response.newBuilder()
                         .withMessage(translate(ExceptionCodes.VALIDATION_ERROR, properties))
