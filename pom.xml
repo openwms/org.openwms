@@ -4,11 +4,11 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>27.2</version>
+        <version>27.5</version>
         <relativePath />
     </parent>
     <artifactId>org.openwms</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>3.1.0-SNAPSHOT</version>
     <name>OpenWMS.org Project</name>
     <packaging>pom</packaging>
 
@@ -120,31 +120,17 @@
 
     <repositories>
         <repository>
-            <id>sonatype-nexus-staging</id>
-            <name>Staging Repository</name>
-            <url>https://oss.sonatype.org/content/groups/staging/</url>
+            <id>ossrh-staging-api</id>
+            <name>OSSRH Staging Repository</name>
+            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
             <releases>
                 <enabled>true</enabled>
             </releases>
         </repository>
     </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
 
     <modules>
         <module>org.openwms.core.util</module>
