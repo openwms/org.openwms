@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.openwms</groupId>
         <artifactId>org.openwms.parent</artifactId>
-        <version>27.5</version>
+        <version>27.6</version>
         <relativePath />
     </parent>
     <artifactId>org.openwms</artifactId>
@@ -120,25 +120,14 @@
 
     <repositories>
         <repository>
-            <id>central-portal-snapshots</id>
-            <name>Central Portal Snapshots</name>
+            <id>central-staging</id>
+            <name>OSSRH Snapshot Repository</name>
             <url>https://central.sonatype.com/repository/maven-snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
             <releases>
                 <enabled>false</enabled>
-            </releases>
-        </repository>
-        <repository>
-            <id>ossrh-staging-api</id>
-            <name>OSSRH Staging Repository</name>
-            <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
             </releases>
         </repository>
     </repositories>

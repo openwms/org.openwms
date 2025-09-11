@@ -35,7 +35,7 @@ jobs:
               "password": "${{ secrets.OSSRH_PASSWORD }}"
             },
             {
-              "id": "ossrh-staging-api",
+              "id": "central-portal-snapshots",
               "username": "${{ secrets.OSSRH_USERNAME }}",
               "password": "${{ secrets.OSSRH_PASSWORD }}"
             }]
@@ -53,7 +53,7 @@ jobs:
           ./mvnw deploy
           -DsurefireArgs=-Dspring.profiles.active=ASYNCHRONOUS,TEST
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
-          -U -B -Prelease,gpg $MAVEN_OPTS
+          -U -B -Prelease,release-central,gpg $MAVEN_OPTS
 
       - name: Cache SonarQube packages
         uses: actions/cache@v3
