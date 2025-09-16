@@ -8,7 +8,7 @@
         <relativePath />
     </parent>
     <artifactId>org.openwms</artifactId>
-    <version>3.1.0-SNAPSHOT</version>
+    <version>3.1.0-jdk17-SNAPSHOT</version>
     <name>OpenWMS.org Project</name>
     <packaging>pom</packaging>
 
@@ -84,6 +84,8 @@
         <moduleDir>.</moduleDir>
         <env.all>true</env.all>
 
+        <ameba-lib.version>4.2.0-jdk17</ameba-lib.version>
+        <java.version>17</java.version>
         <ci.buildNumber>MANUAL</ci.buildNumber>
         <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
         <ms.group>NULL</ms.group>

@@ -58,7 +58,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
         synchronized (subscriptions) {
             Set<EventListener> listeners = subscriptions.get(event);
             if (listeners == null) {
-                listeners = HashSet.newHashSet(1);
+                listeners = new HashSet<>(1);
                 listeners.add(listener);
             } else {
                 listeners.add(listener);

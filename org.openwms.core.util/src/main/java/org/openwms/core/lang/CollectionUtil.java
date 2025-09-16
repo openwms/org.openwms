@@ -60,7 +60,7 @@ public final class CollectionUtil {
         if (list == null || extractor == null || list.isEmpty()) {
             return Collections.emptyMap();
         }
-        Map<K, V> map = LinkedHashMap.newLinkedHashMap(list.size());
+        Map<K, V> map = new LinkedHashMap<>(list.size());
         for (V node : list) {
             map.put(extractor.extractKey(node), extractor.extractValue(node));
         }
