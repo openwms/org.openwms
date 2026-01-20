@@ -87,6 +87,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Sonar Analysis
     needs: build_job
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -118,5 +120,3 @@ jobs:
           -DSONAR_TOKEN=$SONAR_TOKEN
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -Pcoverage -B $MAVEN_OPTS
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
