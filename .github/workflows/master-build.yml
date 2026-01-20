@@ -120,3 +120,5 @@ jobs:
           -DSONAR_TOKEN=$SONAR_TOKEN
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -Pcoverage -B $MAVEN_OPTS
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
