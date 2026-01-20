@@ -62,6 +62,41 @@ jobs:
     name: CVE Analysis
     needs: build_job
     steps:
+      - name: Restore last run timestamp
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: .last_run
+          key: last-run-cache
+
+      - name: Check cooldown
+        id: cooldown
+        run: |
+          NOW=$(date -u +%s)
+
+          if [ -f .last_run ]; then
+            LAST=$(cat .last_run)
+          else
+            LAST=0
+          fi
+
+          DIFF=$((NOW - LAST))
+          COOLDOWN=43200   # 12 hours
+
+          echo "Seconds since last run: $DIFF"
+
+          if [ "$DIFF" -lt "$COOLDOWN" ]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Exit if in cooldown window
+        if: steps.cooldown.outputs.skip == 'true'
+        run: |
+          echo "Cooldown active — skipping job"
+          exit 0
+
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -81,6 +116,15 @@ jobs:
         run: >
           ./mvnw org.owasp:dependency-check-maven:aggregate -DfailBuildOnCVSS=11 -Dformats=XML,JSON,HTML
           -B $MAVEN_OPTS
+
+      - name: Update last run timestamp
+        run: date -u +%s > .last_run
+
+      - name: Save timestamp
+        uses: actions/cache@v3
+        with:
+          path: .last_run
+          key: last-run-cache
 
   sonar_job:
     if: github.event_name != 'schedule'
