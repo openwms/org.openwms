@@ -2,6 +2,8 @@ name: 'master_build'
 on:
   push:
     branches: [ master ]
+  schedule:
+    - cron: "0 2 * * *" # Every day 2pm UTC to deploy snapshots
 
 env:
   MAVEN_OPTS: -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
@@ -55,12 +57,58 @@ jobs:
           -Dci.buildNumber=$GITHUB_RUN_NUMBER
           -U -B -Prelease,release-central,gpg $MAVEN_OPTS
 
+  cve_job:
+    runs-on: ubuntu-latest
+    name: CVE Analysis
+    needs: build_job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: 21
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: CVE Analysis
+        run: >
+          ./mvnw org.owasp:dependency-check-maven:aggregate -DfailBuildOnCVSS=11 -Dformats=XML,JSON,HTML
+          -B $MAVEN_OPTS
+
+  sonar_job:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    name: Sonar Analysis
+    needs: build_job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: 21
+
       - name: Cache SonarQube packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
 
       - name: Sonar
         run: >
